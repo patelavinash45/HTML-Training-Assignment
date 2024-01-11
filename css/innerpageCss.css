@@ -5,6 +5,10 @@ header {
     justify-content: space-between;
 }
 
+.body {
+    display: flex;
+}
+
 #left-side {
     width: 365px;
     height: 1279px;
@@ -27,7 +31,7 @@ header {
     border-radius: 5px;
 }
 
-.opestions{
+.opestions {
     margin-left: 35px;
     margin-right: 15px;
 }
