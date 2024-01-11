@@ -26,7 +26,14 @@ header {
     height: 43px;
 }
 
-#dashboard {
+
+#form {
+    width: -moz-available;
+    background-color: #fafafa;
+    padding: 35px;
+}
+
+#analysis {
     background-color: #FFF3F4;
     border-radius: 5px;
 }
@@ -62,6 +69,10 @@ header {
     margin-right: 12px;
     width: 44px;
     height: 44px;
+}
+
+input{
+    border: 1px solid #ADADAD;
 }
 
 #downward-arrow {
