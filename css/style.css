@@ -5,14 +5,14 @@ body {
 
 .center {
     display: flex;
+    height: 100vh;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    margin-bottom: -50%;
-    transform: translate(-50%, -50%)
+}
+
+#left-side{
+    display: flex;
+    justify-content: end;
 }
 
 .hero_image {
@@ -22,7 +22,8 @@ body {
     border-width: 20px;
     border-style: solid;
     border-color: #FFFFFF;
-    margin-right: 164px;
+    margin-right: 50px;
+    margin-left: 30px;
 }
 
 .logo_image {
@@ -98,4 +99,15 @@ input::placeholder {
 
 form {
     padding-top: 23.45px;
+}
+
+
+/* media queries */
+
+@media only screen and (max-width:1400px) and (min-width:1200px){
+    #left-side{
+        display: flex;
+        justify-content: end;
+        
+    }
 }

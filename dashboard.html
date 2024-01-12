@@ -7,20 +7,23 @@
     </head>
     <body>
         <!-- header -->
-        <header>
-            <div>
+        <header class="container-fluid">
+            <div class="col-xxl-2 col-xl-3 col-lg-3 col-md-4 col-sm-4">
                 <img id="menu-bar" src="images/menu-bar.svg">
                 <img id="header-logo" src="images/header-logo.svg">
             </div>
-            <div>
+            <div class="col-xxl-7 col-xl-6 col-lg-5 col-md-4 col-sm-3">
                 <img id="search-icon" src="images/search-icon.svg">
                 Search
-                <img id="notification-icon" src="images/notification-icon.svg">
             </div>
-            <div>
-                <img id="profile" src="images/profile.png">
-                John Doe
-                <img id="downward-arrow" src="images/downward-arrow.svg">
+            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-5"
+                id="header-rightside">
+                <img id="notification-icon" src="images/notification-icon.svg">
+                <div>
+                    <img id="profile" src="images/profile.png">
+                    John Doe
+                    <img id="downward-arrow" src="images/downward-arrow.svg">
+                </div>
             </div>
         </header>
         <div class="body">
@@ -35,7 +38,7 @@
                         Dashboard
                     </span>
                 </div>
-                <div class="left-side">
+                <button class="left-side" onclick="window.location.href='innerpage.html';">
                     <span class="opestions">
                         <img class="left-side-image"
                             src="images/graph-default.svg">
@@ -43,7 +46,7 @@
                     <span>
                         Analysis
                     </span>
-                </div>
+                </button>
                 <div class="left-side">
                     <span class="opestions">
                         <img class="left-side-image"
@@ -76,7 +79,7 @@
                         <img class="left-side-image"
                             src="images/maintenance-default.svg">
                     </span>
-                    <span >
+                    <span>
                         Maintenance
                     </span>
                 </div>
@@ -96,70 +99,66 @@
                     Dashboard
                 </span>
                 <!-- functions -->
-                <div id="functions">
-                    <div class="functions ">
-                        <img src="images/star.svg" width="33.33px"
-                            height="33.33px">
-                        <div
-                            style="display: flex; flex-direction: column-reverse;">
-                            <span>
-                                23,453
-                            </span>
-                            <span>
-                                New Products
-                            </span>
+                <div class="container-fluid" id="function">
+                    <div class="row">
+                        <div class="functions col-xxl-2 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-3">
+                            <img class="function-images" src="images/star.svg">
+                            <div class="function-data">
+                                <b class="function-text-size">
+                                    23,453
+                                </b>
+                                <span>
+                                    New Products
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="functions ">
-                        <img src="images/new-product.svg" width="33.33px"
-                            height="33.33px">
-                        <div
-                            style="display: flex; flex-direction: column-reverse;">
-                            <span>
-                                2345
-                            </span>
-                            <span>
-                                Added Products
-                            </span>
+                        <div class="functions col-xxl-2 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-3">
+                            <img class="function-images"
+                                src="images/new-product.svg">
+                            <div class="function-data">
+                                <b class="function-text-size">
+                                    2345
+                                </b>
+                                <span>
+                                    Added Products
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="functions ">
-                        <img src="images/total-product.svg" width="33.33px"
-                            height="33.33px">
-                        <div
-                            style="display: flex; flex-direction: column-reverse;">
-                            <span>
-                                32,456
-                            </span>
-                            <span>
-                                Total Products
-                            </span>
+                        <div class="functions col-xxl-2 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-3">
+                            <img class="function-images"
+                                src="images/total-product.svg">
+                            <div class="function-data">
+                                <b class="function-text-size">
+                                    32,456
+                                </b>
+                                <span>
+                                    Total Products
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="functions ">
-                        <img src="images/dollar-filled.svg" width="33.33px"
-                            height="33.33px">
-                        <div
-                            style="display: flex; flex-direction: column-reverse;">
-                            <span>
-                                5678
-                            </span>
-                            <span>
-                                Todays Sale
-                            </span>
+                        <div class="functions col-xxl-2 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-3">
+                            <img class="function-images"
+                                src="images/dollar-filled.svg">
+                            <div class="function-data">
+                                <b class="function-text-size">
+                                    5678
+                                </b>
+                                <span>
+                                    Todays Sale
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="functions ">
-                        <img src="images/dollar-filled.svg" width="33.33px"
-                            height="33.33px">
-                        <div
-                            style="display: flex; flex-direction: column-reverse;">
-                            <span>
-                                3,33,543
-                            </span>
-                            <span>
-                                Total Sale
-                            </span>
+                        <div class="functions col-xxl-2 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-3">
+                            <img class="function-images"
+                                src="images/dollar-filled.svg">
+                            <div class="function-data">
+                                <b class="function-text-size">
+                                    3,33,543
+                                </b>
+                                <span>
+                                    Total Sale
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,7 +166,8 @@
                 <div class="container-fluid">
                     <div class="row">
                         <!-- graph -->
-                        <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10" id="graph">
+                        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8"
+                            id="graph">
                             <div>
                                 <!-- graph upper side -->
                                 <div id="graph-text">
@@ -185,17 +185,18 @@
                                     </div>
                                 </div>
                                 <!-- graph lower side only image-->
-                                <img src="images/data-graph.png" width="80%">
+                                <img src="images/data-graph.png" width="100%">
                             </div>
                         </div>
                         <!-- chart -->
-                        <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" id="chart">
+                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-8 col-xxl-3"
+                            id="chart">
                             <!-- chart upper side text -->
                             <b class="diffrent-text">
                                 Sales by Contry
                             </b>
                             <!-- chart -->
-                            <div>
+                            <div id="chart-image">
                                 <img src="images/pie-chart.svg" alt>
                             </div>
                             <!-- chart lower side text -->
@@ -235,7 +236,7 @@
                     </div>
                 </div>
                 <!-- invoice -->
-                <div id="invoices">
+                <div id="invoices" class="table">
                     <div id="invoice-upper-text">
                         <b class="diffrent-text">
                             Invoices
@@ -245,7 +246,7 @@
                         </span>
                     </div>
                     <div class="table" id="row-heigth">
-                        <table style="width: 100%;">
+                        <table class="table">
                             <tr>
                                 <th class="table-header-text">
                                     INVOICE
