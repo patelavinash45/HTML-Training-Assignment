@@ -1,3 +1,8 @@
+body {
+    background-color: #FAFAFA;
+    font-family: roboto;
+}
+
 header {
     height: 80px;
     display: flex;
@@ -15,13 +20,14 @@ header {
     display: flex;
 }
 
-#left-side {
+
+/* #left-side {
     width: 335px;
     height: 1279px;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+} */
 
 .left-side {
     display: flex;
@@ -34,13 +40,18 @@ header {
     border-width: 0px;
 }
 
+#header-bar-button {
+    border-width: 0px;
+    background-color: #ffffff;
+}
+
 .opestions {
     margin-left: 35px;
     margin-right: 15px;
 }
 
 #right-side {
-    width: -moz-available;
+    width: 100%;
     background-color: #fafafa;
     padding: 35px;
 }
@@ -92,7 +103,7 @@ header {
 #chart {
     /* width: 490px; */
     margin-top: 10px;
-    height: 460px;
+    height: 510px;
     background-color: #FFFFFF;
     padding: 30px;
 }
@@ -145,8 +156,12 @@ header {
     font-size: 15px;
 }
 
+.table {
+    overflow-y: scroll;
+}
+
 #row-heigth {
-    line-height: 3;
+    line-height: 35px;
 }
 
 .green-box {
@@ -209,15 +224,13 @@ header {
 }
 
 #notification-icon {
-    margin-right: 42px;
+    margin-right: 25px;
     width: 21.52px;
     height: 21.52px;
 }
 
 #profile {
-    margin-right: 12px;
-    width: 44px;
-    height: 44px;
+    margin-left: 12px;
 }
 
 #downward-arrow {
@@ -235,9 +248,36 @@ header {
 
 /* media queries */
 
-@media only screen and (max-width:768px) {
+
+/* @media only screen and (max-width:768px) {
     #left-side {
         display: none;
+    }
+} */
+
+@media only screen and (max-width: 450px) {
+    #country-name {
+        display: flex;
+        flex-direction: column;
+        margin-top: -60px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #search-text {
+        display: none;
+    }
+    #profile {
+        display: none
+    }
+    #header-logo {
+        width: 100px;
+        height: 30px;
+    }
+    #notification-icon {
+        margin-right: 22px;
+        width: 21.52px;
+        height: 21.52px;
     }
 }
 
@@ -258,6 +298,19 @@ header {
     .functions {
         height: 116px;
         margin-right: 5px;
+        display: flex;
+        background-color: #FFFFFF;
+        border-radius: 5px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+}
+
+@media only screen and (max-width:768px) {
+    .functions {
+        height: 116px;
+        margin-right: 10px;
         display: flex;
         background-color: #FFFFFF;
         border-radius: 5px;

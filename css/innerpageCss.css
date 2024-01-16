@@ -1,3 +1,8 @@
+body {
+    background-color: #FAFAFA;
+    font-family: roboto;
+}
+
 header {
     height: 80px;
     display: flex;
@@ -15,13 +20,13 @@ header {
     display: flex;
 }
 
-#left-side {
+/* #left-side {
     width: 335px;
     height: 1279px;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+} */
 
 .left-side {
     display: flex;
@@ -32,6 +37,11 @@ header {
     height: 43px;
     background-color: #ffffff;
     border-width: 0px;
+}
+
+#header-bar-button{
+    border-width: 0px;
+    background-color: #ffffff;
 }
 
 input {
@@ -91,7 +101,7 @@ select {
     padding-bottom: 30px;
 }
 
-#form {
+#right-side {
     width: -moz-available;
     background-color: #fafafa;
     padding: 35px;
@@ -124,6 +134,7 @@ select {
     justify-content: start;
     align-items: center;
 }
+
 
 .radio{
     display: flex;
@@ -232,15 +243,13 @@ select {
 }
 
 #notification-icon {
-    margin-right: 42px;
+    margin-right: 25px;
     width: 21.52px;
     height: 21.52px;
 }
 
 #profile {
-    margin-right: 12px;
-    width: 44px;
-    height: 44px;
+    margin-left: 12px;
 }
 
 input {
@@ -259,11 +268,33 @@ input {
     margin-left: 18 px;
 }
 
+.message-images{
+    height: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
 
 /* media queries */
 
-@media only screen and (max-width:577px){
-    #left-side {
+@media only screen and (max-width:768px) {
+    #search-text{
         display: none;
     }
+
+    #profile{
+        display: none
+    }
+
+    #header-logo {
+        width: 100px;
+        height: 30px;
+    }
+
+    #notification-icon {
+        margin-right: 22px;
+        width: 21.52px;
+        height: 21.52px;
+    }
 }
+

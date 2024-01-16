@@ -11,10 +11,10 @@
     </head>
     <body class="container-fluid">
         <div class="center row">
-            <div class="col-xxl-6 col-xl-1" id="left-side">
-                <img class="hero_image img-responsive" src="images/hero-image.png">
+            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12" id="left-side">
+                <img class="hero_image img-responsive" id="hero-image-scale" src="images/hero-image.png">
             </div>
-            <div class="col-xxl-4 col-xl-1" id="rigth-side">
+            <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12" id="rigth-side">
                 <img class="logo_image" src="images/header-logo.svg"
                     width="292px">
                 <div class="text2">
@@ -28,12 +28,12 @@
                     <div>
                         <input type="text" placeholder="Username">
                     </div>
-                    <div style="margin-top: 27px;">
+                    <div class="password-input">
                         <input type="password" placeholder="Password">
                     </div>
                 </form>
                 <div>
-                    <button>
+                    <button onclick="window.location.href='dashboard.html'">
                         Login
                     </button>
                     <a href class="forgot_password">Forgot Password?</a>
