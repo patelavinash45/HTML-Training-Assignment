@@ -225,6 +225,10 @@ select {
     font-size: 15px;
 }
 
+.right-space{
+    margin-right: 10px;
+}
+
 /* images */
 
 #menu-bar {
@@ -295,6 +299,12 @@ input {
         margin-right: 22px;
         width: 21.52px;
         height: 21.52px;
+    }
+}
+
+@media only screen and (max-width:576px){
+    .snackbar-text{
+        font-size: 12px;
     }
 }
 

@@ -1,0 +1,13 @@
+
+#bottom-part{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+    height: 6vh;
+    width: 20vw;
+}
+
+a{
+    user-select: none;
+}
