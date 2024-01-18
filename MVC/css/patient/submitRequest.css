@@ -1,0 +1,120 @@
+#them-icon{
+    margin-right: 40px;
+    border-radius: 10px;
+    border-color: cadetblue;
+    border-width: 2px;
+    border-style: solid;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.remove-underline{
+    text-decoration: none;
+}
+
+#back-box{
+    position: fixed;
+    top: 90px;
+    right: 100px;
+    border-radius: 10px;
+    border-color: cadetblue;
+    border-width: 2px;
+    border-style: solid;
+    height: 50px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: cadetblue;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+header{
+    box-shadow: 0px 0px 8px lightgray;
+}
+
+#logo-image{
+    width: 150px;
+    margin-left: 4vh;
+}
+
+.button{
+    display: flex;
+    width: 300px;
+    height: 60px;
+    border-radius: 10px;
+    border-width: 1px;
+    border-style: solid;
+    margin-bottom: 3vh;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 20px;
+}
+
+#patient-box{
+    background-color: #e9eaef;
+    color: #5e699a;
+    border-color: #cacdd4;
+}
+
+#family-friend-box{
+    background-color: #e5f2f8;
+    color: #3f9eba;
+    border-color: #bddbf8;
+}
+
+#concierge-box{
+    background-color: #e9f0e8;
+    color: #4f8758;
+    border-color: #d0f6cd;
+}
+
+#business-box{
+    background-color: #f6e7ee;
+    color: #93386e;
+    border-color: #f6cfe4;
+}
+
+#heading-text{
+    width: 300px;
+    font-size: 35px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+
+}
+
+
+/* --------------------------------------media queries----------------------------- */
+
+@media screen and (min-width:1400px) {
+    #back-box{
+        top: 100px;
+        right: 400px;
+    }
+}
+
+@media screen and (max-width:450px) {
+    #back-box{
+        right: 20px;
+    }
+}
+
+@media screen and (max-width:576px) {
+
+    .button{
+        display: inline;
+        width: 250px;
+    }
+
+    #heading-text{
+        width: 250px;
+        font-size: 25px;
+        font-weight: 500;
+    }
+}
