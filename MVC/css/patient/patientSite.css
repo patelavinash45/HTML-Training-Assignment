@@ -1,13 +1,79 @@
+#bg-image{
+    display: none;
+}
 
-#bottom-part{
+button{
+    height: 60px;
+    width: 500px;
+    border-radius: 10px;
+    margin-bottom: 3vh;
+    font-size: 25px;
+    color: white;
+}
+
+#them-icon{
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    border-radius: 10px;
+    border-color: cadetblue;
+    border-width: 2px;
+    border-style: solid;
+    height: 50px;
+    width: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: aliceblue;
-    height: 6vh;
-    width: 20vw;
 }
 
-a{
-    user-select: none;
+#submit-button{
+    background-color: #01bce9;
+}
+
+.conditions-text{
+    color: #86878a;
+    text-decoration: none;
+}
+
+#register-button{
+    background-color: #0d1556;
+}
+
+#bottom-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 50px;
+    background-color: #f8f4f4;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+/* ---------------------------media query---------------------------*/
+
+@media screen and (max-width:576px) {
+
+    #bg-image{
+        display: inline;
+        width: 70vw;
+        height: 100vh;
+        position: absolute;
+        filter: blur(3px);
+        z-index: -1;
+    }
+
+    button{
+        width: 320px;
+    }
+
+    #bottom-box{
+        font-size: 10px;
+        width: 200px;
+        height: 40px;
+    }
+
+    #logo-image{
+        visibility: hidden;
+    }
 }
