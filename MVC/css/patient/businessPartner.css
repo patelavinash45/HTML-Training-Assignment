@@ -2,6 +2,29 @@ body{
     background-color: #dcdbdb;
 }
 
+#main-body{
+    opacity: 0.5;
+}
+
+#alert-message{
+    position: fixed;
+    display: flex;
+    z-index: 3;
+    justify-content: center;
+    align-items: center;
+}
+
+#alert-box{
+    width: 550px;
+    background-color: white;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
 header{
     box-shadow: 0px 0px 8px lightgray;
     background-color: white;
@@ -48,7 +71,6 @@ header{
     width: 100vw;
     border-radius: 10px;
     background-color: white;
-    padding: 20px;
 }
 
 .form-control{
@@ -57,11 +79,29 @@ header{
 
 .form-floating > label{
     left: 10px;
-    top: 7px;
+    top: 25px;
 }
 
 .form-floating>.form-control:focus~label{
-    top: -8px;
+    top: -2px;
+}
+
+button{
+    height: 58px;
+    margin-top: 18px;
+    width: 150px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #1db5d0;
+    color: white;
+}
+
+input{
+    height: 58px;
+}
+
+input[type=file]::-webkit-file-upload-button {
+    display: none;
 }
 
 .bottom-button{
@@ -83,4 +123,30 @@ header{
 
 #cancel-button{
     color: #1db5d0;
+}
+
+.btn,.btn:hover{
+    font-size: 20px;
+    color: white;
+    width: 25%;
+    background-color: #1db5d0;
+    border: 0.5px solid black;
+    height: 50px;
+}
+
+#date-picker{
+    top: 0px;
+}
+
+/* media Queries */
+
+@media screen and (max-width:576px) {
+    #alert-box{
+        width: 360px;
+        height: 300px;
+    }
+
+    span{
+        font-size: 12px;
+    }
 }

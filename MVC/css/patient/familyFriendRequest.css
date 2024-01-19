@@ -1,18 +1,41 @@
-body{
+body {
     background-color: #dcdbdb;
 }
 
-header{
+#main-body {
+    opacity: 0.5;
+}
+
+#alert-message {
+    position: fixed;
+    display: flex;
+    z-index: 3;
+    justify-content: center;
+    align-items: center;
+}
+
+#alert-box {
+    width: 550px;
+    background-color: white;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+header {
     box-shadow: 0px 0px 8px lightgray;
     background-color: white;
 }
 
-#logo-image{
+#logo-image {
     width: 150px;
     margin-left: 4vh;
 }
 
-#them-icon{
+#them-icon {
     margin-right: 40px;
     border-radius: 10px;
     border-color: cadetblue;
@@ -25,7 +48,7 @@ header{
     align-items: center;
 }
 
-#back-box{
+#back-box {
     background-color: white;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -44,27 +67,45 @@ header{
     text-decoration: none;
 }
 
-#form{
+#form {
     width: 100vw;
     border-radius: 10px;
     background-color: white;
     padding: 20px;
 }
 
-.form-control{
+.form-control {
     margin-top: 2vh;
 }
 
-.form-floating > label{
+.form-floating>label {
     left: 10px;
-    top: 7px;
+    top: 25px;
 }
 
-.form-floating>.form-control:focus~label{
-    top: -8px;
+.form-floating>.form-control:focus~label {
+    top: -2px;
 }
 
-.bottom-button{
+button {
+    height: 58px;
+    margin-top: 18px;
+    width: 150px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #1db5d0;
+    color: white;
+}
+
+input {
+    height: 58px;
+}
+
+input[type=file]::-webkit-file-upload-button {
+    display: none;
+}
+
+.bottom-button {
     margin-top: 50px;
     display: flex;
     justify-content: center;
@@ -75,12 +116,39 @@ header{
     border-radius: 10px;
 }
 
-#submit-button{
+#submit-button {
     background-color: #1db5d0;
     margin-right: 20px;
     color: white;
 }
 
-#cancel-button{
+#cancel-button {
     color: #1db5d0;
+}
+
+.btn,
+.btn:hover {
+    font-size: 20px;
+    color: white;
+    width: 25%;
+    background-color: #1db5d0;
+    border: 0.5px solid black;
+    height: 50px;
+}
+
+#date-picker {
+    top: 0px;
+}
+
+/* media Queries */
+
+@media screen and (max-width:576px) {
+    #alert-box {
+        width: 360px;
+        height: 300px;
+    }
+
+    span {
+        font-size: 12px;
+    }
 }

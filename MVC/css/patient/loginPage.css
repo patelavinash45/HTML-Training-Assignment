@@ -11,8 +11,9 @@
     mix-blend-mode: multiply;
 }
 
-input{
+.form-floating>input{
     background: transparent;
+    border-color: black;
 }
 
 .form-control{
@@ -45,7 +46,6 @@ input{
 
 #back-button{
     width: 400px;
-    
     text-decoration: none;
     font-size: 20px;
     height: 45px;
@@ -75,7 +75,7 @@ input{
 
 #heading-text{
     font-size: 40px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .backto-patientsite{
@@ -83,6 +83,7 @@ input{
     display: flex;
     justify-content: center;
     align-items: center;
+    color: black;
 }
 
 /* ---------------------------media query---------------------------*/
