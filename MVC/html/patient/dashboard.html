@@ -14,232 +14,247 @@
         <header>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
-                    <div id="slidebar-button" class="buttons">
+                    <button id="slidebar-button" onclick="sidebar()">
                         <i class="bi bi-list"></i>
-                    </div>
+                    </button>
                     <img id="logo-image" src="/MVC/images/helloDocLogo.png" />
                 </div>
                 <div class="d-flex align-items-center">
                     <span id="welcome-text">
                         Welcome <b>Tests tests </b>
                     </span>
-                    <div id="log-out" class="buttons">
-                        <span id="logout-text">
-                            Logout
-                        </span>
-                        <i id="logout-icon" class="bi bi-box-arrow-right"></i>
-                    </div>
-                    <div id="them-icon" class="buttons">
+                    <a href="/MVC/html/patient/loginPage.html">
+                        <button id="log-out">
+                            <span id="logout-text">
+                                Logout
+                            </span>
+                            <i id="logout-icon"
+                                class="bi bi-box-arrow-right"></i>
+                        </button>
+                    </a>
+                    <button id="them-icon">
                         <i class="bi-moon"> </i>
-                    </div>
+                    </button>
                 </div>
             </div>
             <hr>
-            <div class="d-flex">
-                <button class="btn navbar-item dashboard" onclick="openTab(dashboard)">
+            <div id="header-buttom">
+                <button class="btn navbar-item"
+                    onclick="changeTab(dashboard_content)">
                     Dashboard
                 </button>
-                <button class="btn navbar-item profile" onclick="openTab(profile)">
+                <button class="btn navbar-item"
+                    onclick="changeTab(profile_content)">
                     Profile
                 </button>
             </div>
         </header>
-        <div class="tab-content" id="dashboard">
+        <div id="side-bar">
+            <button class="sidebar-button navbar-item" id="dashboard" onclick="changeTab(dashboard_content,true)"> 
+                Dashboard
+            </button>
+            <button class="sidebar-button navbar-item" id="profile" onclick="changeTab(profile_content,false)">
+                Profile
+            </button>
+        </div>
+        <div class="tab-content" id="dashboard_content">
             <span class="h3">
                 Medical History
             </span>
-            <div class="table-responsive d-flex flex-column align-items-end" id="history">
-                <div id="new-request" class="buttons">
+            <div class="d-flex flex-column align-items-end" id="history">
+                <button id="new-request">
                     Create New Request
+                </button>
+                <div class="table-responsive w-100  ">
+                    <table class="table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="col-2">
+                                    Created Date
+                                </th>
+                                <th class="col-2">
+                                    Current Status
+                                </th>
+                                <th class="col-8">
+                                    Document
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+                                    <button id="document">
+                                        (1) Document
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sep 27,2023
+                                </td>
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table class="table">
-                    <thead class="table-dark">
-                        <tr>
-                            <th class="col-2">
-                                Created Date    
-                            </th>
-                            <th class="col-2">
-                                Current Status    
-                            </th>
-                            <th class="col-8">
-                                Document   
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                <div id="document" class="buttons">
-                                    (1) Document
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
-        <div class="tab-content" id="profile">
-            22222222222222222222222222222222
+        <div class="tab-content" id="profile_content">
+            Profile content
         </div>
     </body>
 </html>

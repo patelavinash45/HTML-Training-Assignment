@@ -2,6 +2,10 @@ body {
     background-color: #dcdbdb;
 }
 
+a{
+    text-decoration: none;
+}
+
 #them-icon {
     margin-right: 40px;
     width: 50px;
@@ -12,6 +16,7 @@ body {
     display: none;
     width: 50px;
     height: 50px;
+    margin-left: 10px;
 }
 
 #new-request{
@@ -30,15 +35,8 @@ body {
     height: 35px;
 }
 
-#log-out{
-    width: 100px;
-    height: 50px;
-    color: cadetblue;
-    margin-right: 20px;
-    margin-left: 20px;
-}
-
-.buttons{
+button{
+    background: transparent;
     border-radius: 10px;
     border-color: cadetblue;
     border-width: 2px;
@@ -46,6 +44,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#log-out{
+    width: 100px;
+    height: 50px;
+    color: cadetblue;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 .navbar-nav{
@@ -60,6 +66,7 @@ body {
 }
 
 header {
+    width: 100vw;
     box-shadow: 0px 0px 8px lightgray;
     background-color: white;
 }
@@ -68,7 +75,7 @@ header {
     display: none;
 }
 
-#dashboard{
+#dashboard_content{
     display: block;
     margin: 25px;
 }
@@ -93,6 +100,31 @@ tr{
     display: none;
 }
 
+#dashboard{
+    background-color: #dcdbdb;
+    color: cadetblue;
+}
+
+#header-buttom{
+    display: flex;
+}
+
+#side-bar{
+    display: none;
+    top: 80px;
+    background-color: white;
+    width: 225px;
+    height: 100vh;
+    position: absolute;
+    /* z-index: 1; */
+}
+
+.sidebar-button{
+    font-size: 20px;
+    width: 200px;
+    height: 50px;
+    margin: 15px;
+}
 
 
 /* -------------------media-queries-------------------*/
@@ -117,5 +149,14 @@ tr{
 
     #slidebar-button{
         display: flex;
+    }
+
+    #header-buttom{
+        display: none;
+    }
+
+    #logo-image {
+        width: 120px;
+        margin-left: 2vh;
     }
 }

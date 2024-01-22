@@ -37,7 +37,10 @@
           <input class="form-control" id="password" type="password"
             placeholder />
           <label for="password">Password</label>
-          <i class="bi bi-eye input-icon"></i>
+          <button class="input-icon bg-transparent border-0" onclick="password()">
+            <i class="bi bi-eye" id="show-password"></i>
+            <i class="bi bi-eye-slash" id="hide-password"></i>
+          </button>
         </div>
         <a class="w-100" href="/MVC/html/patient/dashboard.html">
           <button class="button">Log In</button>
@@ -53,4 +56,21 @@
       </div>
     </div>
   </body>
+  <script>
+    var temp=true;
+    function password(){
+      if(temp){
+        document.getElementById("show-password").style.display="none";
+        document.getElementById("hide-password").style.display="inline";
+        document.getElementById("password").type="text";
+        temp=false;
+      }
+      else{
+        document.getElementById("hide-password").style.display="none";
+        document.getElementById("show-password").style.display="inline";
+        document.getElementById("password").type="password";
+        temp=true;
+      }
+    }
+  </script>
 </html>
