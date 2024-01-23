@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="auto">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,9 +12,11 @@
   </head>
 
   <body>
-    <div id="them-icon" class="z-2">
-      <i class="bi-moon"> </i>
-    </div>
+    <button onclick="darkmoad()">
+      <div id="them-icon" class="z-2">
+        <i class="bi-moon"> </i>
+      </div>
+    </button>
     <div
       class="d-flex flex-column justify-content-between align-items-center vh-100">
       <img id="bg-image" src="/MVC/images/LoginImage-removeBG.png" />
@@ -72,5 +74,18 @@
         temp=true;
       }
     }
+
+    // function darkmoad(){
+    //   // data-bs-theme="dark"
+    //   var html=document.querySelector("html");
+    //   console.log(html);
+    //   if(html.getAttribute("data-bs-theme")!="dark"){
+    //     html.setAttribute("data-bs-theme");
+    //   }
+    //   else
+    //   {
+    //     html.setAttribute("data-bs-theme")="auto";
+    //   }
+    // }
   </script>
 </html>
