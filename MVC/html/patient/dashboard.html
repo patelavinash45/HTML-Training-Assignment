@@ -25,11 +25,12 @@
                     </span>
                     <a href="/MVC/html/patient/loginPage.html">
                         <button id="log-out">
-                            <span id="logout-text">
+                            <span id="button-text">
                                 Logout
                             </span>
-                            <i id="logout-icon"
-                                class="bi bi-box-arrow-right"></i>
+                            <i id="button-icon"
+                                class="bi bi-box-arrow-right">
+                            </i>
                         </button>
                     </a>
                     <button id="them-icon">
@@ -50,10 +51,12 @@
             </div>
         </header>
         <div id="side-bar">
-            <button class="sidebar-button navbar-item" id="dashboard" onclick="changeTab(dashboard_content,true)"> 
+            <button class="sidebar-button navbar-item" id="dashboard"
+                onclick="changeTab(dashboard_content,true)">
                 Dashboard
             </button>
-            <button class="sidebar-button navbar-item" id="profile" onclick="changeTab(profile_content,false)">
+            <button class="sidebar-button navbar-item" id="profile"
+                onclick="changeTab(profile_content,false)">
                 Profile
             </button>
         </div>
@@ -63,7 +66,12 @@
             </span>
             <div class="d-flex flex-column align-items-end" id="history">
                 <button id="new-request">
-                    Create New Request
+                    <span id="button-text">
+                        Create New Request
+                    </span>
+                    <i id="button-icon"
+                        class="bi bi-plus">
+                    </i>
                 </button>
                 <div class="table-responsive w-100  ">
                     <table class="table">

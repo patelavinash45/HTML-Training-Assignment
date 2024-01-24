@@ -25,6 +25,10 @@ a{
     margin-bottom: 15px;
 }
 
+#button-icon{
+    display: none;
+}
+
 #logo-image {
     width: 150px;
     margin-left: 4vh;
@@ -96,10 +100,6 @@ tr{
     height: 50px;
 }
 
-#logout-icon{
-    display: none;
-}
-
 #dashboard{
     background-color: #dcdbdb;
     color: cadetblue;
@@ -131,12 +131,16 @@ tr{
 
 
 @media screen and (max-width:576px) {
-    #logout-text{
+    #button-text{
         display: none;
     }
 
-    #logout-icon{
+    #button-icon{
         display: inline;
+    }
+
+    #new-request{
+        width: 50px;
     }
 
     #log-out{
