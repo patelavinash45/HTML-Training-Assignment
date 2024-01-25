@@ -1,22 +1,22 @@
 --1>Create a stored procedure in the Northwind database that will calculate the average value of Freight for a specified --  customer.Then, a business rule will be added that will be triggered before every Update and Insert command in the --  Orders controller,and will use the stored procedure to verify that the Freight does not exceed the average freight. --  If it does, a message will be displayed and the command will be cancelled.CREATE PROCEDURE avg_freight
-	@order_id int=null
+	@customer_id varchar(40)
 AS
 BEGIN
 	select c.CompanyName,avg(Freight) AS "AVERAGE" from Customers c inner join orders o on c.CustomerID=o.CustomerID 
 	where o.OrderID=@order_id group by c.CustomerID,CompanyName;
 END
 
-alter TRIGGER tr_orders_insert
+CREATE TRIGGER tr_orders_insert
 on Orders
 for insert
 AS
 BEGIN
 		declare @id VARCHAR(40);
-		declare @Freight money;
 		select @id=CustomerID from inserted;
-		print(@id)
-		Exec @Freight=avg_freight @customer_id=@id; 
-		if(exists(select 1 from orders  WHERE CustomerID=@id HAVING avg(Freight)<@Freight))
+		declare @freight money;
+		select @freight=Freight from inserted;
+		EXEC avg_freight @customer_id=@id;
+		if(exists(select 1 from orders  WHERE CustomerID=@id HAVING avg(Freight)>@freight))
 	    begin 
 		print('row is not added' );
 		rollback
@@ -33,13 +33,26 @@ on Orders
 for update
 AS
 BEGIN
-		print('Update order table' +' at ' + cast(getdate() as varchar(40)) );
+		declare @id VARCHAR(40);
+		select @id=CustomerID from inserted;
+		declare @freight money;
+		select @freight=Freight from inserted;
+		EXEC avg_freight @customer_id=@id;
+		if(exists(select 1 from orders  WHERE CustomerID=@id HAVING avg(Freight)>@freight))
+	    begin 
+		print('row is not Updated' );
+		rollback
+		end
+		else
+		begin
+		print('row is Updated');
+		print('new order from CustomerID = '+ @id +' at ' + cast(getdate() as varchar(40)) );
+		end
 END
 
 
 --RUN-
 exec avg_freight @customer_id='RICSU';
-select * from orders
 
 
 --2>write a SQL query to Create Stored procedure in the Northwind database to retrieve Employee Sales by CountryCREATE PROCEDURE country_sales
