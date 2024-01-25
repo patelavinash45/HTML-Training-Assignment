@@ -1,21 +1,31 @@
 --1>Create a stored procedure in the Northwind database that will calculate the average value of Freight for a specified --  customer.Then, a business rule will be added that will be triggered before every Update and Insert command in the --  Orders controller,and will use the stored procedure to verify that the Freight does not exceed the average freight. --  If it does, a message will be displayed and the command will be cancelled.CREATE PROCEDURE avg_freight
-	@name varchar(40),
 	@order_id int=null
 AS
 BEGIN
 	select c.CompanyName,avg(Freight) AS "AVERAGE" from Customers c inner join orders o on c.CustomerID=o.CustomerID 
-	where c.CompanyName=@name group by c.CustomerID,CompanyName;
+	where o.OrderID=@order_id group by c.CustomerID,CompanyName;
 END
 
-CREATE TRIGGER tr_orders_insert
+alter TRIGGER tr_orders_insert
 on Orders
 for insert
 AS
 BEGIN
-		declare @id int;
-		select @id=OrderID from inserted;
-		print('new order from orderid='+ cast(@id as varchar(5)) +' at ' + cast(getdate() as varchar(40)) );
-		exec avg_freight @name='Around the Horn', @order_id=@id;
+		declare @id VARCHAR(40);
+		declare @Freight money;
+		select @id=CustomerID from inserted;
+		print(@id)
+		Exec @Freight=avg_freight @customer_id=@id; 
+		if(exists(select 1 from orders  WHERE CustomerID=@id HAVING avg(Freight)<@Freight))
+	    begin 
+		print('row is not added' );
+		rollback
+		end
+		else
+		begin
+		print('row is added');
+		print('new order from CustomerID = '+ @id +' at ' + cast(getdate() as varchar(40)) );
+		end
 END
 
 CREATE TRIGGER tr_orders_update
@@ -28,7 +38,8 @@ END
 
 
 --RUN-
-exec avg_freight @name='Around the Horn';
+exec avg_freight @customer_id='RICSU';
+select * from orders
 
 
 --2>write a SQL query to Create Stored procedure in the Northwind database to retrieve Employee Sales by CountryCREATE PROCEDURE country_sales
