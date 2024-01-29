@@ -46,7 +46,7 @@ END
 FROM customer c INNER JOIN payment p ON c.customer_id=p.customer_id 
 GROUP BY p.customer_id,"Name",c.email;
 
---10.2
+--12.2
 CREATE VIEW "categories of Customer" AS
 SELECT concat(c.first_name,' ',c.last_name) AS "Name",c.email,SUM(p.amount) AS "Total Rentals",
 CASE
