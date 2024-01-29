@@ -12,11 +12,9 @@
   </head>
 
   <body>
-    <button onclick="darkmoad()">
-      <div id="them-icon" class="z-2">
-        <i class="bi-moon"> </i>
-      </div>
-    </button>
+    <div id="them-icon" class="z-2">
+      <i class="bi-moon"> </i>
+    </div>
     <div
       class="d-flex flex-column justify-content-between align-items-center vh-100">
       <img id="bg-image" src="/MVC/images/LoginImage-removeBG.png" />
@@ -39,7 +37,8 @@
           <input class="form-control" id="password" type="password"
             placeholder />
           <label for="password">Password</label>
-          <button class="input-icon bg-transparent border-0" onclick="password()">
+          <button class="input-icon bg-transparent border-0"
+            onclick="password()">
             <i class="bi bi-eye" id="show-password"></i>
             <i class="bi bi-eye-slash" id="hide-password"></i>
           </button>
