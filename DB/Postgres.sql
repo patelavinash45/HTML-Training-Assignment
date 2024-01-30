@@ -60,6 +60,22 @@ GROUP BY p.customer_id,"Name",c.email;
 
 SELECT * FROM "categories of Customer";
 
+--14.1
+CREATE DATABASE mycommerce;
+CREATE TABLE order_details(
+	orderid SERIAL PRIMARY KEY,
+	customer_name VARCHAR(40) NOT NULL,
+	product_name VARCHAR(40) NOT NULL,
+	ordered_from VARCHAR(10),
+	order_amount FLOAT NOT NULL,
+	order_date DATE NOT NULL,
+	delivary_date DATE
+);
+
+--14.2
+ALTER TABLE order_details RENAME COLUMN customer_name TO customer_first_name;
+ALTER TABLE order_details ADD COLUMN cancel_date date;
+
 
 
 
