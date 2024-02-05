@@ -60,7 +60,6 @@ a {
     margin-bottom: 30px;
     border-radius: 10px;
 }
-}
 
 /* ---------------------------media query---------------------------*/
 
@@ -71,7 +70,7 @@ a {
         width: 70vw;
         height: 100vh;
         position: absolute;
-        filter: blur(3px);
+        opacity: 0.3;
         z-index: -1;
     }
 
@@ -85,7 +84,8 @@ a {
         height: 40px;
     }
 
-    #logo-image{
+    #logo-image {
+        margin-bottom: 25vh;
         visibility: hidden;
     }
 }

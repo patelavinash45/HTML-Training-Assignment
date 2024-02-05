@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\Footer.css",
+      "PackagePath": "staticwebassets\\css\\patient\\Footer.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\PatientSite.css",
       "PackagePath": "staticwebassets\\css\\patient\\PatientSite.css"
     },
@@ -27,6 +31,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\familyFriendRequest.css",
       "PackagePath": "staticwebassets\\css\\patient\\familyFriendRequest.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\header.css",
+      "PackagePath": "staticwebassets\\css\\patient\\header.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\loginPage.css",
@@ -73,12 +81,16 @@
       "PackagePath": "staticwebassets\\images\\loginImage.jpg"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\international-telephone-input.js",
-      "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\Request.js",
+      "PackagePath": "staticwebassets\\js\\Patient\\Request.js"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\site.js",
-      "PackagePath": "staticwebassets\\js\\site.js"
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\dashboard.js",
+      "PackagePath": "staticwebassets\\js\\Patient\\dashboard.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\international-telephone-input.js",
+      "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\LICENSE",

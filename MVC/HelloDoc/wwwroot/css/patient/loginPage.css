@@ -1,9 +1,9 @@
-#bg-image{
+#bg-image {
     opacity: 0.5;
     width: 70vw;
     height: 100vh;
     position: absolute;
-    filter: blur(5px);
+    opacity: 0.3;
     z-index: -1;
 }
 

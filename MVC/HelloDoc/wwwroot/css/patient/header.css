@@ -1,0 +1,17 @@
+﻿#logo-image {
+    width: 150px;
+    margin-left: 4vh;
+}
+
+#them-icon {
+    margin-right: 40px;
+    border-radius: 10px;
+    border-color: cadetblue;
+    border-width: 2px;
+    border-style: solid;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

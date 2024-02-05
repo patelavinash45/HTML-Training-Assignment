@@ -67,11 +67,12 @@ header{
     text-decoration: none;
 }
 
-#form{
+#form {
     width: 100vw;
     border-radius: 10px;
     background-color: white;
     padding: 20px;
+    margin-bottom: 15px;
 }
 
 .form-control{
@@ -122,8 +123,9 @@ input[type=file]::-webkit-file-upload-button {
     color: white;
 }
 
-#cancel-button{
+#cancel-button {
     color: #1db5d0;
+    background-color: white;
 }
 
 .btn,.btn:hover{
@@ -135,6 +137,10 @@ input[type=file]::-webkit-file-upload-button {
     height: 50px;
 }
 
+button:hover {
+    font-weight: bold;
+}
+
 #date-picker{
     top: 15px;
 }
@@ -142,6 +148,19 @@ input[type=file]::-webkit-file-upload-button {
 /* media Queries */
 
 @media screen and (max-width:576px) {
+
+    button {
+        width: 100px;
+    }
+
+    .fs-5 {
+        font-size: 1rem !important;
+    }
+
+    .fw-semibold {
+        font-size: 1.10rem;
+    }
+
     #alert-box{
         width: 360px;
         height: 300px;

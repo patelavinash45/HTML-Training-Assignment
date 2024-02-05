@@ -10,8 +10,10 @@
     <link href="~/css/patient/patientRequest.css" rel="stylesheet" />
     <link href="~/css/international-telephone-input.css" rel="stylesheet">
     <script src="~/js/international-telephone-input.js"></script>
+    <script src="~/js/Patient/Request.js"></script>
 </head>
 <body>
+    <partial name="_Header" />
     <div class="alert vw-100 vh-100" id="alert-message">
         <div id="alert-box">
             <img class="w-25" src="~/images/informtion-icon.png" />
@@ -21,8 +23,7 @@
             <span>When submitting a request, you must provide the</span>
             <span>correct contact information of your illness.</span>
             <span>
-                Failure to provide the correct email and
-                phone
+                Failure to provide the correct email phone
             </span>
             <span> number will delay service or be declined.</span>
             <button class="btn"
@@ -32,12 +33,6 @@
         </div>
     </div>
     <div id="main-body">
-        <header class="d-flex justify-content-between align-items-center">
-            <img id="logo-image" src="~/images/helloDocLogo.png" />
-            <div id="them-icon">
-                <i class="bi-moon"> </i>
-            </div>
-        </header>
         <div class="d-flex justify-content-end">
             <a id="back-box" asp-controller="Patient" asp-action="SubmitRequest">
                 <i class="bi bi-chevron-left"> </i>
@@ -124,20 +119,15 @@
                 </button>
             </div>
             <div class="d-flex justify-content-end">
-                <div class="bottom-button" id="submit-button">
+                <button class="bottom-button" id="submit-button">
                     Submit
-                </div>
-                <div class="bottom-button" id="cancel-button">
+                </button>
+                <button class="bottom-button" id="cancel-button">
                     Cancel
-                </div>
+                </button>
             </div>
         </div>
     </div>
+    <partial name="_Footer" />
 </body>
-<script>
-    function alert_close(element) {
-        element.parentNode.parentNode.style.display = 'none';
-        document.getElementById("main-body").style.opacity = 1;
-    }
-</script>
 </html>
