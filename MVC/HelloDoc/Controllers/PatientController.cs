@@ -1,9 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HelloDoc.DataContext;
+using HelloDoc.DataModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDoc.Controllers
 {
     public class PatientController : Controller
     {
+        private readonly ApplicationDbContext _dbContext;
+
+        public PatientController(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         [Route("/")]
         public IActionResult PatientSite()
         {
@@ -47,6 +56,20 @@ namespace HelloDoc.Controllers
         public IActionResult Dashboard()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult LoginPage(AspNetUser user)
+        {
+            var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
+            if (userFromDb != null && userFromDb.PasswordHash == user.PasswordHash)
+            {
+                return View(userFromDb);
+            }
+            else
+            {
+                return View(null);
+            }
         }
     }
 }

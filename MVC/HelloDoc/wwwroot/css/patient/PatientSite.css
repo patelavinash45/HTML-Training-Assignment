@@ -61,6 +61,10 @@ a {
     border-radius: 10px;
 }
 
+#logo-image {
+    margin-bottom: 15vh;
+}
+
 /* ---------------------------media query---------------------------*/
 
 @media screen and (max-width:576px) {

@@ -1446,6 +1446,7 @@
 .flag {
     height: 15px;
     box-shadow: 0 0 1px 0 #888;
+    /* background-image: url(/MVC/images/flags.png);*/
     background-image: url('../images/flags.png');
     background-repeat: no-repeat;
     background-color: #dbdbdb;
@@ -1454,6 +1455,7 @@
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .flag {
+        /*background-image: url(/MVC/images/flags@2x.png);*/
         background-image: url('../images/flags@2x.png');
     }
 }

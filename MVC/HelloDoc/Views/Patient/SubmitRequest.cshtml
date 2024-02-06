@@ -1,12 +1,13 @@
-﻿<html>
-    <head>
-        <title>
-            Submit Request
-        </title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
-        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="~/css/patient/submitRequest.css" rel="stylesheet" />
-    </head>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Request</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/patient/submitRequest.css" rel="stylesheet" />
+</head>
 <body>
     <partial name="_Header" />
     <div class="d-flex align-items-center flex-column">
@@ -15,16 +16,16 @@
             Back
         </a>
         <span id="heading-text"> I am a... </span>
-        <a class="remove-underline" asp-controller="Patient" asp-action="PatientRequest">
+        <a asp-controller="Patient" asp-action="PatientRequest">
             <button class="button" id="patient-box">PATIENT</button>
         </a>
-        <a class="remove-underline" asp-controller="Patient" asp-action="FamilyFriendRequest">
+        <a asp-controller="Patient" asp-action="FamilyFriendRequest">
             <button class="button" id="family-friend-box">FAMILY/FRIEND</button>
         </a>
-        <a class="remove-underline" asp-controller="Patient" asp-action="ConciergeRequest">
+        <a asp-controller="Patient" asp-action="ConciergeRequest">
             <button class="button" id="concierge-box">CONCIERGE</button>
         </a>
-        <a class="remove-underline" asp-controller="Patient" asp-action="BusinessRequest">
+        <a asp-controller="Patient" asp-action="BusinessRequest">
             <button class="button" id="business-box">BUSINESS PARTNERS</button>
         </a>
     </div>

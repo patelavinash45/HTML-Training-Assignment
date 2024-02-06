@@ -14,7 +14,7 @@ body{
     align-items: center;
 }
 
-#alert-box{
+#alert-box {
     width: 550px;
     background-color: white;
     height: 450px;
@@ -23,6 +23,7 @@ body{
     align-items: center;
     flex-direction: column;
     border-radius: 10px;
+    margin-bottom: 150px;
 }
 
 header{
