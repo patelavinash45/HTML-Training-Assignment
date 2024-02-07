@@ -7,7 +7,7 @@ public partial class Admin
 {
     public int AdminId { get; set; }
 
-    public string AspNetUserId { get; set; } = null!;
+    public int AspNetUserId { get; set; }
 
     public string FirstName { get; set; } = null!;
 
@@ -29,11 +29,11 @@ public partial class Admin
 
     public string? AltPhone { get; set; }
 
-    public string CreatedBy { get; set; } = null!;
+    public int CreatedBy { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
-    public string? ModifiedBy { get; set; }
+    public int? ModifiedBy { get; set; }
 
     public DateTime? ModifiedDate { get; set; }
 

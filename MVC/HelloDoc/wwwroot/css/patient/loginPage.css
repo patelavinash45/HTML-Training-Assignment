@@ -58,7 +58,6 @@
     bottom: 20px;
 }
 
-
 #them-icon{
     position: absolute;
     top: 20px;
@@ -89,6 +88,19 @@
 
 #hide-password{
     display: none;
+}
+
+#alert-box {
+    display: none;
+    height: 40px;
+    width: 100%;
+    background-color: #f2dede;
+    border-radius: 5px;
+    border-color: #ebccd1;
+    border-width: 1px;
+    border-style: solid;
+    color: #a94442;
+    padding-left: 10px;
 }
 
 /* ---------------------------media query---------------------------*/

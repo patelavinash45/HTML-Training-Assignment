@@ -8,7 +8,7 @@ public partial class User
 {
     public int UserId { get; set; }
 
-    public string? AspNetUserId { get; set; }
+    public int? AspNetUserId { get; set; }
 
     public string FirstName { get; set; } = null!;
 
@@ -36,11 +36,11 @@ public partial class User
 
     public int? IntDate { get; set; }
 
-    public string CreatedBy { get; set; } = null!;
+    public int CreatedBy { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
-    public string? ModifiedBy { get; set; }
+    public int? ModifiedBy { get; set; }
 
     public DateTime? ModifiedDate { get; set; }
 

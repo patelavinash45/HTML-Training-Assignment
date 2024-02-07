@@ -19,11 +19,11 @@ public partial class RequestNote
 
     public string? AdminNotes { get; set; }
 
-    public string CreatedBy { get; set; } = null!;
+    public int CreatedBy { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
-    public string? ModifiedBy { get; set; }
+    public int? ModifiedBy { get; set; }
 
     public DateTime? ModifiedDate { get; set; }
 

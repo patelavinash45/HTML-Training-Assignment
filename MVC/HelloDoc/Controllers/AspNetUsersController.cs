@@ -28,7 +28,7 @@ namespace HelloDoc.Controllers
         }
 
         // GET: AspNetUsers/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.AspNetUsers == null)
             {
@@ -68,7 +68,7 @@ namespace HelloDoc.Controllers
         }
 
         // GET: AspNetUsers/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.AspNetUsers == null)
             {
@@ -88,7 +88,7 @@ namespace HelloDoc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,PasswordHash,Email,PhoneNumber,Ip,CreatedDate")] AspNetUser aspNetUser)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,PasswordHash,Email,PhoneNumber,Ip,CreatedDate")] AspNetUser aspNetUser)
         {
             if (id != aspNetUser.Id)
             {
@@ -119,7 +119,7 @@ namespace HelloDoc.Controllers
         }
 
         // GET: AspNetUsers/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.AspNetUsers == null)
             {
@@ -139,7 +139,7 @@ namespace HelloDoc.Controllers
         // POST: AspNetUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.AspNetUsers == null)
             {
@@ -155,7 +155,7 @@ namespace HelloDoc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AspNetUserExists(string id)
+        private bool AspNetUserExists(int id)
         {
           return (_context.AspNetUsers?.Any(e => e.Id == id)).GetValueOrDefault();
         }

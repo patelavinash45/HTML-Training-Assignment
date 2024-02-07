@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model HelloDoc.DataModels.User
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -39,6 +41,7 @@
                 Back
             </a>
         </div>
+        <form class="w-100" asp-controller="Patient" asp-action="PatientRequest">
         <div class="container" id="form">
             <h5 class="fw-semibold">
                 Patient Information
@@ -48,17 +51,17 @@
                       rows="3"></textarea>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="first-name" placeholder>
+                    <input asp-for="FirstName" class="form-control" id="first-name" placeholder>
                     <label for="first-name">First Name</label>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="last-name" placeholder>
+                        <input asp-for="LastName" class="form-control" id="last-name" placeholder>
                     <label for="last-name">Last Name</label>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="date"
+                        <input  class="form-control" id="date"
                            placeholder="First Name" type="date">
                     <label id="date-picker" for="date">Date of Birth</label>
                 </div>
@@ -68,12 +71,12 @@
             </h5>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="email" placeholder
+                        <input asp-for="Email" class="form-control" id="email" placeholder
                            type="email">
                     <label for="email">Email</label>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input class="form-control" id="phone" placeholder
+                    <input asp-for="Mobile" class="form-control" id="phone" placeholder
                            type="tel" />
                     @*<label for="phone">Phone Number</label> *@
                 </div>
@@ -83,21 +86,21 @@
             </h5>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="street" placeholder>
+                        <input asp-for="Street" class="form-control" id="street" placeholder>
                     <label for="street">Street</label>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="city" placeholder>
+                        <input asp-for="City" class="form-control" id="city" placeholder>
                     <label for="city">city</label>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="state" placeholder>
+                        <input asp-for="State" class="form-control" id="state" placeholder>
                     <label for="state">State</label>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="zip-code" placeholder>
+                        <input asp-for="ZipCode" class="form-control" id="zip-code" placeholder>
                     <label for="zip-code">Zip-Code</label>
                 </div>
             </div>
@@ -122,11 +125,12 @@
                 <button class="bottom-button" id="submit-button">
                     Submit
                 </button>
-                <button class="bottom-button" id="cancel-button">
+                <button type="submit" class="bottom-button" id="cancel-button">
                     Cancel
                 </button>
             </div>
         </div>
+        </form>
     </div>
     <partial name="_Footer" />
 </body>
