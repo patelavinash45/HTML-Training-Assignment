@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model HelloDoc.ViewModels.AddConciergeRequest
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,35 +45,41 @@
                 Back
             </a>
         </div>
+        <form class="w-100" asp-controller="Patient" asp-action="ConciergeRequest">
         <div class="container" id="form">
             <h5 class="fw-semibold">
                 Concierge Information
             </h5>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="first-name" placeholder>
+                    <input asp-for="ConciergeFirstName" class="form-control" id="first-name" placeholder>
                     <label for="first-name">Your First Name</label>
+                        <span asp-validation-for="ConciergeFirstName" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="last-name" placeholder>
+                    <input asp-for="ConciergeLastName" class="form-control" id="last-name" placeholder>
                     <label for="last-name">Your Last Name</label>
+                        <span asp-validation-for="ConciergeLastName" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input class="form-control" id="phone" placeholder
+                        <input asp-for="ConciergeMobile" class="form-control" id="phone1" placeholder
                            type="tel" />
+                        <span asp-validation-for="ConciergeMobile" class="text-danger"></span>
                     <!-- <label for="phone">Phone Number</label> -->
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="f-email" placeholder>
+                        <input asp-for="ConciergeEmail" class="form-control" id="f-email" placeholder>
                     <label for="f-email">Email</label>
+                        <span asp-validation-for="ConciergeEmail" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="relation" placeholder>
+                        <input asp-for="ConciergePropertyName" class="form-control" id="relation" placeholder>
                     <label for="relation">Home/Property Name</label>
+                        <span asp-validation-for="ConciergePropertyName" class="text-danger"></span>
                 </div>
             </div>
             <h5 class="fw-semibold mt-4">
@@ -79,45 +87,53 @@
             </h5>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="street" placeholder>
+                        <input asp-for="ConciergeStreet" class="form-control" id="street" placeholder>
                     <label for="street">Street</label>
+                        <span asp-validation-for="ConciergeStreet" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="city" placeholder>
+                        <input asp-for="ConciergeCity" class="form-control" id="city" placeholder>
                     <label for="city">City</label>
+                        <span asp-validation-for="ConciergeCity" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="state" placeholder>
+                        <input asp-for="ConciergeState" class="form-control" id="state" placeholder>
                     <label for="state">State</label>
+                        <span asp-validation-for="ConciergeState" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="zip-code" placeholder>
+                        <input asp-for="ConciergeZipCode" class="form-control" id="zip-code" placeholder>
                     <label for="zip-code">Zip-Code</label>
+                        <span asp-validation-for="ConciergeZipCode" class="text-danger"></span>
                 </div>
             </div>
             <h5 class="fw-semibold mt-4">
                 Patient Information
             </h5>
-            <textarea class="form-control"
+                <textarea asp-for="Symptoms" class="form-control"
                       placeholder="Enter Brief Details Of Symptoms(Optional)"
                       rows="3"></textarea>
+                <span asp-validation-for="Symptoms" class="text-danger"></span>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="first-name" placeholder>
+                        <input asp-for="FirstName" class="form-control" id="first-name" placeholder>
                     <label for="first-name">First Name</label>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="last-name" placeholder>
+                        <input asp-for="LastName" class="form-control" id="last-name" placeholder>
                     <label for="last-name">Last Name</label>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="date"
-                           placeholder="First Name" type="date">
+                        <input asp-for="BirthDate" class="form-control" id="date"
+                           placeholder="" type="date">
                     <label id="date-picker" for="date">Date of Birth</label>
+                        <span asp-validation-for="BirthDate" class="text-danger"></span>
                 </div>
             </div>
             <h5 class="fw-semibold mt-4">
@@ -125,13 +141,15 @@
             </h5>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="email" placeholder
+                        <input asp-for="Email" class="form-control" id="email" placeholder
                            type="email">
                     <label for="email">Email</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input class="form-control" id="phone" placeholder
+                        <input asp-for="Mobile" class="form-control" id="phone2" placeholder
                            type="tel" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
                     <!-- <label for="phone">Phone Number</label> -->
                 </div>
             </div>
@@ -140,29 +158,34 @@
             </h5>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="street" placeholder>
+                        <input asp-for="Street" class="form-control" id="street" placeholder>
                     <label for="street">Street</label>
+                        <span asp-validation-for="Street" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="city" placeholder>
+                        <input asp-for="City" class="form-control" id="city" placeholder>
                     <label for="city">city</label>
+                        <span asp-validation-for="City" class="text-danger"></span>
                     <!-- <select class="selectpicker contrypicker" data-flag="true" data-live-search="true"></select> -->
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="state" placeholder>
+                        <input asp-for="State" class="form-control" id="state" placeholder>
                     <label for="state">State</label>
+                        <span asp-validation-for="State" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="zip-code" placeholder>
+                        <input asp-for="ZipCode" class="form-control" id="zip-code" placeholder>
                     <label for="zip-code">Zip-Code</label>
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="house" placeholder>
+                        <input asp-for="House" class="form-control" id="house" placeholder>
                     <label for="house">house(Optional)</label>
+                        <span asp-validation-for="House" class="text-danger"></span>
                 </div>
             </div>
             <h5 class="fw-semibold mt-4">
@@ -177,7 +200,7 @@
                 </button>
             </div>
             <div class="d-flex justify-content-end">
-                <button class="bottom-button" id="submit-button">
+                <button type="submit" class="bottom-button" id="submit-button">
                     Submit
                 </button>
                 <button class="bottom-button" id="cancel-button">
@@ -185,7 +208,21 @@
                 </button>
             </div>
         </div>
+        </form>
     </div>
     <partial name="_Footer" />
+    <script>
+        const phoneInputField = document.getElementById("phone1");
+        window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        const phoneInputField2 = document.getElementById("phone2");
+        window.intlTelInput(phoneInputField2, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
 </body>
 </html>

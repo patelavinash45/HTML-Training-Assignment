@@ -59,7 +59,7 @@
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input class="form-control" id="phone" placeholder
+                    <input class="form-control" id="phone1" placeholder
                            type="tel" />
                     <!-- <label for="phone">Phone Number</label> -->
                 </div>
@@ -107,7 +107,7 @@
                     <label for="email">Email</label>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input class="form-control" id="phone" placeholder
+                    <input class="form-control" id="phone2" placeholder
                            type="tel" />
                     <!-- <label for="phone">Phone Number</label> -->
                 </div>
@@ -163,5 +163,18 @@
         </div>
     </div>
     <partial name="_Footer" />
+    <script>
+        const phoneInputField = document.getElementById("phone1");
+        window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        const phoneInputField2 = document.getElementById("phone2");
+        window.intlTelInput(phoneInputField2, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
 </body>
 </html>

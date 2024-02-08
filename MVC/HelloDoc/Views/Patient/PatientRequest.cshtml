@@ -1,4 +1,4 @@
-﻿@model HelloDoc.DataModels.User
+﻿@model HelloDoc.ViewModels.AddPatientRequest
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,22 +46,24 @@
             <h5 class="fw-semibold">
                 Patient Information
             </h5>
-            <textarea class="form-control"
+            <textarea asp-for="Symptoms" class="form-control"
                       placeholder="Enter Brief Details Of Symptoms(Optional)"
                       rows="3"></textarea>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
                     <input asp-for="FirstName" class="form-control" id="first-name" placeholder>
                     <label for="first-name">First Name</label>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
                         <input asp-for="LastName" class="form-control" id="last-name" placeholder>
                     <label for="last-name">Last Name</label>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
-                        <input  class="form-control" id="date"
+                        <input asp-for="BirthDate" class="form-control" id="date"
                            placeholder="First Name" type="date">
                     <label id="date-picker" for="date">Date of Birth</label>
                 </div>
@@ -74,10 +76,12 @@
                         <input asp-for="Email" class="form-control" id="email" placeholder
                            type="email">
                     <label for="email">Email</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input asp-for="Mobile" class="form-control" id="phone" placeholder
+                        <input asp-for="Mobile" class="form-control" id="phone" placeholder
                            type="tel" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
                     @*<label for="phone">Phone Number</label> *@
                 </div>
             </div>
@@ -88,25 +92,29 @@
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
                         <input asp-for="Street" class="form-control" id="street" placeholder>
                     <label for="street">Street</label>
+                        <span asp-validation-for="Street" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
                         <input asp-for="City" class="form-control" id="city" placeholder>
                     <label for="city">city</label>
+                        <span asp-validation-for="City" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
                         <input asp-for="State" class="form-control" id="state" placeholder>
                     <label for="state">State</label>
+                        <span asp-validation-for="State" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6 ">
                         <input asp-for="ZipCode" class="form-control" id="zip-code" placeholder>
                     <label for="zip-code">Zip-Code</label>
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-col-xl-6 col-md-6 col-lg-6 ">
-                    <input class="form-control" id="house" placeholder>
+                    <input asp-for="House" class="form-control" id="house" placeholder>
                     <label for="house">house(Optional)</label>
                 </div>
             </div>
@@ -133,5 +141,12 @@
         </form>
     </div>
     <partial name="_Footer" />
+    <script>
+        const phoneInputField = document.getElementById("phone");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
 </body>
 </html>

@@ -21,8 +21,8 @@
     <div
       class="d-flex flex-column justify-content-between align-items-center vh-100">
       <img id="bg-image" src="~/images/LoginImage-removeBG.png" />
-      <img id="logo-image" class="mb-5" src="~/images/helloDocLogo.png" />
       <div class="d-flex flex-column align-items-center" id="form-box">
+        <img id="logo-image" class="mb-5" src="~/images/helloDocLogo.png" />
         <span class="d-flex" id="back-button">
           <a class="mt-4 mb-5 backto-patientsite"
                    asp-controller="Patient" asp-action="PatientSite" >
@@ -37,20 +37,20 @@
         <form class="w-100" asp-controller="Patient" asp-action="LoginPage">
         <div class="form-floating">
           <input asp-for="Email" class="form-control" id="email"  />
+          <span asp-validation-for="Email" class="text-danger"></span>
           <label for="email">Email</label>
           <i class="bi bi-envelope input-icon"></i>
-          <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-floating">
-          <input asp-for="PasswordHash" class="form-control" id="password" type="password"
-             />
+          <input asp-for="PasswordHash" class="form-control" id="password" type="password"/>
+          <span asp-validation-for="PasswordHash" class="text-danger"></span>
           <label for="password">Password</label>
           <button type="button" class="input-icon bg-transparent border-0"
             onclick="Password()">
             <i class="bi bi-eye" id="show-password"></i>
             <i class="bi bi-eye-slash" id="hide-password"></i>
           </button>
-          <span asp-validation-for="PasswordHash" class="text-danger"></span>
+      
         </div>
         <a class="w-100" asp-controller="Patient" asp-action="Dashboard">
           <button type="submit" class="button">Log In</button>
@@ -61,16 +61,16 @@
                 Forgot password?
         </a>
             @{
-                if (ViewBag.error == "Email Not Found")
+                if (ViewBag.error == 1)
                 {
                     <script type="text/javascript">
-                        alert_message("Email Not Found");
+                        alert_message("Email Not Found.");
                     </script>
                 }
-                else if (ViewBag.error == "Invalid Password")
+                else if (ViewBag.error == 2)
                 {
                     <script type="text/javascript">
-                        alert_message("Invalid Password");
+                        alert_message("Invalid Password.");
                     </script>
                 }
             }
