@@ -5,8 +5,7 @@ function Password() {
         document.getElementById("hide-password").style.display = "inline";
         document.getElementById("password").type = "text";
         temp = false;
-    }
-    else {
+    } else {
         document.getElementById("hide-password").style.display = "none";
         document.getElementById("show-password").style.display = "inline";
         document.getElementById("password").type = "password";
@@ -16,19 +15,19 @@ function Password() {
 
 function alert_message(error_message) {
     document.getElementById("alert-box").style.display = "flex";
-    document.getElementById("alert-box").style.alignItems="center";
+    document.getElementById("alert-box").style.alignItems = "center";
     document.getElementById("alert-box").textContent = error_message;
 }
 
-    // function darkmoad(){
-    //   // data-bs-theme="dark"
-    //   var html=document.querySelector("html");
-    //   console.log(html);
-    //   if(html.getAttribute("data-bs-theme")!="dark"){
-    //     html.setAttribute("data-bs-theme");
-    //   }
-    //   else
-    //   {
-    //     html.setAttribute("data-bs-theme")="auto";
-    //   }
-    // }
+// function darkmoad(){
+//   // data-bs-theme="dark"
+//   var html=document.querySelector("html");
+//   console.log(html);
+//   if(html.getAttribute("data-bs-theme")!="dark"){
+//     html.setAttribute("data-bs-theme");
+//   }
+//   else
+//   {
+//     html.setAttribute("data-bs-theme")="auto";
+//   }
+// }

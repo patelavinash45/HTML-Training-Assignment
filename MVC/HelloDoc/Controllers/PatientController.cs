@@ -66,7 +66,7 @@ namespace HelloDoc.Controllers
         {
             if(ModelState.IsValid)
             {
-                var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
+                var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == user.Email.Trim());
                 if (userFromDb == null)
                 {
                     ViewBag.error = 1;
@@ -94,6 +94,18 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
+                AspNetRole aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
+                if(aspNetRole == null)
+                {
+                    aspNetRole = new()
+                    {
+                        Name = "Patient",
+                    };
+                    _dbContext.Add(aspNetRole);
+                    await _dbContext.SaveChangesAsync();
+                    aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
+                };
+                //
                 AspNetUser aspNetUser = new()
                 {
                     UserName = model.FirstName,
@@ -106,7 +118,7 @@ namespace HelloDoc.Controllers
                 _dbContext.Add(aspNetUser);
                 await _dbContext.SaveChangesAsync();
                 //
-                aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == aspNetUser.Email);
+                aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
                 User user = new()
                 {
                     FirstName = model.FirstName,
@@ -128,7 +140,15 @@ namespace HelloDoc.Controllers
                 _dbContext.Add(user);
                 await _dbContext.SaveChangesAsync();
                 //
-                user = _dbContext.Users.FirstOrDefault(a => a.Email == aspNetUser.Email);
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = user.UserId,
+                    RoleId = aspNetRole.Id,
+                };
+                _dbContext.Add(aspNetUserRole);
+                await _dbContext.SaveChangesAsync();
+                //
+                user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == user.Email.Trim());
                 Request request = new()
                 {
                     RequestTypeId = 2,
@@ -137,11 +157,40 @@ namespace HelloDoc.Controllers
                     LastName = user.LastName,
                     Email = user.Email,
                     PhoneNumber = user.Mobile,
-                    Status = 1,
                     CreatedDate = DateTime.Now,
-                    Symptoms=model.Symptoms,
                 };
                 _dbContext.Add(request);
+                await _dbContext.SaveChangesAsync();
+                //
+                Region region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
+                if (region == null)
+                {
+                    region = new()
+                    {
+                        Name = model.State,
+                    };
+                    _dbContext.Add(region);
+                    await _dbContext.SaveChangesAsync();
+                    region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
+                }
+                //
+                request = _dbContext.Requests.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                RequestClient requestClient = new()
+                {
+                    RequestId = request.RequestId,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.Mobile,
+                    RegionId = region.RegionId,
+                    Email = model.Email,
+                    State = model.State,
+                    Street = model.Street,
+                    City = model.City,
+                    ZipCode = model.ZipCode,
+                    Status = 1,
+                    Symptoms = model.Symptoms,
+                }; 
+                _dbContext.Add(requestClient);
                 await _dbContext.SaveChangesAsync();
             };
             return View(null);
@@ -153,6 +202,18 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
+                AspNetRole aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
+                if (aspNetRole == null)
+                {
+                    aspNetRole = new()
+                    {
+                        Name = "Patient",
+                    };
+                    _dbContext.Add(aspNetRole);
+                    await _dbContext.SaveChangesAsync();
+                    aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
+                };
+                //
                 AspNetUser aspNetUser = new()
                 {
                     UserName = model.FirstName,
@@ -165,7 +226,15 @@ namespace HelloDoc.Controllers
                 _dbContext.Add(aspNetUser);
                 await _dbContext.SaveChangesAsync();
                 //
-                aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == aspNetUser.Email);
+                aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = aspNetUser.Id,
+                    RoleId = aspNetRole.Id,
+                };
+                _dbContext.Add(aspNetUserRole);
+                await _dbContext.SaveChangesAsync();
+                //
                 User user = new()
                 {
                     FirstName = model.FirstName,
@@ -187,23 +256,18 @@ namespace HelloDoc.Controllers
                 _dbContext.Add(user);
                 await _dbContext.SaveChangesAsync();
                 //
-                user = _dbContext.Users.FirstOrDefault(a => a.Email == aspNetUser.Email);
                 Request request = new()
                 {
                     RequestTypeId = 4,
-                    UserId = user.UserId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    PhoneNumber = user.Mobile,
-                    Status = 1,
-                    CreatedDate = DateTime.Now,
-                    Symptoms = model.Symptoms,
+                    FirstName = model.ConciergeFirstName,
+                    LastName = model.ConciergeLastName,
+                    Email = model.ConciergeEmail,
+                    PhoneNumber = model.ConciergeMobile,
                 };
                 _dbContext.Add(request);
                 await _dbContext.SaveChangesAsync();
                 //
-                Region region =_dbContext.Regions.FirstOrDefault(a => a.Name == model.ConciergeState);
+                Region region =_dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.ConciergeState.Trim());
                 if(region == null)
                 {
                     region = new()
@@ -212,7 +276,7 @@ namespace HelloDoc.Controllers
                     };
                     _dbContext.Add(region);
                     await _dbContext.SaveChangesAsync();
-                    region = _dbContext.Regions.FirstOrDefault(a => a.Name == model.ConciergeState);
+                    region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.ConciergeState.Trim());
                 }
                 //
                 Concierge concierge = new()
@@ -228,14 +292,274 @@ namespace HelloDoc.Controllers
                 _dbContext.Add(concierge);  
                 await _dbContext.SaveChangesAsync();
                 //
-                concierge = _dbContext.Concierges.FirstOrDefault(a => a.ConciergeName == model.ConciergeFirstName);
-                request = _dbContext.Requests.FirstOrDefault(a => a.Email == model.Email);
+                concierge = _dbContext.Concierges.FirstOrDefault(a => a.ConciergeName.Trim() == model.ConciergeFirstName.Trim());
+                request = _dbContext.Requests.FirstOrDefault(a => a.Email.Trim() == model.ConciergeEmail.Trim());
                 RequestConcierge requestConcierge = new()
                 {
                     RequestId = request.RequestId,
                     ConciergeId = concierge.ConciergeId
-                };
+                };  
                 _dbContext.Add(requestConcierge);
+                await _dbContext.SaveChangesAsync();
+                //
+                region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
+                if (region == null)
+                {
+                    region = new()
+                    {
+                        Name = model.State,
+                    };
+                    _dbContext.Add(region);
+                    await _dbContext.SaveChangesAsync();
+                    region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
+                }
+                //
+                request = _dbContext.Requests.FirstOrDefault(a => a.Email.Trim() == model.ConciergeEmail.Trim());
+                RequestClient requestClient = new()
+                {
+                    RequestId = request.RequestId,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.Mobile,
+                    RegionId = region.RegionId,
+                    Email = model.Email,
+                    State = model.State,
+                    Street = model.Street,
+                    City = model.City,
+                    ZipCode = model.ZipCode,
+                    Status = 1,
+                    Symptoms = model.Symptoms,
+                };
+                _dbContext.Add(requestClient);
+                await _dbContext.SaveChangesAsync();
+            };
+            return View(null);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FamilyFriendRequest(AddFamilyRequest model)
+        {
+            if (ModelState.IsValid)
+            {
+                AspNetRole aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
+                if (aspNetRole == null)
+                {
+                    aspNetRole = new()
+                    {
+                        Name = "Patient",
+                    };
+                    _dbContext.Add(aspNetRole);
+                    await _dbContext.SaveChangesAsync();
+                    aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
+                };
+                //
+                AspNetUser aspNetUser = new()
+                {
+                    UserName = model.FirstName,
+                    Email = model.Email,
+                    PhoneNumber = model.Mobile,
+                    PasswordHash = "123456",
+                    Ip = "123.123.123.123",
+                    CreatedDate = DateTime.Now
+                };
+                _dbContext.Add(aspNetUser);
+                await _dbContext.SaveChangesAsync();
+                //
+                aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = aspNetUser.Id,
+                    RoleId = aspNetRole.Id,
+                };
+                _dbContext.Add(aspNetUserRole);
+                await _dbContext.SaveChangesAsync();
+                //
+                User user = new()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Mobile = model.Mobile,
+                    Street = model.Street,
+                    City = model.City,
+                    State = model.State,
+                    ZipCode = model.ZipCode,
+                    AspNetUserId = aspNetUser.Id,
+                    CreatedBy = aspNetUser.Id,
+                    CreatedDate = DateTime.Now,
+                    House = model.House,
+                    //IntYear=model.BirthDate.Value.Year,
+                    //IntDate= int.Parse(model.BirthDate.Value.Date.ToString()),
+                    //StrMonth= model.BirthDate.Value.Month.ToString(),
+                };
+                _dbContext.Add(user);
+                await _dbContext.SaveChangesAsync();
+                //
+                Request request = new()
+                {
+                    RequestTypeId = 4,
+                    FirstName = model.FamilyFriendFirstName,
+                    LastName = model.FamilyFriendLastName,
+                    Email = model.FamilyFriendEmail,
+                    PhoneNumber = model.FamilyFriendMobile,
+                };
+                _dbContext.Add(request);
+                await _dbContext.SaveChangesAsync();
+                //
+                Region region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
+                if (region == null)
+                {
+                    region = new()
+                    {
+                        Name = model.State,
+                    };
+                    _dbContext.Add(region);
+                    await _dbContext.SaveChangesAsync();
+                    region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
+                }
+                //
+                request = _dbContext.Requests.FirstOrDefault(a => a.Email.Trim() == model.FamilyFriendEmail.Trim());
+                RequestClient requestClient = new()
+                {
+                    RequestId = request.RequestId,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.Mobile,
+                    RegionId = region.RegionId,
+                    Email = model.Email,
+                    State = model.State,
+                    Street = model.Street,
+                    City = model.City,
+                    ZipCode = model.ZipCode,
+                    Status = 1,
+                    Symptoms = model.Symptoms,
+                };
+                _dbContext.Add(requestClient);
+                await _dbContext.SaveChangesAsync();
+            };
+            return View(null);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BusinessRequest(AddBusinessRequest model)
+        {
+            if (ModelState.IsValid)
+            {
+                AspNetRole aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
+                if (aspNetRole == null)
+                {
+                    aspNetRole = new()
+                    {
+                        Name = "Patient",
+                    };
+                    _dbContext.Add(aspNetRole);
+                    await _dbContext.SaveChangesAsync();
+                    aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
+                };
+                //
+                AspNetUser aspNetUser = new()
+                {
+                    UserName = model.FirstName,
+                    Email = model.Email,
+                    PhoneNumber = model.Mobile,
+                    PasswordHash = "123456",
+                    Ip = "123.123.123.123",
+                    CreatedDate = DateTime.Now
+                };
+                _dbContext.Add(aspNetUser);
+                await _dbContext.SaveChangesAsync();
+                //
+                aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = aspNetUser.Id,
+                    RoleId = aspNetRole.Id,
+                };
+                _dbContext.Add(aspNetUserRole);
+                await _dbContext.SaveChangesAsync();
+                //
+                User user = new()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Mobile = model.Mobile,
+                    Street = model.Street,
+                    City = model.City,
+                    State = model.State,
+                    ZipCode = model.ZipCode,
+                    AspNetUserId = aspNetUser.Id,
+                    CreatedBy = aspNetUser.Id,
+                    CreatedDate = DateTime.Now,
+                    House = model.House,
+                    //IntYear=model.BirthDate.Value.Year,
+                    //IntDate= int.Parse(model.BirthDate.Value.Date.ToString()),
+                    //StrMonth= model.BirthDate.Value.Month.ToString(),
+                };
+                _dbContext.Add(user);
+                await _dbContext.SaveChangesAsync();
+                //
+                Request request = new()
+                {
+                    RequestTypeId = 4,
+                    FirstName = model.BusinessFirstName,
+                    LastName = model.BusinessLastName,
+                    Email = model.BusinessEmail,
+                    PhoneNumber = model.BusinessMobile,
+                };
+                _dbContext.Add(request);
+                await _dbContext.SaveChangesAsync();
+                //
+                Business business = new()
+                {
+                    Name = model.BusinessFirstName,
+                    PhoneNumber= model.BusinessMobile,
+                    CreatedDate = DateTime.Now,
+                };
+                _dbContext.Add(business);
+                await _dbContext.SaveChangesAsync();
+                //
+                business = _dbContext.Businesses.FirstOrDefault(a => a.Name.Trim() == model.BusinessFirstName.Trim());
+                request = _dbContext.Requests.FirstOrDefault(a => a.Email.Trim() == model.BusinessEmail.Trim());
+                RequestBusiness requestBusiness = new()
+                {
+                    RequestId = request.RequestId,
+                    BusinessId = business.BusinessId,
+                };
+                _dbContext.Add(requestBusiness);
+                await _dbContext.SaveChangesAsync();
+                //
+                Region region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
+                if (region == null)
+                {
+                    region = new()
+                    {
+                        Name = model.State,
+                    };
+                    _dbContext.Add(region);
+                    await _dbContext.SaveChangesAsync();
+                    region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
+                }
+                //
+                request = _dbContext.Requests.FirstOrDefault(a => a.Email.Trim() == model.BusinessEmail.Trim());
+                RequestClient requestClient = new()
+                {
+                    RequestId = request.RequestId,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.Mobile,
+                    RegionId = region.RegionId,
+                    Email = model.Email,
+                    State = model.State,
+                    Street = model.Street,
+                    City = model.City,
+                    ZipCode = model.ZipCode,
+                    Status = 1,
+                    Symptoms = model.Symptoms,
+                };
+                _dbContext.Add(requestClient);
                 await _dbContext.SaveChangesAsync();
             };
             return View(null);

@@ -29,8 +29,6 @@ public partial class Request
     [StringLength(50)]
     public string? Email { get; set; }
 
-    public short Status { get; set; }
-
     public int? PhysicianId { get; set; }
 
     [StringLength(20)]
@@ -88,9 +86,6 @@ public partial class Request
     public string? PatientAccountId { get; set; }
 
     public int? CreatedUserId { get; set; }
-
-    [StringLength(500)]
-    public string? Symptoms { get; set; }
 
     [ForeignKey("PhysicianId")]
     [InverseProperty("Requests")]

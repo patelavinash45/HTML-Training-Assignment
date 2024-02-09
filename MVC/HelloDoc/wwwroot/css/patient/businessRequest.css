@@ -1,12 +1,12 @@
-body{
+body {
     background-color: #dcdbdb;
 }
 
-#main-body{
+#main-body {
     opacity: 0.5;
 }
 
-#alert-message{
+#alert-message {
     position: fixed;
     display: flex;
     z-index: 3;
@@ -26,17 +26,17 @@ body{
     margin-bottom: 150px;
 }
 
-header{
+header {
     box-shadow: 0px 0px 8px lightgray;
     background-color: white;
 }
 
-#logo-image{
+#logo-image {
     width: 150px;
     margin-left: 4vh;
 }
 
-#them-icon{
+#them-icon {
     margin-right: 40px;
     border-radius: 10px;
     border-color: cadetblue;
@@ -49,7 +49,7 @@ header{
     align-items: center;
 }
 
-#back-box{
+#back-box {
     background-color: white;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -76,7 +76,7 @@ header{
     margin-bottom: 15px;
 }
 
-.form-control{
+.form-control {
     margin-top: 2vh;
 }
 
@@ -89,7 +89,7 @@ header{
     top: 15px;
 }
 
-button{
+button {
     height: 58px;
     margin-top: 18px;
     width: 150px;
@@ -99,15 +99,15 @@ button{
     color: white;
 }
 
-input{
+input {
     height: 58px;
 }
 
-input[type=file]::-webkit-file-upload-button {
-    display: none;
-}
+    input[type="file"]::-webkit-file-upload-button {
+        display: none;
+    }
 
-.bottom-button{
+.bottom-button {
     margin-top: 50px;
     display: flex;
     justify-content: center;
@@ -118,7 +118,7 @@ input[type=file]::-webkit-file-upload-button {
     border-radius: 10px;
 }
 
-#submit-button{
+#submit-button {
     background-color: #1db5d0;
     margin-right: 20px;
     color: white;
@@ -133,7 +133,8 @@ button:hover {
     font-weight: bold;
 }
 
-.btn,.btn:hover{
+.btn,
+.btn:hover {
     font-size: 20px;
     color: white;
     width: 25%;
@@ -142,14 +143,13 @@ button:hover {
     height: 50px;
 }
 
-#date-picker{
+#date-picker {
     top: 15px;
 }
 
 /* media Queries */
 
-@media screen and (max-width:576px) {
-
+@media screen and (max-width: 576px) {
     button {
         width: 100px;
     }
@@ -159,15 +159,15 @@ button:hover {
     }
 
     .fw-semibold {
-        font-size: 1.10rem;
+        font-size: 1.1rem;
     }
 
-    #alert-box{
+    #alert-box {
         width: 360px;
         height: 300px;
     }
 
-    span{
+    span {
         font-size: 12px;
     }
 }

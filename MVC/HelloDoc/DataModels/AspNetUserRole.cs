@@ -1,13 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace HelloDoc.DataModels;
 
 public partial class AspNetUserRole
 {
-    public string UserId { get; set; } = null!;
+    [Key]
+    public int UserId { get; set; }
 
-    public string RoleId { get; set; } = null!;
+    public int RoleId { get; set; }
 
+    [ForeignKey("RoleId")]
+    [InverseProperty("AspNetUserRoles")]
+    public virtual AspNetRole Role { get; set; } = null!;
+
+    [ForeignKey("UserId")]
+    [InverseProperty("AspNetUserRole")]
     public virtual AspNetUser User { get; set; } = null!;
 }
