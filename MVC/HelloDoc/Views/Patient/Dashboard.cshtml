@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@model List<HelloDoc.ViewModels.Dashboard>
+
+@{
+    List<String> status = new List<string>() {"Unassigned", "Accepted", "Cancelled", "Reserving", "MDEnRoute", "MDOnSite", "FollowUp", "Closed", "Locked", "Declined", "Consult", "Clear",
+                            "CancelledByProvider", "CCUploadedByClient", "CCApprovedByAdmin" };
+
+    List<String> months = new List<String>() { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -22,7 +31,11 @@
                 <img id="logo-image" src="~/images/helloDocLogo.png" />
             </div>
             <div class="d-flex align-items-center">
-                <span id="welcome-text"> Welcome <b>Tests tests </b> </span>
+                <span id="welcome-text">
+                    Welcome @* <b>Tests tests </b>*@
+                    <b> @Model[0].FirstName </b>
+                    <b> @Model[0].LastName </b>
+                </span>
                 <a asp-controller="Patient" asp-action="LoginPage">
                     <button id="log-out">
                         <span id="button-text">
@@ -82,114 +95,79 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach(var iteam in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @months[int.Parse(@iteam.StrMonth.ToString())-1] @iteam.IntDate, @iteam.IntYear
+                                </td>
+                                <td>
+                                    @status[int.Parse(@iteam.Status.ToString())-1]
+                                </td>
+                                <td>
+                                    @{
+                                        if (@iteam.DoumentsPaths != null)
+                                        {
+                                            //str = '"' + @iteam.DoumentsPaths.ToString() + '"';
+                                            <button id="document" onclick="window.open("@iteam.DoumentsPaths.ToString()", '_blank');">
+                                                (1) Document
+                                            </button>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        } @*
                         <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td></td>
+                        <td>
+                        Sep 27,2023
+                        </td>
+                        <td>
+                        Accepted
+                        </td>
+                        <td>
+                        <button id="document">
+                        (1) Document
+                        </button>
+                        </td>
                         </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td>
-                                <button id="document">
-                                    (1) Document
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sep 27,2023
-                            </td>
-                            <td>
-                                Accepted
-                            </td>
-                            <td></td>
-                        </tr>
+                        *@
                     </tbody>
                 </table>
             </div>
             <!-- table(mobile-view) -->
             <div class="accordion accordion-flush w-100" id="accordionFlushExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            <i class="bi bi-clock me-2"></i>
-                            <b class="me-2">Created Date: </b> Dec 5,2023
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div>
-                                <i class="bi bi-person-circle me-2"></i>
-                                <b class="me-2">Provider: -</b>
-                            </div>
-                            <div>
-                                <i class="bi bi-check-circle me-2"></i>
-                                <b class="me-2">Current Status </b> Cancelled By Admin
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                            <i class="bi bi-clock me-2"></i>
-                            <b class="me-2">Created Date: </b> Dec 5,2023
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div>
-                                <i class="bi bi-person-circle me-2"></i>
-                                <b class="me-2">Provider: -</b>
-                            </div>
-                            <div>
-                                <i class="bi bi-check-circle me-2"></i>
-                                <b class="me-2">Current Status </b>
-                                <button id="document">
-                                    (1) Document
-                                </button>
+                @foreach(var iteam in Model)
+                {
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                <i class="bi bi-clock me-2"></i>
+                                <b class="me-2">Created Date: </b> @months[int.Parse(@iteam.StrMonth.ToString())-1] @iteam.IntDate, @iteam.IntYear
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                            <div class="accordion-body">
+                                <div>
+                                    <i class="bi bi-person-circle me-2"></i>
+                                    <b class="me-2">Provider: -</b>
+                                </div>
+                                <div>
+                                    <i class="bi bi-check-circle me-2"></i>
+                                    <b class="me-2">Current Status: - </b> @status[int.Parse(@iteam.Status.ToString())-1]
+                                    @{
+                                        if (@iteam.DoumentsPaths != null)
+                                        {
+                                        // String str = Model.DoumentsPaths.ToString();
+                                            <button id="document" onclick="openDocumnet(@iteam.DoumentsPaths.ToString())">
+                                                (1) Document
+                                            </button>
+                                        }
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                            <i class="bi bi-clock me-2"></i>
-                            <b class="me-2">Created Date: </b> Dec 5,2023
-                        </button>
-                    </h2>
-                    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div>
-                                <i class="bi bi-person-circle me-2"></i>
-                                <b class="me-2">Provider: -</b>
-                            </div>
-                            <div>
-                                <i class="bi bi-check-circle me-2"></i>
-                                <b class="me-2">Current Status </b> Cancelled By Admin
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>

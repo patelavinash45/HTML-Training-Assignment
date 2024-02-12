@@ -43,7 +43,9 @@ namespace HelloDoc.ViewModels
 
         [Required]
         public DateTime? BirthDate { get; set; }
- 
+
+        public IFormFile? File { get; set; }
+
         [StringLength(100)]
         public string? House { get; set; }
 

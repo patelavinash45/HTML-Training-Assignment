@@ -29,3 +29,9 @@ function sidebar() {
         document.getElementById("side-bar").style.display = "none";
     }
 }
+
+function openDocumnet(path) {
+    console.log("hi");
+    Page.ClientScript.RegisterStartupScript(
+        this.GetType(), "OpenWindow", "window.open(path,'_newtab');", true);
+}

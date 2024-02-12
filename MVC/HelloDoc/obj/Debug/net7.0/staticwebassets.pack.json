@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\HelloDoc.bundle.scp.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\29.txt",
+      "PackagePath": "staticwebassets\\Files\\29.txt"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\international-telephone-input.css",
       "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
     },

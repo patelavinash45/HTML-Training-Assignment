@@ -2,6 +2,7 @@
 using HelloDoc.DataModels;
 using HelloDoc.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace HelloDoc.Controllers
@@ -59,27 +60,79 @@ namespace HelloDoc.Controllers
         {
             return View();
         }
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public bool OnChnage(String email)
+        {
+            User user= _dbContext.Users.FirstOrDefault(a => a.Email == email);
+            if(user == null)
+            {
+                return true;
+            }
+            return false;
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult LoginPage(PatientLogin user)
+        public IActionResult LoginPage(PatientLogin model)
         {
             if(ModelState.IsValid)
             {
-                var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == user.Email.Trim());
-                if (userFromDb == null)
+                var aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                if (aspNetUser == null)
                 {
                     ViewBag.error = 1;
                     return View(null);
                 }
-                else if (userFromDb.PasswordHash != user.PasswordHash)
+                else if (aspNetUser.PasswordHash != model.PasswordHash)
                 {
                     ViewBag.error = 2;
                     return View(null);
                 }
                 else
                 {
-                    return RedirectToAction("Dashboard");
+                    User user = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == aspNetUser.Id);
+                    //Request request = _dbContext.Requests.FirstOrDefault(a => a.UserId == user.UserId);
+                    //RequestClient requestClient = _dbContext.RequestClients.FirstOrDefault(a => a.RequestId == request.RequestId);
+                    //RequestWiseFile requestWiseFile = _dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestId == request.RequestId);
+                    //Dashboard dashboard = new()
+                    //{
+                    //    FirstName = requestClient.FirstName,
+                    //    LastName = requestClient.LastName,
+                    //    StrMonth = requestClient.StrMonth,
+                    //    IntYear = requestClient.IntYear,
+                    //    IntDate = requestClient.IntDate,
+                    //    Status = requestClient.Status,
+                    //    DoumentsPaths = requestWiseFile.FileName,
+                    //};
+
+                    List<Request> requests = _dbContext.Requests.Where(a => a.UserId == user.UserId).ToList();
+                    List<RequestClient> requestClient = new List<RequestClient>() { };
+                    for (int i = 0; i < requests.Count; i++)
+                    {
+                        requestClient.Add(_dbContext.RequestClients.FirstOrDefault(a => a.RequestId == requests[i].RequestId));
+                    }
+                    List<RequestWiseFile> requestWiseFiles = new List<RequestWiseFile>() { };
+                    for (int i = 0; i < requests.Count; i++)
+                    {
+                        requestWiseFiles.Add(_dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestId == requests[i].RequestId));
+                    }
+                    List<Dashboard> dashboards = new List<Dashboard>() { };
+                    for (int i = 0; i < requests.Count; i++)
+                    {
+                        Dashboard dashboard = new()
+                        {
+                            FirstName = requestClient[i].FirstName,
+                            LastName = requestClient[i].LastName,
+                            StrMonth = requestClient[i].StrMonth,
+                            IntYear = requestClient[i].IntYear,
+                            IntDate = requestClient[i].IntDate,
+                            Status = requestClient[i].Status,
+                            DoumentsPaths = requestWiseFiles[i].FileName,
+                        };
+                        dashboards.Add(dashboard);
+                    }
+                    return View("Dashboard", dashboards);
                 }
             }
             else
@@ -95,7 +148,7 @@ namespace HelloDoc.Controllers
             if (ModelState.IsValid)
             {
                 AspNetRole aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
-                if(aspNetRole == null)
+                 if(aspNetRole == null)
                 {
                     aspNetRole = new()
                     {
@@ -133,16 +186,17 @@ namespace HelloDoc.Controllers
                     CreatedBy = aspNetUser.Id,
                     CreatedDate = DateTime.Now,
                     House=model.House,
-                    //IntYear=model.BirthDate.Value.Year,
-                    //IntDate= int.Parse(model.BirthDate.Value.Date.ToString()),
-                    //StrMonth= model.BirthDate.Value.Month.ToString(),
+                    IntYear=model.BirthDate.Value.Year,
+                    IntDate= model.BirthDate.Value.Day,
+                    StrMonth= model.BirthDate.Value.Month.ToString(),
                 };
                 _dbContext.Add(user);
                 await _dbContext.SaveChangesAsync();
                 //
+                aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
                 AspNetUserRole aspNetUserRole = new()
                 {
-                    UserId = user.UserId,
+                    UserId = aspNetUser.Id,
                     RoleId = aspNetRole.Id,
                 };
                 _dbContext.Add(aspNetUserRole);
@@ -162,6 +216,23 @@ namespace HelloDoc.Controllers
                 _dbContext.Add(request);
                 await _dbContext.SaveChangesAsync();
                 //
+                request = _dbContext.Requests.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                if(!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                };
+                path = Path.Combine(path, request.RequestId.ToString()+".txt");
+                model.File.CopyTo(new FileStream(path, FileMode.Create));
+                RequestWiseFile requestWiseFile = new()
+                {
+                    RequestId = request.RequestId,
+                    FileName = path,
+                    CreatedDate = DateTime.Now,
+                };
+                _dbContext.Add(requestWiseFile);
+                await _dbContext.SaveChangesAsync();
+                //
                 Region region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
                 if (region == null)
                 {
@@ -174,7 +245,6 @@ namespace HelloDoc.Controllers
                     region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
                 }
                 //
-                request = _dbContext.Requests.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
                 RequestClient requestClient = new()
                 {
                     RequestId = request.RequestId,
@@ -189,6 +259,9 @@ namespace HelloDoc.Controllers
                     ZipCode = model.ZipCode,
                     Status = 1,
                     Symptoms = model.Symptoms,
+                    IntYear = DateTime.Now.Year,
+                    IntDate = DateTime.Now.Day,
+                    StrMonth = DateTime.Now.Month.ToString(),
                 }; 
                 _dbContext.Add(requestClient);
                 await _dbContext.SaveChangesAsync();
@@ -249,13 +322,14 @@ namespace HelloDoc.Controllers
                     CreatedBy = aspNetUser.Id,
                     CreatedDate = DateTime.Now,
                     House = model.House,
-                    //IntYear=model.BirthDate.Value.Year,
-                    //IntDate= int.Parse(model.BirthDate.Value.Date.ToString()),
-                    //StrMonth= model.BirthDate.Value.Month.ToString(),
+                    IntYear = model.BirthDate.Value.Year,
+                    IntDate = model.BirthDate.Value.Day,
+                    StrMonth = model.BirthDate.Value.Month.ToString(),
                 };
                 _dbContext.Add(user);
                 await _dbContext.SaveChangesAsync();
                 //
+                user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
                 Request request = new()
                 {
                     RequestTypeId = 4,
@@ -263,6 +337,7 @@ namespace HelloDoc.Controllers
                     LastName = model.ConciergeLastName,
                     Email = model.ConciergeEmail,
                     PhoneNumber = model.ConciergeMobile,
+                    UserId=user.UserId,
                 };
                 _dbContext.Add(request);
                 await _dbContext.SaveChangesAsync();
@@ -329,6 +404,9 @@ namespace HelloDoc.Controllers
                     ZipCode = model.ZipCode,
                     Status = 1,
                     Symptoms = model.Symptoms,
+                    IntYear = DateTime.Now.Year,
+                    IntDate = DateTime.Now.Day,
+                    StrMonth = DateTime.Now.Month.ToString(),
                 };
                 _dbContext.Add(requestClient);
                 await _dbContext.SaveChangesAsync();
@@ -389,13 +467,14 @@ namespace HelloDoc.Controllers
                     CreatedBy = aspNetUser.Id,
                     CreatedDate = DateTime.Now,
                     House = model.House,
-                    //IntYear=model.BirthDate.Value.Year,
-                    //IntDate= int.Parse(model.BirthDate.Value.Date.ToString()),
-                    //StrMonth= model.BirthDate.Value.Month.ToString(),
+                    IntYear = model.BirthDate.Value.Year,
+                    IntDate = model.BirthDate.Value.Day,
+                    StrMonth = model.BirthDate.Value.Month.ToString(),
                 };
                 _dbContext.Add(user);
                 await _dbContext.SaveChangesAsync();
                 //
+                user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
                 Request request = new()
                 {
                     RequestTypeId = 4,
@@ -403,6 +482,7 @@ namespace HelloDoc.Controllers
                     LastName = model.FamilyFriendLastName,
                     Email = model.FamilyFriendEmail,
                     PhoneNumber = model.FamilyFriendMobile,
+                    UserId=user.UserId,
                 };
                 _dbContext.Add(request);
                 await _dbContext.SaveChangesAsync();
@@ -434,6 +514,9 @@ namespace HelloDoc.Controllers
                     ZipCode = model.ZipCode,
                     Status = 1,
                     Symptoms = model.Symptoms,
+                    IntYear = DateTime.Now.Year,
+                    IntDate = DateTime.Now.Day,
+                    StrMonth = DateTime.Now.Month.ToString(),
                 };
                 _dbContext.Add(requestClient);
                 await _dbContext.SaveChangesAsync();
@@ -494,13 +577,14 @@ namespace HelloDoc.Controllers
                     CreatedBy = aspNetUser.Id,
                     CreatedDate = DateTime.Now,
                     House = model.House,
-                    //IntYear=model.BirthDate.Value.Year,
-                    //IntDate= int.Parse(model.BirthDate.Value.Date.ToString()),
-                    //StrMonth= model.BirthDate.Value.Month.ToString(),
+                    IntYear = model.BirthDate.Value.Year,
+                    IntDate = model.BirthDate.Value.Day,
+                    StrMonth = model.BirthDate.Value.Month.ToString(),
                 };
                 _dbContext.Add(user);
                 await _dbContext.SaveChangesAsync();
                 //
+                user= _dbContext.Users.FirstOrDefault(a =>a.Email.Trim() == model.Email.Trim());
                 Request request = new()
                 {
                     RequestTypeId = 4,
@@ -508,6 +592,7 @@ namespace HelloDoc.Controllers
                     LastName = model.BusinessLastName,
                     Email = model.BusinessEmail,
                     PhoneNumber = model.BusinessMobile,
+                    UserId=user.UserId,
                 };
                 _dbContext.Add(request);
                 await _dbContext.SaveChangesAsync();
@@ -558,6 +643,9 @@ namespace HelloDoc.Controllers
                     ZipCode = model.ZipCode,
                     Status = 1,
                     Symptoms = model.Symptoms,
+                    IntYear = DateTime.Now.Year,
+                    IntDate = DateTime.Now.Day,
+                    StrMonth = DateTime.Now.Month.ToString(),
                 };
                 _dbContext.Add(requestClient);
                 await _dbContext.SaveChangesAsync();

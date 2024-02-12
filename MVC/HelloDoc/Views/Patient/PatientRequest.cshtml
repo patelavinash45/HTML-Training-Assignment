@@ -12,26 +12,10 @@
     <link href="~/css/international-telephone-input.css" rel="stylesheet" />
     <script src="~/js/international-telephone-input.js"></script>
     <script src="~/js/Patient/Request.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <partial name="_Header" />
-    <div class="alert vw-100 vh-100" id="alert-message">
-        <div id="alert-box">
-            <img class="w-25" src="~/images/informtion-icon.png" />
-            <h4>
-                Information
-            </h4>
-            <span>When submitting a request, you must provide the</span>
-            <span>correct contact information of your illness.</span>
-            <span>
-                Failure to provide the correct email phone
-            </span>
-            <span> number will delay service or be declined.</span>
-            <button class="btn" onclick="alert_close(this)">
-                ok
-            </button>
-        </div>
-    </div>
     <div id="main-body">
         <div class="d-flex justify-content-end">
             <a id="back-box" asp-controller="Patient" asp-action="SubmitRequest">
@@ -39,7 +23,7 @@
                 Back
             </a>
         </div>
-        <form class="w-100" asp-controller="Patient" asp-action="PatientRequest">
+        <form class="w-100" asp-controller="Patient" asp-action="PatientRequest" enctype="multipart/form-data">
             <div class="container" id="form">
                 <h5 class="fw-semibold">
                     Patient Information
@@ -68,7 +52,7 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="Email" class="form-control" id="email" placeholder type="email" />
+                        <input asp-for="Email" class="form-control" id="email" placeholder type="email" onchange="onChange()" />
                         <label for="email">Email</label>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
@@ -115,7 +99,7 @@
                     (Optional)Upload Photo or Document
                 </h5>
                 <div class="input-group">
-                    <input class="form-control" placeholder="Select File" type="file" id="file-picker" />
+                    <input class="form-control" placeholder="Select File" type="file" id="file-picker" asp-for="File"/>
                     <button class="button fs-5">
                         <i class="bi bi-cloud-arrow-up-fill"></i>
                         Upload

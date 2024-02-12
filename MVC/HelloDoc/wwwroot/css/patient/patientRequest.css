@@ -2,10 +2,6 @@ body {
     background-color: #dcdbdb;
 }
 
-#main-body{
-    opacity: 0.5;
-}
-
 #alert-message{
     position: fixed;
     display: flex;
