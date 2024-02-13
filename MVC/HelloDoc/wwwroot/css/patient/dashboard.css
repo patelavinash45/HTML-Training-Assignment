@@ -12,13 +12,6 @@ a {
     height: 50px;
 }
 
-#slidebar-button {
-    display: none;
-    width: 50px;
-    height: 50px;
-    margin-left: 10px;
-}
-
 #new-request {
     width: 200px;
     height: 50px;
@@ -29,10 +22,6 @@ a {
     display: none;
 }
 
-#logo-image {
-    width: 150px;
-    margin-left: 4vh;
-}
 
 #document {
     width: 150px;
@@ -50,29 +39,8 @@ button {
     align-items: center;
 }
 
-#log-out {
-    width: 100px;
-    height: 50px;
-    color: cadetblue;
-    margin-right: 20px;
-    margin-left: 20px;
-}
-
 .navbar-nav {
     flex-direction: row;
-}
-
-.navbar-item {
-    margin-left: 10px;
-    margin-right: 10px;
-    width: 100px;
-    height: 50px;
-}
-
-header {
-    width: 100vw;
-    box-shadow: 0px 0px 8px lightgray;
-    background-color: white;
 }
 
 .tab-content {
@@ -98,11 +66,6 @@ header {
 
 tr {
     height: 50px;
-}
-
-#dashboard {
-    background-color: #dcdbdb;
-    color: cadetblue;
 }
 
 #header-buttom {
@@ -161,14 +124,13 @@ tr {
         width: 100%;
     }
 
-    .accordion,
-    #button-icon {
+    .accordion {
         display: inline;
     }
 
-    #button-text,
     #welcome-text,
     #header-buttom,
+    #button-text,
     .table-responsive {
         display: none;
     }

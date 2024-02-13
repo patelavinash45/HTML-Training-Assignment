@@ -143,10 +143,13 @@ input[type=file]::-webkit-file-upload-button {
     top: 15px;
 }
 
+#input-password{
+    display:none;
+}
+
+
 /* media Queries */
-
 @media screen and (max-width:576px) {
-
     button {
         width: 100px;
     }

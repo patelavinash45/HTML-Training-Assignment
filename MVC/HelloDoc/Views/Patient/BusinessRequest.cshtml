@@ -14,7 +14,7 @@
     <script src="~/js/Patient/Request.js"></script>
 </head>
 <body>
-    <partial name="_Header" />
+    <partial name="_RequestHeader" />
     <div class="alert vw-100 vh-100" id="alert-message">
         <div id="alert-box">
             <img class="w-25" src="~/images/informtion-icon.png" />
@@ -167,7 +167,7 @@
             </div>
         </form>
     </div>
-    <partial name="_Footer" />
+    <partial name="_RequestFooter" />
     <script>
         const phoneInputField = document.getElementById("phone1");
         window.intlTelInput(phoneInputField, {

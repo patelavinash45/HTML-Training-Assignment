@@ -1,0 +1,169 @@
+﻿@model List<HelloDoc.ViewModels.ViewDocument>
+@{
+    List<String> months = new List<String>() { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/patient/viewDocument.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/patient/dashboard.js"></script>
+</head>
+<body>
+    <partial name="_DashboardHeader" />
+    <div class="container tab-content" id="dashboard_content">
+        <div class="d-flex flex-column align-items-center w-100 row">
+            <div class="d-flex justify-content-between align-content-center mt-3 mb-3">
+                <span class="h3">
+                    Documents
+                </span>
+                <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="62">
+                    <button id="backBox">
+                        <i class="bi bi-chevron-left"> </i>
+                        Back
+                    </button>
+                </a>
+            </div>
+            <div class="main-body">
+                <div class="w-100">
+                    Patient Name
+                </div>
+                <div class="h3 w-100">
+                    Test test()
+                </div>
+                <div class="w-100">
+                    Check here for any files that you or the doctors of your
+                    subsequents have attached for you to review.
+                </div>
+                <div class="input-group w-100 mb-4 mt-4">
+                    <input class="form-control" placeholder="Select File"
+                           type="file" id="file-picker">
+                    <button class="fs-5 button" id="uploadButton">
+                        <i class="bi bi-cloud-arrow-up-fill "></i>
+                        Upload
+                    </button>
+                </div>
+                <div class="d-flex justify-content-between align-content-center mt-3 mb-3">
+                    <span class="h3 w-100">
+                        Documents
+                    </span>
+                    <button id="downloadAll">
+                        <span id="downloadText">
+                            Download All
+                        </span>
+                        <i class="bi bi-cloud-arrow-down"
+                           id="downloadIcon"></i>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="col-5">
+                                    <input type="checkbox">
+                                </th>
+                                <th class="col-3">
+                                    Uploader
+                                </th>
+                                <th class="col-3">
+                                    Upload Date
+                                </th>
+                                <th class="col-1">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*<tr>
+                                <td>
+                                    <input type="checkbox">
+                                    <i class="bi bi-file-earmark-pdf-fill mx-2"></i>
+                                    demo.pdf
+                                </td>
+                                <td>
+                                    test test
+                                </td>
+                                <td>
+                                    Aug 4,2023
+                                </td>
+                                <td>
+                                    <button id="downloadButton">
+                                        <i class="bi bi-cloud-arrow-down"></i>
+                                    </button>
+                                </td>
+                            </tr>*@
+                            @foreach(var iteam in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                        <i class="bi bi-file-earmark-pdf-fill mx-2"></i>
+                                        @iteam.FileName
+                                    </td>
+                                    <td>
+                                        @iteam.Uploder
+                                    </td>
+                                    <td>
+                                        @months[iteam.Month-1] @iteam.Day, @iteam.Year
+                                    </td>
+                                    <td>
+                                        <button id="downloadButton">
+                                            <i class="bi bi-cloud-arrow-down"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="accordion accordion-flush w-100"
+                     id="accordionFlushExample">
+                    @foreach(var iteam in Model)
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"
+                                id="panelsStayOpen-headingOne">
+                                <button class="accordion-button" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseOne"
+                                        aria-expanded="true"
+                                        aria-controls="panelsStayOpen-collapseOne">
+                                    <input type="checkbox">
+                                    <i class="bi bi-file-earmark-pdf-fill mx-2"></i>
+                                    @iteam.FileName
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseOne"
+                                 class="accordion-collapse collapse show"
+                                 aria-labelledby="panelsStayOpen-headingOne">
+                                <div class="accordion-body row">
+                                    <div class="col-10">
+                                        <div>
+                                            @iteam.Uploder
+                                        </div>
+                                        <div>
+                                            @months[iteam.Month-1] @iteam.Day, @iteam.Year
+                                        </div>
+                                    </div>
+                                    <button class="col-2" id="downloadButton">
+                                        <i class="bi bi-cloud-arrow-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content" id="profile_content">
+        Profile content
+    </div>
+</body>
+</html>

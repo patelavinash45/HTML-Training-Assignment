@@ -22,51 +22,7 @@
     <script src="~/js/patient/dashboard.js"></script>
 </head>
 <body>
-    <header>
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <button id="slidebar-button" onclick="sidebar()">
-                    <i class="bi bi-list"></i>
-                </button>
-                <img id="logo-image" src="~/images/helloDocLogo.png" />
-            </div>
-            <div class="d-flex align-items-center">
-                <span id="welcome-text">
-                    Welcome @* <b>Tests tests </b>*@
-                    <b> @Model[0].FirstName </b>
-                    <b> @Model[0].LastName </b>
-                </span>
-                <a asp-controller="Patient" asp-action="LoginPage">
-                    <button id="log-out">
-                        <span id="button-text">
-                            Logout
-                        </span>
-                        <i id="button-icon" class="bi bi-box-arrow-right"> </i>
-                    </button>
-                </a>
-                <button id="them-icon">
-                    <i class="bi-moon"> </i>
-                </button>
-            </div>
-        </div>
-        <hr />
-        <div id="header-buttom">
-            <button class="btn navbar-item" onclick="changeTab(dashboard_content)">
-                Dashboard
-            </button>
-            <button class="btn navbar-item" onclick="changeTab(profile_content)">
-                Profile
-            </button>
-        </div>
-    </header>
-    <div id="side-bar">
-        <button class="sidebar-button navbar-item" id="dashboard" onclick="changeTab(dashboard_content,true)">
-            Dashboard
-        </button>
-        <button class="sidebar-button navbar-item" id="profile" onclick="changeTab(profile_content,false)">
-            Profile
-        </button>
-    </div>
+    <partial name="_DashboardHeader" />
     <div class="tab-content" id="dashboard_content">
         <span class="h3">
             Medical History
@@ -106,12 +62,14 @@
                                 </td>
                                 <td>
                                     @{
-                                        if (@iteam.DoumentsPaths != null)
+                                        if (@iteam.Document.Count>0)
                                         {
                                             //str = '"' + @iteam.DoumentsPaths.ToString() + '"';
-                                            <button id="document" onclick="window.open("@iteam.DoumentsPaths.ToString()", '_blank');">
-                                                (1) Document
-                                            </button>
+                                            <a asp-controller="Patient" asp-action="ViewDocument" asp-route-id="@iteam.Document">
+                                                <button id="document">
+                                                    (@iteam.Document.Count) Document
+                                                </button>
+                                            </a>
                                         }
                                     }
                                 </td>
@@ -155,12 +113,13 @@
                                     <i class="bi bi-check-circle me-2"></i>
                                     <b class="me-2">Current Status: - </b> @status[int.Parse(@iteam.Status.ToString())-1]
                                     @{
-                                        if (@iteam.DoumentsPaths != null)
+                                        if (@iteam.Document.Count > 0)
                                         {
-                                        // String str = Model.DoumentsPaths.ToString();
-                                            <button id="document" onclick="openDocumnet(@iteam.DoumentsPaths.ToString())">
-                                                (1) Document
-                                            </button>
+                                            <a asp-controller="Patient" asp-action="ViewDocument" asp-route-id="@iteam.Document">
+                                                <button id="document">
+                                                    (1) Document
+                                                </button>
+                                            </a>
                                         }
                                     }
                                 </div>

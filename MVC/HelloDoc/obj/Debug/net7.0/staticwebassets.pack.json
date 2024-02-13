@@ -9,16 +9,48 @@
       "PackagePath": "staticwebassets\\Files\\29.txt"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\30.txt",
+      "PackagePath": "staticwebassets\\Files\\30.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\31.txt",
+      "PackagePath": "staticwebassets\\Files\\31.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\32.txt",
+      "PackagePath": "staticwebassets\\Files\\32.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\34.txt",
+      "PackagePath": "staticwebassets\\Files\\34.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\36.txt",
+      "PackagePath": "staticwebassets\\Files\\36.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\37.txt",
+      "PackagePath": "staticwebassets\\Files\\37.txt"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\international-telephone-input.css",
       "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\Footer.css",
-      "PackagePath": "staticwebassets\\css\\patient\\Footer.css"
-    },
-    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\PatientSite.css",
       "PackagePath": "staticwebassets\\css\\patient\\PatientSite.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\_dashboardHeader.css",
+      "PackagePath": "staticwebassets\\css\\patient\\_dashboardHeader.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\_requestFooter.css",
+      "PackagePath": "staticwebassets\\css\\patient\\_requestFooter.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\_requestHeader.css",
+      "PackagePath": "staticwebassets\\css\\patient\\_requestHeader.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\businessRequest.css",
@@ -37,10 +69,6 @@
       "PackagePath": "staticwebassets\\css\\patient\\familyFriendRequest.css"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\header.css",
-      "PackagePath": "staticwebassets\\css\\patient\\header.css"
-    },
-    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\loginPage.css",
       "PackagePath": "staticwebassets\\css\\patient\\loginPage.css"
     },
@@ -55,6 +83,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\submitRequest.css",
       "PackagePath": "staticwebassets\\css\\patient\\submitRequest.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\viewDocument.css",
+      "PackagePath": "staticwebassets\\css\\patient\\viewDocument.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\favicon.ico",

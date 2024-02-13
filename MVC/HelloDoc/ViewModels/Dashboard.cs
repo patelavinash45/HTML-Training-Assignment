@@ -15,18 +15,15 @@ namespace HelloDoc.ViewModels
         [StringLength(100)]
         public string? LastName { get; set; }
 
-        [Column("strMonth")]
         [StringLength(20)]
         public string? StrMonth { get; set; }
 
-        [Column("intYear")]
         public int? IntYear { get; set; }
 
-        [Column("intDate")]
         public int? IntDate { get; set; }
 
         public short? Status { get; set; }
 
-        public String? DoumentsPaths { get; set; }
+        public List<int> Document { get; set; }
     }
 }

@@ -5,7 +5,7 @@ function changeTab(element1, element2) {
         temp[i].style.display = "none";
     }
     // display.getElementsByClassName("element").style.fontweight="bold";
-    element1.style.display = "inline";
+    element1.style.display = "Block";
     if (element2) {
         document.getElementById("dashboard").style.backgroundColor = "#dcdbdb";
         document.getElementById("dashboard").style.color = "cadetblue";
@@ -22,9 +22,8 @@ function changeTab(element1, element2) {
 
 function sidebar() {
     var temp = document.getElementById("side-bar").style.display;
-    console.log(document.getElementById("side-bar").style);
     if (temp == "none") {
-        document.getElementById("side-bar").style.display = "inline";
+        document.getElementById("side-bar").style.display = "block";
     } else {
         document.getElementById("side-bar").style.display = "none";
     }
