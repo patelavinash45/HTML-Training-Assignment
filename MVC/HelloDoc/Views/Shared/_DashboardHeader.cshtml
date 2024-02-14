@@ -11,8 +11,13 @@
         <div class="d-flex align-items-center">
             <span id="welcome-text">
                 Welcome @* <b>Tests tests </b>*@
-                @*<b> @Model[0].FirstName </b>
-                <b> @Model[0].LastName </b>*@
+                @{
+                    //if(Model[0].)
+                    //{
+                    //    <b> @Model[0].FirstName </b>
+                    //    <b> @Model[0].LastName </b>
+                    //}
+                }
             </span>
             <a asp-controller="Patient" asp-action="LoginPage">
                 <button id="log-out">

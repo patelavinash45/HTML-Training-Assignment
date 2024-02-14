@@ -147,6 +147,10 @@ input[type=file]::-webkit-file-upload-button {
     top: 15px;
 }
 
+#input-password {
+    display: none;
+}
+
 /* media Queries */
 
 @media screen and (max-width:576px) {
@@ -156,7 +160,7 @@ input[type=file]::-webkit-file-upload-button {
     }
 
     .fs-5 {
-        font-size: 1rem !important;;
+        font-size: 1rem !important;
     }
 
     .fw-semibold {

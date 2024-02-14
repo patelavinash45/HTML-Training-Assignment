@@ -1,6 +1,7 @@
 ﻿using HelloDoc.DataContext;
 using HelloDoc.DataModels;
 using HelloDoc.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -56,14 +57,15 @@ namespace HelloDoc.Controllers
             return View();
         }
 
-        public IActionResult ViewDocument(List<int> requestIds)
-        { 
+        public IActionResult ViewDocument(int id)
+        {
+            List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == id).ToList();
             List<ViewDocument> viewDocuments = new List<ViewDocument>();
-            for(int i=0;i<1;i++)
+            for(int i=0;i< requestWiseFiles.Count; i++)
             { 
                 String uploader;
-                Request request = _dbContext.Requests.FirstOrDefault(a => a.RequestId == 29);
-                uploader=request.FirstName+request.LastName;
+                Request request = _dbContext.Requests.FirstOrDefault(a => a.RequestId == id);
+                uploader=request.FirstName+" "+request.LastName;
                 RequestWiseFile requestWiseFile = _dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestId == request.RequestId);
                 ViewDocument viewDocument = new()
                 {
@@ -93,34 +95,58 @@ namespace HelloDoc.Controllers
             for (int i = 0; i < requests.Count; i++)
             {
                 List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == requests[i].RequestId).ToList();
-                List<int> requestIds = new List<int>() { };
-                for(int j=0; j< requestWiseFiles.Count; j++)
-                {
-                    requestIds.Add(requestWiseFiles[j].RequestId);
-                }
                 Dashboard dashboard = new()
                 {
+                    RequestId= requests[i].RequestId,
                     FirstName = requestClient[i].FirstName,
                     LastName = requestClient[i].LastName,
                     StrMonth = requestClient[i].StrMonth,
                     IntYear = requestClient[i].IntYear,
                     IntDate = requestClient[i].IntDate,
                     Status = requestClient[i].Status,
-                    Document = requestIds,
+                    Document = requestWiseFiles.Count,
                 };
                 dashboards.Add(dashboard);
             }
             return View(dashboards);
         }
+            
+        [HttpPost]
+        public async Task<bool> UploadFile(IFormFile file)
+        {
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            };
+            FileInfo fileInfo = new FileInfo(file.FileName);
+            string fileName = fileInfo.Name + "40" + fileInfo.Extension;
+            string fileNameWithPath = Path.Combine(path, fileName);
+            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+            RequestWiseFile requestWiseFile = new()
+            {
+                RequestId = 40,
+                FileName = fileName,
+                CreatedDate = DateTime.Now,
+            };
+            _dbContext.Add(requestWiseFile);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
 
+        [HttpGet]
+        [ValidateAntiForgeryToken]
         public Task<bool> IsEmailExists(string email)
         {
-            bool isExist = _dbContext.AspNetUsers.Any(x => x.Email == email);
-            if (isExist)
+            AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == email.Trim());
+            if (aspNetUser == null)
             {
-                return Task.FromResult(true);
+                return Task.FromResult(false);
             }
-            return Task.FromResult(false);
+            return Task.FromResult(true);
         }
 
         [HttpGet]
@@ -136,7 +162,7 @@ namespace HelloDoc.Controllers
         {
             if(ModelState.IsValid)
             {
-                var aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
                 if (aspNetUser == null)
                 {
                     ViewBag.error = 1;
@@ -166,7 +192,7 @@ namespace HelloDoc.Controllers
             {
                 AspNetRole aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
                  if(aspNetRole == null)
-                {
+                 {
                     aspNetRole = new()
                     {
                         Name = "Patient",
@@ -174,50 +200,54 @@ namespace HelloDoc.Controllers
                     _dbContext.Add(aspNetRole);
                     await _dbContext.SaveChangesAsync();
                     //aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
-                };
+                 };
                 //
-                AspNetUser aspNetUser = new()
+                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                User user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                if(aspNetUser == null)
                 {
-                    UserName = model.FirstName,
-                    Email = model.Email,
-                    PhoneNumber = model.Mobile,
-                    PasswordHash = "123456",
-                    Ip = "123.123.123.123",
-                    CreatedDate = DateTime.Now
-                };
-                _dbContext.Add(aspNetUser);
-                await _dbContext.SaveChangesAsync();
-                //
-                //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                User user = new()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    Mobile = model.Mobile,  
-                    Street = model.Street,
-                    City = model.City,
-                    State = model.State,
-                    ZipCode = model.ZipCode,
-                    AspNetUserId = aspNetUser.Id,
-                    CreatedBy = aspNetUser.Id,
-                    CreatedDate = DateTime.Now,
-                    House=model.House,
-                    IntYear=model.BirthDate.Value.Year,
-                    IntDate= model.BirthDate.Value.Day,
-                    StrMonth= model.BirthDate.Value.Month.ToString(),
-                };
-                _dbContext.Add(user);
-                await _dbContext.SaveChangesAsync();
-                //
-                //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                AspNetUserRole aspNetUserRole = new()
-                {
-                    UserId = aspNetUser.Id,
-                    RoleId = aspNetRole.Id,
-                };
-                _dbContext.Add(aspNetUserRole);
-                await _dbContext.SaveChangesAsync();
+                    aspNetUser= new()
+                    {
+                        UserName = model.FirstName,
+                        Email = model.Email,
+                        PhoneNumber = model.Mobile,
+                        PasswordHash = model.Password,
+                        CreatedDate = DateTime.Now
+                    };
+                    _dbContext.Add(aspNetUser);
+                    await _dbContext.SaveChangesAsync();
+                    //
+                    //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                    user = new()
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        Mobile = model.Mobile,
+                        Street = model.Street,
+                        City = model.City,
+                        State = model.State,
+                        ZipCode = model.ZipCode,
+                        AspNetUserId = aspNetUser.Id,
+                        CreatedBy = aspNetUser.Id,
+                        CreatedDate = DateTime.Now,
+                        House = model.House,
+                        IntYear = model.BirthDate.Value.Year,
+                        IntDate = model.BirthDate.Value.Day,
+                        StrMonth = model.BirthDate.Value.Month.ToString(),
+                    };
+                    _dbContext.Add(user);
+                    await _dbContext.SaveChangesAsync();
+                    //
+                    //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                    AspNetUserRole aspNetUserRole = new()
+                    {
+                        UserId = aspNetUser.Id,
+                        RoleId = aspNetRole.Id,
+                    };
+                    _dbContext.Add(aspNetUserRole);
+                    await _dbContext.SaveChangesAsync();
+                }
                 //
                 //user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == user.Email.Trim());
                 Request request = new()
@@ -234,21 +264,29 @@ namespace HelloDoc.Controllers
                 await _dbContext.SaveChangesAsync();
                 //
                 //request = _dbContext.Requests.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-                if(!Directory.Exists(path))
+                if (model.File != null)
                 {
-                    Directory.CreateDirectory(path);
-                };
-                path = Path.Combine(path, request.RequestId.ToString()+".txt");
-                model.File.CopyTo(new FileStream(path, FileMode.Create));
-                RequestWiseFile requestWiseFile = new()
-                {
-                    RequestId = request.RequestId,
-                    FileName = path,
-                    CreatedDate = DateTime.Now,
-                };
-                _dbContext.Add(requestWiseFile);
-                await _dbContext.SaveChangesAsync();
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    };
+                    FileInfo fileInfo = new FileInfo(model.File.FileName);
+                    string fileName = request.RequestId + "_"+ fileInfo.Name;
+                    string fileNameWithPath = Path.Combine(path, fileName);
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        model.File.CopyTo(stream);
+                    }
+                    RequestWiseFile requestWiseFile = new()
+                    {
+                        RequestId = request.RequestId,
+                        FileName = fileName,
+                        CreatedDate = DateTime.Now,
+                    };
+                    _dbContext.Add(requestWiseFile);
+                    await _dbContext.SaveChangesAsync();
+                }
                 //
                 Region region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
                 if (region == null)
@@ -301,50 +339,55 @@ namespace HelloDoc.Controllers
                     };
                     _dbContext.Add(aspNetRole);
                     await _dbContext.SaveChangesAsync();
-                    aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
+                    //aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
                 };
                 //
-                AspNetUser aspNetUser = new()
+                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                User user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                if (aspNetUser == null)
                 {
-                    UserName = model.FirstName,
-                    Email = model.Email,
-                    PhoneNumber = model.Mobile,
-                    PasswordHash = "123456",
-                    Ip = "123.123.123.123",
-                    CreatedDate = DateTime.Now
-                };
-                _dbContext.Add(aspNetUser);
-                await _dbContext.SaveChangesAsync();
-                //
-                //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                AspNetUserRole aspNetUserRole = new()
-                {
-                    UserId = aspNetUser.Id,
-                    RoleId = aspNetRole.Id,
-                };
-                _dbContext.Add(aspNetUserRole);
-                await _dbContext.SaveChangesAsync();
-                //
-                User user = new()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    Mobile = model.Mobile,
-                    Street = model.Street,
-                    City = model.City,
-                    State = model.State,
-                    ZipCode = model.ZipCode,
-                    AspNetUserId = aspNetUser.Id,
-                    CreatedBy = aspNetUser.Id,
-                    CreatedDate = DateTime.Now,
-                    House = model.House,
-                    IntYear = model.BirthDate.Value.Year,
-                    IntDate = model.BirthDate.Value.Day,
-                    StrMonth = model.BirthDate.Value.Month.ToString(),
-                };
-                _dbContext.Add(user);
-                await _dbContext.SaveChangesAsync();
+                    aspNetUser = new()
+                    {
+                        UserName = model.FirstName,
+                        Email = model.Email,
+                        PhoneNumber = model.Mobile,
+                        PasswordHash = model.Password,
+                        CreatedDate = DateTime.Now
+                    };
+                    _dbContext.Add(aspNetUser);
+                    await _dbContext.SaveChangesAsync();
+                    //
+                    //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                    user = new()
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        Mobile = model.Mobile,
+                        Street = model.Street,
+                        City = model.City,
+                        State = model.State,
+                        ZipCode = model.ZipCode,
+                        AspNetUserId = aspNetUser.Id,
+                        CreatedBy = aspNetUser.Id,
+                        CreatedDate = DateTime.Now,
+                        House = model.House,
+                        IntYear = model.BirthDate.Value.Year,
+                        IntDate = model.BirthDate.Value.Day,
+                        StrMonth = model.BirthDate.Value.Month.ToString(),
+                    };
+                    _dbContext.Add(user);
+                    await _dbContext.SaveChangesAsync();
+                    //
+                    //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                    AspNetUserRole aspNetUserRole = new()
+                    {
+                        UserId = aspNetUser.Id,
+                        RoleId = aspNetRole.Id,
+                    };
+                    _dbContext.Add(aspNetUserRole);
+                    await _dbContext.SaveChangesAsync();
+                }
                 //
                 //user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
                 Request request = new()
@@ -358,6 +401,30 @@ namespace HelloDoc.Controllers
                 };
                 _dbContext.Add(request);
                 await _dbContext.SaveChangesAsync();
+                //
+                if (model.File != null)
+                {
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    };
+                    FileInfo fileInfo = new FileInfo(model.File.FileName);
+                    string fileName = model.File.FileName + request.RequestId + fileInfo.Extension;
+                    string fileNameWithPath = Path.Combine(path, fileName);
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        model.File.CopyTo(stream);
+                    }
+                    RequestWiseFile requestWiseFile = new()
+                    {
+                        RequestId = request.RequestId,
+                        FileName = fileName,
+                        CreatedDate = DateTime.Now,
+                    };
+                    _dbContext.Add(requestWiseFile);
+                    await _dbContext.SaveChangesAsync();
+                }
                 //
                 Region region =_dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.ConciergeState.Trim());
                 if(region == null)
@@ -449,47 +516,52 @@ namespace HelloDoc.Controllers
                     //aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
                 };
                 //
-                AspNetUser aspNetUser = new()
+                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                User user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                if (aspNetUser == null)
                 {
-                    UserName = model.FirstName,
-                    Email = model.Email,
-                    PhoneNumber = model.Mobile,
-                    PasswordHash = "123456",
-                    Ip = "123.123.123.123",
-                    CreatedDate = DateTime.Now
-                };
-                _dbContext.Add(aspNetUser);
-                await _dbContext.SaveChangesAsync();
-                //
-                //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                AspNetUserRole aspNetUserRole = new()
-                {
-                    UserId = aspNetUser.Id,
-                    RoleId = aspNetRole.Id,
-                };
-                _dbContext.Add(aspNetUserRole);
-                await _dbContext.SaveChangesAsync();
-                //
-                User user = new()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    Mobile = model.Mobile,
-                    Street = model.Street,
-                    City = model.City,
-                    State = model.State,
-                    ZipCode = model.ZipCode,
-                    AspNetUserId = aspNetUser.Id,
-                    CreatedBy = aspNetUser.Id,
-                    CreatedDate = DateTime.Now,
-                    House = model.House,
-                    IntYear = model.BirthDate.Value.Year,
-                    IntDate = model.BirthDate.Value.Day,
-                    StrMonth = model.BirthDate.Value.Month.ToString(),
-                };
-                _dbContext.Add(user);
-                await _dbContext.SaveChangesAsync();
+                    aspNetUser = new()
+                    {
+                        UserName = model.FirstName,
+                        Email = model.Email,
+                        PhoneNumber = model.Mobile,
+                        PasswordHash = model.Password,
+                        CreatedDate = DateTime.Now
+                    };
+                    _dbContext.Add(aspNetUser);
+                    await _dbContext.SaveChangesAsync();
+                    //
+                    //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                    user = new()
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        Mobile = model.Mobile,
+                        Street = model.Street,
+                        City = model.City,
+                        State = model.State,
+                        ZipCode = model.ZipCode,
+                        AspNetUserId = aspNetUser.Id,
+                        CreatedBy = aspNetUser.Id,
+                        CreatedDate = DateTime.Now,
+                        House = model.House,
+                        IntYear = model.BirthDate.Value.Year,
+                        IntDate = model.BirthDate.Value.Day,
+                        StrMonth = model.BirthDate.Value.Month.ToString(),
+                    };
+                    _dbContext.Add(user);
+                    await _dbContext.SaveChangesAsync();
+                    //
+                    //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                    AspNetUserRole aspNetUserRole = new()
+                    {
+                        UserId = aspNetUser.Id,
+                        RoleId = aspNetRole.Id,
+                    };
+                    _dbContext.Add(aspNetUserRole);
+                    await _dbContext.SaveChangesAsync();
+                }
                 //
                 //user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
                 Request request = new()
@@ -503,6 +575,30 @@ namespace HelloDoc.Controllers
                 };
                 _dbContext.Add(request);
                 await _dbContext.SaveChangesAsync();
+                //
+                if (model.File != null)
+                {
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    };
+                    FileInfo fileInfo = new FileInfo(model.File.FileName);
+                    string fileName = model.File.FileName + request.RequestId + fileInfo.Extension;
+                    string fileNameWithPath = Path.Combine(path, fileName);
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        model.File.CopyTo(stream);
+                    }
+                    RequestWiseFile requestWiseFile = new()
+                    {
+                        RequestId = request.RequestId,
+                        FileName = fileName,
+                        CreatedDate = DateTime.Now,
+                    };
+                    _dbContext.Add(requestWiseFile);
+                    await _dbContext.SaveChangesAsync();
+                }
                 //
                 Region region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
                 if (region == null)
@@ -559,47 +655,52 @@ namespace HelloDoc.Controllers
                     //aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
                 };
                 //
-                AspNetUser aspNetUser = new()
+                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                User user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                if (aspNetUser == null)
                 {
-                    UserName = model.FirstName,
-                    Email = model.Email,
-                    PhoneNumber = model.Mobile,
-                    PasswordHash = "123456",
-                    Ip = "123.123.123.123",
-                    CreatedDate = DateTime.Now
-                };
-                _dbContext.Add(aspNetUser);
-                await _dbContext.SaveChangesAsync();
-                //
-                //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                AspNetUserRole aspNetUserRole = new()
-                {
-                    UserId = aspNetUser.Id,
-                    RoleId = aspNetRole.Id,
-                };
-                _dbContext.Add(aspNetUserRole);
-                await _dbContext.SaveChangesAsync();
-                //
-                User user = new()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    Mobile = model.Mobile,
-                    Street = model.Street,
-                    City = model.City,
-                    State = model.State,
-                    ZipCode = model.ZipCode,
-                    AspNetUserId = aspNetUser.Id,
-                    CreatedBy = aspNetUser.Id,
-                    CreatedDate = DateTime.Now,
-                    House = model.House,
-                    IntYear = model.BirthDate.Value.Year,
-                    IntDate = model.BirthDate.Value.Day,
-                    StrMonth = model.BirthDate.Value.Month.ToString(),
-                };
-                _dbContext.Add(user);
-                await _dbContext.SaveChangesAsync();
+                    aspNetUser = new()
+                    {
+                        UserName = model.FirstName,
+                        Email = model.Email,
+                        PhoneNumber = model.Mobile,
+                        PasswordHash = model.Password,
+                        CreatedDate = DateTime.Now
+                    };
+                    _dbContext.Add(aspNetUser);
+                    await _dbContext.SaveChangesAsync();
+                    //
+                    //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                    user = new()
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        Mobile = model.Mobile,
+                        Street = model.Street,
+                        City = model.City,
+                        State = model.State,
+                        ZipCode = model.ZipCode,
+                        AspNetUserId = aspNetUser.Id,
+                        CreatedBy = aspNetUser.Id,
+                        CreatedDate = DateTime.Now,
+                        House = model.House,
+                        IntYear = model.BirthDate.Value.Year,
+                        IntDate = model.BirthDate.Value.Day,
+                        StrMonth = model.BirthDate.Value.Month.ToString(),
+                    };
+                    _dbContext.Add(user);
+                    await _dbContext.SaveChangesAsync();
+                    //
+                    //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
+                    AspNetUserRole aspNetUserRole = new()
+                    {
+                        UserId = aspNetUser.Id,
+                        RoleId = aspNetRole.Id,
+                    };
+                    _dbContext.Add(aspNetUserRole);
+                    await _dbContext.SaveChangesAsync();
+                }
                 //
                 //user= _dbContext.Users.FirstOrDefault(a =>a.Email.Trim() == model.Email.Trim());
                 Request request = new()
@@ -613,6 +714,30 @@ namespace HelloDoc.Controllers
                 };
                 _dbContext.Add(request);
                 await _dbContext.SaveChangesAsync();
+                //
+                if (model.File != null)
+                {
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    };
+                    FileInfo fileInfo = new FileInfo(model.File.FileName);
+                    string fileName = fileInfo.Name + request.RequestId + fileInfo.Extension;
+                    string fileNameWithPath = Path.Combine(path, fileName);
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        model.File.CopyTo(stream);
+                    }
+                    RequestWiseFile requestWiseFile = new()
+                    {
+                        RequestId = request.RequestId,
+                        FileName = fileName,
+                        CreatedDate = DateTime.Now,
+                    };
+                    _dbContext.Add(requestWiseFile);
+                    await _dbContext.SaveChangesAsync();
+                }
                 //
                 Business business = new()
                 {

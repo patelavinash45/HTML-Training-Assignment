@@ -8,14 +8,17 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\patient\LoginPage.js" />
+    <Content Remove="wwwroot\js\patient\viewDocument.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\patient\LoginPage.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\patient\viewDocument.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\js\patient\LoginPage.js" />
+    <None Include="wwwroot\js\patient\viewDocument.js" />
   </ItemGroup>
 
   <ItemGroup>

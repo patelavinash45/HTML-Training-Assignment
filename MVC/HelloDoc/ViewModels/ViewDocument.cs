@@ -6,7 +6,6 @@ namespace HelloDoc.ViewModels
 {
     public class ViewDocument
     { 
-
         [StringLength(500)]
         public string FileName { get; set; } = null!;
 

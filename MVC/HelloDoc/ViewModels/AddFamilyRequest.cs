@@ -56,6 +56,13 @@ namespace HelloDoc.ViewModels
             "\\w{1,63}\\.[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
         public string Email { get; set; } = null!;
 
+        [StringLength(100)]
+        public string? Password { get; set; }
+
+        [StringLength(100)]
+        [CompareAttribute("Password", ErrorMessage = "Password doesn't match.")]
+        public string? ConformPassword { get; set; }
+
         [StringLength(20)]
         [Required]
         public string? Mobile { get; set; }
@@ -84,5 +91,7 @@ namespace HelloDoc.ViewModels
 
         [Required]
         public DateTime? BirthDate { get; set; }
+
+        public IFormFile? File { get; set; }
     }
 }

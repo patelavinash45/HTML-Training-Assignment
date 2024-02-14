@@ -25,6 +25,7 @@ namespace HelloDoc.ViewModels
         public string? Password { get; set; }
 
         [StringLength(100)]
+        [CompareAttribute("Password", ErrorMessage = "Password doesn't match.")]
         public string? ConformPassword { get; set; }
 
         [StringLength(20)]

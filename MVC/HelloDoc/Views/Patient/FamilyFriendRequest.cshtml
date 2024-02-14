@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Family/Friend Request</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/patient/familyFriendRequest.css" rel="stylesheet" />
     <link href="~/css/international-telephone-input.css" rel="stylesheet" />
@@ -43,7 +44,7 @@
                 Back
             </a>
         </div>
-        <form asp-controller="Patient" asp-action="FamilyFriendRequest">
+        <form asp-controller="Patient" asp-action="FamilyFriendRequest" enctype="multipart/form-data">
             <div class="container" id="form">
                 <h5 class="fw-semibold">
                     Family/Friend Information
@@ -107,7 +108,7 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="Email" class="form-control" id="email" placeholder type="email" />
+                        <input asp-for="Email" class="form-control" id="email" placeholder type="email" onfocusout="checkEmail(this)" />
                         <label for="email">Email</label>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
@@ -115,6 +116,18 @@
                         <input asp-for="Mobile" class="form-control" id="phone2" placeholder type="tel" />
                         <span asp-validation-for="Mobile" class="text-danger"></span>
                         <!-- <label for="phone">Phone Number</label> -->
+                    </div>
+                </div>
+                <div class="row" id="input-password">
+                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                        <input asp-for="Password" class="form-control" id="password" type="password" />
+                        <label for="password">Password</label>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                        <input asp-for="ConformPassword" class="form-control" id="conform" type="password" />
+                        <label for="conform">Conform Password</label>
+                        <span asp-validation-for="ConformPassword" class="text-danger"></span>
                     </div>
                 </div>
                 <h5 class="fw-semibold mt-4">
@@ -155,8 +168,8 @@
                     (Optional)Upload Photo or Document
                 </h5>
                 <div class="input-group">
-                    <input class="form-control" placeholder="Select File" type="file" id="file-picker" />
-                    <button class="button fs-5">
+                    <input class="form-control" placeholder="Select File" type="file" id="file-picker" asp-for="File" />
+                    <button class="button fs-5" type="button">
                         <i class="bi bi-cloud-arrow-up-fill"></i>
                         Upload
                     </button>

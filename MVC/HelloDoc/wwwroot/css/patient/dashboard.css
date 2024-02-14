@@ -47,6 +47,55 @@ button {
     display: none;
 }
 
+#backBox {
+    border-color: cadetblue;
+    width: 100px;
+    height: 50px;
+    color: cadetblue;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+#form {
+    width: 100vw;
+    border-radius: 10px;
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.form-control {
+    margin-top: 2vh;
+}
+
+.form-floating > label {
+    left: 10px;
+    top: 25px;
+}
+
+.form-floating > .form-control:focus ~ label {
+    top: 15px;
+}
+
+input {
+    height: 58px;
+}
+
+input[type=file]::-webkit-file-upload-button {
+    display: none;
+}
+
+.bottom-button {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+    border: 1px solid #1db5d0;
+    border-radius: 10px;
+}
+
 #dashboard_content {
     display: block;
     margin: 25px;

@@ -53,7 +53,7 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="Email" class="form-control" id="email2"  type="email" />
+                        <input asp-for="Email" class="form-control" id="email" type="email" onfocusout="checkEmail(this)" />
                         <label for="email">Email</label>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
@@ -113,7 +113,7 @@
                 </h5>
                 <div class="input-group">
                     <input class="form-control" type="file" id="file-picker" asp-for="File"/>
-                    <button class="button fs-5">
+                    <button class="button fs-5" type="button">
                         <i class="bi bi-cloud-arrow-up-fill"></i>
                         Upload
                     </button>
