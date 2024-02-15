@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace HelloDoc.Controllers
 {
@@ -57,49 +58,117 @@ namespace HelloDoc.Controllers
             return View();
         }
 
+        public IActionResult ViewProfile(int id)
+        { 
+            User user = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == id);
+            DateTime birthDay = DateTime.Parse(user.IntYear + "-" + user.StrMonth + "-" + user.IntDate);
+            DashboardHeader dashboardHeader = new()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+            };
+            ViewProfile viewProfile = new()
+            {
+                AspNetUserId= id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                BirthDate = birthDay,
+                Email = user.Email,
+                Mobile = user.Mobile,
+                State = user.State,
+                Street = user.Street,
+                City = user.City,
+                ZipCode = user.ZipCode,
+                Header= dashboardHeader,
+            };
+            return View(viewProfile);
+        }
+
         public IActionResult ViewDocument(int id)
         {
             List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == id).ToList();
-            List<ViewDocument> viewDocuments = new List<ViewDocument>();
-            for(int i=0;i< requestWiseFiles.Count; i++)
-            { 
-                String uploader;
-                Request request = _dbContext.Requests.FirstOrDefault(a => a.RequestId == id);
-                uploader=request.FirstName+" "+request.LastName;
-                RequestWiseFile requestWiseFile = _dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestId == request.RequestId);
-                ViewDocument viewDocument = new()
-                {
-                    FileName=requestWiseFile.FileName,
-                    Uploder=uploader,
-                    Day= requestWiseFile.CreatedDate.Day,
-                    Month=requestWiseFile.CreatedDate.Month,
-                    Year=requestWiseFile.CreatedDate.Year,
-                    PhysicianId=requestWiseFile.PhysicianId,   
-                    AdminId=requestWiseFile.AdminId,
-                };
-                viewDocuments.Add(viewDocument);
-            }
-            return View(viewDocuments);
+            RequestClient requestClient = _dbContext.RequestClients.FirstOrDefault(a => a.RequestId == id);
+            //
+            //List<ViewDocument> viewDocuments = new List<ViewDocument>();
+            //for(int i=0;i< requestWiseFiles.Count; i++)
+            //{ 
+            //    String uploader;
+            //    Request request = _dbContext.Requests.FirstOrDefault(a => a.RequestId == id);
+            //    uploader=request.FirstName+" "+request.LastName;
+            //    RequestWiseFile requestWiseFile = _dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestId == request.RequestId);
+            //    ViewDocument viewDocument = new()
+            //    {
+            //        FileName=requestWiseFile.FileName,
+            //        Uploder=uploader,
+            //        Day= requestWiseFile.CreatedDate.Day,
+            //        Month=requestWiseFile.CreatedDate.Month,
+            //        Year=requestWiseFile.CreatedDate.Year,
+            //        PhysicianId=requestWiseFile.PhysicianId,   
+            //        AdminId=requestWiseFile.AdminId,
+            //    };
+            //    viewDocuments.Add(viewDocument);
+            //}
+            //
+            DashboardHeader dashboardHeader = new()
+            {
+                FirstName = requestClient.FirstName,
+                LastName = requestClient.LastName,
+            };
+            ViewDocument viewDocument = new()
+            {
+                FileList = requestWiseFiles,
+                Header = dashboardHeader,
+                RequestId = requestClient.RequestId,
+            };
+            return View(viewDocument);
         }
 
         public IActionResult Dashboard(int id)
         {
+            //Cookie AspNetUserId = new Cookie();
+            //AspNetUserId.Value = id.ToString();
+            //AspNetUserId.Expires = DateTime.Now.AddDays(30);
+            //TempData["AspNetUserId"] = id;
+            //
+            CookieOptions options = new CookieOptions();
+            options.Secure = true;
+            options.Expires = DateTime.Now.AddDays(60);
+            Response.Cookies.Append("AspNetUserId", id.ToString(), options);
             User user = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == id);
             List<Request> requests = _dbContext.Requests.Where(a => a.UserId == user.UserId).ToList();
+            //
+            //RequestClient requestClient = _dbContext.RequestClients.FirstOrDefault(a => a.RequestId == requests[0].RequestId);
+            //
             List<RequestClient> requestClient = new List<RequestClient>() { };
             for (int i = 0; i < requests.Count; i++)
             {
                 requestClient.Add(_dbContext.RequestClients.FirstOrDefault(a => a.RequestId == requests[i].RequestId));
             }
             List<Dashboard> dashboards = new List<Dashboard>() { };
-            for (int i = 0; i < requests.Count; i++)
+            List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == requests[0].RequestId).ToList();
+            DashboardHeader dashboardHeader = new()
             {
-                List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == requests[i].RequestId).ToList();
-                Dashboard dashboard = new()
+                FirstName = requestClient[0].FirstName,
+                LastName = requestClient[0].LastName,
+                userId = id,
+            };
+            Dashboard dashboard = new()
+            {
+                RequestId = requests[0].RequestId,
+                StrMonth = requestClient[0].StrMonth,
+                Header = dashboardHeader,
+                IntYear = requestClient[0].IntYear,
+                IntDate = requestClient[0].IntDate,
+                Status = requestClient[0].Status,
+                Document = requestWiseFiles.Count,
+            };
+            dashboards.Add(dashboard);
+            for (int i = 1; i < requests.Count; i++)
+            {
+                requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == requests[i].RequestId).ToList();
+                dashboard = new()
                 {
                     RequestId= requests[i].RequestId,
-                    FirstName = requestClient[i].FirstName,
-                    LastName = requestClient[i].LastName,
                     StrMonth = requestClient[i].StrMonth,
                     IntYear = requestClient[i].IntYear,
                     IntDate = requestClient[i].IntDate,
@@ -109,32 +178,6 @@ namespace HelloDoc.Controllers
                 dashboards.Add(dashboard);
             }
             return View(dashboards);
-        }
-            
-        [HttpPost]
-        public async Task<bool> UploadFile(IFormFile file)
-        {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            };
-            FileInfo fileInfo = new FileInfo(file.FileName);
-            string fileName = fileInfo.Name + "40" + fileInfo.Extension;
-            string fileNameWithPath = Path.Combine(path, fileName);
-            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-            {
-                file.CopyTo(stream);
-            }
-            RequestWiseFile requestWiseFile = new()
-            {
-                RequestId = 40,
-                FileName = fileName,
-                CreatedDate = DateTime.Now,
-            };
-            _dbContext.Add(requestWiseFile);
-            await _dbContext.SaveChangesAsync();
-            return true;
         }
 
         [HttpGet]
@@ -177,6 +220,66 @@ namespace HelloDoc.Controllers
                 {
                     return RedirectToAction("Dashboard", "Patient", new { id = aspNetUser.Id });
                 }
+            }
+            else
+            {
+                return View(null);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ViewProfile(ViewProfile model)
+        {
+            //if (ModelState.IsValid)
+            //{
+            User user = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == model.AspNetUserId);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+                    user.Email = model.Email;
+            user.Mobile = model.Mobile;
+            user.Street = model.Street;
+            user.City = model.City;
+            user.State = model.State;
+            user.ZipCode = model.ZipCode;
+                _dbContext.Update(user);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("ViewProfile", "Patient", new { id = Request.Cookies["AspNetUserId"] });
+            //}
+            //else
+            //{
+            //    return View(null);
+            //}
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ViewDocument(ViewDocument model)
+        {
+            if (model.File != null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                };
+                FileInfo fileInfo = new FileInfo(model.File.FileName);
+                string fileName = fileInfo.Name + model.RequestId + fileInfo.Extension;
+                string fileNameWithPath = Path.Combine(path, fileName);
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    model.File.CopyTo(stream);
+                }
+                RequestWiseFile requestWiseFile = new()
+                {
+                    RequestId = model.RequestId,
+                    FileName = fileName,
+                    CreatedDate = DateTime.Now,
+                };
+                _dbContext.Add(requestWiseFile);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("ViewDocument", "Patient", new { id = model.RequestId });
             }
             else
             {

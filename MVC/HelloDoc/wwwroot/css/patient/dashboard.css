@@ -43,9 +43,13 @@ button {
     flex-direction: row;
 }
 
-.tab-content {
-    display: none;
+#submit{
+    display:none;
 }
+
+/*.tab-content {
+    display: none;
+}*/
 
 #backBox {
     border-color: cadetblue;
@@ -86,6 +90,7 @@ input[type=file]::-webkit-file-upload-button {
 }
 
 .bottom-button {
+    margin-right: 20px;
     margin-top: 50px;
     display: flex;
     justify-content: center;
@@ -165,6 +170,13 @@ tr {
 .accordion-item {
     background-color: aliceblue;
     border-radius: 5px;
+}
+
+select {
+    height: 58px;
+    border-radius: 5px;
+    margin-right: 15px;
+    border-color: #ced4da;
 }
 
 /* -------------------media-queries-------------------*/

@@ -1,11 +1,11 @@
 function changeTab(element1, element2) {
-    var temp;
-    temp = document.getElementsByClassName("tab-content");
-    for (i = 0; i < temp.length; i++) {
-        temp[i].style.display = "none";
-    }
+    //var temp;
+    //temp = document.getElementsByClassName("tab-content");
+    //for (i = 0; i < temp.length; i++) {
+    //    temp[i].style.display = "none";
+    //}
     // display.getElementsByClassName("element").style.fontweight="bold";
-    element1.style.display = "Block";
+    //element1.style.display = "Block";
     if (element2) {
         document.getElementById("dashboard").style.backgroundColor = "#dcdbdb";
         document.getElementById("dashboard").style.color = "cadetblue";
@@ -17,7 +17,7 @@ function changeTab(element1, element2) {
         document.getElementById("dashboard").style.backgroundColor = "white";
         document.getElementById("dashboard").style.color = "black";
     }
-    document.getElementById("side-bar").style.display = "none";
+    /*//document.getElementById("side-bar").style.display = "none";*/
 }
 
 function sidebar() {
@@ -29,8 +29,17 @@ function sidebar() {
     }
 }
 
-function openDocumnet(path) {
-    console.log("hi");
-    Page.ClientScript.RegisterStartupScript(
-        this.GetType(), "OpenWindow", "window.open(path,'_newtab');", true);
+function ProfileEdit(temp) {
+    if (temp) {
+        $('#edit').css("display", "none");
+        $('#submit').css("display", "flex");
+        $('#submit').css("justifyContent", "end");
+        document.getElementById("Fieldset").disabled = false;
+    }
+    else {
+        document.getElementById("myFieldset").disabled = true;
+        $('#edit').css("display", "flex");
+        $('#edit').css("justifyContent", "end");
+        $('#submit').css("display", "none");
+    }
 }

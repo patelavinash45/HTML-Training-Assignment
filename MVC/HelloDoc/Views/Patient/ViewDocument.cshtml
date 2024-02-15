@@ -1,7 +1,5 @@
-﻿@model List<HelloDoc.ViewModels.ViewDocument>
-@{
-    List<String> months = new List<String>() { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
-}
+﻿@model HelloDoc.ViewModels.ViewDocument
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,14 +15,16 @@
     <script src="~/js/patient/dashboard.js"></script>
 </head>
 <body>
-    <partial name="_DashboardHeader" />
+    @{
+        @Html.Partial("~/Views/Shared/_DashboardHeader.cshtml",Model.Header);
+    }
     <div class="container tab-content" id="dashboard_content">
         <div class="d-flex flex-column align-items-center w-100 row">
             <div class="d-flex justify-content-between align-content-center mt-3 mb-3">
                 <span class="h3">
                     Documents
                 </span>
-                <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="62">
+                <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@TempData["AspNetUserId"]">
                     <button id="backBox">
                         <i class="bi bi-chevron-left"> </i>
                         Back
@@ -36,19 +36,23 @@
                     Patient Name
                 </div>
                 <div class="h3 w-100">
-                    Test test()
+                    @Model.Header.FirstName @Model.Header.LastName
                 </div>
                 <div class="w-100">
                     Check here for any files that you or the doctors of your
                     subsequents have attached for you to review.
                 </div>
-                <div class="input-group w-100 mb-4 mt-4">
-                    <input class="form-control" placeholder="Select File" type="file" id="file-picker" >
-                    <button class="fs-5 button" id="uploadButton" onclick="uploadFile(40)">
-                        <i class="bi bi-cloud-arrow-up-fill "></i>
-                        Upload
-                    </button>
-                </div>
+                <form asp-controller="Patient" asp-action="ViewDocument" enctype="multipart/form-data">
+                    <div class="input-group w-100 mb-4 mt-4">
+                        <input class="form-control" placeholder="Select File" type="file" id="file-picker" asp-for="File">
+                        <span asp-validation-for="File" class="text-danger"></span>
+                        <input class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="RequestId">
+                        <button class="fs-5 button" id="uploadButton" type="submit">
+                            <i class="bi bi-cloud-arrow-up-fill "></i>
+                            Upload
+                        </button>
+                    </div>
+                </form>
                 <div class="d-flex justify-content-between align-content-center mt-3 mb-3">
                     <span class="h3 w-100">
                         Documents
@@ -98,7 +102,7 @@
                                     </button>
                                 </td>
                             </tr>*@
-                            @foreach(var item in Model)
+                            @foreach(var item in Model.FileList)
                             {
                                 <tr>
                                     <td>
@@ -110,7 +114,7 @@
                                         @item.Uploder
                                     </td>
                                     <td>
-                                        @months[item.Month-1] @item.Day, @item.Year
+                                        @item.CreatedDate.ToString("MMM dd, yyyy")
                                     </td>
                                     <td>
                                          <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" id="download">
@@ -126,7 +130,7 @@
                 </div>
                 <div class="accordion accordion-flush w-100"
                      id="accordionFlushExample">
-                    @foreach(var item in Model)
+                    @foreach(var item in Model.FileList)
                     {
                         <div class="accordion-item">
                             <h2 class="accordion-header"
@@ -150,7 +154,7 @@
                                             @item.Uploder
                                         </div>
                                         <div>
-                                            @months[item.Month-1] @item.Day, @item.Year
+                                            @item.CreatedDate.ToString("MMM dd, yyyy")
                                         </div>
                                     </div>
                                     <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" id="download">

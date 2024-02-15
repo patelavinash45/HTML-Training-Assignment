@@ -24,7 +24,9 @@
     <script src="~/js/patient/dashboard.js"></script>
 </head>
 <body>
-    <partial name="_DashboardHeader" />
+    @{
+        @Html.Partial("~/Views/Shared/_DashboardHeader.cshtml", Model[0].Header)
+    }
     <div class="tab-content" id="dashboard_content">
         <span class="h3">
             Medical History
@@ -132,108 +134,5 @@
             </div>
         </div>
     </div>
-    <div class="tab-content container" id="profile_content">
-        <div class="d-flex justify-content-between align-content-center mt-3 mb-3">
-            <span class="h3">
-                User Profile
-            </span>
-            <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="62">
-                <button id="backBox">
-                    <i class="bi bi-chevron-left"> </i>
-                    Back
-                </button>
-            </a>
-        </div>
-        <form class="w-100" enctype="multipart/form-data" id="form">
-                <h5 class="fw-semibold">
-                    General Information
-                </h5>
-                <div class="row">
-                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="first-name" />
-                        <label for="first-name">First Name</label>
-                        @*<span asp-validation-for="FirstName" class="text-danger"></span>*@
-                    </div>
-                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input  class="form-control" id="last-name" />
-                        <label for="last-name">Last Name</label>
-                        @*<span asp-validation-for="LastName" class="text-danger"></span>*@
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input  class="form-control" id="date" type="date" />
-                        <label id="date-picker" for="date">Date of Birth</label>
-                        @*<span asp-validation-for="BirthDate" class="text-danger"></span>*@
-                    </div>
-                </div>
-                <h5 class="fw-semibold mt-4">
-                    Contact Information
-                </h5>
-                <div class="row">
-                    @*<div class="form-floating col-xl-6 col-md-6 col-lg-6">*@
-                        @*<input  class="form-control" id="phone" type="tel" />*@
-                        @*<span asp-validation-for="Mobile" class="text-danger"></span>*@
-                        @*<label for="phone">Phone Number</label> *@
-                    @*</div>*@
-                    <div class="col-xl-6 col-md-6 col-lg-6">
-                        <div class="row">
-                        <select class="form-select col-xl-4 col-md-4 col-lg-4" aria-label="Default select example">
-                            <option value="1" selected>Mobile</option>
-                                <option value="2">Land Line</option>
-                            </select>
-                            <div class="form-floating col-xl-8 col-md-8 col-lg-8">
-                                <input  class="form-control" id="phone" type="tel" />
-                                @*<span asp-validation-for="Mobile" class="text-danger"></span>*@
-                                @*<label for="phone">Phone Number</label> *@
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input  class="form-control" id="email" type="email" onfocusout="checkEmail(this)" />
-                        <label for="email">Email</label>
-                        @*<span asp-validation-for="Email" class="text-danger"></span>*@
-                    </div>
-                </div>
-                <h5 class="fw-semibold mt-4">
-                    Location Information
-                </h5>
-                <div class="row">
-                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input  class="form-control" id="street" />
-                        <label for="street">Street</label>
-                        @*<span asp-validation-for="Street" class="text-danger"></span>*@
-                    </div>
-                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="city" />
-                        <label for="city">city</label>
-                        @*<span asp-validation-for="City" class="text-danger"></span>*@
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input  class="form-control" id="state" />
-                        <label for="state">State</label>
-                        @*<span asp-validation-for="State" class="text-danger"></span>*@
-                    </div>
-                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input  class="form-control" id="zip-code" />
-                        <label for="zip-code">Zip-Code</label>
-                        @*<span asp-validation-for="ZipCode" class="text-danger"></span>*@
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button class="bottom-button" id="submit-button">
-                        Edit
-                    </button>
-                </div>
-        </form>
-    </div>
-    <script>
-        const phoneInputField = document.getElementById("phone");
-        const phoneInput = window.intlTelInput(phoneInputField, {
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        });
-    </script>
 </body>
 </html>

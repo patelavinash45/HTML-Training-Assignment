@@ -47,6 +47,9 @@ public partial class RequestWiseFile
     [Column(TypeName = "bit(1)")]
     public BitArray? IsPatientRecords { get; set; }
 
+    [StringLength(50)]
+    public string? Uploder { get; set; }
+
     [ForeignKey("AdminId")]
     [InverseProperty("RequestWiseFiles")]
     public virtual Admin? Admin { get; set; }
