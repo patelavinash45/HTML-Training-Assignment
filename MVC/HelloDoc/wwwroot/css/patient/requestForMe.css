@@ -1,5 +1,9 @@
-body {
+﻿body {
     background-color: #dcdbdb;
+}
+
+#header-buttom{
+    display: none;
 }
 
 #logo-image {
@@ -65,7 +69,7 @@ body {
     background-color: transparent;
 }
 
-button {
+.uploadButton {
     height: 58px;
     margin-top: 18px;
     width: 150px;
@@ -75,17 +79,17 @@ button {
     color: white;
 }
 
-button:hover {
-    font-weight: bold;
- }
+    button:hover {
+        font-weight: bold;
+    }
 
 input {
     height: 58px;
 }
 
-input[type=file]::-webkit-file-upload-button {
-    display: none;
-}
+    input[type=file]::-webkit-file-upload-button {
+        display: none;
+    }
 
 .bottom-button {
     margin-top: 50px;
@@ -123,8 +127,8 @@ input[type=file]::-webkit-file-upload-button {
     top: 15px;
 }
 
-#input-password{
-    display:none;
+#input-password {
+    display: none;
 }
 
 

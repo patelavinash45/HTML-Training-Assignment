@@ -24,7 +24,7 @@
                 <span class="h3">
                     Documents
                 </span>
-                <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@TempData["AspNetUserId"]">
+                <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.Header.AspNetUserId">
                     <button id="backBox">
                         <i class="bi bi-chevron-left"> </i>
                         Back
@@ -47,6 +47,8 @@
                         <input class="form-control" placeholder="Select File" type="file" id="file-picker" asp-for="File">
                         <span asp-validation-for="File" class="text-danger"></span>
                         <input class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="RequestId">
+                        <input class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="Header.FirstName">
+                        <input class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="Header.LastName">
                         <button class="fs-5 button" id="uploadButton" type="submit">
                             <i class="bi bi-cloud-arrow-up-fill "></i>
                             Upload
@@ -106,7 +108,7 @@
                             {
                                 <tr>
                                     <td>
-                                        <input type="checkbox" id="checkBox">
+                                        <input type="checkbox" class="checkBox">
                                         <i class="bi bi-file-earmark-pdf-fill mx-2"></i>
                                         @item.FileName
                                     </td>
@@ -117,7 +119,7 @@
                                         @item.CreatedDate.ToString("MMM dd, yyyy")
                                     </td>
                                     <td>
-                                         <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" id="download">
+                                         <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" class="download">
                                               <button id="downloadButton">
                                                    <i class="bi bi-cloud-arrow-down"></i>
                                               </button>
@@ -157,7 +159,7 @@
                                             @item.CreatedDate.ToString("MMM dd, yyyy")
                                         </div>
                                     </div>
-                                    <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" id="download">
+                                    <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" class="download">
                                         <button id="downloadButton">
                                             <i class="bi bi-cloud-arrow-down"></i>
                                         </button>

@@ -43,3 +43,33 @@ function ProfileEdit(temp) {
         $('#submit').css("display", "none");
     }
 }
+
+//function changeTab(element1) {
+//    if (element1) {
+//        $("#dashboardHr").css("display", "block");
+//        $("#profileHr").css("display", "none");
+//    }
+//    else {
+//        $("#profileHr").css("display", "block");
+//        $("#dashboardHr").css("display", "none");
+//    }
+//}
+
+function changeRadio(element) {
+    if (element) {
+        $('.forMe').css("background-color", "cadetblue");
+        $('.forMe').css("color", "white");
+        $('.forSomeOne').css("background-color", "white");
+        $('.forSomeOne').css("color", "cadetblue");
+        $("#forMe").css("display", "block");
+        $("#forSomeOne").css("display", "none");
+    }
+    else {
+        $('.forSomeOne').css("background-color", "cadetblue");
+        $('.forSomeOne').css("color", "white");
+        $('.forMe').css("background-color", "white");
+        $('.forMe').css("color", "cadetblue");
+        $("#forSomeOne").css("display", "block");
+        $("#forMe").css("display", "none");
+    }
+}

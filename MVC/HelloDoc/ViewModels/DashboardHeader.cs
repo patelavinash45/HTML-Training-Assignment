@@ -12,6 +12,6 @@ namespace HelloDoc.ViewModels
         [Required]
         public string? LastName { get; set; }
 
-        public int? userId { get; set; }
+        public int? AspNetUserId { get; set; }
     }
 }

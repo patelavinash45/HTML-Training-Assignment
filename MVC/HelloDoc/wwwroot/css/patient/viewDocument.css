@@ -87,6 +87,10 @@ input[type=file]::-webkit-file-upload-button {
     display: none;
 }
 
+#header-buttom {
+    display: none;
+}
+
 /* media Queries */
 @media screen and (max-width:778px) {
     #accordionFlushExample {

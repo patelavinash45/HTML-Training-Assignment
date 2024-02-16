@@ -13,8 +13,8 @@
         <div class="d-flex align-items-center">
             <span id="welcome-text">
                 Welcome @* <b>Tests tests </b>*@
-                @*<b> @Model.FirstName </b>
-                <b> @Model.LastName </b>*@
+                <b> @Model.FirstName </b>
+                <b> @Model.LastName </b>
             </span>
             <a asp-controller="Patient" asp-action="LoginPage">
                 <button id="log-out">
@@ -31,25 +31,27 @@
     </div>
     <hr/>
     <div id="header-buttom">
-        <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.userId">
-            <button class="btn navbar-item">
+        <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.AspNetUserId">
+            <button class="navbar-item border-0" onclick="changeTab2(true)">
                 Dashboard
+                <hr id="dashboardHr" class="underLine"/>
             </button>
         </a>
-        <a asp-controller="Patient" asp-action="ViewProfile" asp-route-id="@Model.userId">
-            <button class="btn navbar-item">
+        <a asp-controller="Patient" asp-action="ViewProfile" asp-route-id="@Model.AspNetUserId">
+            <button class="navbar-item border-0" onclick="changeTab2(false)">
                 Profile
+                <hr id="profileHr" class="underLine" />
             </button>
         </a>
     </div>
 </header>
 <div id="side-bar" >
-    <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.userId">
+    <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.AspNetUserId">
         <button class="sidebar-button navbar-item w-75" id="dashboard" onclick="changeTab(true)">
             Dashboard
         </button>
     </a>
-    <a asp-controller="Patient" asp-action="ViewProfile" asp-route-id="@Model.userId">
+    <a asp-controller="Patient" asp-action="ViewProfile" asp-route-id="@Model.AspNetUserId">
         <button class="sidebar-button navbar-item w-75" id="profile" onclick="changeTab(false)">
             Profile
         </button>

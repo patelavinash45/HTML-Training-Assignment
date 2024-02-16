@@ -26,13 +26,30 @@ function uploadFile(id) {
 
 $('#mainCheckBox').click(function () {
     if ($(this).is(':checked')) {
-        $('#checkBox').prop('checked', true);
+        console.log($('.checkBox'));
+        $('.checkBox').prop('checked', true);
     }
     else {
-        $('#checkBox').prop('checked', false);
+        $('.checkBox').prop('checked', false);
     }
 });
 
 $('#downloadText').click(function () {
-    $('#download')[0].click();
+    //var temp = $('.download');
+    //for (let i = 0; i < temp.length / 2; i++) {
+    //    temp[i].click();
+    //}
+    $.ajax({
+        url: '/Patient/DownloadAll',
+        type: 'GET',
+        contentType: 'application/json',
+        data: { id: 40 },
+        success: function (response) {
+            if (response.emailExists) {
+                $('#input-password').hide();
+            } else {
+                $('#input-password').css("display", "flex");
+            }
+        }
+    });
 });

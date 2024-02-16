@@ -26,7 +26,7 @@
             <span class="h3">
                 User Profile
             </span>
-            <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="62">
+            <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.Header.AspNetUserId">
                 <button id="backBox">
                     <i class="bi bi-chevron-left"> </i>
                     Back

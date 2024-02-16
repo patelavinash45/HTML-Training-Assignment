@@ -1,29 +1,32 @@
-﻿@model HelloDoc.ViewModels.AddPatientRequest
+﻿@model HelloDoc.ViewModels.AddRequestByPatient
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Patient Request</title>
+    <title>Request For Me</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/patient/patientRequest.css" rel="stylesheet" />
+    <link href="~/css/patient/requestForMe.css" rel="stylesheet" />
     <link href="~/css/international-telephone-input.css" rel="stylesheet" />
     <script src="~/js/international-telephone-input.js"></script>
-    <script src="~/js/Patient/Request.js"></script>
 </head>
 <body>
-    <partial name="_RequestHeader" />
+    @{
+        @Html.Partial("~/Views/Shared/_DashboardHeader.cshtml", Model.Header)
+    }
     <div id="main-body">
-        <div class="d-flex justify-content-end container">
-            <a id="back-box" asp-controller="Patient" asp-action="SubmitRequest">
+        <div class="d-flex justify-content-between container align-items-center">
+            <h3>
+                Submit Information
+            </h3>
+            <a id="back-box" asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.Header.AspNetUserId">
                 <i class="bi bi-chevron-left"> </i>
                 Back
             </a>
         </div>
-        <form class="w-100" asp-controller="Patient" asp-action="PatientRequest" enctype="multipart/form-data">
+        <form class="w-100" asp-controller="Patient" asp-action="RequestForMe" enctype="multipart/form-data">
             <div class="container" id="form">
                 <h5 class="fw-semibold">
                     Patient Information
@@ -31,12 +34,13 @@
                 <textarea asp-for="Symptoms" class="form-control" placeholder="Enter Brief Details Of Symptoms(Optional)" rows="3"></textarea>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="FirstName" class="form-control" id="first-name"  />
+                        <input asp-for="FirstName" class="form-control" id="first-name" />
+                        <input asp-for="FirstName" class="form-control" id="first-name" />
                         <label for="first-name">First Name</label>
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="LastName" class="form-control" id="last-name"  />
+                        <input asp-for="LastName" class="form-control" id="last-name" />
                         <label for="last-name">Last Name</label>
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
@@ -53,26 +57,15 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="Email" class="form-control" id="email" type="email" onfocusout="checkEmail(this)" />
+                        <input asp-for="Email" class="form-control" id="email" type="email" disabled />
+                        <input asp-for="Email" class="form-control d-none" id="email" type="email"  />
                         <label for="email">Email</label>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="Mobile" class="form-control" id="phone"  type="tel" />
+                        <input asp-for="Mobile" class="form-control" id="phone" type="tel" />
                         <span asp-validation-for="Mobile" class="text-danger"></span>
                         @*<label for="phone">Phone Number</label> *@
-                    </div>
-                </div>
-                <div class="row" id="input-password">
-                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="Password" class="form-control" id="password"  type="password"  />
-                        <label for="password">Password</label>
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="ConformPassword" class="form-control" id="conform"  type="password" />
-                        <label for="conform">Conform Password</label>
-                        <span asp-validation-for="ConformPassword" class="text-danger"></span>
                     </div>
                 </div>
                 <h5 class="fw-semibold mt-4">
@@ -80,31 +73,31 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="Street" class="form-control" id="street"  />
+                        <input asp-for="Street" class="form-control" id="street" />
                         <label for="street">Street</label>
                         <span asp-validation-for="Street" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="City" class="form-control" id="city"  />
+                        <input asp-for="City" class="form-control" id="city" />
                         <label for="city">city</label>
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="State" class="form-control" id="state"  />
+                        <input asp-for="State" class="form-control" id="state" />
                         <label for="state">State</label>
                         <span asp-validation-for="State" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="ZipCode" class="form-control" id="zip-code"  />
+                        <input asp-for="ZipCode" class="form-control" id="zip-code" />
                         <label for="zip-code">Zip-Code</label>
                         <span asp-validation-for="ZipCode" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-floating col-col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="House" class="form-control" id="house"  />
+                        <input asp-for="House" class="form-control" id="house" />
                         <label for="house">house(Optional)</label>
                     </div>
                 </div>
@@ -112,8 +105,8 @@
                     (Optional)Upload Photo or Document
                 </h5>
                 <div class="input-group">
-                    <input class="form-control" type="file" id="file-picker" asp-for="File"/>
-                    <button class="button fs-5" type="button">
+                    <input class="form-control" type="file" id="file-picker" asp-for="File" />
+                    <button class="uploadButton fs-5" type="button">
                         <i class="bi bi-cloud-arrow-up-fill"></i>
                         Upload
                     </button>
@@ -129,13 +122,11 @@
             </div>
         </form>
     </div>
-    <partial name="_RequestFooter" />
     <script>
         const phoneInputField = document.getElementById("phone");
         const phoneInput = window.intlTelInput(phoneInputField, {
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     </script>
-
 </body>
 </html>
