@@ -1,0 +1,12 @@
+D:\project\HTML Training Assignment\MVC\Repositories\bin\Debug\net7.0\Repositories.deps.json
+D:\project\HTML Training Assignment\MVC\Repositories\bin\Debug\net7.0\Repositories.dll
+D:\project\HTML Training Assignment\MVC\Repositories\bin\Debug\net7.0\Repositories.pdb
+D:\project\HTML Training Assignment\MVC\Repositories\obj\Debug\net7.0\Repositories.csproj.AssemblyReference.cache
+D:\project\HTML Training Assignment\MVC\Repositories\obj\Debug\net7.0\Repositories.GeneratedMSBuildEditorConfig.editorconfig
+D:\project\HTML Training Assignment\MVC\Repositories\obj\Debug\net7.0\Repositories.AssemblyInfoInputs.cache
+D:\project\HTML Training Assignment\MVC\Repositories\obj\Debug\net7.0\Repositories.AssemblyInfo.cs
+D:\project\HTML Training Assignment\MVC\Repositories\obj\Debug\net7.0\Repositories.csproj.CoreCompileInputs.cache
+D:\project\HTML Training Assignment\MVC\Repositories\obj\Debug\net7.0\Repositories.dll
+D:\project\HTML Training Assignment\MVC\Repositories\obj\Debug\net7.0\refint\Repositories.dll
+D:\project\HTML Training Assignment\MVC\Repositories\obj\Debug\net7.0\Repositories.pdb
+D:\project\HTML Training Assignment\MVC\Repositories\obj\Debug\net7.0\ref\Repositories.dll

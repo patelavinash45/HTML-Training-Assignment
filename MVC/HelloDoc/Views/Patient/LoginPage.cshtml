@@ -1,4 +1,4 @@
-﻿@model HelloDoc.ViewModels.PatientLogin
+﻿@model Repositories.ViewModels.PatientLogin
 
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
@@ -53,16 +53,10 @@
                 Forgot password?
             </a>
             @{
-                if (ViewBag.error == 1)
+                if (ViewBag.error == 0)
                 {
                     <script type="text/javascript">
-                        alert_message("Email Not Found.");
-                    </script>
-                }
-                else if (ViewBag.error == 2)
-                {
-                    <script type="text/javascript">
-                        alert_message("Invalid Password.");
+                        alert_message("Invalid credentials");
                     </script>
                 }
             }

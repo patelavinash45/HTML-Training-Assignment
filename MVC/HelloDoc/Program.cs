@@ -1,10 +1,17 @@
 using HelloDoc.DataContext;
+using Repositories.Implementation;
+using Repositories.Interface;
+using Services.Implementation;
+using Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<HelloDoc.DataContext.ApplicationDbContext>();
+builder.Services.AddDbContext<Repositories.DataContext.HalloDocDbContext>();
+builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IAspNetUserRepository, AspNetUserRepository>();
 
 
 var app = builder.Build();
@@ -26,6 +33,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Patient}/{action=PatientSite}/{id?}");
+    pattern: "{controller=Admin}/{action=Dashboard}/{id?}");
 
 app.Run();

@@ -1,6 +1,6 @@
 ﻿using HelloDoc.DataContext;
 using HelloDoc.DataModels;
-using HelloDoc.ViewModels;
+using Services.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,17 +8,20 @@ using System.ComponentModel.DataAnnotations;
 using System.IO.Compression;
 using System.Net;
 using System.Text;
-
+using Repositories.ViewModels;
+using HelloDoc.ViewModels;
 
 namespace HelloDoc.Controllers
 {
     public class PatientController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly ILoginService _loginService;
 
-        public PatientController(ApplicationDbContext dbContext)
+        public PatientController(ApplicationDbContext dbContext, ILoginService loginService)
         {
             _dbContext = dbContext;
+            _loginService = loginService;
         }
 
         [Route("/")]
@@ -218,30 +221,22 @@ namespace HelloDoc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult LoginPage(PatientLogin model)
+        public async Task<IActionResult> LoginPage(PatientLogin model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                if (aspNetUser == null)
+                int result = _loginService.CheckUser(model);
+                if (result == 0)
                 {
-                    ViewBag.error = 1;
-                    return View(null);
-                }
-                else if (aspNetUser.PasswordHash != model.PasswordHash)
-                {
-                    ViewBag.error = 2;
+                    ViewBag.error = 0;
                     return View(null);
                 }
                 else
                 {
-                    return RedirectToAction("Dashboard", "Patient", new { id = aspNetUser.Id });
+                    return RedirectToAction("Dashboard", "Patient", new { id = result });
                 }
             }
-            else
-            {
-                return View(null);
-            }
+            return View(null);
         }
 
         [HttpPost]
@@ -249,7 +244,6 @@ namespace HelloDoc.Controllers
         public async Task<IActionResult> ViewProfile(ViewProfile model)
         {
             User user = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == model.AspNetUserId);
-
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Email = model.Email;

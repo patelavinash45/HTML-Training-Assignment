@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HelloDoc.ViewModels
+namespace Repositories.ViewModels
 {
     public class PatientLogin
     {

@@ -28,7 +28,11 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\project\\HTML Training Assignment\\MVC\\Services\\Services.csproj": {
+                "projectPath": "D:\\project\\HTML Training Assignment\\MVC\\Services\\Services.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -81,6 +85,126 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\project\\HTML Training Assignment\\MVC\\Repositories\\Repositories.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\project\\HTML Training Assignment\\MVC\\Repositories\\Repositories.csproj",
+        "projectName": "Repositories",
+        "projectPath": "D:\\project\\HTML Training Assignment\\MVC\\Repositories\\Repositories.csproj",
+        "packagesPath": "C:\\Users\\pce106\\.nuget\\packages\\",
+        "outputPath": "D:\\project\\HTML Training Assignment\\MVC\\Repositories\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\pce106\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\project\\HTML Training Assignment\\MVC\\Services\\Services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\project\\HTML Training Assignment\\MVC\\Services\\Services.csproj",
+        "projectName": "Services",
+        "projectPath": "D:\\project\\HTML Training Assignment\\MVC\\Services\\Services.csproj",
+        "packagesPath": "C:\\Users\\pce106\\.nuget\\packages\\",
+        "outputPath": "D:\\project\\HTML Training Assignment\\MVC\\Services\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\pce106\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\project\\HTML Training Assignment\\MVC\\Repositories\\Repositories.csproj": {
+                "projectPath": "D:\\project\\HTML Training Assignment\\MVC\\Repositories\\Repositories.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

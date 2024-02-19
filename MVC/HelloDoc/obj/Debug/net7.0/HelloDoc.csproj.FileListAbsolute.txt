@@ -284,3 +284,7 @@ D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\runtimes\win-a
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Services.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Services.pdb
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Repositories.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Repositories.pdb
