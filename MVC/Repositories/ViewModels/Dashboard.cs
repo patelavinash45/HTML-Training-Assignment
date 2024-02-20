@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using HelloDoc.DataModels;
+using Repositories.DataModels;
+using HelloDoc.ViewModels;
 
-namespace HelloDoc.ViewModels
+namespace Repositories.ViewModels
 {
     public class Dashboard
     {

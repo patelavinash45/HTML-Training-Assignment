@@ -9,6 +9,6 @@ namespace Services.Interface
 {
     public interface ILoginService
     {
-        int CheckUser(PatientLogin model);
+        int auth(PatientLogin model);
     }
 }

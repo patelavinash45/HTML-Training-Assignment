@@ -288,3 +288,6 @@ D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Services.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Services.pdb
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Repositories.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Repositories.pdb
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.Views.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\HelloDoc.MvcApplicationPartsAssemblyInfo.cs

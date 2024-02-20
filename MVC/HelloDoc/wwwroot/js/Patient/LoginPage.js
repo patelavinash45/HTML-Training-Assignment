@@ -13,11 +13,6 @@ function Password() {
     }
 }
 
-function alert_message(error_message) {
-    document.getElementById("alert-box").style.display = "flex";
-    document.getElementById("alert-box").style.alignItems = "center";
-    document.getElementById("alert-box").textContent = error_message;
-}
 
 // function darkmoad(){
 //   // data-bs-theme="dark"

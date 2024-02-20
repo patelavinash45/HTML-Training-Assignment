@@ -10,18 +10,24 @@ using System.Net;
 using System.Text;
 using Repositories.ViewModels;
 using HelloDoc.ViewModels;
+using Services.Interfaces;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace HelloDoc.Controllers
 {
     public class PatientController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly INotyfService _notyfService;
         private readonly ILoginService _loginService;
+        private readonly IDashboardService _dashboardService;
 
-        public PatientController(ApplicationDbContext dbContext, ILoginService loginService)
+        public PatientController(ApplicationDbContext dbContext,INotyfService notyfService,ILoginService loginService ,IDashboardService dashboardService)
         {
             _dbContext = dbContext;
+            _notyfService = notyfService;
             _loginService = loginService;
+            _dashboardService = dashboardService;
         }
 
         [Route("/")]
@@ -154,49 +160,8 @@ namespace HelloDoc.Controllers
             options.Secure = true;
             options.Expires = DateTime.Now.AddDays(60);
             Response.Cookies.Append("AspNetUserId", id.ToString(), options);
-            User user = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == id);
-            List<Request> requests = _dbContext.Requests.Where(a => a.UserId == user.UserId).ToList();
-            //
-            //RequestClient requestClient = _dbContext.RequestClients.FirstOrDefault(a => a.RequestId == requests[0].RequestId);
-            //
-            List<RequestClient> requestClient = new List<RequestClient>() { };
-            for (int i = 0; i < requests.Count; i++)
-            {
-                requestClient.Add(_dbContext.RequestClients.FirstOrDefault(a => a.RequestId == requests[i].RequestId));
-            }
-            List<Dashboard> dashboards = new List<Dashboard>() { };
-            List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == requests[0].RequestId).ToList();
-            DashboardHeader dashboardHeader = new()
-            {
-                FirstName = requestClient[0].FirstName,
-                LastName = requestClient[0].LastName,
-                AspNetUserId = id,
-            };
-            Dashboard dashboard = new()
-            {
-                RequestId = requests[0].RequestId,
-                StrMonth = requestClient[0].StrMonth,
-                Header = dashboardHeader,
-                IntYear = requestClient[0].IntYear,
-                IntDate = requestClient[0].IntDate,
-                Status = requestClient[0].Status,
-                Document = requestWiseFiles.Count,
-            };
-            dashboards.Add(dashboard);
-            for (int i = 1; i < requests.Count; i++)
-            {
-                requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == requests[i].RequestId).ToList();
-                dashboard = new()
-                {
-                    RequestId= requests[i].RequestId,
-                    StrMonth = requestClient[i].StrMonth,
-                    IntYear = requestClient[i].IntYear,
-                    IntDate = requestClient[i].IntDate,
-                    Status = requestClient[i].Status,
-                    Document = requestWiseFiles.Count,
-                };
-                dashboards.Add(dashboard);
-            }
+            List<Dashboard> dashboards=_dashboardService.GetUsersMedicalData(id);
+            //_notyfService.Success("Successfully Login");
             return View(dashboards);
         }
 
@@ -221,18 +186,19 @@ namespace HelloDoc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginPage(PatientLogin model)
+        public IActionResult LoginPage(PatientLogin model)
         {
             if (ModelState.IsValid)
             {
-                int result = _loginService.CheckUser(model);
+                int result = _loginService.auth(model);
                 if (result == 0)
                 {
-                    ViewBag.error = 0;
+                    _notyfService.Error("Invalid credentials");
                     return View(null);
                 }
                 else
                 {
+                    _notyfService.Success("Successfully Login");
                     return RedirectToAction("Dashboard", "Patient", new { id = result });
                 }
             }
@@ -287,6 +253,7 @@ namespace HelloDoc.Controllers
                 };
                 _dbContext.Add(requestWiseFile);
                 await _dbContext.SaveChangesAsync();
+                _notyfService.Success("File Uploaded");
                 return RedirectToAction("ViewDocument", "Patient", new { id = model.RequestId });
             }
             else
@@ -376,6 +343,7 @@ namespace HelloDoc.Controllers
                     };
                     _dbContext.Add(requestClient);
                     await _dbContext.SaveChangesAsync();
+                    _notyfService.Success("Successfully Request Added");
                     return RedirectToAction("Dashboard", "Patient", new { id = Int32.Parse(Request.Cookies["AspNetUserId"]) });
                 }
             }
@@ -507,6 +475,7 @@ namespace HelloDoc.Controllers
                 };
                 _dbContext.Add(requestClient);
                 await _dbContext.SaveChangesAsync();
+                _notyfService.Success("Successfully Request Added");
                 return RedirectToAction("Dashboard", "Patient", new { id = Int32.Parse(Request.Cookies["AspNetUserId"]) });
             };
             return View(model);

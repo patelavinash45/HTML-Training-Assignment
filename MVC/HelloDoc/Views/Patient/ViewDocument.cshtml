@@ -9,6 +9,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/patient/viewDocument.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -18,6 +20,7 @@
     @{
         @Html.Partial("~/Views/Shared/_DashboardHeader.cshtml",Model.Header);
     }
+    @await Component.InvokeAsync("Notyf")
     <div class="container tab-content" id="dashboard_content">
         <div class="d-flex flex-column align-items-center w-100 row">
             <div class="d-flex justify-content-between align-content-center mt-3 mb-3">

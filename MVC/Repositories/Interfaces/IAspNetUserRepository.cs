@@ -8,6 +8,10 @@ namespace Repositories.Interface
 {
     public interface IAspNetUserRepository
     {
-        int ValidateUser(String email,String password);
+        int validateUser(String email,String password);
+
+        bool checkUser(String email);
+
+        int addUser(String email,String password,String firstName, String mobile);
     }
 }

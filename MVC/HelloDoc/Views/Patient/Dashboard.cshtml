@@ -1,4 +1,4 @@
-﻿@model List<HelloDoc.ViewModels.Dashboard>
+﻿@model List<Repositories.ViewModels.Dashboard>
 
 @{
     List<String> status = new List<string>() {"Unassigned", "Accepted", "Cancelled", "Reserving", "MDEnRoute", "MDOnSite", "FollowUp", "Closed", "Locked", "Declined", "Consult", "Clear",
@@ -17,6 +17,8 @@
     </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/international-telephone-input.css" rel="stylesheet" />
     <script src="~/js/international-telephone-input.js"></script>
@@ -28,6 +30,7 @@
     @{
         @Html.Partial("~/Views/Shared/_DashboardHeader.cshtml", Model[0].Header)
     }
+    @await Component.InvokeAsync("Notyf")
     <div class="modal" tabindex="-1" id="createNewRequest">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

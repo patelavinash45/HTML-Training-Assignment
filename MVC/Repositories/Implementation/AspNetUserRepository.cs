@@ -18,9 +18,30 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
-        public int ValidateUser(String email, String password)
+        public int validateUser(String email, String password)
         {
             AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == email.Trim() && a.PasswordHash==password);
+            return aspNetUser?.Id ?? 0;
+        }
+
+        public bool checkUser(String email)
+        {
+            AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == email.Trim());
+            return aspNetUser==null? true : false;
+        }
+
+        public async Task<int> addUser(String email, String password, String firstName, String mobile)
+        {
+            AspNetUser aspNetUser = new()
+            {
+                UserName = firstName,
+                Email = email,
+                PhoneNumber = mobile,
+                PasswordHash = password,
+                CreatedDate = DateTime.Now,
+            };
+            _dbContext.Add(aspNetUser);
+            int temp = await _dbContext.SaveChangesAsync();
             return aspNetUser?.Id ?? 0;
         }
     }

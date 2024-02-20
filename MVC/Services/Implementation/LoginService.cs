@@ -21,9 +21,9 @@ namespace Services.Implementation
             _userRepository = userRepository;
         }
 
-        public int CheckUser(PatientLogin model)
+        public int auth(PatientLogin model)
         {
-            return  _userRepository.ValidateUser(email: model.Email.Trim(), password: model.PasswordHash);
+            return  _userRepository.validateUser(email: model.Email.Trim(), password: model.PasswordHash);
         }
     }
 }
