@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,7 @@ namespace Repositories.Interfaces
     public interface IRequestWiseFileRepository
     {
         int countFile(int requestId);
+
+        Task<int> addFile(int requestId, AddPatientRequest model);
     }
 }

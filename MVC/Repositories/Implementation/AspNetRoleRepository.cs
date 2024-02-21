@@ -18,24 +18,21 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
-        public bool checkUserRole(string role)
+        public int checkUserRole(string role)
         {
             AspNetRole aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
-            if(aspNetRole == null) {
-                return false;
-            }
-            return true;
+            return aspNetRole?.Id ?? 0;
         }
 
-        public async Task<bool> addUserRole(string role)
+        public async Task<int> addUserRole(string role)
         {
             AspNetRole aspNetRole = new()
             {
                 Name = "Patient",
             };
             _dbContext.Add(aspNetRole);
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0 ? true : false;
+            await _dbContext.SaveChangesAsync();
+            return aspNetRole?.Id ?? 0;
         }
     }
 }

@@ -8,6 +8,6 @@ namespace Repositories.Interfaces
 {
     public interface IAspNetUserRoleRepository
     {
-
+        Task<bool> addAspNetUserRole(int userId, int roleId);
     }
 }

@@ -1,0 +1,485 @@
+﻿<div class="d-flex justify-content-between mt-4 align-items-center">
+    <span id="headingText" class="h3">
+        Patients (Active)
+    </span>
+    <div class="d-flex">
+        <button class="mx-1 middleOptionButtons">
+            <i class="bi bi-link"></i>
+            <span class="buttonText">
+                Send Link
+            </span>
+        </button>
+        <button class="mx-1 middleOptionButtons">
+            <i class="bi bi-pencil-square"></i>
+            <span class="buttonText">
+                Create Requests
+            </span>
+        </button>
+        <button class="mx-1 middleOptionButtons">
+            <i class="bi bi-forward-fill"></i>
+            <span class="buttonText">
+                Export
+            </span>
+        </button>
+        <button class="mx-1 middleOptionButtons">
+            <i class="bi bi-skip-forward"></i>
+            <span class="buttonText">
+                Export All
+            </span>
+        </button>
+        <button class="mx-1 middleOptionButtons">
+            <i class="bi bi-person"></i>
+            <span class="buttonText">
+                Request DTY Support
+            </span>
+        </button>
+    </div>
+</div>
+<div>
+    <div class="p-3 bg-white rounded-top-3 row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <input placeholder="Search Patient" class="p-2">
+            <select aria-label="Default select example" aria-placeholder="Region" class="p-2 ">
+                <option value="1">Region-1</option>
+                <option value="2">Region-2</option>
+                <option value="3">Region-3</option>
+                <option value="4">Region-4</option>
+                <option value="5">Region-5</option>
+            </select>
+        </div>
+        <div class="d-flex justify-content-end col-xl-6 col-lg-6 col-md-12 col-sm-12 align-items-md-center">
+            <button class="px-3" id="allButton">
+                All
+            </button>
+            <div class="d-flex align-items-center colorOption">
+                <i class="bi bi-circle-fill text-success mx-1"></i>
+                <span class="colorText">
+                    Patient
+                </span>
+            </div>
+            <div class="d-flex align-items-center colorOption">
+                <i class="bi bi-circle-fill text-warning mx-1"></i>
+                <span class="colorText">
+                    Family/Friend
+                </span>
+            </div>
+            <div class="d-flex align-items-center colorOption">
+                <i class="bi bi-circle-fill text-danger mx-1"></i>
+                <span class="colorText">
+                    Business
+                </span>
+            </div>
+            <div class="d-flex align-items-center colorOption">
+                <i class="bi bi-circle-fill text-primary mx-1"></i>
+                <span class="colorText">
+                    Concierge
+                </span>
+            </div>
+            <div class="d-flex align-items-center colorOption">
+                <i class="bi bi-circle-fill text-info mx-1"></i>
+                <span class="colorText">
+                    VIP
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-2 text-black">
+                    Name
+                </th>
+                <th class="col-1 text-black">
+                    Date Of Birth
+                </th>
+                <th class="col-1 text-black">
+                    Requesters
+                </th>
+                <th class="col-1 text-black">
+                    Requested Date
+                </th>
+                <th class="col-2 text-black">
+                    Phone
+                </th>
+                <th class="col-2 text-black">
+                    Address
+                </th>
+                <th class="col-1 text-black">
+                    Notes
+                </th>
+                <th class="col-1 text-black">
+                    Chat With
+                </th>
+                <th class="col-1 text-black">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text-white">
+            <tr class="bg-success align-middle">
+                <td>
+                    <div class="d-flex justify-content-between  align-items-center">
+                        Test,Test
+                        <button class="bg-transparent text-white p-2 border-white">
+                            <i class="bi bi-envelope-fill"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    Jun 12,2023
+                </td>
+                <td>
+                    Patient Test,test
+                </td>
+                <td>
+                    Jun 12,2023
+                </td>
+                <td>
+                    <button class="bg-transparent text-white p-2 border-white">
+                        +91 1234567890
+                    </button>
+                    (Patient)
+                </td>
+                <td>
+                    abc, xyz, pqr, 123456
+                </td>
+                <td>
+                    -
+                </td>
+                <td>
+                    <button class="bg-transparent text-white p-2 border-white">
+                        <i class="bi bi-person"></i>
+                        Provider
+                    </button>
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn p-2 btn-secondary dropdown-toggle bg-transparent text-white border-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-list-check mx-1"></i>
+                                    Assign Case
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-x-circle-fill mx-1"></i>
+                                    Cancel Case
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-book-fill mx-1"></i>
+                                    View Case
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-file-earmark-fill mx-1"></i>
+                                    View Notes
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-slash-circle-fill mx-1"></i>
+                                    Block Patient
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr class="bg-success align-middle">
+                <td>
+                    <div class="d-flex justify-content-between align-items-center">
+                        Test,Test
+                        <button class="bg-transparent text-white p-2 border-white">
+                            <i class="bi bi-envelope-fill"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    Jun 12,2023
+                </td>
+                <td>
+                    Patient Test,test
+                </td>
+                <td>
+                    Jun 12,2023
+                </td>
+                <td>
+                    <button class="bg-transparent text-white p-2 border-white">
+                        +91 1234567890
+                    </button>
+                    (Patient)
+                </td>
+                <td>
+                    abc, xyz, pqr, 123456
+                </td>
+                <td>
+                    -
+                </td>
+                <td>
+                    <button class="bg-transparent text-white p-2 border-white">
+                        <i class="bi bi-person"></i>
+                        Provider
+                    </button>
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn p-2 btn-secondary dropdown-toggle bg-transparent text-white border-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-list-check mx-1"></i>
+                                    Assign Case
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-x-circle-fill mx-1"></i>
+                                    Cancel Case
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-book-fill mx-1"></i>
+                                    View Case
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-file-earmark-fill mx-1"></i>
+                                    View Notes
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-slash-circle-fill mx-1"></i>
+                                    Block Patient
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr class="bg-primary align-middle">
+                <td>
+                    <div class="d-flex justify-content-between align-items-center">
+                        Test,Test
+                        <button class="bg-transparent text-white p-2 border-white">
+                            <i class="bi bi-envelope-fill"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    Jun 12,2023
+                </td>
+                <td>
+                    Concierge Test,test
+                </td>
+                <td>
+                    Jun 12,2023
+                </td>
+                <td>
+                    <button class="bg-transparent text-white p-2 border-white">
+                        +91 1234567890
+                    </button>
+                    (Patient)
+                    <button class="bg-transparent text-white p-2 border-white">
+                        +91 1234567890
+                    </button>
+                    (Concierge)
+                </td>
+                <td>
+                    abc, xyz, pqr, 123456
+                </td>
+                <td>
+                    Patient has been under my care.
+                </td>
+                <td>
+                    <button class="bg-transparent text-white p-2 border-white">
+                        <i class="bi bi-person"></i>
+                        Provider
+                    </button>
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn p-2 btn-secondary dropdown-toggle bg-transparent text-white border-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-list-check mx-1"></i>
+                                    Assign Case
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-x-circle-fill mx-1"></i>
+                                    Cancel Case
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-book-fill mx-1"></i>
+                                    View Case
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-file-earmark-fill mx-1"></i>
+                                    View Notes
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-slash-circle-fill mx-1"></i>
+                                    Block Patient
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="accordion accordion-flush row" id="accordionFlushExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                <div class="col-7">
+                    <div class="mb-2">
+                        Test test
+                    </div>
+                    abc, xyz, pqr, 123456
+                </div>
+                <div class="col-5">
+                    <div class="px-4 mb-1">
+                        <span>
+                            Patient
+                        </span>
+                        <i class="bi bi-circle-fill text-success mx-1"></i>
+                    </div>
+                    <div class="border border-1 rounded-pill d-flex justify-content-center p-2 border-primary mapButton">
+                        Map Location
+                    </div>
+                </div>
+            </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+             data-bs-parent="#accordionFlushExample">
+            <div class="mt-3">
+                <div class="mt-3">
+                    <i class="bi bi-telephone-fill rounded-circle border border-1 border-primary p-2"></i>
+                    <span class="h6">
+                        Date of Borth: +91 1234567890
+                    </span>
+                </div>
+                <div class="mt-3">
+                    <i class="bi bi-envelope-fill rounded-circle border border-1 border-primary p-2"></i>
+                    <span class="h6">
+                        Email: abc@gmail.com
+                    </span>
+                </div>
+                <div class="mt-3">
+                    <i class="bi bi-telephone-fill rounded-circle border border-1 border-primary p-2"></i>
+                    <span class="h6">
+                        Phone: +91 1234567890
+                    </span>
+                </div>
+            </div>
+            <div class="row mt-3 px-3">
+                <button class="col-md-3 col-sm-6 col-6 bg-info text-white fw-bold">
+                    Assign Case
+                </button>
+                <button class="col-md-3 col-sm-6 col-6 bg-danger text-white fw-bold">
+                    Cancle Case
+                </button>
+                <button class="col-md-3 col-sm-6 col-6 bg-success text-white fw-bold">
+                    View Notes
+                </button>
+                <button class="col-md-3 col-sm-6 col-6 bg-danger text-white fw-bold">
+                    Block Patient
+                </button>
+                <button class="col-md-3 col-sm-6 col-6 bg-success text-white fw-bold">
+                    Email
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseOne">
+                <div class="col-7">
+                    <div class="mb-2">
+                        Test test
+                    </div>
+                    abc, xyz, pqr, 123456
+                </div>
+                <div class="col-5">
+                    <div class="px-4 mb-1">
+                        <span>
+                            Patient
+                        </span>
+                        <i class="bi bi-circle-fill text-success mx-1"></i>
+                    </div>
+                    <div class="border border-1 rounded-pill d-flex justify-content-center p-2 border-primary mapButton">
+                        Map Location
+                    </div>
+                </div>
+            </button>
+        </h2>
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+             data-bs-parent="#accordionFlushExample">
+            <div class="mt-3">
+                <div class="mt-3">
+                    <i class="bi bi-telephone-fill rounded-circle border border-1 border-primary p-2"></i>
+                    <span class="h6">
+                        Date of Borth: +91 1234567890
+                    </span>
+                </div>
+                <div class="mt-3">
+                    <i class="bi bi-envelope-fill rounded-circle border border-1 border-primary p-2"></i>
+                    <span class="h6">
+                        Email: abc@gmail.com
+                    </span>
+                </div>
+                <div class="mt-3">
+                    <i class="bi bi-telephone-fill rounded-circle border border-1 border-primary p-2"></i>
+                    <span class="h6">
+                        Phone: +91 1234567890
+                    </span>
+                </div>
+            </div>
+            <div class="row mt-3 px-3">
+                <button class="col-md-3 col-sm-6 col-6 bg-info text-white fw-bold">
+                    Assign Case
+                </button>
+                <button class="col-md-3 col-sm-6 col-6 bg-danger text-white fw-bold">
+                    Cancle Case
+                </button>
+                <button class="col-md-3 col-sm-6 col-6 bg-success text-white fw-bold">
+                    View Notes
+                </button>
+                <button class="col-md-3 col-sm-6 col-6 bg-danger text-white fw-bold">
+                    Block Patient
+                </button>
+                <button class="col-md-3 col-sm-6 col-6 bg-success text-white fw-bold">
+                    Email
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

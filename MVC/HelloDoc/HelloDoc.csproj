@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Files\" />
+    <Folder Include="wwwroot\js\Admin\" />
   </ItemGroup>
 
   <ItemGroup>

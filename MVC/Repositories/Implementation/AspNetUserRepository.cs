@@ -24,10 +24,10 @@ namespace Repositories.Implementation
             return aspNetUser?.Id ?? 0;
         }
 
-        public bool checkUser(String email)
+        public int checkUser(String email)
         {
             AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == email.Trim());
-            return aspNetUser==null? true : false;
+            return aspNetUser?.Id ?? 0;
         }
 
         public async Task<int> addUser(String email, String password, String firstName, String mobile)
@@ -41,7 +41,7 @@ namespace Repositories.Implementation
                 CreatedDate = DateTime.Now,
             };
             _dbContext.Add(aspNetUser);
-            int temp = await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
             return aspNetUser?.Id ?? 0;
         }
     }

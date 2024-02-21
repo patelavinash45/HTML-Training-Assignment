@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Repositories.Interfaces
 {
-    internal interface IAspNetRoleRepository
+    public interface IAspNetRoleRepository
     {
-        bool checkUserRole(string role);
+        int checkUserRole(string role);
 
-        bool addUserRole(string role);
+        Task<int> addUserRole(string role);
     }
 }

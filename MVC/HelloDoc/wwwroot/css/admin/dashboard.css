@@ -1,0 +1,281 @@
+﻿body {
+    background-color: #f9f9f9;
+}
+
+thead {
+    background-color: #f9f9f9;
+}
+
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-color: white;
+}
+
+select,
+input {
+    width: 300px;
+    height: 40px;
+    margin-top: 5px;
+}
+
+button {
+    border: 0.5px solid;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+button:hover{
+    font-weight:bold;
+    border-color: black;
+}
+
+.mapButton {
+    width: fit-content;
+}
+
+#newOption {
+    box-shadow: 10px 10px 5px #AAA;
+    background-color: #203f9a;
+    color: white;
+    border-color: #1348e8;
+}
+
+#pendingOption {
+    background-color: #e5f2f8;
+    color: #5ea3b0;
+    border-color: #c9ebfb;
+}
+
+#activeOption {
+    background-color: #e9f0e8;
+    color: #4e7d4f;
+    border-color: #dcfbdc;
+}
+
+#concludeOption {
+    background-color: #f7e6ee;
+    color: #a84281;
+    border-color: #cdb2c2;
+}
+
+#tocloseOption {
+    background-color: #e5eef5;
+    color: #1a6eb7;
+    border-color: #d7f3fd;
+}
+
+#unpaidOption {
+    background-color: #efeef4;
+    color: #9674ad;
+    border-color: #f2d9fc;
+}
+
+    #newOption:hover,
+    #activeOption:hover,
+    #concludeOption:hover,
+    #tocloseOption:hover,
+    #unpaidOption:hover,
+    #pendingOption:hover {
+        box-shadow: 10px 10px 5px #AAA;
+    }
+
+.middleOptionButtons {
+    background-color: #01bde5;
+    padding: 10px 15px;
+    color: white;
+}
+
+.accordion {
+    display: none;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+#allButton {
+    height: 40px;
+}
+
+#mainbody{
+    margin: 15px;
+}
+/* -------------------Header-------------------*/
+#slidebar-button {
+    display: none;
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    box-shadow: 0px 0px 8px lightgray;
+    background-color: white;
+}
+
+#button-icon {
+    display: none;
+}
+
+.navbar-item {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100px;
+    height: 50px;
+}
+
+#logo-image {
+    width: 150px;
+    margin-left: 4vh;
+}
+
+#them-icon {
+    margin-right: 40px;
+    width: 50px;
+    height: 50px;
+}
+
+#dashboard {
+    background-color: #dcdbdb;
+    color: cadetblue;
+}
+
+#log-out {
+    width: 100px;
+    height: 50px;
+    color: cadetblue;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+#side-bar {
+    display: none;
+    top: 60px;
+    background-color: white;
+    width: 225px;
+    height: 100vh;
+    position: absolute;
+    z-index: 1;
+}
+
+button {
+    border: 1px solid cadetblue;
+    border-radius: 10px;
+}
+
+#pending{
+    display: none;
+}
+
+#active {
+    display: none;
+}
+
+#conclude {
+    display: none;
+}
+
+#close {
+    display: none;
+}
+
+#unpaid {
+    display: none;
+}
+
+
+/* -------------------media-queries-------------------*/
+
+@media screen and (max-width:576px) {
+
+    .h5 {
+        font-size: 0.5rem;
+    }
+
+    .colorText {
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width:577px) and (max-width:768px) {
+
+    .h5 {
+        font-size: 0.7rem;
+    }
+
+}
+
+@media screen and (max-width:768px) {
+
+
+    .buttonLogo {
+        display: none;
+    }
+
+    .h3 {
+        font-size: calc(1rem + .6vw);
+    }
+
+    #headingText {
+        font-size: calc(0.7rem + .6vw);
+    }
+
+    #allButton {
+        display: none;
+    }
+
+    #header-buttom,
+    #button-text,
+    #welcome-text {
+        display: none;
+    }
+
+    #log-out {
+        width: 50px;
+    }
+
+    #button-icon {
+        display: inline;
+    }
+
+    #slidebar-button {
+        display: flex;
+    }
+
+    #logo-image {
+        width: 100px;
+    }
+}
+
+@media screen and (max-width:615px) {
+
+    select,
+    input {
+        width: 100%;
+    }
+
+    .colorOption {
+        flex-direction: column;
+        margin: 5px;
+    }
+}
+
+@media screen and (max-width:992px) {
+    .table-responsive {
+        display: none;
+    }
+
+    .accordion {
+        display: block;
+    }
+}
+
+@media screen and (max-width:1200px) {
+
+    .buttonText {
+        display: none;
+    }
+}

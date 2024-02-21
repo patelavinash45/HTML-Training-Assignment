@@ -6,8 +6,10 @@ using Repositories.Implementation;
 using Repositories.Interface;
 using Repositories.Interfaces;
 using Services.Implementation;
+using Services.Implementation.Admin;
 using Services.Interface;
 using Services.Interfaces;
+using Services.Interfaces.Admin;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,11 +20,17 @@ builder.Services.AddDbContext<HelloDoc.DataContext.ApplicationDbContext>();
 builder.Services.AddDbContext<Repositories.DataContext.HalloDocDbContext>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IAspNetUserRepository, AspNetUserRepository>();
+builder.Services.AddScoped<IAspNetRoleRepository, AspNetRoleRepository>();
+builder.Services.AddScoped<IAspNetUserRoleRepository, AspNetUserRoleRepository>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IRequestClientRepository, RequestClientRepository>();
 builder.Services.AddScoped<IRequestWiseFileRepository, RequestWiseFileRepository>();
+builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+builder.Services.AddScoped<IAddRequestService, AddRequestService>();
+builder.Services.AddScoped<IViewProfileService, ViewProfileService>();
+builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
 
 
 var app = builder.Build();

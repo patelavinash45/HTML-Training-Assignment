@@ -11,18 +11,9 @@ header {
     background-color: white;
 }
 
-/*#profileHr{
-    visibility:hidden;
-}*/
-
 #button-icon {
     display: none;
 }
-
-/*.underLine {
-    color: cadetblue;
-    height: 5px;
-}*/
 
 .navbar-item {
     margin-left: 10px;
@@ -89,6 +80,10 @@ button {
 
     #slidebar-button {
         display: flex;
+    }
+
+    #logo-image {
+        width: 100px;
     }
 
 }

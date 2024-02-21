@@ -1,22 +1,32 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace HelloDoc.ViewModels
+namespace Repositories.ViewModels.Admin
 {
-    public class ViewProfile
+    public class NewTables
     {
         [StringLength(100)]
-        public string FirstName { get; set; } = null!;
+        public string FirstName { get; set; } 
 
         [StringLength(100)]
         public string? LastName { get; set; }
 
+        [StringLength(100)]
+        public string? Requesters { get; set; }
+
         [StringLength(50)]
         [RegularExpression("^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\\-+)|([A-Za-z0-9]+\\.+)|([A-Za-z0-9]+\\++))*[A-Za-z0-9]+@((\\w+\\-+)|(\\w+\\.))*" +
             "\\w{1,63}\\.[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
-        public string Email { get; set; } = null!;
+        public string Email { get; set; } 
 
         [StringLength(20)]
         public string? Mobile { get; set; }
+
+        public DateTime? BirthDate { get; set; }
 
         [StringLength(100)]
         public string? Street { get; set; }
@@ -29,11 +39,5 @@ namespace HelloDoc.ViewModels
 
         [StringLength(10)]
         public string? ZipCode { get; set; }
-
-        public DateTime? BirthDate { get; set; }
-
-        public int? AspNetUserId { get; set; }
-
-        public DashboardHeader Header { get; set; }
     }
 }

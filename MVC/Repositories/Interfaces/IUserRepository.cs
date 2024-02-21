@@ -1,4 +1,5 @@
-﻿using Repositories.ViewModels;
+﻿using Repositories.DataModels;
+using Repositories.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,10 @@ namespace Repositories.Interfaces
     {
         int getUserID(int aspNetUserID);
 
-        int addUser(AddPatientRequest model, int aspNetUserId);
+        Task<int> addUser(AddPatientRequest model, int aspNetUserId);
+
+        User GetUser(int aspNetUserID);
+
+        Task<bool> updateProfile(ViewProfile model);
     }
 }

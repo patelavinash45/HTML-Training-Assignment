@@ -32,13 +32,13 @@
     <hr/>
     <div id="header-buttom">
         <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.AspNetUserId">
-            <button class="navbar-item border-0" onclick="changeTab2(true)">
+            <button class="navbar-item border-0 bg-transparent" onclick="changeTab2(true)">
                 Dashboard
                 <hr id="dashboardHr" class="underLine"/>
             </button>
         </a>
         <a asp-controller="Patient" asp-action="ViewProfile" asp-route-id="@Model.AspNetUserId">
-            <button class="navbar-item border-0" onclick="changeTab2(false)">
+            <button class="navbar-item border-0 bg-transparent" onclick="changeTab2(false)">
                 Profile
                 <hr id="profileHr" class="underLine" />
             </button>

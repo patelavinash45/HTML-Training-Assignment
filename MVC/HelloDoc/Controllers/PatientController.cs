@@ -21,13 +21,18 @@ namespace HelloDoc.Controllers
         private readonly INotyfService _notyfService;
         private readonly ILoginService _loginService;
         private readonly IDashboardService _dashboardService;
+        private readonly IAddRequestService _addRequestService;
+        private readonly IViewProfileService _viewProfileService;
 
-        public PatientController(ApplicationDbContext dbContext,INotyfService notyfService,ILoginService loginService ,IDashboardService dashboardService)
+        public PatientController(ApplicationDbContext dbContext,INotyfService notyfService,ILoginService loginService ,IDashboardService dashboardService,
+                                 IAddRequestService addRequestService,IViewProfileService viewProfileService )
         {
             _dbContext = dbContext;
             _notyfService = notyfService;
             _loginService = loginService;
             _dashboardService = dashboardService;
+            _addRequestService = addRequestService;
+            _viewProfileService= viewProfileService;
         }
 
         [Route("/")]
@@ -110,29 +115,7 @@ namespace HelloDoc.Controllers
 
         public IActionResult ViewProfile(int id)
         { 
-            User user = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == id);
-            DateTime birthDay = DateTime.Parse(user.IntYear + "-" + user.StrMonth + "-" + user.IntDate);
-            DashboardHeader dashboardHeader = new()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                AspNetUserId = id,
-            };
-            ViewProfile viewProfile = new()
-            {
-                AspNetUserId= id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                BirthDate = birthDay,
-                Email = user.Email,
-                Mobile = user.Mobile,
-                State = user.State,
-                Street = user.Street,
-                City = user.City,
-                ZipCode = user.ZipCode,
-                Header= dashboardHeader,
-            };
-            return View(viewProfile);
+            return View(_viewProfileService.getProfileDetails(id));
         }
 
         public IActionResult ViewDocument(int id)
@@ -160,9 +143,7 @@ namespace HelloDoc.Controllers
             options.Secure = true;
             options.Expires = DateTime.Now.AddDays(60);
             Response.Cookies.Append("AspNetUserId", id.ToString(), options);
-            List<Dashboard> dashboards=_dashboardService.GetUsersMedicalData(id);
-            //_notyfService.Success("Successfully Login");
-            return View(dashboards);
+            return View(_dashboardService.GetUsersMedicalData(id));
         }
 
         [HttpGet]
@@ -209,20 +190,14 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewProfile(ViewProfile model)
         {
-            User user = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == model.AspNetUserId);
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            user.Email = model.Email;
-            user.Mobile = model.Mobile;
-            user.Street = model.Street;
-            user.City = model.City;
-            user.State = model.State;
-            user.ZipCode = model.ZipCode;
-            user.IntDate = model.BirthDate.Value.Day;
-            user.StrMonth = model.BirthDate.Value.Month.ToString();
-            user.IntYear=model.BirthDate.Value.Year;
-            _dbContext.Update(user);
-            await _dbContext.SaveChangesAsync();
+            if(await _viewProfileService.updatePatientProfile(model))
+            {
+                _notyfService.Success("Successfully Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild!");
+            }
             return RedirectToAction("ViewProfile", "Patient", new { id = Request.Cookies["AspNetUserId"] });
         }
 
@@ -487,137 +462,7 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                AspNetRole aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
-                 if(aspNetRole == null)
-                 {
-                    aspNetRole = new()
-                    {
-                        Name = "Patient",
-                    };
-                    _dbContext.Add(aspNetRole);
-                    await _dbContext.SaveChangesAsync();
-                    //aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
-                 };
-                //
-                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                User user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                if(aspNetUser == null)
-                {
-                    aspNetUser= new()
-                    {
-                        UserName = model.FirstName,
-                        Email = model.Email,
-                        PhoneNumber = model.Mobile,
-                        PasswordHash = model.Password,
-                        CreatedDate = DateTime.Now
-                    };
-                    _dbContext.Add(aspNetUser);
-                    await _dbContext.SaveChangesAsync();
-                    //
-                    //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                    user = new()
-                    {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        Email = model.Email,
-                        Mobile = model.Mobile,
-                        Street = model.Street,
-                        City = model.City,
-                        State = model.State,
-                        ZipCode = model.ZipCode,
-                        AspNetUserId = aspNetUser.Id,
-                        CreatedBy = aspNetUser.Id,
-                        CreatedDate = DateTime.Now,
-                        House = model.House,
-                        IntYear = model.BirthDate.Value.Year,
-                        IntDate = model.BirthDate.Value.Day,
-                        StrMonth = model.BirthDate.Value.Month.ToString(),
-                    };
-                    _dbContext.Add(user);
-                    await _dbContext.SaveChangesAsync();
-                    //
-                    //aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                    AspNetUserRole aspNetUserRole = new()
-                    {
-                        UserId = aspNetUser.Id,
-                        RoleId = aspNetRole.Id,
-                    };
-                    _dbContext.Add(aspNetUserRole);
-                    await _dbContext.SaveChangesAsync();
-                }
-                //
-                //user = _dbContext.Users.FirstOrDefault(a => a.Email.Trim() == user.Email.Trim());
-                Request request = new()
-                {
-                    RequestTypeId = 2,
-                    UserId = user.UserId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    PhoneNumber = user.Mobile,
-                    CreatedDate = DateTime.Now,
-                };
-                _dbContext.Add(request);
-                await _dbContext.SaveChangesAsync();
-                //
-                //request = _dbContext.Requests.FirstOrDefault(a => a.Email.Trim() == model.Email.Trim());
-                if (model.File != null)
-                {
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    };
-                    FileInfo fileInfo = new FileInfo(model.File.FileName);
-                    string fileName = request.RequestId + "_"+ fileInfo.Name;
-                    string fileNameWithPath = Path.Combine(path, fileName);
-                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                    {
-                        model.File.CopyTo(stream);
-                    }
-                    RequestWiseFile requestWiseFile = new()
-                    {
-                        RequestId = request.RequestId,
-                        FileName = fileName,
-                        CreatedDate = DateTime.Now,
-                        Uploder=model.FirstName+" "+model.LastName,
-                    };
-                    _dbContext.Add(requestWiseFile);
-                    await _dbContext.SaveChangesAsync();
-                }
-                //
-                Region region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
-                if (region == null)
-                {
-                    region = new()
-                    {
-                        Name = model.State,
-                    };
-                    _dbContext.Add(region);
-                    await _dbContext.SaveChangesAsync();
-                    //region = _dbContext.Regions.FirstOrDefault(a => a.Name.Trim() == model.State.Trim());
-                }
-                //
-                RequestClient requestClient = new()
-                {
-                    RequestId = request.RequestId,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.Mobile,
-                    RegionId = region.RegionId,
-                    Email = model.Email,
-                    State = model.State,
-                    Street = model.Street,
-                    City = model.City,
-                    ZipCode = model.ZipCode,
-                    Status = 1,
-                    Symptoms = model.Symptoms,
-                    IntYear = DateTime.Now.Year,
-                    IntDate = DateTime.Now.Day,
-                    StrMonth = DateTime.Now.Month.ToString(),
-                }; 
-                _dbContext.Add(requestClient);
-                await _dbContext.SaveChangesAsync();
+                await _addRequestService.addPatientRequest(model);
             };
             return View(null);
         }

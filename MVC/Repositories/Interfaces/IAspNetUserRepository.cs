@@ -10,8 +10,8 @@ namespace Repositories.Interface
     {
         int validateUser(String email,String password);
 
-        bool checkUser(String email);
+        int checkUser(String email);
 
-        int addUser(String email,String password,String firstName, String mobile);
+        Task<int> addUser(String email,String password,String firstName, String mobile);
     }
 }

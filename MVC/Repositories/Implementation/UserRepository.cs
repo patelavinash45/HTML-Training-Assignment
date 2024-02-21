@@ -47,8 +47,32 @@ namespace Repositories.Implementation
                 StrMonth = model.BirthDate.Value.Month.ToString(),
             };
             _dbContext.Add(user);
-            int temp = await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
             return user?. UserId ?? 0;
+        }
+
+        public User GetUser(int aspNetUserID)
+        {
+            return _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == aspNetUserID);
+        }
+
+        public async Task<bool> updateProfile(ViewProfile model)
+        {
+            User user = GetUser((int)model.AspNetUserId);
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.Mobile = model.Mobile;
+            user.Street = model.Street;
+            user.City = model.City;
+            user.State = model.State;
+            user.ZipCode = model.ZipCode;
+            user.IntDate = model.BirthDate.Value.Day;
+            user.StrMonth = model.BirthDate.Value.Month.ToString();
+            user.IntYear = model.BirthDate.Value.Year;
+            _dbContext.Update(user);
+            int temp=await _dbContext.SaveChangesAsync();
+            return temp > 0;
         }
     }
 }

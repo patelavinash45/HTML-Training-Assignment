@@ -49,6 +49,18 @@
       "PackagePath": "staticwebassets\\Files\\47_7774236_3736765.jpg"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\79_Fig21. Admin My profile..jpg",
+      "PackagePath": "staticwebassets\\Files\\79_Fig21. Admin My profile..jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\81_Fig22 Regions menu.jpg",
+      "PackagePath": "staticwebassets\\Files\\81_Fig22 Regions menu.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\82_Fig22 Regions menu.jpg",
+      "PackagePath": "staticwebassets\\Files\\82_Fig22 Regions menu.jpg"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Create Business Request_mobile.png41.png",
       "PackagePath": "staticwebassets\\Files\\Create Business Request_mobile.png41.png"
     },
@@ -137,6 +149,10 @@
       "PackagePath": "staticwebassets\\Files\\image-removebg-preview.png41.png"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\dashboard.css",
+      "PackagePath": "staticwebassets\\css\\admin\\dashboard.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\international-telephone-input.css",
       "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
     },
@@ -223,6 +239,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\loginImage.jpg",
       "PackagePath": "staticwebassets\\images\\loginImage.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\dashboard.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\dashboard.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\Request.js",
