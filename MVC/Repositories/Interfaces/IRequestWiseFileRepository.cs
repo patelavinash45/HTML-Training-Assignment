@@ -1,4 +1,5 @@
-﻿using Repositories.ViewModels;
+﻿using Repositories.DataModels;
+using Repositories.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Repositories.Interfaces
     {
         int countFile(int requestId);
 
-        Task<int> addFile(int requestId, AddPatientRequest model);
+        Task<int> addFile(RequestWiseFile requestWiseFile);
+
+        List<RequestWiseFile> getFilesByrequestId(int requestId);
     }
 }

@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using HelloDoc.DataModels;
+using Microsoft.AspNetCore.Http;
+using Repositories.DataModels;
+using Repositories.ViewModels;
 
-namespace HelloDoc.ViewModels
+namespace Repositories.ViewModels
 {
     public class ViewDocument
     { 

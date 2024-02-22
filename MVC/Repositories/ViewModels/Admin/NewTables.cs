@@ -16,17 +16,31 @@ namespace Repositories.ViewModels.Admin
         public string? LastName { get; set; }
 
         [StringLength(100)]
-        public string? Requesters { get; set; }
+        public string? PhysicianName { get; set; }
 
-        [StringLength(50)]
-        [RegularExpression("^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\\-+)|([A-Za-z0-9]+\\.+)|([A-Za-z0-9]+\\++))*[A-Za-z0-9]+@((\\w+\\-+)|(\\w+\\.))*" +
-            "\\w{1,63}\\.[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
+        public int Requester { get; set; }
+
+        public int RequestId { get; set; }
+
+        [StringLength(100)]
+        public string RequesterFirstName { get; set; }
+
+        [StringLength(100)]
+        public string? RequesterLastName { get; set; }
+
+        public int? RequesterType { get; set; }
+
         public string Email { get; set; } 
 
         [StringLength(20)]
         public string? Mobile { get; set; }
 
+        [StringLength(20)]
+        public string? RequesterMobile { get; set; }
+
         public DateTime? BirthDate { get; set; }
+
+        public DateTime? DateOfService { get; set; }
 
         [StringLength(100)]
         public string? Street { get; set; }

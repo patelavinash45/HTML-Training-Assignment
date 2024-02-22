@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Repositories.ViewModels;
 
 namespace HelloDoc.ViewModels
 {

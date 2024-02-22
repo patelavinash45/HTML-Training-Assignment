@@ -26,26 +26,8 @@ namespace Repositories.Implementation
             return user?.UserId ?? 0;
         }
 
-        public async Task<int> addUser(AddPatientRequest model,int aspNetUserId)
+        public async Task<int> addUser(User user)
         {
-            User user = new()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                Mobile = model.Mobile,
-                Street = model.Street,
-                City = model.City,
-                State = model.State,
-                ZipCode = model.ZipCode,
-                AspNetUserId = aspNetUserId,
-                CreatedBy = aspNetUserId,
-                CreatedDate = DateTime.Now,
-                House = model.House,
-                IntYear = model.BirthDate.Value.Year,
-                IntDate = model.BirthDate.Value.Day,
-                StrMonth = model.BirthDate.Value.Month.ToString(),
-            };
             _dbContext.Add(user);
             await _dbContext.SaveChangesAsync();
             return user?. UserId ?? 0;

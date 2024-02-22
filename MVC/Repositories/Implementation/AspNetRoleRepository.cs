@@ -24,12 +24,8 @@ namespace Repositories.Implementation
             return aspNetRole?.Id ?? 0;
         }
 
-        public async Task<int> addUserRole(string role)
+        public async Task<int> addUserRole(AspNetRole aspNetRole)
         {
-            AspNetRole aspNetRole = new()
-            {
-                Name = "Patient",
-            };
             _dbContext.Add(aspNetRole);
             await _dbContext.SaveChangesAsync();
             return aspNetRole?.Id ?? 0;

@@ -5,11 +5,10 @@ using Microsoft.AspNetCore.Hosting;
 using Repositories.Implementation;
 using Repositories.Interface;
 using Repositories.Interfaces;
-using Services.Implementation;
 using Services.Implementation.Admin;
-using Services.Interface;
-using Services.Interfaces;
+using Services.Implementation.Patient;
 using Services.Interfaces.Admin;
+using Services.Interfaces.Patient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +21,7 @@ builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IAspNetUserRepository, AspNetUserRepository>();
 builder.Services.AddScoped<IAspNetRoleRepository, AspNetRoleRepository>();
 builder.Services.AddScoped<IAspNetUserRoleRepository, AspNetUserRoleRepository>();
-builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IPatientDashboardService, PatientDashboardService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IRequestClientRepository, RequestClientRepository>();
@@ -31,6 +30,8 @@ builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 builder.Services.AddScoped<IAddRequestService, AddRequestService>();
 builder.Services.AddScoped<IViewProfileService, ViewProfileService>();
 builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
+builder.Services.AddScoped<IResetPasswordService, ResetPasswordService>();
+builder.Services.AddScoped<IViewDocumentsServices, ViewDocumentsServices>();
 
 
 var app = builder.Build();

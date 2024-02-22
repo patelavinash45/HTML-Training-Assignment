@@ -1,4 +1,5 @@
-﻿using Repositories.DataContext;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
 using Repositories.ViewModels;
@@ -19,34 +20,26 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
-        public List<RequestClient> getAllRequestClient()
+        public List<RequestClient> getRequestClientByStatus(int status)
         {
-            return _dbContext.RequestClients.ToList();
+            return _dbContext.RequestClients.Include(a => a.Request).Where(a => a.Status==status).ToList();
         }
 
-        public async Task<int> addRequestClient(int userId, AddPatientRequest model, int requestId,int regionId)
+        public List<RequestClient> getAllRequestClientForUser(int userId)
         {
-            RequestClient requestClient = new()
-            {
-                RequestId = requestId,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                PhoneNumber = model.Mobile,
-                RegionId = regionId,
-                Email = model.Email,
-                State = model.State,
-                Street = model.Street,
-                City = model.City,
-                ZipCode = model.ZipCode,
-                Status = 1,
-                Symptoms = model.Symptoms,
-                IntYear = DateTime.Now.Year,
-                IntDate = DateTime.Now.Day,
-                StrMonth = DateTime.Now.Month.ToString(),
-            };
+            return _dbContext.RequestClients.Where(r => r.Request.UserId==userId).ToList();
+        }
+
+        public async Task<int> addRequestClient(RequestClient requestClient)
+        {
             _dbContext.Add(requestClient);
             await _dbContext.SaveChangesAsync();
             return requestClient?.RequestClientId ?? 0;
+        }
+
+        public RequestClient GetRequestClientByRequestId(int requestId)
+        {
+            return _dbContext.RequestClients.FirstOrDefault(a => a.RequestId==requestId);
         }
     }
 }

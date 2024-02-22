@@ -18,13 +18,8 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
-        public async Task<bool> addAspNetUserRole(int userId, int roleId)
+        public async Task<bool> addAspNetUserRole(AspNetUserRole aspNetUserRole)
         {
-            AspNetUserRole aspNetUserRole = new()
-            {
-                UserId = userId,
-                RoleId = roleId,
-            };
             _dbContext.Add(aspNetUserRole);
             int temp = await _dbContext.SaveChangesAsync();
             return temp>0? true: false;

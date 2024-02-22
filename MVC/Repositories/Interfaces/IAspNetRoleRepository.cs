@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,6 @@ namespace Repositories.Interfaces
     {
         int checkUserRole(string role);
 
-        Task<int> addUserRole(string role);
+        Task<int> addUserRole(AspNetRole aspNetRole);
     }
 }

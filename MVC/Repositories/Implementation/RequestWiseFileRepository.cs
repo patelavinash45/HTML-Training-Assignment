@@ -25,30 +25,16 @@ namespace Repositories.Implementation
             return requestWiseFile.Count;
         }
 
-        public async Task<int> addFile(int requestId, AddPatientRequest model)
+        public async Task<int> addFile(RequestWiseFile requestWiseFile)
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            };
-            FileInfo fileInfo = new FileInfo(model.File.FileName);
-            string fileName = requestId + "_" + fileInfo.Name;
-            string fileNameWithPath = Path.Combine(path, fileName);
-            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-            {
-                model.File.CopyTo(stream);
-            }
-            RequestWiseFile requestWiseFile = new()
-            {
-                RequestId = requestId,
-                FileName = fileName,
-                CreatedDate = DateTime.Now,
-                Uploder = model.FirstName + " " + model.LastName,
-            };
             _dbContext.Add(requestWiseFile);
             await _dbContext.SaveChangesAsync();
             return requestWiseFile?.RequestWiseFileId ?? 0;
+        }
+
+        public List<RequestWiseFile> getFilesByrequestId(int requestId)
+        {
+            return _dbContext.RequestWiseFiles.Where(a => a.RequestId == requestId).ToList();
         }
     }
 }

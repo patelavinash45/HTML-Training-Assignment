@@ -10,8 +10,12 @@ namespace Repositories.Interfaces
 {
     public interface IRequestClientRepository
     {
-        List<RequestClient> getAllRequestClient();
+        List<RequestClient> getRequestClientByStatus(int status);
 
-        Task<int> addRequestClient(int userId, AddPatientRequest model, int requestId, int regionId);
+        List<RequestClient> getAllRequestClientForUser(int userId);
+
+        Task<int> addRequestClient(RequestClient requestClient);
+
+        RequestClient GetRequestClientByRequestId(int requestId);
     }
 }

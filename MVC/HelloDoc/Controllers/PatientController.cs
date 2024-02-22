@@ -1,6 +1,5 @@
 ﻿using HelloDoc.DataContext;
 using HelloDoc.DataModels;
-using Services.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +9,8 @@ using System.Net;
 using System.Text;
 using Repositories.ViewModels;
 using HelloDoc.ViewModels;
-using Services.Interfaces;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Services.Interfaces.Patient;
 
 namespace HelloDoc.Controllers
 {
@@ -20,12 +19,15 @@ namespace HelloDoc.Controllers
         private readonly ApplicationDbContext _dbContext;
         private readonly INotyfService _notyfService;
         private readonly ILoginService _loginService;
-        private readonly IDashboardService _dashboardService;
+        private readonly IPatientDashboardService _dashboardService;
         private readonly IAddRequestService _addRequestService;
         private readonly IViewProfileService _viewProfileService;
+        private readonly IResetPasswordService _resetPasswordService;
+        private readonly IViewDocumentsServices _viewDocumentsServices;
 
-        public PatientController(ApplicationDbContext dbContext,INotyfService notyfService,ILoginService loginService ,IDashboardService dashboardService,
-                                 IAddRequestService addRequestService,IViewProfileService viewProfileService )
+        public PatientController(ApplicationDbContext dbContext,INotyfService notyfService,ILoginService loginService ,IPatientDashboardService dashboardService,
+                                 IAddRequestService addRequestService,IViewProfileService viewProfileService, IResetPasswordService resetPasswordService,
+                                 IViewDocumentsServices viewDocumentsServices)
         {
             _dbContext = dbContext;
             _notyfService = notyfService;
@@ -33,6 +35,8 @@ namespace HelloDoc.Controllers
             _dashboardService = dashboardService;
             _addRequestService = addRequestService;
             _viewProfileService= viewProfileService;
+            _resetPasswordService= resetPasswordService;
+            _viewDocumentsServices = viewDocumentsServices;
         }
 
         [Route("/")]
@@ -120,21 +124,7 @@ namespace HelloDoc.Controllers
 
         public IActionResult ViewDocument(int id)
         {
-            List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == id).ToList();
-            RequestClient requestClient = _dbContext.RequestClients.FirstOrDefault(a => a.RequestId == id);
-            DashboardHeader dashboardHeader = new()
-            {
-                FirstName = requestClient.FirstName,
-                LastName = requestClient.LastName,
-                AspNetUserId = Int32.Parse(Request.Cookies["AspNetUserId"]),
-            };
-            ViewDocument viewDocument = new()
-            {
-                FileList = requestWiseFiles,
-                Header = dashboardHeader,
-                RequestId = requestClient.RequestId,
-            };
-            return View(viewDocument);
+            return View(_viewDocumentsServices.getDocumentList(requestId: id,aspNetUserId: Int32.Parse(Request.Cookies["AspNetUserId"])));
         }
 
         public IActionResult Dashboard(int id)
@@ -199,6 +189,14 @@ namespace HelloDoc.Controllers
                 _notyfService.Error("Faild!");
             }
             return RedirectToAction("ViewProfile", "Patient", new { id = Request.Cookies["AspNetUserId"] });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPassword model)
+        {
+            _resetPasswordService.resetPasswordLinkSend(model.Email);
+            return RedirectToAction("PatientSite", "Patient");
         }
 
         [HttpPost]

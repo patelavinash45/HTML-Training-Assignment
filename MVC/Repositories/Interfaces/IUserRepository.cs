@@ -12,7 +12,7 @@ namespace Repositories.Interfaces
     {
         int getUserID(int aspNetUserID);
 
-        Task<int> addUser(AddPatientRequest model, int aspNetUserId);
+        Task<int> addUser(User user);
 
         User GetUser(int aspNetUserID);
 

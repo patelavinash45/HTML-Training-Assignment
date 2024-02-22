@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Repositories.ViewModels;
 
-namespace Services.Interfaces
+namespace Services.Interfaces.Patient
 {
-    public interface IDashboardService
+    public interface ILoginService
     {
-        List<Dashboard> GetUsersMedicalData(int aspNetUserId);
+        int auth(PatientLogin model);
     }
 }

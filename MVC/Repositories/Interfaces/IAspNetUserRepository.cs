@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,6 @@ namespace Repositories.Interface
 
         int checkUser(String email);
 
-        Task<int> addUser(String email,String password,String firstName, String mobile);
+        Task<int> addUser(AspNetUser aspNetUser);
     }
 }

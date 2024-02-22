@@ -24,18 +24,8 @@ namespace Repositories.Implementation
             return _dbContext.Requests.ToList();
         }
 
-        public async Task<int> addRequest(int userId, AddPatientRequest model)
+        public async Task<int> addRequest(Request request)
         {
-            Request request = new()
-            {
-                RequestTypeId = 2,
-                UserId = userId,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                PhoneNumber = model.Mobile,
-                CreatedDate = DateTime.Now,
-            };
             _dbContext.Add(request);
             await _dbContext.SaveChangesAsync();
             return request?.RequestId ?? 0;

@@ -190,7 +190,7 @@ tr {
 }
 
 .accordion-button[aria-expanded="true"] {
-    background-color: cadetblue;
+    background-color: #f9f9f9;
     border: none;
 }
 

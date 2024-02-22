@@ -12,6 +12,6 @@ namespace Repositories.Interfaces
     {
         List<Request> getAllRequest();
 
-        Task<int> addRequest(int userId,AddPatientRequest model);
+        Task<int> addRequest(Request request);
     }
 }

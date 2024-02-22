@@ -30,16 +30,8 @@ namespace Repositories.Implementation
             return aspNetUser?.Id ?? 0;
         }
 
-        public async Task<int> addUser(String email, String password, String firstName, String mobile)
+        public async Task<int> addUser(AspNetUser aspNetUser)
         {
-            AspNetUser aspNetUser = new()
-            {
-                UserName = firstName,
-                Email = email,
-                PhoneNumber = mobile,
-                PasswordHash = password,
-                CreatedDate = DateTime.Now,
-            };
             _dbContext.Add(aspNetUser);
             await _dbContext.SaveChangesAsync();
             return aspNetUser?.Id ?? 0;

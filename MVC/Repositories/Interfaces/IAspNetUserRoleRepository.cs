@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Repositories.Interfaces
 {
     public interface IAspNetUserRoleRepository
     {
-        Task<bool> addAspNetUserRole(int userId, int roleId);
+        Task<bool> addAspNetUserRole(AspNetUserRole aspNetUserRole);
     }
 }

@@ -80,7 +80,7 @@
                             NEW
                         </span>
                         <b class="mb-3 mx-3 h3">
-                            1453
+                            @Model.NewRequestCount
                         </b>
                     </button>
                 </div>
@@ -91,7 +91,7 @@
                             PENDING
                         </span>
                         <b class="mb-3 mx-3 h3">
-                            1453
+                            @Model.PendingRequestCount
                         </b>
                     </button>
                 </div>
@@ -102,7 +102,7 @@
                             ACTIVE
                         </span>
                         <b class="mb-3 mx-3 h3">
-                            1453
+                            @Model.ActiveRequestCount
                         </b>
                     </button>
                 </div>
@@ -113,7 +113,7 @@
                             CONCLUDE
                         </span>
                         <b class="mb-3 mx-3 h3">
-                            1453
+                            @Model.ConcludeRequestCount
                         </b>
                     </button>
                 </div>
@@ -124,7 +124,7 @@
                             TO CLOSE
                         </span>
                         <b class="mb-3 mx-3 h3">
-                            1453
+                            @Model.TocloseRequestCount
                         </b>
                     </button>
                 </div>
@@ -135,28 +135,132 @@
                             UNPAID
                         </span>
                         <b class="mb-3 mx-3 h3">
-                            1453
+                            @Model.UnpaidRequestCount
                         </b>
                     </button>
                 </div>
             </div>
-            <div id="new" class="tables row">
-                @Html.Partial("~/Views/Shared/_NewTable.cshtml",Model.NewRequests[0])
+            <div class="d-flex justify-content-between mt-4 align-items-center">
+                <div id="headingText" class="h3 d-flex">
+                    Patients
+                    <span id="newText" class="tables">
+                        (New)
+                    </span>
+                    <span id="pendingText" class="tables">
+                        (Pending)
+                    </span>
+                    <span id="activeText" class="tables">
+                        (Active)
+                    </span>
+                    <span id="concludeText" class="tables">
+                        (Conclude)
+                    </span>
+                    <span id="closeText" class="tables">
+                        (ToClose)
+                    </span>
+                    <span id="unpaidText" class="tables">
+                        (UnPiad)
+                    </span>
+                </div>
+                <div class="d-flex">
+                    <button class="mx-1 middleOptionButtons">
+                        <i class="bi bi-link"></i>
+                        <span class="buttonText">
+                            Send Link
+                        </span>
+                    </button>
+                    <button class="mx-1 middleOptionButtons">
+                        <i class="bi bi-pencil-square"></i>
+                        <span class="buttonText">
+                            Create Requests
+                        </span>
+                    </button>
+                    <button class="mx-1 middleOptionButtons">
+                        <i class="bi bi-forward-fill"></i>
+                        <span class="buttonText">
+                            Export
+                        </span>
+                    </button>
+                    <button class="mx-1 middleOptionButtons">
+                        <i class="bi bi-skip-forward"></i>
+                        <span class="buttonText">
+                            Export All
+                        </span>
+                    </button>
+                    <button class="mx-1 middleOptionButtons">
+                        <i class="bi bi-person"></i>
+                        <span class="buttonText">
+                            Request DTY Support
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <div class="p-3 bg-white rounded-top-3 row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                        <input placeholder="Search Patient" class="p-2">
+                        <select aria-label="Default select example" aria-placeholder="Region" class="p-2 ">
+                            <option value="1">Region-1</option>
+                            <option value="2">Region-2</option>
+                            <option value="3">Region-3</option>
+                            <option value="4">Region-4</option>
+                            <option value="5">Region-5</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-end col-xl-6 col-lg-6 col-md-12 col-sm-12 align-items-md-center">
+                        <button class="px-3" id="allButton">
+                            All
+                        </button>
+                        <div class="d-flex align-items-center colorOption">
+                            <i class="bi bi-circle-fill text-success mx-1"></i>
+                            <span class="colorText">
+                                Patient
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center colorOption">
+                            <i class="bi bi-circle-fill text-warning mx-1"></i>
+                            <span class="colorText">
+                                Family/Friend
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center colorOption">
+                            <i class="bi bi-circle-fill text-danger mx-1"></i>
+                            <span class="colorText">
+                                Business
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center colorOption">
+                            <i class="bi bi-circle-fill text-primary mx-1"></i>
+                            <span class="colorText">
+                                Concierge
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center colorOption">
+                            <i class="bi bi-circle-fill text-info mx-1"></i>
+                            <span class="colorText">
+                                VIP
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="new" class="tables">
+                @Html.Partial("~/Views/Shared/_NewTable.cshtml",Model.NewRequests)
             </div>
             <div id="pending" class="tables">
-                @Html.Partial("~/Views/Shared/_PendingTable.cshtml")
+                @Html.Partial("~/Views/Shared/_PendingTable.cshtml",Model.PendingRequests)
             </div>
             <div id="active" class="tables">
-                @Html.Partial("~/Views/Shared/_ActiveTable.cshtml")
+                @Html.Partial("~/Views/Shared/_ActiveTable.cshtml",Model.ActiveRequests)
             </div>
             <div id="conclude" class="tables">
-                @Html.Partial("~/Views/Shared/_ConcludeTable.cshtml")
+                @Html.Partial("~/Views/Shared/_ConcludeTable.cshtml",Model.ConcludeRequests)
             </div>
             <div id="close" class="tables">
-                @Html.Partial("~/Views/Shared/_CloseTable.cshtml")
+                @Html.Partial("~/Views/Shared/_CloseTable.cshtml",Model.TocloseRequests)
             </div>
             <div id="unpaid" class="tables">
-                @Html.Partial("~/Views/Shared/_UnpaidTable.cshtml")
+                @Html.Partial("~/Views/Shared/_UnpaidTable.cshtml",Model.UnpaidRequests)
             </div>
         </div>
     </div>

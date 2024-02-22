@@ -24,12 +24,8 @@ namespace Repositories.Implementation
             return region?.RegionId ?? 0;
         }
 
-        public async Task<int> addRegion(String regionName)
+        public async Task<int> addRegion(Region region)
         {
-            Region region = new()
-            {
-                Name = regionName.Trim(),
-            };
             _dbContext.Add(region);
             await _dbContext.SaveChangesAsync();
             return region?.RegionId ?? 0;

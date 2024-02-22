@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Repositories.ViewModels;
 
-namespace Services.Interface
+namespace Services.Interfaces.Patient
 {
-    public interface ILoginService
+    public interface IResetPasswordService
     {
-        int auth(PatientLogin model);
+        bool resetPasswordLinkSend(string email);
     }
 }

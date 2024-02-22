@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Services.Interface;
 using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Interface;
+using Services.Interfaces.Patient;
 
-namespace Services.Implementation
+namespace Services.Implementation.Patient
 {
     public class LoginService : ILoginService
     {
@@ -23,7 +23,7 @@ namespace Services.Implementation
 
         public int auth(PatientLogin model)
         {
-            return  _userRepository.validateUser(email: model.Email.Trim(), password: model.PasswordHash);
+            return _userRepository.validateUser(email: model.Email.Trim(), password: model.PasswordHash);
         }
     }
 }

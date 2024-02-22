@@ -1,18 +1,17 @@
-﻿using HelloDoc.ViewModels;
+﻿using Repositories.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Repositories.DataModels;
 using Repositories.Interfaces;
-using Repositories.ViewModels;
-using Services.Interfaces;
+using Services.Interfaces.Patient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Implementation
+namespace Services.Implementation.Patient
 {
-    public class ViewProfileService :IViewProfileService
+    public class ViewProfileService : IViewProfileService
     {
         private readonly IUserRepository _userRepository;
 
@@ -24,7 +23,7 @@ namespace Services.Implementation
 
         public ViewProfile getProfileDetails(int aspNetUserId)
         {
-            User user= _userRepository.GetUser(aspNetUserId);
+            User user = _userRepository.GetUser(aspNetUserId);
             DateTime birthDay = DateTime.Parse(user.IntYear + "-" + user.StrMonth + "-" + user.IntDate);
             DashboardHeader dashboardHeader = new()
             {

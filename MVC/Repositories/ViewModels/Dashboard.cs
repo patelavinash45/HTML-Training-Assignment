@@ -4,7 +4,7 @@ using System.Collections;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Repositories.DataModels;
-using HelloDoc.ViewModels;
+using Repositories.ViewModels;
 
 namespace Repositories.ViewModels
 {
