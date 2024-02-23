@@ -140,6 +140,16 @@ button:hover{
     display: none;
 }
 
+.dt-column-order,
+.dt-length,
+.dt-search{
+    display: none;
+}
+
+table.dataTable td.dt-type-numeric,
+table.dataTable th.dt-type-numeric {
+    text-align: left;
+}
 
 /* -------------------Header-------------------*/
 #slidebar-button {

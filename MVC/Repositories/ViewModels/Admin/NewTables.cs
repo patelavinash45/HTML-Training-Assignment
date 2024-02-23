@@ -18,6 +18,8 @@ namespace Repositories.ViewModels.Admin
         [StringLength(100)]
         public string? PhysicianName { get; set; }
 
+        public int RequesterType { get; set; }
+
         public int Requester { get; set; }
 
         public int RequestId { get; set; }
@@ -27,8 +29,6 @@ namespace Repositories.ViewModels.Admin
 
         [StringLength(100)]
         public string? RequesterLastName { get; set; }
-
-        public int? RequesterType { get; set; }
 
         public string Email { get; set; } 
 

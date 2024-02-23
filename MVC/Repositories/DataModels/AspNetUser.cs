@@ -30,6 +30,9 @@ public partial class AspNetUser
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? CreatedDate { get; set; }
 
+    [StringLength(500)]
+    public string? ResetPasswordToken { get; set; }
+
     [InverseProperty("AspNetUser")]
     public virtual ICollection<Admin> AdminAspNetUsers { get; set; } = new List<Admin>();
 

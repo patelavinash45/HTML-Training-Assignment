@@ -1,5 +1,6 @@
 var temp = true;
-function Password() {
+var temp2 = true;
+function changeIcon() {
     if (temp) {
         document.getElementById("show-password").style.display = "none";
         document.getElementById("hide-password").style.display = "inline";
@@ -10,6 +11,20 @@ function Password() {
         document.getElementById("show-password").style.display = "inline";
         document.getElementById("password").type = "password";
         temp = true;
+    }
+}
+
+function changeIcon2() {
+    if (temp2) {
+        document.getElementById("show-conformpassword").style.display = "none";
+        document.getElementById("hide-conformpassword").style.display = "inline";
+        document.getElementById("conformpassword").type = "text";
+        temp2 = false;
+    } else {
+        document.getElementById("hide-conformpassword").style.display = "none";
+        document.getElementById("show-conformpassword").style.display = "inline";
+        document.getElementById("conformpassword").type = "password";
+        temp2 = true;
     }
 }
 

@@ -15,13 +15,13 @@ namespace Services.Implementation.Admin
 {
     public class AdminDashboardService : IAdminDashboardService
     {
-        private readonly IRequestRepository _requestRepository;
+        //private readonly IRequestRepository _requestRepository;
         private readonly IRequestClientRepository _requestClientRepository;
 
         public AdminDashboardService(IRequestRepository requestRepository,
                                     IRequestClientRepository requestClientRepository)
         { 
-            _requestRepository = requestRepository;
+            //_requestRepository = requestRepository;
             _requestClientRepository = requestClientRepository;
         }
 

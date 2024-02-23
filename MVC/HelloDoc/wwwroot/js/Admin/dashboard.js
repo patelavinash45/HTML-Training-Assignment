@@ -49,4 +49,18 @@ function setTableData(temp, response) {
         case "Unpaid": $("#unpaid").html(response); break;
         default: return View();
     }
+    $('table.myTable').dataTable();
+}
+
+$(document).ready(function () {
+    $('table.myTable').dataTable();
+});
+
+//$("#searchTable").focus(function () {
+//    console.log($(this).val());
+//    $('#myTable').dataTable().search($(this).val()).draw();
+//});
+
+function tableSearch(document) {
+    $('table.myTable').DataTable().search($(document).val()).draw();
 }

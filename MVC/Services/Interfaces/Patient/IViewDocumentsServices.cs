@@ -11,6 +11,7 @@ namespace Services.Interfaces.Patient
     {
         ViewDocument getDocumentList(int requestId,int aspNetUserId);
 
-        Task<bool> uploadFile(ViewDocument model);
+        Task<int> uploadFile(ViewDocument model);
+
     }
 }

@@ -8,7 +8,7 @@
 
 
 <div class="table-responsive row">
-    <table class="table">
+    <table class="table myTable">
         <thead>
             <tr>
                 <th class="col-2 text-black">
@@ -24,7 +24,7 @@
                     Physician Name
                 </th>
                 <th class="col-1 text-black">
-                    Requested Date
+                    Date Of Service
                 </th>
                 <th class="col-2 text-black">
                     Address
@@ -58,28 +58,13 @@
                             @data.BirthDate.ToString()
                         </td>
                         <td>
-                            @requester[data.Requester - 1] @data.RequesterFirstName @data.RequesterLastName
+                            @data.State
                         </td>
                         <td>
                             @data.PhysicianName
                         </td>
                         <td>
                             @data.DateOfService
-                        </td>
-                        <td>
-                            <button class="bg-transparent text-white p-2 border-white">
-                                @data.Mobile
-                            </button>
-                            (Patient)
-                            @if (data.Requester == 1 || data.Requester == 3 || data.Requester == 4)
-                            {
-                                <button class="bg-transparent text-white p-2 border-white">
-                                    @data.RequesterMobile
-                                </button>
-                                <span>
-                                    (@requester[data.Requester - 1])
-                                </span>
-                            }
                         </td>
                         <td>
                             @data.Street, @data.City, @data.State, @data.ZipCode
@@ -226,7 +211,7 @@
                         <div class="mt-3">
                             <i class="bi bi-person rounded-circle border border-1 border-primary p-2"></i>
                             <span class="h6">
-                                Requester: @requester[data.Requester - 1] @data.RequesterFirstName @data.RequesterLastName
+                                Requester: @requester[data.Requester - 1], @data.RequesterFirstName @data.RequesterLastName
                             </span>
                         </div>
                     </div>

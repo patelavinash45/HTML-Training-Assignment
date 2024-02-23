@@ -43,9 +43,9 @@ namespace Services.Implementation.Patient
             return viewDocument;
         }
 
-        public Task<bool> uploadFile(ViewDocument model)
+        public async Task<int> uploadFile(ViewDocument model)
         {
-            await _fileService.addFile(requestId: model.RequestId, firstName: model.Header.FirstName, lastName: model.Header.LastName);
+            return await _fileService.addFile(requestId: model.RequestId, firstName: model.Header.FirstName, lastName: model.Header.LastName,file: model.File);
         }
     }
 }

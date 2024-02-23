@@ -13,6 +13,14 @@ namespace Repositories.Interface
 
         int checkUser(String email);
 
+        AspNetUser getUser(int aspNetUserId);
+
         Task<int> addUser(AspNetUser aspNetUser);
+
+        Task<bool> setToken(String token, int aspNetUserId);
+
+        bool checkToken(String token,int aspNetUserId);
+
+        Task<bool> changePassword(AspNetUser aspNetUser,String password);
     }
 }

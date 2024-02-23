@@ -79,6 +79,11 @@ namespace HelloDoc.Controllers
             return View();
         }
 
+        public IActionResult NewPassword(String token, int aspNetUserId, string time)
+        {
+            return View(_resetPasswordService.validatePasswordLink(token, aspNetUserId, time));
+        }
+
         public IActionResult RequestForSomeOne(int id)
         {
             User user = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == id);
@@ -148,6 +153,7 @@ namespace HelloDoc.Controllers
             return Task.FromResult(true);
         }
 
+
         [HttpGet]
         public async Task<IActionResult> CheckEmailExists(string email)
         {
@@ -171,6 +177,21 @@ namespace HelloDoc.Controllers
                 {
                     _notyfService.Success("Successfully Login");
                     return RedirectToAction("Dashboard", "Patient", new { id = result });
+                }
+            }
+            return View(null);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> NewPassword(SetNewPassword model)
+        {
+            if (ModelState.IsValid)
+            {
+                if(await _resetPasswordService.changePassword(model))
+                {
+                    _notyfService.Success("Successfully Password Updated");
+                    return RedirectToAction("LoginPage", "Patient");
                 }
             }
             return View(null);
@@ -205,34 +226,12 @@ namespace HelloDoc.Controllers
         {
             if (model.File != null)
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-                if (!Directory.Exists(path))
+                if(await _viewDocumentsServices.uploadFile(model)>0)
                 {
-                    Directory.CreateDirectory(path);
-                };
-                FileInfo fileInfo = new FileInfo(model.File.FileName);
-                string fileName = fileInfo.Name + model.RequestId + fileInfo.Extension;
-                string fileNameWithPath = Path.Combine(path, fileName);
-                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                {
-                    model.File.CopyTo(stream);
+                    return RedirectToAction("ViewDocument", "Patient", new { id = model.RequestId });
                 }
-                RequestWiseFile requestWiseFile = new()
-                {
-                    RequestId = model.RequestId,
-                    FileName = fileName,
-                    CreatedDate = DateTime.Now,
-                    Uploder = model.Header.FirstName+" "+model.Header.LastName,
-                };
-                _dbContext.Add(requestWiseFile);
-                await _dbContext.SaveChangesAsync();
-                _notyfService.Success("File Uploaded");
-                return RedirectToAction("ViewDocument", "Patient", new { id = model.RequestId });
             }
-            else
-            {
-                return View(null);
-            }
+            return View(null);
         }
 
         [HttpPost]

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "alsH9nhgiGhhVpscyeJXH3DPbN3FT9G2wXOVyMTn1RKx+njJ29sHfgp5isYCSjtzagC7RKsm9XVnnFfZ4ZlOEw==",
+  "dgSpecHash": "Za8uMrJoj/04o+aPol0B2m5Aeb4iRGjVTW+aLRk/Gs4aAz7AJLBFTeGllepsO8E8CEU+pkQNfnfShMuLHNlXFA==",
   "success": true,
   "projectFilePath": "D:\\project\\HTML Training Assignment\\MVC\\Services\\Services.csproj",
   "expectedPackageFiles": [
@@ -26,6 +26,8 @@
     "C:\\Users\\pce106\\.nuget\\packages\\npgsql\\7.0.6\\npgsql.7.0.6.nupkg.sha512",
     "C:\\Users\\pce106\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.11\\npgsql.entityframeworkcore.postgresql.7.0.11.nupkg.sha512",
     "C:\\Users\\pce106\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
+    "C:\\Users\\pce106\\.nuget\\packages\\system.formats.asn1\\5.0.0\\system.formats.asn1.5.0.0.nupkg.sha512",
+    "C:\\Users\\pce106\\.nuget\\packages\\system.security.cryptography.openssl\\5.0.0\\system.security.cryptography.openssl.5.0.0.nupkg.sha512",
     "C:\\Users\\pce106\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512"
   ],
   "logs": []

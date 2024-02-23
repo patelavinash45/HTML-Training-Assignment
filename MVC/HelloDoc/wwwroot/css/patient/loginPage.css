@@ -86,7 +86,8 @@
     color: black;
 }
 
-#hide-password{
+#hide-conformpassword,
+#hide-password {
     display: none;
 }
 

@@ -11,14 +11,21 @@ namespace HelloDoc.Controllers
     public class AdminController : Controller
     {
         private readonly IAdminDashboardService _adminDashboardService;
+        private readonly IViewCaseService _viewCaseService;
 
-        public AdminController(IAdminDashboardService adminDashboardService)
+        public AdminController(IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService)
         {
             _adminDashboardService = adminDashboardService;
+            _viewCaseService = viewCaseService;
         }
         public IActionResult Dashboard()
         {
             return View(_adminDashboardService.getallRequests());
+        }
+
+        public IActionResult ViewCase(int id)
+        {
+            return View(_viewCaseService.getRequestDetails(requestId: id));
         }
 
         [HttpGet]

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6LQSNsPxJiLBGAXdU3/foE3u5H4gePcJCuh9mMyOyLFN9nTpd+M/QQA0fTgPDZi1OVpYfcp9Q+htPfJSIRy8DA==",
+  "dgSpecHash": "5vBs+RhXELOjaOTe1Qz/ug7NrL2NKP7I5LQMlZHG/sXs2chOJUEn4sZhxxfTrx7MNwC9WIQyUACC52+S2K5/ZA==",
   "success": true,
   "projectFilePath": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\HelloDoc.csproj",
   "expectedPackageFiles": [
@@ -214,7 +214,7 @@
     "C:\\Users\\pce106\\.nuget\\packages\\system.security.cryptography.cng\\5.0.0\\system.security.cryptography.cng.5.0.0.nupkg.sha512",
     "C:\\Users\\pce106\\.nuget\\packages\\system.security.cryptography.csp\\4.3.0\\system.security.cryptography.csp.4.3.0.nupkg.sha512",
     "C:\\Users\\pce106\\.nuget\\packages\\system.security.cryptography.encoding\\4.3.0\\system.security.cryptography.encoding.4.3.0.nupkg.sha512",
-    "C:\\Users\\pce106\\.nuget\\packages\\system.security.cryptography.openssl\\4.3.0\\system.security.cryptography.openssl.4.3.0.nupkg.sha512",
+    "C:\\Users\\pce106\\.nuget\\packages\\system.security.cryptography.openssl\\5.0.0\\system.security.cryptography.openssl.5.0.0.nupkg.sha512",
     "C:\\Users\\pce106\\.nuget\\packages\\system.security.cryptography.pkcs\\5.0.0\\system.security.cryptography.pkcs.5.0.0.nupkg.sha512",
     "C:\\Users\\pce106\\.nuget\\packages\\system.security.cryptography.primitives\\4.3.0\\system.security.cryptography.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\pce106\\.nuget\\packages\\system.security.cryptography.protecteddata\\6.0.0\\system.security.cryptography.protecteddata.6.0.0.nupkg.sha512",

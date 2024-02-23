@@ -7,7 +7,7 @@
 }
 
 <div class="table-responsive row">
-    <table class="table">
+    <table class="table myTable">
         <thead>
             <tr>
                 <th class="col-2 text-black">
@@ -55,7 +55,7 @@
                         @data.BirthDate.ToString()
                     </td>
                     <td>
-                        @requester[data.Requester - 1] @data.RequesterFirstName @data.RequesterLastName
+                        @requester[data.Requester - 1], @data.RequesterFirstName @data.RequesterLastName
                     </td>
                     <td>
                         
@@ -106,7 +106,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ViewCase" asp-route-id="@data.RequestId">
                                         <i class="bi bi-book-fill mx-1"></i>
                                         View Case
                                     </a>
@@ -183,7 +183,7 @@
                         <div class="mt-3">
                             <i class="bi bi-telephone-fill rounded-circle border border-1 border-primary p-2"></i>
                             <span class="h6">
-                                Requester: @requester[data.Requester - 1] @data.RequesterFirstName @data.RequesterLastName
+                                Requester: @requester[data.Requester - 1], @data.RequesterFirstName @data.RequesterLastName
                             </span>
                         </div>
                     </div>
