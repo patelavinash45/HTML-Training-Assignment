@@ -1,21 +1,12 @@
 ﻿using Repositories.DataModels;
-using Repositories.Implementation;
-using Repositories.Interface;
 using Repositories.Interfaces;
 using Repositories.ViewModels.Admin;
-using Services.Interfaces;
 using Services.Interfaces.Admin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Implementation.Admin
 {
     public class AdminDashboardService : IAdminDashboardService
     {
-        //private readonly IRequestRepository _requestRepository;
         private readonly IRequestClientRepository _requestClientRepository;
 
         public AdminDashboardService(IRequestRepository requestRepository,

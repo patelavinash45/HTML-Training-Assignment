@@ -11,6 +11,10 @@ thead {
     --bs-table-color: white;
 }
 
+a {
+    text-decoration: none;
+}
+
 select,
 input {
     width: 300px;
@@ -81,7 +85,7 @@ button:hover{
     }
 
 .middleOptionButtons {
-    background-color: #01bde5;
+    background-color: cadetblue;
     padding: 10px 15px;
     color: white;
 }

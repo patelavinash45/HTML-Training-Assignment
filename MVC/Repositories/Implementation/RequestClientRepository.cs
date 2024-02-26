@@ -2,12 +2,6 @@
 using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
-using Repositories.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.Implementation
 {
@@ -33,13 +27,20 @@ namespace Repositories.Implementation
         public async Task<int> addRequestClient(RequestClient requestClient)
         {
             _dbContext.Add(requestClient);
-            await _dbContext.SaveChangesAsync();
-            return requestClient?.RequestClientId ?? 0;
+            int temp = await _dbContext.SaveChangesAsync();
+            return temp>0 ? requestClient.RequestClientId : 0;
         }
 
         public RequestClient GetRequestClientByRequestId(int requestId)
         {
             return _dbContext.RequestClients.FirstOrDefault(a => a.RequestId==requestId);
+        }
+
+        public async Task<bool> updateRequestClient(RequestClient requestClient)
+        {
+            _dbContext.Update(requestClient);
+            int temp = await _dbContext.SaveChangesAsync();
+            return temp > 0 ? true : false;
         }
     }
 }

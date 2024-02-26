@@ -1,4 +1,63 @@
-﻿/* -------------------Header-------------------*/
+﻿body {
+    background-color: #dcdbdb;
+}
+
+button {
+    height: 58px;
+    color: cadetblue;
+    font-size: 20px;
+    background-color : white;
+}
+
+.form-floating > label {
+    top: 13px;
+    left: 12px;
+    background-color: transparent;
+}
+
+input {
+    height: 58px;
+}
+
+.editButton,
+.form-control {
+    margin-top: 2vh;
+}
+
+#submit {
+    display: none;
+    margin-top: 2vh;
+}
+
+#viewNotesButton {
+    background-color: cadetblue;
+    color : white;
+}
+
+.editButton{
+    width: 100px;
+    margin-left: 12px;
+}
+
+#form {
+    width: 100vw;
+    border-radius: 10px;
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+#back-box {
+    background-color: white;
+    width: 100px;
+}
+
+a{
+    text-decoration: none;
+}
+
+
+/* -------------------Header-------------------*/
 #slidebar-button {
     display: none;
     width: 50px;
@@ -65,6 +124,16 @@ button {
 
 /* -------------------media-queries-------------------*/
 @media screen and (max-width: 778px) {
+
+    h3 {
+        font-size: calc(1rem + .6vw);
+    }
+
+    #back-box{
+        width : 90px;
+    }
+
+    /* -------------------Header-------------------*/
 
     #header-buttom,
     #button-text,

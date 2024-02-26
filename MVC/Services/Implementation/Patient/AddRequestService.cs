@@ -1,16 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Repositories.DataModels;
-using Repositories.Implementation;
+﻿using Repositories.DataModels;
 using Repositories.Interface;
 using Repositories.Interfaces;
 using Repositories.ViewModels;
 using Services.Interfaces.Patient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Implementation.Patient
 {

@@ -2,11 +2,6 @@
 using Repositories.Interfaces;
 using Repositories.ViewModels.Admin;
 using Services.Interfaces.Admin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Implementation.Admin
 {
@@ -24,6 +19,7 @@ namespace Services.Implementation.Admin
             RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
             ViewCase viewCase = new() 
             { 
+                RequestId = requestId,
                 FirstName = requestClient.FirstName,
                 LastName = requestClient.LastName,
                 BirthDate= requestClient.IntYear != null ? DateTime.Parse(requestClient.IntYear + "-" + requestClient.StrMonth
@@ -35,5 +31,24 @@ namespace Services.Implementation.Admin
             };
             return viewCase;
         }
-    }
+
+        public async Task<bool> updateRequest(ViewCase model)
+        {
+            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            requestClient.FirstName = model.FirstName;
+            requestClient.LastName = model.LastName;
+            requestClient.PhoneNumber = model.Mobile;
+            requestClient.IntYear = model.BirthDate.Value.Year;
+            requestClient.IntDate= model.BirthDate.Value.Day;
+            requestClient.StrMonth = model.BirthDate.Value.Month.ToString();
+            return await _requestClientRepository.updateRequestClient(requestClient);
+        }
+
+        public async Task<bool> cancelRequest(int requestId)
+        {
+            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
+            requestClient.Status = 3;
+            return await _requestClientRepository.updateRequestClient(requestClient);
+        }
+    }       
 }

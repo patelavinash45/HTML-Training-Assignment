@@ -1,19 +1,11 @@
 ﻿using Repositories.DataModels;
-using Repositories.Implementation;
 using Repositories.Interface;
-using Repositories.Interfaces;
 using Repositories.ViewModels;
 using Services.Interfaces.Patient;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Reflection.Emit;
-using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Implementation.Patient
 {
@@ -32,17 +24,18 @@ namespace Services.Implementation.Patient
             {
                 int aspNetUserId = _userRepository.checkUser(email);
                 String guiId = Guid.NewGuid().ToString();
-                _userRepository.setToken(token: guiId,aspNetUserId: aspNetUserId);
-                String link = "token="+guiId + "&&aspNetUserId=" + aspNetUserId + "&&time=" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                _userRepository.setToken(token: guiId, aspNetUserId: aspNetUserId);
+                String link = "token=" + guiId + "&&id=" + aspNetUserId + "&&time=" + genrateHash(DateTime.Now.ToString("yyyyMMddHHmm"));
                 MailMessage mailMessage = new MailMessage
                 {
                     From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
                     Subject = "Reset Password Link",
-                    Body = "Link for reset password : https://localhost:44392/Patient/Newpassword?"+link,
                     IsBodyHtml = true,
                 };
+                string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EmailTemplate/resetPasswordEmail.cshtml");
+                string body= System.IO.File.ReadAllText(templatePath).Replace("EmailLink", link);
+                mailMessage.Body = body;
                 mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
-
                 SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
                 {
                     UseDefaultCredentials = false,
@@ -52,27 +45,47 @@ namespace Services.Implementation.Patient
                     Credentials = new NetworkCredential(userName: "tatva.dotnet.avinashpatel@outlook.com", password: "Avinash@6351"),
                 };
                 await smtpClient.SendMailAsync(mailMessage);
+                return true;
             }
-            catch (Exception ex) { }
-            return true;
+            catch (Exception ex) { 
+                return false;
+            }
         }
 
         public SetNewPassword validatePasswordLink(String token, int aspNetUserId, String time)
         {
-            DateTime dateTime = DateTime.ParseExact(time, "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
-            TimeSpan timeDiffrence = DateTime.Now.Subtract(dateTime);
             SetNewPassword setNewPassword = new()
             {
-                AspNetUserId= aspNetUserId.ToString(),
-                IsValidLink= timeDiffrence.Minutes < 5 ? _userRepository.checkToken(token: token, aspNetUserId: aspNetUserId): false,
+                AspNetUserId = aspNetUserId.ToString(),
+                IsValidLink = false,
             };
+            for (int i=0;i>=-3;i--)
+            {
+                if(time == genrateHash(DateTime.Now.AddMinutes(i).ToString("yyyyMMddHHmm")))
+                {
+                    setNewPassword.IsValidLink = _userRepository.checkToken(token: token, aspNetUserId: aspNetUserId);
+                    return setNewPassword;
+                }
+            }
             return setNewPassword;
         }
 
         public Task<bool> changePassword(SetNewPassword model)
         {
-            AspNetUser aspNetUser = _userRepository.getUser(int.Parse(model.AspNetUserId));
-            return _userRepository.changePassword(aspNetUser:aspNetUser,password:model.Password);
+            using (var sha256 = SHA256.Create())
+            {
+                AspNetUser aspNetUser = _userRepository.getUser(int.Parse(model.AspNetUserId));
+                return _userRepository.changePassword(aspNetUser:aspNetUser,password: genrateHash(model.Password));
+            }
+        }
+
+        private String genrateHash(String password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] hashPassword = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashPassword).Replace("-", "").ToLower();
+            }
         }
     }
 }

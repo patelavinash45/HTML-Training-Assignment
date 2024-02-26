@@ -1,20 +1,19 @@
-﻿using Azure;
-using HelloDoc.DataContext;
-using HelloDoc.ViewModels;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.ViewModels.Admin;
-using Services.Interfaces;
 using Services.Interfaces.Admin;
 
 namespace HelloDoc.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly INotyfService _notyfService;
         private readonly IAdminDashboardService _adminDashboardService;
         private readonly IViewCaseService _viewCaseService;
 
-        public AdminController(IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService)
+        public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService)
         {
+            _notyfService = notyfService;
             _adminDashboardService = adminDashboardService;
             _viewCaseService = viewCaseService;
         }
@@ -26,6 +25,35 @@ namespace HelloDoc.Controllers
         public IActionResult ViewCase(int id)
         {
             return View(_viewCaseService.getRequestDetails(requestId: id));
+        }
+
+        public IActionResult ViewNotes()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ViewCase(ViewCase model) 
+        {
+            if(ModelState.IsValid)
+            {
+                if (await _viewCaseService.updateRequest(model))
+                {
+                    _notyfService.Success("Successfully Request Updated");
+                }
+                else
+                {
+                    _notyfService.Error("Update Request Faild");
+                }
+                return View(model);
+            }
+            return View(null);
+        }
+
+        public async Task<IActionResult> CancleRequest(int id)
+        {
+            await _viewCaseService.cancelRequest(id);
+            return RedirectToAction("Dashboard","Admin");
         }
 
         [HttpGet]

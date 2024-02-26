@@ -1,13 +1,6 @@
-﻿using Repositories.ViewModels;
-using Microsoft.EntityFrameworkCore;
-using Repositories.DataModels;
-using Repositories.Interface;
+﻿using Repositories.DataModels;
 using Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Repositories.ViewModels;
 using Services.Interfaces.Patient;
 
 namespace Services.Implementation.Patient

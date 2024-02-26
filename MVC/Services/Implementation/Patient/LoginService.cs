@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Repositories.DataContext;
-using Repositories.DataModels;
+﻿using Repositories.Interface;
 using Repositories.ViewModels;
-using Microsoft.EntityFrameworkCore;
-using Repositories.Interface;
 using Services.Interfaces.Patient;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Services.Implementation.Patient
 {
@@ -23,7 +17,16 @@ namespace Services.Implementation.Patient
 
         public int auth(PatientLogin model)
         {
-            return _userRepository.validateUser(email: model.Email.Trim(), password: model.PasswordHash);
+            return _userRepository.validateUser(email: model.Email.Trim(), password: genrateHash(model.PasswordHash));
+        }
+
+        private String genrateHash(String password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] hashPassword = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashPassword).Replace("-", "").ToLower();
+            }
         }
     }
 }

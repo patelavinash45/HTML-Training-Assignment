@@ -17,5 +17,7 @@ namespace Repositories.Interfaces
         Task<int> addRequestClient(RequestClient requestClient);
 
         RequestClient GetRequestClientByRequestId(int requestId);
+
+        Task<bool> updateRequestClient(RequestClient requestClient);
     }
 }

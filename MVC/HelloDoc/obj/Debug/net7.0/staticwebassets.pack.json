@@ -161,6 +161,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\ViewCase.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ViewNotes.css",
+      "PackagePath": "staticwebassets\\css\\admin\\ViewNotes.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\dashboard.css",
       "PackagePath": "staticwebassets\\css\\admin\\dashboard.css"
     },
@@ -255,6 +259,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\dashboard.js",
       "PackagePath": "staticwebassets\\js\\Admin\\dashboard.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\viewCase.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\viewCase.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\Request.js",

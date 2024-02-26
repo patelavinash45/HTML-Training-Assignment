@@ -64,3 +64,4 @@ $(document).ready(function () {
 function tableSearch(document) {
     $('table.myTable').DataTable().search($(document).val()).draw();
 }
+

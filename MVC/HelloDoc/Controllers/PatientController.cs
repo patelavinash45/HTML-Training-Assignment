@@ -1,15 +1,9 @@
-﻿using HelloDoc.DataContext;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HelloDoc.DataContext;
 using HelloDoc.DataModels;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.IO.Compression;
-using System.Net;
-using System.Text;
-using Repositories.ViewModels;
 using HelloDoc.ViewModels;
-using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc;
+using Repositories.ViewModels;
 using Services.Interfaces.Patient;
 
 namespace HelloDoc.Controllers
@@ -79,9 +73,9 @@ namespace HelloDoc.Controllers
             return View();
         }
 
-        public IActionResult NewPassword(String token, int aspNetUserId, string time)
+        public IActionResult NewPassword(String token, int id, string time)
         {
-            return View(_resetPasswordService.validatePasswordLink(token, aspNetUserId, time));
+            return View(_resetPasswordService.validatePasswordLink(token, id, time));
         }
 
         public IActionResult RequestForSomeOne(int id)
