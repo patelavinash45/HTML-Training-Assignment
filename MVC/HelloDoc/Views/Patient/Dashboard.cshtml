@@ -27,7 +27,7 @@
 </head>
 <body>
     @{
-        @Html.Partial("~/Views/Shared/_DashboardHeader.cshtml", Model[0].Header)
+        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml", Model[0].Header)
     }
     @await Component.InvokeAsync("Notyf")
     <div class="modal" tabindex="-1" id="createNewRequest">
@@ -45,10 +45,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a asp-controller="Patient" asp-action="RequestForMe" asp-route-id="@Model[0].Header.AspNetUserId" id="forMe">
+                    <a asp-controller="Patient" asp-action="RequestForMe" id="forMe">
                         <button type="button" class="btn btn-primary">Continue</button>
                     </a>
-                    <a asp-controller="Patient" asp-action="RequestForSomeOne" asp-route-id="@Model[0].Header.AspNetUserId" id="forSomeOne">
+                    <a asp-controller="Patient" asp-action="RequestForSomeOne" id="forSomeOne">
                         <button type="button" class="btn btn-primary">Continue</button>
                     </a>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

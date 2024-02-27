@@ -7,5 +7,7 @@ namespace Repositories.Interfaces
         int checkRegion(String regionName);
 
         Task<int> addRegion(Region region);
+
+        List<Region> getRegions();
     }
 }

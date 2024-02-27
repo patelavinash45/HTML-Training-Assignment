@@ -1,7 +1,5 @@
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
-using HelloDoc.DataContext;
-using Microsoft.AspNetCore.Hosting;
 using Repositories.Implementation;
 using Repositories.Interface;
 using Repositories.Interfaces;
@@ -13,6 +11,14 @@ using Services.Interfaces.Patient;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSession(
+    options => {
+        options.Cookie.Name = ".MySession";
+        options.IdleTimeout = TimeSpan.FromDays(1);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+    }
+);
 builder.Services.AddControllersWithViews();
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddDbContext<HelloDoc.DataContext.ApplicationDbContext>();
@@ -34,6 +40,11 @@ builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
 builder.Services.AddScoped<IResetPasswordService, ResetPasswordService>();
 builder.Services.AddScoped<IViewDocumentsServices, ViewDocumentsServices>();
 builder.Services.AddScoped<IViewCaseService, ViewCaseService>();
+builder.Services.AddScoped<IViewNotesService, ViewNotesService>();
+builder.Services.AddScoped<IRequestNotesRepository, RequestNotesRepository>();
+builder.Services.AddScoped<IRequestSatatusLogRepository, RequestSatatusLogRepository>();
+builder.Services.AddScoped<IConciergeRepository, ConciergeRepository>();
+builder.Services.AddScoped<IRequestConciergeRepository, RequestConciergeRepository>();
 
 
 var app = builder.Build();
@@ -46,11 +57,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseNotyf();
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 

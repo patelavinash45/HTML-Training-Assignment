@@ -13,11 +13,6 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
-        public List<Request> getAllRequest()
-        {
-            return _dbContext.Requests.ToList();
-        }
-
         public async Task<int> addRequest(Request request)
         {
             _dbContext.Add(request);

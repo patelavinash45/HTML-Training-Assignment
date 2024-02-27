@@ -9,8 +9,8 @@ namespace Repositories.Interfaces
 
         Task<int> addUser(User user);
 
-        User GetUser(int aspNetUserID);
+        User getUser(int aspNetUserID);
 
-        Task<bool> updateProfile(ViewProfile model);
+        Task<bool> updateProfile(User user);
     }
 }

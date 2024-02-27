@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Collections;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 
 namespace Repositories.ViewModels
 {
@@ -10,11 +7,11 @@ namespace Repositories.ViewModels
     { 
         [StringLength(100)]
         [Required]
-        public string FirstName { get; set; } = null!;
+        public string FirstName { get; set; } 
 
         [StringLength(100)]
         [Required]
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
 
         [StringLength(50)]
         [Required]

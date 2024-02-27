@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Repositories.ViewModels.Admin
+﻿namespace Repositories.ViewModels.Admin
 {
     public class AdminDashboard
     {
+        public DashboardHeader Header { get; set; }
+
         public List<NewTables> NewRequests { get; set; }
 
         public int NewRequestCount { get; set; }
@@ -31,5 +27,7 @@ namespace Repositories.ViewModels.Admin
         public List<NewTables> UnpaidRequests { get; set; }
 
         public int UnpaidRequestCount { get; set; }
+
+        public List<String> Regions { get; set; }
     }
 }

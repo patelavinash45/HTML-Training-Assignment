@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using Repositories.ViewModels;
 
-namespace HelloDoc.ViewModels
+namespace Repositories.ViewModels
 {
     public class AddRequestByPatient
     {
-        public DashboardHeader Header { get; set; }
+        public int AspNetUserId { get; set; }
+
+        public DashboardHeader? Header { get; set; }
 
         [StringLength(100)]
         [Required]
@@ -53,7 +56,7 @@ namespace HelloDoc.ViewModels
         [Required]
         public DateTime? BirthDate { get; set; }
 
-        public IFormFile? File { get; set; }
+        public IFormFile File { get; set; }
 
         [StringLength(100)]
         public string? House { get; set; }

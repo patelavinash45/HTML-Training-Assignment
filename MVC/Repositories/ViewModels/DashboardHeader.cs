@@ -4,9 +4,11 @@ namespace Repositories.ViewModels
 {
     public class DashboardHeader
     {
+        public int PageType { get; set; }
+
         [StringLength(100)]
         [Required]
-        public string FirstName { get; set; } = null!;
+        public string FirstName { get; set; } 
 
         [StringLength(100)]
         [Required]

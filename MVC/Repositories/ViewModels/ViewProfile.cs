@@ -1,5 +1,4 @@
-﻿using Repositories.ViewModels;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.ViewModels
 {

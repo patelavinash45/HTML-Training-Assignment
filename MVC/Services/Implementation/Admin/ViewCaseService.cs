@@ -1,5 +1,6 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interfaces;
+using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
 using Services.Interfaces.Admin;
 
@@ -16,9 +17,14 @@ namespace Services.Implementation.Admin
 
         public ViewCase getRequestDetails(int requestId)
         {
+            DashboardHeader dashboardHeader = new()
+            {
+                PageType = 1,
+            };
             RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
             ViewCase viewCase = new() 
             { 
+                Header = dashboardHeader,
                 RequestId = requestId,
                 FirstName = requestClient.FirstName,
                 LastName = requestClient.LastName,

@@ -39,6 +39,7 @@ namespace Services.Implementation.Patient
             List<Dashboard> dashboards = new List<Dashboard>() { };
             DashboardHeader dashboardHeader = new()
             {
+                PageType = 1,
                 FirstName = requestClients[0].FirstName,
                 LastName = requestClients[0].LastName,
                 AspNetUserId = aspNetUserId,

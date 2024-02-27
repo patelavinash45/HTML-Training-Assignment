@@ -58,7 +58,7 @@
                         @requester[data.Requester - 1], @data.RequesterFirstName @data.RequesterLastName
                     </td>
                     <td>
-                        
+                        @data.RequestdDate
                     </td>
                     <td>
                         <button class="bg-transparent text-white p-2 border-white">
@@ -106,7 +106,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ViewCase" asp-route-id="@data.RequestId">
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ViewCase" asp-route-requestId="@data.RequestId">
                                         <i class="bi bi-book-fill mx-1"></i>
                                         View Case
                                     </a>

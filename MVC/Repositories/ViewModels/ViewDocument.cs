@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Repositories.DataModels;
-using Repositories.ViewModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.ViewModels
 {

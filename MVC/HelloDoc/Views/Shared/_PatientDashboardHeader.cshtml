@@ -1,7 +1,8 @@
 ﻿@model Repositories.ViewModels.DashboardHeader
+@inject IHttpContextAccessor HttpContextAccessor
 
-<script src="~/js/patient/dashboard.js"></script>
 <link href="~/css/patient/_dashboardHeader.css" rel="stylesheet" />
+<script src="~/js/patient/dashboard.js"></script>
 <header>
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
@@ -17,7 +18,7 @@
                 <b> @Model.LastName </b>
             </span>
             <a asp-controller="Patient" asp-action="LoginPage">
-                <button id="log-out">
+                <button id="log-out" onclick="">
                     <span id="button-text">
                         Logout
                     </span>
@@ -30,22 +31,28 @@
         </div>
     </div>
     <hr/>
-    <div id="header-buttom">
-        <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.AspNetUserId">
-            <button class="navbar-item border-0 bg-transparent" onclick="changeTab2(true)">
+    <div id="header-buttom" class="mx-2">
+        <a asp-controller="Patient" asp-action="Dashboard" class="mx-2">
+            <div class="mx-2 h6">
                 Dashboard
-                <hr id="dashboardHr" class="underLine"/>
-            </button>
+            </div>
+            @if(Model.PageType == 1)
+            {
+                <hr class="h1" />
+            }
         </a>
-        <a asp-controller="Patient" asp-action="ViewProfile" asp-route-id="@Model.AspNetUserId">
-            <button class="navbar-item border-0 bg-transparent" onclick="changeTab2(false)">
+        <a asp-controller="Patient" asp-action="ViewProfile" class="mx-2">
+            <div class="mx-2 h6">
                 Profile
-                <hr id="profileHr" class="underLine" />
-            </button>
+            </div>
+            @if (Model.PageType == 2)
+            {
+                <hr class="h1" />
+            }
         </a>
     </div>
 </header>
-<div id="side-bar" >
+@*<div id="side-bar" >
     <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.AspNetUserId">
         <button class="sidebar-button navbar-item w-75" id="dashboard" onclick="changeTab(true)">
             Dashboard
@@ -56,4 +63,11 @@
             Profile
         </button>
     </a>
-</div>
+</div>*@
+@*<script>
+    function logout(){
+        @{
+          HttpContextAccessor.HttpContext.Session.Remove("aspNetUserId");
+        }
+    }
+</script>*@

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.ViewModels.Admin
 {
     public class ViewCase
     {
+        public DashboardHeader Header { get; set; }
+
         public int RequestId { get; set; }
 
         [StringLength(100)]
@@ -46,6 +43,5 @@ namespace Repositories.ViewModels.Admin
 
         public int? AspNetUserId { get; set; }
 
-        public DashboardHeader? Header { get; set; }
     }
 }

@@ -18,7 +18,8 @@
 </head>
 <body>
     @{
-        @Html.Partial("~/Views/Shared/_DashboardHeader.cshtml",Model.Header);
+        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml",Model.Header)
+        ;
     }
     @await Component.InvokeAsync("Notyf")
     <div class="container tab-content" id="dashboard_content">
@@ -27,7 +28,7 @@
                 <span class="h3">
                     Documents
                 </span>
-                <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.Header.AspNetUserId">
+                <a asp-controller="Patient" asp-action="Dashboard">
                     <button id="backBox">
                         <i class="bi bi-chevron-left"> </i>
                         Back

@@ -308,9 +308,7 @@ public partial class HalloDocDbContext : DbContext
         {
             entity.HasKey(e => e.RequestNotesId).HasName("RequestNotes_pkey");
 
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.RequestNoteCreatedByNavigations)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("RequestNotes_CreatedBy_fkey");
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.RequestNoteCreatedByNavigations).HasConstraintName("RequestNotes_CreatedBy_fkey");
 
             entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.RequestNoteModifiedByNavigations).HasConstraintName("RequestNotes_ModifiedBy_fkey");
 

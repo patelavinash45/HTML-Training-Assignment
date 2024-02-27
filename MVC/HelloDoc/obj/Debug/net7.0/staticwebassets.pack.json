@@ -69,6 +69,14 @@
       "PackagePath": "staticwebassets\\Files\\82_MVC.pdf"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\85_.gitconfig",
+      "PackagePath": "staticwebassets\\Files\\85_.gitconfig"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\86_Bing.url",
+      "PackagePath": "staticwebassets\\Files\\86_Bing.url"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Create Business Request_mobile.png41.png",
       "PackagePath": "staticwebassets\\Files\\Create Business Request_mobile.png41.png"
     },
@@ -163,6 +171,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ViewNotes.css",
       "PackagePath": "staticwebassets\\css\\admin\\ViewNotes.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\_dashboardHeader.css",
+      "PackagePath": "staticwebassets\\css\\admin\\_dashboardHeader.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\dashboard.css",

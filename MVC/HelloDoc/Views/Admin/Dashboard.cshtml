@@ -18,60 +18,7 @@
 </head>
 
 <body>
-    <header>
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <button id="slidebar-button" class="bg-transparent " onclick="sidebar()">
-                    <i class="bi bi-list"></i>
-                </button>
-                <img id="logo-image" src="~/images/helloDocLogo.png" />
-            </div>
-            <div class="d-flex align-items-center">
-                <span id="welcome-text">
-                    Welcome @* <b>Tests tests </b>*@
-                    <b> Test </b>
-                    <b> test </b>
-                </span>
-                <a asp-controller="Patient" asp-action="LoginPage">
-                    <button id="log-out" class="bg-transparent ">
-                        <span id="button-text">
-                            Logout
-                        </span>
-                        <i id="button-icon" class="bi bi-box-arrow-right"> </i>
-                    </button>
-                </a>
-                <button id="them-icon" class="bg-transparent ">
-                    <i class="bi-moon"> </i>
-                </button>
-            </div>
-        </div>
-        <hr class="h5" />
-        <div id="header-buttom">
-            <a asp-controller="" asp-action="" asp-route-id="">
-                <button class="navbar-item text-primary border-0 bg-transparent">
-                    Dashboard
-                    <hr class="fw-bold text-primary" />
-                </button>
-            </a>
-            <a asp-controller="" asp-action="" asp-route-id="">
-                <button class="navbar-item border-0 bg-transparent">
-                    Profile
-                </button>
-            </a>
-        </div>
-    </header>
-    <div id="side-bar">
-        <a asp-controller="" asp-action="" asp-route-id="">
-            <button class="sidebar-button navbar-item w-75" id="dashboard" onclick="changeTab(true)">
-                Dashboard
-            </button>
-        </a>
-        <a asp-controller="" asp-action="" asp-route-id="">
-            <button class="sidebar-button navbar-item w-75" id="profile" onclick="changeTab(false)">
-                Profile
-            </button>
-        </a>
-    </div>
+    @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", Model.Header)
     <div id="mainbody">
         <div class="container-fluid">
             <div class="row">
@@ -201,12 +148,12 @@
                 <div class="p-3 bg-white rounded-top-3 row">
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                         <input placeholder="Search" class="p-2" onchange="tableSearch(this)">
-                        <select aria-label="Default select example" aria-placeholder="Region" class="p-2 ">
-                            <option value="1">Region-1</option>
-                            <option value="2">Region-2</option>
-                            <option value="3">Region-3</option>
-                            <option value="4">Region-4</option>
-                            <option value="5">Region-5</option>
+                        <select aria-label="Default select example" aria-placeholder="Region" class="p-2" onchange="tableSearch(this)">
+                            <option value="">All Region</option>
+                            @foreach(var item in Model.Regions)
+                            {
+                                <option value="@item">@item</option>
+                            }
                         </select>
                     </div>
                     <div class="d-flex justify-content-end col-xl-6 col-lg-6 col-md-12 col-sm-12 align-items-md-center">

@@ -29,7 +29,7 @@ public partial class RequestNote
     [StringLength(500)]
     public string? AdminNotes { get; set; }
 
-    public int CreatedBy { get; set; }
+    public int? CreatedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedDate { get; set; }
@@ -48,7 +48,7 @@ public partial class RequestNote
 
     [ForeignKey("CreatedBy")]
     [InverseProperty("RequestNoteCreatedByNavigations")]
-    public virtual AspNetUser CreatedByNavigation { get; set; } = null!;
+    public virtual AspNetUser? CreatedByNavigation { get; set; }
 
     [ForeignKey("ModifiedBy")]
     [InverseProperty("RequestNoteModifiedByNavigations")]

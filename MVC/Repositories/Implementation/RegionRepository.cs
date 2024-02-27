@@ -25,5 +25,10 @@ namespace Repositories.Implementation
             await _dbContext.SaveChangesAsync();
             return region?.RegionId ?? 0;
         }
+
+        public List<Region> getRegions()
+        {
+            return _dbContext.Regions.ToList();
+        }
     }
 }

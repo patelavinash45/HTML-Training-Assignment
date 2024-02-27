@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore;
-using System.Collections;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Repositories.DataModels;
-using Repositories.ViewModels;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.ViewModels
 {

@@ -1,4 +1,4 @@
-﻿@model HelloDoc.ViewModels.AddRequestByPatient
+﻿@model Repositories.ViewModels.AddRequestByPatient
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,14 +16,14 @@
 </head>
 <body>
     @{
-        @Html.Partial("~/Views/Shared/_DashboardHeader.cshtml", Model.Header)
+        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml", Model.Header)
     }
     <div id="main-body">
         <div class="d-flex justify-content-between container align-items-center">
             <h3>
                 Submit Information
             </h3>
-            <a id="back-box" asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.Header.AspNetUserId">
+            <a id="back-box" asp-controller="Patient" asp-action="Dashboard">
                 <i class="bi bi-chevron-left"> </i>
                 Back
             </a>

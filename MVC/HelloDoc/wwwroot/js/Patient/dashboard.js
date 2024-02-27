@@ -21,11 +21,11 @@ function changeTab(element1, element2) {
 }
 
 function sidebar() {
-    var temp = document.getElementById("side-bar").style.display;
+    var temp = document.getElementById("header-buttom").style.display;
     if (temp == "none") {
-        document.getElementById("side-bar").style.display = "block";
+        document.getElementById("header-buttom").style.display = "flex";
     } else {
-        document.getElementById("side-bar").style.display = "none";
+        document.getElementById("header-buttom").style.display = "none";
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interfaces;
+using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
 using Services.Interfaces.Admin;
 
@@ -8,16 +9,27 @@ namespace Services.Implementation.Admin
     public class AdminDashboardService : IAdminDashboardService
     {
         private readonly IRequestClientRepository _requestClientRepository;
+        private readonly IRegionRepository _regionRepository;
 
-        public AdminDashboardService(IRequestRepository requestRepository,
+        public AdminDashboardService(IRegionRepository regionRepository,
                                     IRequestClientRepository requestClientRepository)
         { 
-            //_requestRepository = requestRepository;
+            _regionRepository = regionRepository;
             _requestClientRepository = requestClientRepository;
         }
 
         public AdminDashboard getallRequests()
         {
+            List<String> allRegionNames = new List<String>();
+            List<Region> regions = _regionRepository.getRegions();
+            foreach (var items in regions)
+            {
+                allRegionNames.Add(items.Name);
+            }
+            DashboardHeader dashboardHeader = new()
+            {
+                PageType = 1,
+            };
             AdminDashboard adminDashboard = new()
             {
                 NewRequests = GetNewRequest("New"),
@@ -30,6 +42,8 @@ namespace Services.Implementation.Admin
                                       _requestClientRepository.getRequestClientByStatus(7).Count +
                                       _requestClientRepository.getRequestClientByStatus(8).Count,
                 UnpaidRequestCount = _requestClientRepository.getRequestClientByStatus(9).Count,
+                Regions= allRegionNames,
+                Header= dashboardHeader,
             };
             return adminDashboard;
         }
@@ -92,12 +106,13 @@ namespace Services.Implementation.Admin
                     Street = requestClient.Street,
                     ZipCode = requestClient.ZipCode,
                     City = requestClient.City,
-                    RequesterType= requestClient.Request.RequestTypeId,
-                    BirthDate= requestClient.IntYear!=null? DateTime.Parse(requestClient.IntYear + "-" + requestClient.StrMonth 
+                    RequesterType = requestClient.Request.RequestTypeId,
+                    BirthDate = requestClient.IntYear!=null? DateTime.Parse(requestClient.IntYear + "-" + requestClient.StrMonth 
                                  + "-" + requestClient.IntDate): null,
-                    Email= requestClient.Email,
-                    DateOfService=null,
-                    PhysicianName="",
+                    RequestdDate = requestClient.Request.CreatedDate != null ? requestClient.Request.CreatedDate : null,
+                    Email = requestClient.Email,
+                    DateOfService = null,
+                    PhysicianName = "",
                 };
                 newTables.Add(newTable);
             }

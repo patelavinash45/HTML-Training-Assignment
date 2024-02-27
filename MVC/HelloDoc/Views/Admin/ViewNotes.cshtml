@@ -1,4 +1,4 @@
-﻿@model Repositories.ViewModels.Admin.ViewCase
+﻿@model Repositories.ViewModels.Admin.ViewNotes
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,60 +15,7 @@
 
 <body>
     @await Component.InvokeAsync("Notyf")
-    <header>
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <button id="slidebar-button" class="bg-transparent " onclick="sidebar()">
-                    <i class="bi bi-list"></i>
-                </button>
-                <img id="logo-image" src="~/images/helloDocLogo.png" />
-            </div>
-            <div class="d-flex align-items-center">
-                <span id="welcome-text">
-                    Welcome @* <b>Tests tests </b>*@
-                    <b> Test </b>
-                    <b> test </b>
-                </span>
-                <a asp-controller="Patient" asp-action="LoginPage">
-                    <button id="log-out" class="bg-transparent ">
-                        <span id="button-text">
-                            Logout
-                        </span>
-                        <i id="button-icon" class="bi bi-box-arrow-right"> </i>
-                    </button>
-                </a>
-                <button id="them-icon" class="bg-transparent ">
-                    <i class="bi-moon"> </i>
-                </button>
-            </div>
-        </div>
-        <hr class="h5" />
-        <div id="header-buttom">
-            <a asp-controller="" asp-action="" asp-route-id="">
-                <button class="navbar-item text-primary border-0 bg-transparent">
-                    Dashboard
-                    <hr class="fw-bold text-primary" />
-                </button>
-            </a>
-            <a asp-controller="" asp-action="" asp-route-id="">
-                <button class="navbar-item border-0 bg-transparent">
-                    Profile
-                </button>
-            </a>
-        </div>
-    </header>
-    <div id="side-bar">
-        <a asp-controller="" asp-action="" asp-route-id="">
-            <button class="sidebar-button navbar-item w-75" id="dashboard" onclick="changeTab(true)">
-                Dashboard
-            </button>
-        </a>
-        <a asp-controller="" asp-action="" asp-route-id="">
-            <button class="sidebar-button navbar-item w-75" id="profile" onclick="changeTab(false)">
-                Profile
-            </button>
-        </a>
-    </div>
+    @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", Model.Header)
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
             <h3>
@@ -86,11 +33,10 @@
                 <div class="d-flex flex-row card p-3">
                     <i class="bi bi-arrow-left-right fs-3 me-3"></i>
                     <div>
-                        <h3>
+                        <h4 class="mt-1">
                             Transfer Notes
-                        </h3>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi excepturi quas similique, atque nesciunt fugiat sit. Culpa sequi quos repudiandae consequuntur repellat quo nobis, in molestiae commodi sint, expedita corrupti.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi excepturi quas similique, atque nesciunt fugiat sit. Culpa sequi quos repudiandae consequuntur repellat quo nobis, in molestiae commodi sint, expedita corrupti.
+                        </h4>
+                        @Model.TransferNotes
                     </div>
                 </div>
             </div>
@@ -98,10 +44,10 @@
                 <div class="d-flex flex-row card p-3">
                     <i class="bi bi-person-circle fs-3 me-3"></i>
                     <div>
-                        <h3>
+                        <h4 class="mt-1">
                             Physician Notes
-                        </h3>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi excepturi quas similique,
+                        </h4>
+                        @Model.PhysicianNotes
                     </div>
                 </div>
             </div>
@@ -111,22 +57,26 @@
                 <div class="d-flex flex-row card p-3">
                     <i class="bi bi-file-person-fill fs-3 me-3"></i>
                     <div>
-                        <h3>
+                        <h4 class="mt-1">
                             Admin Notes
-                        </h3>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi excepturi quas similique, atque nesciunt fugiat sit. Culpa sequi quos repudiandae consequuntur repellat quo nobis, in molestiae commodi sint, expedita corrupti.
+                        </h4>
+                        @Model.AdminNotes
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="card p-3 d-flex align-items-end">
-                    <textarea class="form-control border-2 mb-4" placeholder="Admin Notes" rows="5"></textarea>
-                    <button id="saveChanges" class="px-3">
-                        Save Changes
-                    </button>
-                </div>
+                <form asp-controller="Admin" asp-action="ViewNotes">
+                    <div class="card p-3 d-flex align-items-end">
+                        <input class="d-none" asp-for="RequestId" type="text"/>
+                        <textarea class="form-control border-2 mb-4" placeholder="Additional Notes" rows="5" asp-for="NewAdminNotes" id="newnotes"></textarea>
+                        <span asp-validation-for="NewAdminNotes" class="text-danger"></span>
+                        <button id="saveChanges" class="px-3" type="submit">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-﻿@model HelloDoc.ViewModels.AddRequestByPatient
+﻿@model Repositories.ViewModels.AddRequestByPatient
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,19 +14,20 @@
 </head>
 <body>
     @{
-        @Html.Partial("~/Views/Shared/_DashboardHeader.cshtml", Model.Header)
+        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml", Model.Header)
     }
     <div id="main-body">
         <div class="d-flex justify-content-between container align-items-center">
             <h3>
                 Submit Information
             </h3>
-            <a id="back-box" asp-controller="Patient" asp-action="Dashboard" asp-route-id="@Model.Header.AspNetUserId">
+            <a id="back-box" asp-controller="Patient" asp-action="Dashboard">
                 <i class="bi bi-chevron-left"> </i>
                 Back
             </a>
         </div>
         <form class="w-100" asp-controller="Patient" asp-action="RequestForMe" enctype="multipart/form-data">
+            <input asp-for="AspNetUserId" class="d-none" type="text"/>
             <div class="container" id="form">
                 <h5 class="fw-semibold">
                     Patient Information
@@ -34,7 +35,6 @@
                 <textarea asp-for="Symptoms" class="form-control" placeholder="Enter Brief Details Of Symptoms(Optional)" rows="3"></textarea>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="FirstName" class="form-control" id="first-name" />
                         <input asp-for="FirstName" class="form-control" id="first-name" />
                         <label for="first-name">First Name</label>
                         <span asp-validation-for="FirstName" class="text-danger"></span>

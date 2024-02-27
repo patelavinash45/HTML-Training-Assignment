@@ -10,26 +10,35 @@ namespace HelloDoc.Controllers
         private readonly INotyfService _notyfService;
         private readonly IAdminDashboardService _adminDashboardService;
         private readonly IViewCaseService _viewCaseService;
+        private readonly IViewNotesService _viewNotesService;
 
-        public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService)
+        public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
+                                IViewNotesService viewNotesService)
         {
             _notyfService = notyfService;
             _adminDashboardService = adminDashboardService;
             _viewCaseService = viewCaseService;
+            _viewNotesService = viewNotesService;
         }
         public IActionResult Dashboard()
         {
             return View(_adminDashboardService.getallRequests());
         }
 
-        public IActionResult ViewCase(int id)
+        public IActionResult ViewCase(int requestId)
         {
-            return View(_viewCaseService.getRequestDetails(requestId: id));
+            return View(_viewCaseService.getRequestDetails(requestId));
         }
 
-        public IActionResult ViewNotes()
+        public async Task<IActionResult> ViewNotes(int requestId)
         {
-            return View();
+            return View(await _viewNotesService.GetNotes(requestId));
+        }
+
+        public async Task<IActionResult> CancleRequest(int requestId)
+        {
+            await _viewCaseService.cancelRequest(requestId);
+            return RedirectToAction("Dashboard", "Admin");
         }
 
         [HttpPost]
@@ -45,15 +54,9 @@ namespace HelloDoc.Controllers
                 {
                     _notyfService.Error("Update Request Faild");
                 }
-                return View(model);
+                return RedirectToAction("ViewCase", "Admin", new { requestId = model.RequestId });
             }
             return View(null);
-        }
-
-        public async Task<IActionResult> CancleRequest(int id)
-        {
-            await _viewCaseService.cancelRequest(id);
-            return RedirectToAction("Dashboard","Admin");
         }
 
         [HttpGet]
@@ -70,6 +73,24 @@ namespace HelloDoc.Controllers
                 case "Unpaid": return PartialView("_UnpaidTable", tableData);
                 default: return View();
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ViewNotes(ViewNotes model)
+        {
+            if(ModelState.IsValid)
+            {
+                if (await _viewNotesService.addAdminNotes(model))
+                {
+                    _notyfService.Success("Successfully Notes Added");
+                }
+                else
+                {
+                    _notyfService.Error("Add Notes Faild");
+                }
+                return RedirectToAction("ViewNotes", "Admin", new { requestId = model.RequestId });
+            }
+            return View();
         }
     }
 }
