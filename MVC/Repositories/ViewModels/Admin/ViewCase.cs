@@ -43,5 +43,7 @@ namespace Repositories.ViewModels.Admin
 
         public int? AspNetUserId { get; set; }
 
+        public CancelPopUp CancelPopup { get; set; }
+
     }
 }

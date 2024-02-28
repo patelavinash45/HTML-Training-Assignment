@@ -77,15 +77,18 @@ public partial class Request
     public string? Ip { get; set; }
 
     [StringLength(50)]
-    public string? CaseTag { get; set; }
-
-    [StringLength(50)]
     public string? CaseTagPhysician { get; set; }
 
     [StringLength(128)]
     public string? PatientAccountId { get; set; }
 
     public int? CreatedUserId { get; set; }
+
+    public int? CaseTagId { get; set; }
+
+    [ForeignKey("CaseTagId")]
+    [InverseProperty("Requests")]
+    public virtual CaseTag? CaseTag { get; set; }
 
     [ForeignKey("PhysicianId")]
     [InverseProperty("Requests")]

@@ -177,6 +177,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\_dashboardHeader.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\_requestCancelPopUp.css",
+      "PackagePath": "staticwebassets\\css\\admin\\_requestCancelPopUp.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\dashboard.css",
       "PackagePath": "staticwebassets\\css\\admin\\dashboard.css"
     },

@@ -18,7 +18,10 @@
 </head>
 
 <body>
+    @await Component.InvokeAsync("Notyf")
     @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", Model.Header)
+    @Html.Partial("~/Views/Shared/_RequestCancelPopUp.cshtml",Model.CancelPopup)
+    <div class="cancelPopUp"></div>
     <div id="mainbody">
         <div class="container-fluid">
             <div class="row">

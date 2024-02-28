@@ -21,7 +21,6 @@ builder.Services.AddSession(
 );
 builder.Services.AddControllersWithViews();
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
-builder.Services.AddDbContext<HelloDoc.DataContext.ApplicationDbContext>();
 builder.Services.AddDbContext<Repositories.DataContext.HalloDocDbContext>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IAspNetUserRepository, AspNetUserRepository>();
@@ -42,9 +41,12 @@ builder.Services.AddScoped<IViewDocumentsServices, ViewDocumentsServices>();
 builder.Services.AddScoped<IViewCaseService, ViewCaseService>();
 builder.Services.AddScoped<IViewNotesService, ViewNotesService>();
 builder.Services.AddScoped<IRequestNotesRepository, RequestNotesRepository>();
-builder.Services.AddScoped<IRequestSatatusLogRepository, RequestSatatusLogRepository>();
+builder.Services.AddScoped<IRequestStatusLogRepository, RequestStatusLogRepository>();
 builder.Services.AddScoped<IConciergeRepository, ConciergeRepository>();
 builder.Services.AddScoped<IRequestConciergeRepository, RequestConciergeRepository>();
+builder.Services.AddScoped<ICaseTagRepository, CaseTagRepository>();
+builder.Services.AddScoped<IBusinessRepository, BusinessRepository>();
+builder.Services.AddScoped<IRequestBusinessRepository, RequestBusinessRepository>();
 
 
 var app = builder.Build();

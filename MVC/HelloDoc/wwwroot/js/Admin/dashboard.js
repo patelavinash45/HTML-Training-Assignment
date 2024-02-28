@@ -56,12 +56,14 @@ $(document).ready(function () {
     $('table.myTable').dataTable();
 });
 
-//$("#searchTable").focus(function () {
-//    console.log($(this).val());
-//    $('#myTable').dataTable().search($(this).val()).draw();
-//});
 
 function tableSearch(document) {
     $('table.myTable').DataTable().search($(document).val()).draw();
+}
+
+function cancelPopUp(id) {
+    var idName = "#name-" + id;
+    $("#patientRequestId").val(id);
+    $("#patientName").text($(idName).text());
 }
 

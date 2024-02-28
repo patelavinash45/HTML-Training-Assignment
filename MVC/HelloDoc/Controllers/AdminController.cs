@@ -35,10 +35,22 @@ namespace HelloDoc.Controllers
             return View(await _viewNotesService.GetNotes(requestId));
         }
 
-        public async Task<IActionResult> CancleRequest(int requestId)
+        public async Task<IActionResult> CancelPopUp(CancelPopUp model)
         {
-            await _viewCaseService.cancelRequest(requestId);
-            return RedirectToAction("Dashboard", "Admin");
+            if(ModelState.IsValid)
+            {
+                
+                if (await _viewNotesService.addAdminTransform(model))
+                {
+                    _notyfService.Success("Successfully Reuqest Cancel");
+                }
+                else
+                {
+                    _notyfService.Error("Request Cancel Faild!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            return View(model);
         }
 
         [HttpPost]

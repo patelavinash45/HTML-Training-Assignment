@@ -7,5 +7,7 @@ namespace Services.Interfaces.Admin
         Task<ViewNotes> GetNotes(int RequestId);
 
         Task<bool> addAdminNotes(ViewNotes model);
+
+        Task<bool> addAdminTransform(CancelPopUp mode);
     }
 }

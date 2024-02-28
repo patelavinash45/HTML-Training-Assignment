@@ -19,5 +19,17 @@ namespace Repositories.Implementation
             await _dbContext.SaveChangesAsync();
             return request?.RequestId ?? 0;
         }
+
+        public Request getRequestByRequestId(int requestId)
+        {
+            return _dbContext.Requests.FirstOrDefault(a => a.RequestId==requestId);
+        }
+
+        public async Task<bool> updateRequest(Request request)
+        {
+            _dbContext.Update(request);
+            int temp = await _dbContext.SaveChangesAsync();
+            return temp > 0;
+        }
     }
 }

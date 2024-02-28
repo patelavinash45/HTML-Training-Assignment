@@ -1,4 +1,5 @@
 ﻿using Repositories.DataModels;
+using Repositories.Implementation;
 using Repositories.Interfaces;
 using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
@@ -9,12 +10,18 @@ namespace Services.Implementation.Admin
     public class ViewNotesService : IViewNotesService
     {
         private readonly IRequestNotesRepository _requestNotesRepository;
-        private readonly IRequestSatatusLogRepository _requestSatatusLogRepository;
+        private readonly IRequestStatusLogRepository _requestSatatusLogRepository;
+        private readonly IRequestClientRepository _requestClientRepository;
+        private readonly IRequestRepository _requestRepository;
 
-        public ViewNotesService(IRequestNotesRepository requestNotesRepository, IRequestSatatusLogRepository requestSatatusLogRepository)
+
+        public ViewNotesService(IRequestNotesRepository requestNotesRepository, IRequestStatusLogRepository requestSatatusLogRepository, 
+                                      IRequestClientRepository requestClientRepository, IRequestRepository requestRepository)
         {
             _requestNotesRepository = requestNotesRepository;
             _requestSatatusLogRepository = requestSatatusLogRepository;
+            _requestRepository = requestRepository;
+            _requestRepository = requestRepository;
         }
         public async Task<ViewNotes> GetNotes(int RequestId)
         {
@@ -50,6 +57,30 @@ namespace Services.Implementation.Admin
             }
             requestNote.AdminNotes= model.NewAdminNotes;
             return await _requestNotesRepository.updateRequestNote(requestNote);
+        }
+
+        public async Task<bool> addAdminTransform(CancelPopUp model)
+        {
+            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            requestClient.Status = 3;
+            await _requestClientRepository.updateRequestClient(requestClient);
+            Request request = _requestRepository.getRequestByRequestId(model.RequestId);
+            request.CaseTagId = model.Reason;
+            await _requestRepository.updateRequest(request);
+            RequestStatusLog requestStatusLog = _requestSatatusLogRepository.GetRequestStatusLogByRequestId(model.RequestId);
+            if (requestStatusLog == null)
+            {
+                RequestStatusLog _requestStatusLog = new()
+                {
+                    RequestId = model.RequestId,
+                    Status = 3,
+                    CreatedDate = DateTime.Now,
+                    Notes = model.AdminTransferNotes,
+                };
+                return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
+            }
+            requestStatusLog.Notes = model.AdminTransferNotes;
+            return await _requestSatatusLogRepository.updateRequestSatatusLog(requestStatusLog);
         }
     }
 }

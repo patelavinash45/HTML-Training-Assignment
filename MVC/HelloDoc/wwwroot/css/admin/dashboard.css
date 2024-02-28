@@ -12,6 +12,7 @@ thead {
 }
 
 a {
+    border-radius: 10px;
     text-decoration: none;
 }
 
@@ -20,6 +21,8 @@ input {
     width: 300px;
     height: 40px;
     margin-top: 5px;
+    border-radius: 5px;
+    border-width: 1px;
 }
 
 button {
@@ -29,6 +32,7 @@ button {
     border-radius: 5px;
 }
 
+a:hover,
 button:hover{
     font-weight:bold;
     border-color: black;

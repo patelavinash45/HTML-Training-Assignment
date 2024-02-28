@@ -10,12 +10,14 @@ namespace Services.Implementation.Admin
     {
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IRegionRepository _regionRepository;
+        private readonly ICaseTagRepository _caseTagRepository;
 
-        public AdminDashboardService(IRegionRepository regionRepository,
-                                    IRequestClientRepository requestClientRepository)
+        public AdminDashboardService(IRegionRepository regionRepository,IRequestClientRepository requestClientRepository,
+                                       ICaseTagRepository caseTagRepository)
         { 
             _regionRepository = regionRepository;
             _requestClientRepository = requestClientRepository;
+            _caseTagRepository = caseTagRepository;
         }
 
         public AdminDashboard getallRequests()
@@ -30,20 +32,25 @@ namespace Services.Implementation.Admin
             {
                 PageType = 1,
             };
+            CancelPopUp cancelPopUp = new()
+            {
+                Reasons= _caseTagRepository.getAllReason(),
+            };
             AdminDashboard adminDashboard = new()
             {
                 NewRequests = GetNewRequest("New"),
-                NewRequestCount= _requestClientRepository.getRequestClientByStatus(1).Count,
+                NewRequestCount = _requestClientRepository.getRequestClientByStatus(1).Count,
                 PendingRequestCount = _requestClientRepository.getRequestClientByStatus(2).Count,
-                ActiveRequestCount = _requestClientRepository.getRequestClientByStatus(4).Count + 
+                ActiveRequestCount = _requestClientRepository.getRequestClientByStatus(4).Count +
                                      _requestClientRepository.getRequestClientByStatus(5).Count,
                 ConcludeRequestCount = _requestClientRepository.getRequestClientByStatus(6).Count,
                 TocloseRequestCount = _requestClientRepository.getRequestClientByStatus(3).Count +
                                       _requestClientRepository.getRequestClientByStatus(7).Count +
                                       _requestClientRepository.getRequestClientByStatus(8).Count,
                 UnpaidRequestCount = _requestClientRepository.getRequestClientByStatus(9).Count,
-                Regions= allRegionNames,
-                Header= dashboardHeader,
+                Regions = allRegionNames,
+                Header = dashboardHeader,
+                CancelPopup = cancelPopUp,
             };
             return adminDashboard;
         }

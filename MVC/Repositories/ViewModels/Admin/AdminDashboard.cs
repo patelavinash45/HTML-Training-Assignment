@@ -1,4 +1,6 @@
-﻿namespace Repositories.ViewModels.Admin
+﻿using Repositories.DataModels;
+
+namespace Repositories.ViewModels.Admin
 {
     public class AdminDashboard
     {
@@ -29,5 +31,7 @@
         public int UnpaidRequestCount { get; set; }
 
         public List<String> Regions { get; set; }
+
+        public CancelPopUp CancelPopup { get; set; }
     }
 }

@@ -13,5 +13,8 @@ public partial class CaseTag
     public int CaseTagId { get; set; }
 
     [StringLength(50)]
-    public string Name { get; set; } = null!;
+    public string Reason { get; set; } = null!;
+
+    [InverseProperty("CaseTag")]
+    public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 }

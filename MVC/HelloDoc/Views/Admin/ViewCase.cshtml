@@ -20,6 +20,7 @@
 <body>
     @await Component.InvokeAsync("Notyf")
     @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml",  Model.Header)
+    @Html.Partial("~/Views/Shared/_RequestCancelPopUp.cshtml",Model.CancelPopup)
     <div class="tab-content container" id="profile_content">
         <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
             <div class="d-flex align-items-center">
@@ -95,7 +96,7 @@
                     <button class="px-3">
                         Save
                     </button>
-                    <button class="px-3 mx-2" onclick="ProfileEdit(false)">
+                    <button class="px-3 mx-2" onclick="ProfileEdit(false)" type="button">
                         Cancel
                     </button>
                 </div>
@@ -140,11 +141,14 @@
                         View Notes
                     </button>
                 </a>
-                <a asp-controller="Admin" asp-action="CancleRequest" asp-route-requestId="@Model.RequestId">
+                <button class="bg-danger px-3 text-white mx-1" onclick="cancelPopUp(@Model.RequestId)" data-bs-target="#cancelRequest" data-bs-toggle="modal" type="button">
+                    Cancle
+                </button>
+               @* <a asp-controller="Admin" asp-action="CancleRequest" asp-route-requestId="@Model.RequestId">
                     <button class="bg-danger px-3 text-white mx-1" onclick="ProfileEdit(false)" type="button">
                         Cancle
                     </button>
-                </a>
+                </a>*@
             </div>
         </form>
     </div>

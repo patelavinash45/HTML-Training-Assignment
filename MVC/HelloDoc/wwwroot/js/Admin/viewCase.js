@@ -5,7 +5,7 @@ function ProfileEdit(temp) {
         document.getElementById("Fieldset").disabled = false;
     }
     else {
-        document.getElementById("myFieldset").disabled = true;
+        document.getElementById("Fieldset").disabled = true;
         $('#edit').css("display", "block");
         $('#submit').css("display", "none");
     }
@@ -18,4 +18,9 @@ function sidebar() {
     } else {
         document.getElementById("side-bar").style.display = "none";
     }
+}
+
+function cancelPopUp(id) {
+    $("#patientRequestId").val(id);
+    $("#patientName").text($('#first-name').val() + ' ' + $('#last-name').val());
 }

@@ -1,50 +1,47 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
-namespace HelloDoc.ViewModels
+namespace Repositories.ViewModels
 {
-    public class AddBusinessRequest
+    public class AddFamilyRequest
     {
         [StringLength(100)]
         [Required]
-        public string BusinessFirstName { get; set; } = null!;
+        public string FamilyFriendFirstName { get; set; } = null!;
 
         [StringLength(100)]
         [Required]
-        public string? BusinessLastName { get; set; }
+        public string? FamilyFriendLastName { get; set; }
 
         [StringLength(50)]
         [Required]
         [RegularExpression("^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\\-+)|([A-Za-z0-9]+\\.+)|([A-Za-z0-9]+\\++))*[A-Za-z0-9]+@((\\w+\\-+)|(\\w+\\.))*" +
             "\\w{1,63}\\.[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
-        public string BusinessEmail { get; set; } = null!;
+        public string FamilyFriendEmail { get; set; } = null!;
 
         [StringLength(20)]
         [Required]
-        public string? BusinessMobile { get; set; }
+        public string? FamilyFriendMobile { get; set; }
 
         [StringLength(100)]
         [Required]
-        public string? Business { get; set; }
-
-        [StringLength(100)]
-        [Required]
-        public string? CaseNumber { get; set; }
+        public string? Relation { get; set; }
 
         //[StringLength(100)]
         //[Required]
-        //public string? BusinessStreet { get; set; }
+        //public string? FamilyFriendStreet { get; set; }
 
         //[StringLength(100)]
         //[Required]
-        //public string? BusinessCity { get; set; }
+        //public string? FamilyFriendCity { get; set; }
 
         //[StringLength(100)]
         //[Required]
-        //public string? BusinessState { get; set; }
+        //public string? FamilyFriendState { get; set; }
 
         //[StringLength(10)]
         //[Required]
-        //public string? BusinessZipCode { get; set; }
+        //public string? FamilyFriendZipCode { get; set; }
 
         [StringLength(100)]
         [Required]

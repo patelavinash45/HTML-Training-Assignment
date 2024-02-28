@@ -2,7 +2,6 @@
 @inject IHttpContextAccessor HttpContextAccessor
 
 <link href="~/css/patient/_dashboardHeader.css" rel="stylesheet" />
-<script src="~/js/patient/dashboard.js"></script>
 <header>
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
@@ -17,8 +16,8 @@
                 <b> @Model.FirstName </b>
                 <b> @Model.LastName </b>
             </span>
-            <a asp-controller="Patient" asp-action="LoginPage">
-                <button id="log-out" onclick="">
+            <a asp-controller="Patient" asp-action="Logout">
+                <button id="log-out">
                     <span id="button-text">
                         Logout
                     </span>

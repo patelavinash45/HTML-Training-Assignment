@@ -1,4 +1,5 @@
 ﻿using Repositories.DataModels;
+using Repositories.Implementation;
 using Repositories.Interfaces;
 using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
@@ -9,10 +10,12 @@ namespace Services.Implementation.Admin
     public class ViewCaseService : IViewCaseService
     {
         private readonly IRequestClientRepository _requestClientRepository;
+        private readonly ICaseTagRepository _caseTagRepository;
 
-        public ViewCaseService(IRequestClientRepository requestClientRepository)
+        public ViewCaseService(IRequestClientRepository requestClientRepository, ICaseTagRepository caseTagRepository)
         {
             _requestClientRepository = requestClientRepository;
+            _caseTagRepository = caseTagRepository;
         }
 
         public ViewCase getRequestDetails(int requestId)
@@ -20,6 +23,10 @@ namespace Services.Implementation.Admin
             DashboardHeader dashboardHeader = new()
             {
                 PageType = 1,
+            };
+            CancelPopUp cancelPopUp = new()
+            {
+                Reasons = _caseTagRepository.getAllReason(),
             };
             RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
             ViewCase viewCase = new() 
@@ -34,6 +41,7 @@ namespace Services.Implementation.Admin
                 Email=requestClient.Email,
                 Address=requestClient.Street+ " " +requestClient.City + " " + requestClient.State + " " + requestClient.ZipCode,
                 Region=requestClient.State,
+                CancelPopup=cancelPopUp,
             };
             return viewCase;
         }
@@ -50,11 +58,5 @@ namespace Services.Implementation.Admin
             return await _requestClientRepository.updateRequestClient(requestClient);
         }
 
-        public async Task<bool> cancelRequest(int requestId)
-        {
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
-            requestClient.Status = 3;
-            return await _requestClientRepository.updateRequestClient(requestClient);
-        }
     }       
 }

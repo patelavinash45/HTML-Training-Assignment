@@ -1,46 +1,51 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
-namespace HelloDoc.ViewModels
+namespace Repositories.ViewModels
 {
-    public class AddFamilyRequest
+    public class AddBusinessRequest
     {
         [StringLength(100)]
         [Required]
-        public string FamilyFriendFirstName { get; set; } = null!;
+        public string BusinessFirstName { get; set; } = null!;
 
         [StringLength(100)]
         [Required]
-        public string? FamilyFriendLastName { get; set; }
+        public string? BusinessLastName { get; set; }
 
         [StringLength(50)]
         [Required]
         [RegularExpression("^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\\-+)|([A-Za-z0-9]+\\.+)|([A-Za-z0-9]+\\++))*[A-Za-z0-9]+@((\\w+\\-+)|(\\w+\\.))*" +
             "\\w{1,63}\\.[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
-        public string FamilyFriendEmail { get; set; } = null!;
+        public string BusinessEmail { get; set; } = null!;
 
         [StringLength(20)]
         [Required]
-        public string? FamilyFriendMobile { get; set; }
+        public string? BusinessMobile { get; set; }
 
         [StringLength(100)]
         [Required]
-        public string? Relation { get; set; }
+        public string? Business { get; set; }
+
+        [StringLength(100)]
+        [Required]
+        public string? CaseNumber { get; set; }
 
         //[StringLength(100)]
         //[Required]
-        //public string? FamilyFriendStreet { get; set; }
+        //public string? BusinessStreet { get; set; }
 
         //[StringLength(100)]
         //[Required]
-        //public string? FamilyFriendCity { get; set; }
+        //public string? BusinessCity { get; set; }
 
         //[StringLength(100)]
         //[Required]
-        //public string? FamilyFriendState { get; set; }
+        //public string? BusinessState { get; set; }
 
         //[StringLength(10)]
         //[Required]
-        //public string? FamilyFriendZipCode { get; set; }
+        //public string? BusinessZipCode { get; set; }
 
         [StringLength(100)]
         [Required]

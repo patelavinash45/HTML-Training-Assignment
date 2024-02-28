@@ -35,7 +35,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Create New Request</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="border-0 bg-transparent" data-bs-dismiss="modal">
+                        <i class="bi bi-x-octagon h3"></i>
+                    </button>
                 </div>
                 <div class="modal-body">
                     Here, I Want to create new request for....
@@ -98,7 +100,10 @@
                                         if (@item.Document >0)
                                         {
                                             //str = '"' + @item.DoumentsPaths.ToString() + '"';
-                                            <a asp-controller="Patient" asp-action="ViewDocument" asp-route-id="@item.RequestId" >
+                                            //<button id="document" onclick="NavigatToViewDocument(@item.RequestId)">
+                                            //    (@item.Document) Document
+                                            //</button>
+                                            <a asp-controller="Patient" asp-action="ViewDocument" asp-route-id="@item.RequestId">
                                                 <button id="document">
                                                     (@item.Document) Document
                                                 </button>

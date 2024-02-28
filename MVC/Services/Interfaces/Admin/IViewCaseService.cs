@@ -8,6 +8,5 @@ namespace Services.Interfaces.Admin
 
         Task<bool> updateRequest(ViewCase model);
 
-        Task<bool> cancelRequest(int requestId);
     }
 }

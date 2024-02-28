@@ -1,0 +1,39 @@
+﻿@model Repositories.ViewModels.Admin.CancelPopUp
+
+<link href="~/css/admin/_requestCancelPopUp.css" rel="stylesheet" />
+<div class="modal" tabindex="-1" id="cancelRequest">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Conform Cancellation</h5>
+                <button type="button" class="border-0 bg-transparent" data-bs-dismiss="modal" >
+                    <i class="bi bi-x-octagon h3"></i>
+                </button>
+            </div>
+            <form asp-controller="Admin" asp-action="CancelPopUp">
+                <div class="modal-body">
+                    <div class="h5">
+                        Patient Name : <span class="modal-title" id="patientName"> @Model.PatientName </span>
+                    </div>
+                    <input class="d-none" id="patientRequestId" asp-for="RequestId" type="text" />
+                    <select class="p-2 w-100 mb-2" asp-for="Reason">
+                        <option disabled selected value="">Reasons For Cancellation</option>
+                        @foreach (var item in Model.Reasons)
+                        {
+                            <option value="@item.CaseTagId">@item.Reason</option>
+                        }
+                    </select>
+                    <textarea asp-for="AdminTransferNotes" class="w-100 p-2 border-2 mb-4" placeholder="Additional Notes" rows="5"></textarea>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn mx-2" id="conformButton">
+                            Conform
+                        </button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" id="closeButton">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

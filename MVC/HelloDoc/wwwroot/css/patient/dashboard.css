@@ -109,6 +109,14 @@ button {
     top: 15px;
 }*/
 
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-header {
+    border-radius: 10px;
+}
+
 .modal-title {
     color: cadetblue
 }

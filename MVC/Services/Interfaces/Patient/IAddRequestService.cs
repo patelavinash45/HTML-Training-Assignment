@@ -17,5 +17,9 @@ namespace Services.Interfaces.Patient
         Task<bool> addRequestForSomeOneelse(AddRequestByPatient model, int aspNetUserIdMe);
 
         Task<bool> addConciergeRequest(AddConciergeRequest model);
+
+        Task<bool> addFamilyFriendRequest(AddFamilyRequest model);
+
+        Task<bool> addBusinessRequest(AddBusinessRequest model);
     }
 }

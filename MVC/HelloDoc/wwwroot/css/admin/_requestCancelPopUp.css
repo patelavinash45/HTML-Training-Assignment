@@ -1,0 +1,30 @@
+﻿select,
+textarea {
+    border-radius: 5px;
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+#conformButton {
+    height: 45px;
+    background-color: cadetblue;
+    color : white
+}
+
+.modal-header {
+    border-radius: 10px;
+    background-color: white;
+}
+
+.modal-title {
+    color: cadetblue;
+}
+
+#closeButton {
+    height: 45px;
+    background-color: white;
+    border-color: cadetblue;
+}
+

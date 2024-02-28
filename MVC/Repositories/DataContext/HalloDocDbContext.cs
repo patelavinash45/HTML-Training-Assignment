@@ -249,6 +249,8 @@ public partial class HalloDocDbContext : DbContext
         {
             entity.HasKey(e => e.RequestId).HasName("Request_pkey");
 
+            entity.HasOne(d => d.CaseTag).WithMany(p => p.Requests).HasConstraintName("Request_CaseTagId_fkey");
+
             entity.HasOne(d => d.Physician).WithMany(p => p.Requests).HasConstraintName("Request_PhysicianId_fkey");
 
             entity.HasOne(d => d.User).WithMany(p => p.Requests).HasConstraintName("Request_UserId_fkey");

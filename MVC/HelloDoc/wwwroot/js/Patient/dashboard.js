@@ -37,7 +37,7 @@ function ProfileEdit(temp) {
         document.getElementById("Fieldset").disabled = false;
     }
     else {
-        document.getElementById("myFieldset").disabled = true;
+        document.getElementById("Fieldset").disabled = true;
         $('#edit').css("display", "flex");
         $('#edit').css("justifyContent", "end");
         $('#submit').css("display", "none");
@@ -73,3 +73,15 @@ function changeRadio(element) {
         $("#forMe").css("display", "none");
     }
 }
+
+//function NavigatToViewDocument(id) {
+//    $.ajax({
+//        url: '/Patient/SetRequestId',
+//        type: 'GET',
+//        contentType: 'application/json',
+//        data: { requestId: id },
+//        success: function (response) {
+//            $(document).html(response);
+//        }
+//    })
+//}

@@ -22,12 +22,15 @@ namespace Services.Implementation.Patient
         private readonly IFileService _fileService;
         private readonly IConciergeRepository _conciergeRepository;
         private readonly IRequestConciergeRepository _requestConciergeRepository;
+        private readonly IBusinessRepository _businessRepository;
+        private readonly IRequestBusinessRepository _requestBusinessRepository;
 
         public AddRequestService(IAspNetRoleRepository aspNetRoleRepository, IAspNetUserRepository aspNetUserRepository,
                                     IUserRepository userRepository, IAspNetUserRoleRepository aspNetuserRoleRepository, IRequestRepository requestRepository,
                                     IRequestWiseFileRepository requestWiseFileRepository, IRegionRepository regionRepository,
                                     IRequestClientRepository requestClientRepository, IFileService fileService, IConciergeRepository conciergeRepository,
-                                    IRequestConciergeRepository requestConciergeRepository )
+                                    IRequestConciergeRepository requestConciergeRepository, IBusinessRepository businessRepository, 
+                                    IRequestBusinessRepository requestBusinessRepository )
         {
             _aspNetRoleRepository = aspNetRoleRepository;
             _aspNetUserRepository = aspNetUserRepository;
@@ -40,6 +43,8 @@ namespace Services.Implementation.Patient
             _fileService = fileService;
             _conciergeRepository = conciergeRepository;
             _requestConciergeRepository = requestConciergeRepository;
+            _businessRepository = businessRepository;
+            _requestBusinessRepository = requestBusinessRepository;
         }
 
         public bool IsEmailExists(String email)
@@ -347,7 +352,7 @@ namespace Services.Implementation.Patient
                 FirstName = model.ConciergeFirstName,
                 LastName = model.ConciergeLastName,
                 Email = model.ConciergeEmail,
-                PhoneNumber = model.ConciergeEmail,
+                PhoneNumber = model.ConciergeMobile,
                 CreatedDate = DateTime.Now,
             };
             int requestId = await _requestRepository.addRequest(request);
@@ -390,6 +395,209 @@ namespace Services.Implementation.Patient
                 };
                 regionId = await _regionRepository.addRegion(region);
             }
+            RequestClient requestClient = new()
+            {
+                RequestId = requestId,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.Mobile,
+                RegionId = regionId,
+                Email = model.Email,
+                State = model.State,
+                Street = model.Street,
+                City = model.City,
+                ZipCode = model.ZipCode,
+                Status = 1,
+                Symptoms = model.Symptoms,
+                IntYear = DateTime.Now.Year,
+                IntDate = DateTime.Now.Day,
+                StrMonth = DateTime.Now.Month.ToString(),
+            };
+            return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
+        }
+
+        public async Task<bool> addFamilyFriendRequest(AddFamilyRequest model)
+        {
+            int aspNetRoleId = _aspNetRoleRepository.checkUserRole(role: "Patient");
+            if (aspNetRoleId == 0)
+            {
+                AspNetRole aspNetRole = new()
+                {
+                    Name = "Patient",
+                };
+                aspNetRoleId = await _aspNetRoleRepository.addUserRole(aspNetRole);
+            }
+            int aspNetUserId = _aspNetUserRepository.checkUser(email: model.Email);
+            int userId = _userRepository.getUserID(aspNetUserId);
+            if (aspNetUserId == 0)
+            {
+                AspNetUser aspNetUser = new()
+                {
+                    UserName = model.FirstName,
+                    Email = model.Email,
+                    PhoneNumber = model.Mobile,
+                    PasswordHash = genrateHash(model.Password),
+                    CreatedDate = DateTime.Now,
+                };
+                aspNetUserId = await _aspNetUserRepository.addUser(aspNetUser);
+                User user = new()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Mobile = model.Mobile,
+                    Street = model.Street,
+                    City = model.City,
+                    State = model.State,
+                    ZipCode = model.ZipCode,
+                    AspNetUserId = aspNetUserId,
+                    CreatedBy = aspNetUserId,
+                    CreatedDate = DateTime.Now,
+                    House = model.House,
+                    IntYear = model.BirthDate.Value.Year,
+                    IntDate = model.BirthDate.Value.Day,
+                    StrMonth = model.BirthDate.Value.Month.ToString(),
+                };
+                userId = await _userRepository.addUser(user);
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = userId,
+                    RoleId = aspNetRoleId,
+                };
+                await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
+            }
+            Request request = new()
+            {
+                RequestTypeId = 4,
+                UserId = userId,
+                FirstName = model.FamilyFriendFirstName,
+                LastName = model.FamilyFriendLastName,
+                Email = model.FamilyFriendEmail,
+                PhoneNumber = model.FamilyFriendMobile,
+                CreatedDate = DateTime.Now,
+            };
+            int requestId = await _requestRepository.addRequest(request);
+            if (model.File != null)
+            {
+                await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FirstName, lastName: model.LastName);
+            }
+            int regionId = _regionRepository.checkRegion(model.State);
+            if (regionId == 0)
+            {
+                Region region = new()
+                {
+                    Name = model.State,
+                };
+                regionId = await _regionRepository.addRegion(region);
+            }
+            RequestClient requestClient = new()
+            {
+                RequestId = requestId,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.Mobile,
+                RegionId = regionId,
+                Email = model.Email,
+                State = model.State,
+                Street = model.Street,
+                City = model.City,
+                ZipCode = model.ZipCode,
+                Status = 1,
+                Symptoms = model.Symptoms,
+                IntYear = DateTime.Now.Year,
+                IntDate = DateTime.Now.Day,
+                StrMonth = DateTime.Now.Month.ToString(),
+            };
+            return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
+        }
+
+        public async Task<bool> addBusinessRequest(AddBusinessRequest model)
+        {
+            int aspNetRoleId = _aspNetRoleRepository.checkUserRole(role: "Patient");
+            if (aspNetRoleId == 0)
+            {
+                AspNetRole aspNetRole = new()
+                {
+                    Name = "Patient",
+                };
+                aspNetRoleId = await _aspNetRoleRepository.addUserRole(aspNetRole);
+            }
+            int aspNetUserId = _aspNetUserRepository.checkUser(email: model.Email);
+            int userId = _userRepository.getUserID(aspNetUserId);
+            if (aspNetUserId == 0)
+            {
+                AspNetUser aspNetUser = new()
+                {
+                    UserName = model.FirstName,
+                    Email = model.Email,
+                    PhoneNumber = model.Mobile,
+                    PasswordHash = genrateHash(model.Password),
+                    CreatedDate = DateTime.Now,
+                };
+                aspNetUserId = await _aspNetUserRepository.addUser(aspNetUser);
+                User user = new()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Mobile = model.Mobile,
+                    Street = model.Street,
+                    City = model.City,
+                    State = model.State,
+                    ZipCode = model.ZipCode,
+                    AspNetUserId = aspNetUserId,
+                    CreatedBy = aspNetUserId,
+                    CreatedDate = DateTime.Now,
+                    House = model.House,
+                    IntYear = model.BirthDate.Value.Year,
+                    IntDate = model.BirthDate.Value.Day,
+                    StrMonth = model.BirthDate.Value.Month.ToString(),
+                };
+                userId = await _userRepository.addUser(user);
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = userId,
+                    RoleId = aspNetRoleId,
+                };
+                await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
+            }
+            Request request = new()
+            {
+                RequestTypeId = 4,
+                UserId = userId,
+                FirstName = model.FirstName,
+                LastName = model.BusinessLastName,
+                Email = model.BusinessEmail,
+                PhoneNumber = model.BusinessMobile,
+                CreatedDate = DateTime.Now,
+            };
+            int requestId = await _requestRepository.addRequest(request);
+            if (model.File != null)
+            {
+                await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FirstName, lastName: model.LastName);
+            }
+            int regionId = _regionRepository.checkRegion(model.State);
+            if (regionId == 0)
+            {
+                Region region = new()
+                {
+                    Name = model.State,
+                };
+                regionId = await _regionRepository.addRegion(region);
+            }
+            Business business = new()
+            {
+                Name = model.BusinessFirstName,
+                PhoneNumber = model.BusinessMobile,
+                CreatedDate = DateTime.Now,
+            };
+            int businessId = await _businessRepository.addBusiness(business);
+            RequestBusiness requestBusiness = new()
+            {
+                RequestId = request.RequestId,
+                BusinessId = business.BusinessId,
+            };
+            await _requestBusinessRepository.addRequestBusiness(requestBusiness);
             RequestClient requestClient = new()
             {
                 RequestId = requestId,
