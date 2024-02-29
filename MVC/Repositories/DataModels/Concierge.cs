@@ -33,14 +33,14 @@ public partial class Concierge
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedDate { get; set; }
 
-    public int RegionId { get; set; }
+    public int? RegionId { get; set; }
 
     [StringLength(20)]
     public string? RoleId { get; set; }
 
     [ForeignKey("RegionId")]
     [InverseProperty("Concierges")]
-    public virtual Region Region { get; set; } = null!;
+    public virtual Region? Region { get; set; }
 
     [InverseProperty("Concierge")]
     public virtual ICollection<RequestConcierge> RequestConcierges { get; set; } = new List<RequestConcierge>();

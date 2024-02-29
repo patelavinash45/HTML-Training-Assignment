@@ -11,23 +11,20 @@ namespace Services.Implementation.Admin
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IRegionRepository _regionRepository;
         private readonly ICaseTagRepository _caseTagRepository;
+        private readonly IPhysicianRepository _physicianRepository;
 
         public AdminDashboardService(IRegionRepository regionRepository,IRequestClientRepository requestClientRepository,
-                                       ICaseTagRepository caseTagRepository)
+                                       ICaseTagRepository caseTagRepository, IPhysicianRepository physicianRepository)
         { 
             _regionRepository = regionRepository;
             _requestClientRepository = requestClientRepository;
             _caseTagRepository = caseTagRepository;
+            _physicianRepository = physicianRepository;
         }
 
         public AdminDashboard getallRequests()
         {
-            List<String> allRegionNames = new List<String>();
-            List<Region> regions = _regionRepository.getRegions();
-            foreach (var items in regions)
-            {
-                allRegionNames.Add(items.Name);
-            }
+            List<Region> allRegion = _regionRepository.getAllRegions();
             DashboardHeader dashboardHeader = new()
             {
                 PageType = 1,
@@ -35,6 +32,11 @@ namespace Services.Implementation.Admin
             CancelPopUp cancelPopUp = new()
             {
                 Reasons= _caseTagRepository.getAllReason(),
+            };
+            AssignPopUp assignPopUp = new()
+            {
+                Regions = allRegion,
+                Physics = _physicianRepository.getAllPhysicians(),
             };
             AdminDashboard adminDashboard = new()
             {
@@ -48,9 +50,10 @@ namespace Services.Implementation.Admin
                                       _requestClientRepository.getRequestClientByStatus(7).Count +
                                       _requestClientRepository.getRequestClientByStatus(8).Count,
                 UnpaidRequestCount = _requestClientRepository.getRequestClientByStatus(9).Count,
-                Regions = allRegionNames,
+                Regions = allRegion,
                 Header = dashboardHeader,
                 CancelPopup = cancelPopUp,
+                AssignPopup = assignPopUp,
             };
             return adminDashboard;
         }

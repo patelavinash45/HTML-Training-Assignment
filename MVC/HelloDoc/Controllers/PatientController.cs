@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Repositories.DataModels;
 using Repositories.ViewModels;
+using Services.Interfaces.Auth;
 using Services.Interfaces.Patient;
 
 namespace HelloDoc.Controllers
@@ -127,11 +128,11 @@ namespace HelloDoc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult LoginPage(PatientLogin model)
+        public IActionResult LoginPage(Login model)
         {
             if (ModelState.IsValid)
             {
-                int aspNetUserId = _loginService.auth(model);
+                int aspNetUserId = _loginService.auth(model,1);
                 if (aspNetUserId == 0)
                 {
                     _notyfService.Error("Invalid credentials");

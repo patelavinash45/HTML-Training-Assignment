@@ -58,12 +58,23 @@ $(document).ready(function () {
 
 
 function tableSearch(document) {
-    $('table.myTable').DataTable().search($(document).val()).draw();
+    console.log($('.bg-primary'));
+    $('table.myTable').DataTable().search($('.bg-primary').val()).draw();
+    //$('table.myTable').DataTable().search($(document).val()).draw();
 }
 
-function cancelPopUp(id) {
-    var idName = "#name-" + id;
-    $("#patientRequestId").val(id);
-    $("#patientName").text($(idName).text());
-}
+
+////PopUp Functions
+
+//function cancelPopUp(id) {
+//    var idName = "#name-" + id;
+//    $("#patientRequestId").val(id);
+//    $("#patientName").text($(idName).text());
+//}
+
+//function changeSelect() {
+//    var id = "#region" + $('#selectRegion').val();
+//    $('.physicianOptions').css("display", "none");
+//    $(id).css("display", "block");
+//}
 

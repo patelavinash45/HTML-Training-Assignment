@@ -96,32 +96,27 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bi bi-list-check mx-1"></i>
+                                    <button class="dropdown-item" onclick="displayPopUp(@data.RequestId)" data-bs-target="#assignRequest" data-bs-toggle="modal">
                                         Assign Case
-                                    </a>
+                                    </button>
                                 </li>
                                 <li>
-                                    <button class="dropdown-item" onclick="cancelPopUp(@data.RequestId)" data-bs-target="#cancelRequest" data-bs-toggle="modal">
-                                        <i class="bi bi-x-circle-fill mx-1"></i>
+                                    <button class="dropdown-item" onclick="displayPopUp(@data.RequestId)" data-bs-target="#cancelRequest" data-bs-toggle="modal">
                                         Cancel Case
                                     </button>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" asp-controller="Admin" asp-action="ViewCase" asp-route-requestId="@data.RequestId">
-                                        <i class="bi bi-book-fill mx-1"></i>
                                         View Case
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">
-                                        <i class="bi bi-file-earmark-fill mx-1"></i>
                                         View Notes
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">
-                                        <i class="bi bi-slash-circle-fill mx-1"></i>
                                         Block Patient
                                     </a>
                                 </li>
@@ -191,12 +186,12 @@
                     </div>
                     <div class="row mt-3 px-3">
                         <div class="px-2 col-md-4 col-sm-6 col-6">
-                            <button class="w-100 bg-info text-white fw-bold">
+                            <button class="w-100 bg-info text-white fw-bold" onclick="displayPopUp(@data.RequestId)" data-bs-target="#assignRequest" data-bs-toggle="modal">
                                 Asign Case
                             </button>
                         </div>
                         <div class="px-2 col-md-4 col-sm-6 col-6">
-                            <button class="w-100 bg-danger text-white fw-bold">
+                            <button class="w-100 bg-danger text-white fw-bold" onclick="displayPopUp(@data.RequestId)" data-bs-target="#cancelRequest" data-bs-toggle="modal">
                                 Cancel Case
                             </button>
                         </div>

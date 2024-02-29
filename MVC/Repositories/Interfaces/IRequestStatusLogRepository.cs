@@ -4,7 +4,7 @@ namespace Repositories.Interfaces
 {
     public interface IRequestStatusLogRepository
     {
-        RequestStatusLog GetRequestStatusLogByRequestId(int requestId);
+        List<RequestStatusLog> GetRequestStatusLogByRequestId(int requestId);
 
         Task<int> addRequestSatatusLog(RequestStatusLog requestStatusLog);
 

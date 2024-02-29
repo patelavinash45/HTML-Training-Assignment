@@ -94,6 +94,12 @@ public partial class RequestClient
     [StringLength(500)]
     public string? Symptoms { get; set; }
 
+    public int? PhysicianId { get; set; }
+
+    [ForeignKey("PhysicianId")]
+    [InverseProperty("RequestClients")]
+    public virtual Physician? Physician { get; set; }
+
     [ForeignKey("RegionId")]
     [InverseProperty("RequestClients")]
     public virtual Region? Region { get; set; }

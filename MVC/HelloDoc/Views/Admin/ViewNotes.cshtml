@@ -21,7 +21,7 @@
             <h3>
                 Notes
             </h3>
-            <a asp-controller="Admin" asp-action="ViewCase">
+            <a asp-controller="Admin" asp-action="ViewCase" asp-route-requestId="@Model.RequestId">
                 <button id="back-box">
                     <i class="bi bi-chevron-left"> </i>
                     Back
@@ -36,7 +36,18 @@
                         <h4 class="mt-1">
                             Transfer Notes
                         </h4>
-                        @Model.TransferNotes
+                        @for(int i=0;i<Model.TransferNotes.Count;i++)
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-@(i+1)-square" viewBox="0 0 16 16">
+                                <path d="M9.283 4.002V12H7.971V5.338h-.065L6.072 6.656V5.385l1.899-1.383z" />
+                                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z" />
+                            </svg>
+                            @Model.TransferNotes[i]
+                        }
+                        @*@foreach(var item in Model.TransferNotes)
+                        {
+                            @item
+                        }*@
                     </div>
                 </div>
             </div>

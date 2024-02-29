@@ -100,9 +100,7 @@ public partial class HalloDocDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Admin_AspNetUserId_fkey");
 
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.AdminCreatedByNavigations)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Admin_CreatedBy_fkey");
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.AdminCreatedByNavigations).HasConstraintName("Admin_CreatedBy_fkey");
 
             entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.AdminModifiedByNavigations).HasConstraintName("Admin_ModifiedBy_fkey");
         });
@@ -170,9 +168,7 @@ public partial class HalloDocDbContext : DbContext
         {
             entity.HasKey(e => e.ConciergeId).HasName("Concierge_pkey");
 
-            entity.HasOne(d => d.Region).WithMany(p => p.Concierges)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Concierge_RegionId_fkey");
+            entity.HasOne(d => d.Region).WithMany(p => p.Concierges).HasConstraintName("Concierge_RegionId_fkey");
         });
 
         modelBuilder.Entity<EmailLog>(entity =>
@@ -251,8 +247,6 @@ public partial class HalloDocDbContext : DbContext
 
             entity.HasOne(d => d.CaseTag).WithMany(p => p.Requests).HasConstraintName("Request_CaseTagId_fkey");
 
-            entity.HasOne(d => d.Physician).WithMany(p => p.Requests).HasConstraintName("Request_PhysicianId_fkey");
-
             entity.HasOne(d => d.User).WithMany(p => p.Requests).HasConstraintName("Request_UserId_fkey");
         });
 
@@ -272,6 +266,8 @@ public partial class HalloDocDbContext : DbContext
         modelBuilder.Entity<RequestClient>(entity =>
         {
             entity.HasKey(e => e.RequestClientId).HasName("RequestClient_pkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.RequestClients).HasConstraintName("RequestClient_PhysicianId_fkey");
 
             entity.HasOne(d => d.Region).WithMany(p => p.RequestClients).HasConstraintName("RequestClient_RegionId_fkey");
 

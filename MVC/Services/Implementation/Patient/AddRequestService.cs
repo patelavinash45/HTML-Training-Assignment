@@ -17,7 +17,6 @@ namespace Services.Implementation.Patient
         private readonly IAspNetUserRoleRepository _aspNetuserRoleRepository;
         private readonly IRequestRepository _requestRepository;
         private readonly IRequestWiseFileRepository _requestWiseFileRepository;
-        private readonly IRegionRepository _regionRepository;
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IFileService _fileService;
         private readonly IConciergeRepository _conciergeRepository;
@@ -27,10 +26,9 @@ namespace Services.Implementation.Patient
 
         public AddRequestService(IAspNetRoleRepository aspNetRoleRepository, IAspNetUserRepository aspNetUserRepository,
                                     IUserRepository userRepository, IAspNetUserRoleRepository aspNetuserRoleRepository, IRequestRepository requestRepository,
-                                    IRequestWiseFileRepository requestWiseFileRepository, IRegionRepository regionRepository,
+                                    IRequestWiseFileRepository requestWiseFileRepository, IRequestBusinessRepository requestBusinessRepository,
                                     IRequestClientRepository requestClientRepository, IFileService fileService, IConciergeRepository conciergeRepository,
-                                    IRequestConciergeRepository requestConciergeRepository, IBusinessRepository businessRepository, 
-                                    IRequestBusinessRepository requestBusinessRepository )
+                                    IRequestConciergeRepository requestConciergeRepository, IBusinessRepository businessRepository)
         {
             _aspNetRoleRepository = aspNetRoleRepository;
             _aspNetUserRepository = aspNetUserRepository;
@@ -38,7 +36,6 @@ namespace Services.Implementation.Patient
             _aspNetuserRoleRepository = aspNetuserRoleRepository;
             _requestRepository = requestRepository;
             _requestWiseFileRepository = requestWiseFileRepository;
-            _regionRepository = regionRepository;
             _requestClientRepository = requestClientRepository;
             _fileService = fileService;
             _conciergeRepository = conciergeRepository;
@@ -98,7 +95,7 @@ namespace Services.Implementation.Patient
                 userId = await _userRepository.addUser(user);
                 AspNetUserRole aspNetUserRole = new()
                 {
-                    UserId = userId,
+                    UserId = aspNetUserId,
                     RoleId = aspNetRoleId,
                 };
                 await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
@@ -118,22 +115,12 @@ namespace Services.Implementation.Patient
             {
                 await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FirstName, lastName:model.LastName);
             }
-            int regionId = _regionRepository.checkRegion(model.State);
-            if (regionId == 0)
-            {
-                Region region = new()
-                {
-                    Name = model.State,
-                };
-                regionId = await _regionRepository.addRegion(region);
-            }
             RequestClient requestClient = new()
             {
                 RequestId = requestId,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.Mobile,
-                RegionId = regionId,
                 Email = model.Email,
                 State = model.State,
                 Street = model.Street,
@@ -245,7 +232,7 @@ namespace Services.Implementation.Patient
                 userId = await _userRepository.addUser(user);
                 AspNetUserRole aspNetUserRole = new()
                 {
-                    UserId = userId,
+                    UserId = aspNetUserId,
                     RoleId = _aspNetRoleRepository.checkUserRole(role: "Patient"),
                 };
                 await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
@@ -265,22 +252,12 @@ namespace Services.Implementation.Patient
             {
                 await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FirstName, lastName: model.LastName);
             }
-            int regionId = _regionRepository.checkRegion(model.State);
-            if (regionId == 0)
-            {
-                Region region = new()
-                {
-                    Name = model.State,
-                };
-                regionId = await _regionRepository.addRegion(region);
-            }
             RequestClient requestClient = new()
             {
                 RequestId = requestId,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.Mobile,
-                RegionId = regionId,
                 Email = model.Email,
                 State = model.State,
                 Street = model.Street,
@@ -340,7 +317,7 @@ namespace Services.Implementation.Patient
                 userId = await _userRepository.addUser(user);
                 AspNetUserRole aspNetUserRole = new()
                 {
-                    UserId = userId,
+                    UserId = aspNetUserId,
                     RoleId = aspNetRoleId,
                 };
                 await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
@@ -360,15 +337,6 @@ namespace Services.Implementation.Patient
             {
                 await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FirstName, lastName: model.LastName);
             }
-            int regionId = _regionRepository.checkRegion(model.ConciergeState);
-            if (regionId == 0)
-            {
-                Region region = new()
-                {
-                    Name = model.ConciergeState,
-                };
-                regionId = await _regionRepository.addRegion(region);
-            }
             Concierge concierge = new()
             {
                 ConciergeName = model.ConciergeFirstName,
@@ -377,7 +345,6 @@ namespace Services.Implementation.Patient
                 State = model.ConciergeState,
                 ZipCode = model.ConciergeZipCode,
                 CreatedDate = DateTime.Now,
-                RegionId = regionId,
             };
             int conciergeId = await _conciergeRepository.addConcierge(concierge);
             RequestConcierge requestConcierge = new()
@@ -386,22 +353,12 @@ namespace Services.Implementation.Patient
                 ConciergeId = concierge.ConciergeId
             };
             await _requestConciergeRepository.addRequestConcierge(requestConcierge);
-            regionId = _regionRepository.checkRegion(model.State);
-            if (regionId == 0)
-            {
-                Region region = new()
-                {
-                    Name = model.State,
-                };
-                regionId = await _regionRepository.addRegion(region);
-            }
             RequestClient requestClient = new()
             {
                 RequestId = requestId,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.Mobile,
-                RegionId = regionId,
                 Email = model.Email,
                 State = model.State,
                 Street = model.Street,
@@ -461,7 +418,7 @@ namespace Services.Implementation.Patient
                 userId = await _userRepository.addUser(user);
                 AspNetUserRole aspNetUserRole = new()
                 {
-                    UserId = userId,
+                    UserId = aspNetUserId,
                     RoleId = aspNetRoleId,
                 };
                 await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
@@ -481,22 +438,12 @@ namespace Services.Implementation.Patient
             {
                 await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FirstName, lastName: model.LastName);
             }
-            int regionId = _regionRepository.checkRegion(model.State);
-            if (regionId == 0)
-            {
-                Region region = new()
-                {
-                    Name = model.State,
-                };
-                regionId = await _regionRepository.addRegion(region);
-            }
             RequestClient requestClient = new()
             {
                 RequestId = requestId,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.Mobile,
-                RegionId = regionId,
                 Email = model.Email,
                 State = model.State,
                 Street = model.Street,
@@ -556,7 +503,7 @@ namespace Services.Implementation.Patient
                 userId = await _userRepository.addUser(user);
                 AspNetUserRole aspNetUserRole = new()
                 {
-                    UserId = userId,
+                    UserId = aspNetUserId,
                     RoleId = aspNetRoleId,
                 };
                 await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
@@ -575,15 +522,6 @@ namespace Services.Implementation.Patient
             if (model.File != null)
             {
                 await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FirstName, lastName: model.LastName);
-            }
-            int regionId = _regionRepository.checkRegion(model.State);
-            if (regionId == 0)
-            {
-                Region region = new()
-                {
-                    Name = model.State,
-                };
-                regionId = await _regionRepository.addRegion(region);
             }
             Business business = new()
             {
@@ -604,7 +542,6 @@ namespace Services.Implementation.Patient
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.Mobile,
-                RegionId = regionId,
                 Email = model.Email,
                 State = model.State,
                 Street = model.Street,

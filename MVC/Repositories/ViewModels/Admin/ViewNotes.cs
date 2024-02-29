@@ -15,6 +15,6 @@ namespace Repositories.ViewModels.Admin
         [Required]
         public string NewAdminNotes { get; set; }
 
-        public string? TransferNotes { get; set; }
+        public List<String>? TransferNotes { get; set; }
     }
 }

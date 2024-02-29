@@ -8,6 +8,6 @@ namespace Repositories.Interfaces
 
         Task<int> addRegion(Region region);
 
-        List<Region> getRegions();
+        List<Region> getAllRegions();
     }
 }

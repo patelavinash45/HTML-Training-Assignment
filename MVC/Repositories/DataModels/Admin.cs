@@ -43,7 +43,7 @@ public partial class Admin
     [StringLength(20)]
     public string? AltPhone { get; set; }
 
-    public int CreatedBy { get; set; }
+    public int? CreatedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedDate { get; set; }
@@ -57,8 +57,6 @@ public partial class Admin
 
     public bool? IsDeleted { get; set; }
 
-    public int? RoleId { get; set; }
-
     [InverseProperty("Admin")]
     public virtual ICollection<AdminRegion> AdminRegions { get; set; } = new List<AdminRegion>();
 
@@ -68,7 +66,7 @@ public partial class Admin
 
     [ForeignKey("CreatedBy")]
     [InverseProperty("AdminCreatedByNavigations")]
-    public virtual AspNetUser CreatedByNavigation { get; set; } = null!;
+    public virtual AspNetUser? CreatedByNavigation { get; set; }
 
     [ForeignKey("ModifiedBy")]
     [InverseProperty("AdminModifiedByNavigations")]

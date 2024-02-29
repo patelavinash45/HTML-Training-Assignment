@@ -4,8 +4,10 @@ using Repositories.Implementation;
 using Repositories.Interface;
 using Repositories.Interfaces;
 using Services.Implementation.Admin;
+using Services.Implementation.Auth;
 using Services.Implementation.Patient;
 using Services.Interfaces.Admin;
+using Services.Interfaces.Auth;
 using Services.Interfaces.Patient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,6 +49,7 @@ builder.Services.AddScoped<IRequestConciergeRepository, RequestConciergeReposito
 builder.Services.AddScoped<ICaseTagRepository, CaseTagRepository>();
 builder.Services.AddScoped<IBusinessRepository, BusinessRepository>();
 builder.Services.AddScoped<IRequestBusinessRepository, RequestBusinessRepository>();
+builder.Services.AddScoped<IPhysicianRepository, PhysicianRepository>();
 
 
 var app = builder.Build();

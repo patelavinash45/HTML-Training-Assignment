@@ -2,7 +2,7 @@
 
 namespace Repositories.ViewModels
 {
-    public class PatientLogin
+    public class Login
     {
         [Required(ErrorMessage = "Password is required.")]
         //[RegularExpression("(?=^.{8,10}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{\":;'?/>.<,])(?!.*\\s).*$", 

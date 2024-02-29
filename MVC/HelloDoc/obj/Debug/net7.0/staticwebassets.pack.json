@@ -177,12 +177,16 @@
       "PackagePath": "staticwebassets\\css\\admin\\_dashboardHeader.css"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\_requestCancelPopUp.css",
-      "PackagePath": "staticwebassets\\css\\admin\\_requestCancelPopUp.css"
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\_requestPopUp.css",
+      "PackagePath": "staticwebassets\\css\\admin\\_requestPopUp.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\dashboard.css",
       "PackagePath": "staticwebassets\\css\\admin\\dashboard.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\loginPage.css",
+      "PackagePath": "staticwebassets\\css\\admin\\loginPage.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\international-telephone-input.css",
@@ -275,6 +279,14 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\dashboard.js",
       "PackagePath": "staticwebassets\\js\\Admin\\dashboard.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\loginPage.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\loginPage.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\requestPopUp.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\requestPopUp.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\viewCase.js",

@@ -1,9 +1,9 @@
 ﻿using Repositories.ViewModels;
 
-namespace Services.Interfaces.Patient
+namespace Services.Interfaces.Auth
 {
     public interface ILoginService
     {
-        int auth(PatientLogin model);
+        int auth(Login model,int userType);
     }
 }

@@ -8,6 +8,8 @@ namespace Services.Interfaces.Admin
 
         Task<bool> addAdminNotes(ViewNotes model);
 
-        Task<bool> addAdminTransform(CancelPopUp mode);
+        Task<bool> cancleRequest(CancelPopUp model);
+
+        Task<bool> assignRequest(AssignPopUp model);
     }
 }

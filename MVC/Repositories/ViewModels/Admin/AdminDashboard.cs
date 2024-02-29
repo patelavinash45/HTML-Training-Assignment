@@ -30,8 +30,10 @@ namespace Repositories.ViewModels.Admin
 
         public int UnpaidRequestCount { get; set; }
 
-        public List<String> Regions { get; set; }
+        public List<Region> Regions { get; set; }
 
         public CancelPopUp CancelPopup { get; set; }
+
+        public AssignPopUp AssignPopup { get; set; }
     }
 }

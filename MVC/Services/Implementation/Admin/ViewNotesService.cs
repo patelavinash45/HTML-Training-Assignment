@@ -21,12 +21,17 @@ namespace Services.Implementation.Admin
             _requestNotesRepository = requestNotesRepository;
             _requestSatatusLogRepository = requestSatatusLogRepository;
             _requestRepository = requestRepository;
-            _requestRepository = requestRepository;
+            _requestClientRepository= requestClientRepository;
         }
         public async Task<ViewNotes> GetNotes(int RequestId)
         {
             RequestNote requestNote = _requestNotesRepository.GetRequestNoteByRequestId(RequestId);
-            RequestStatusLog requestStatusLog = _requestSatatusLogRepository.GetRequestStatusLogByRequestId(RequestId);
+            List<RequestStatusLog> requestStatusLogs = _requestSatatusLogRepository.GetRequestStatusLogByRequestId(RequestId);
+            List<string> transferNotes = new List<string>();
+            foreach(var requestStatusLog in requestStatusLogs)
+            {
+                transferNotes.Add(requestStatusLog.Notes);
+            };
             DashboardHeader dashboardHeader = new()
             {
                 PageType = 1,
@@ -37,7 +42,7 @@ namespace Services.Implementation.Admin
                 RequestId = RequestId,
                 AdminNotes = requestNote!=null?requestNote.AdminNotes:null,
                 PhysicianNotes = requestNote != null ? requestNote.PhysicianNotes : null,
-                TransferNotes = requestStatusLog!=null ? requestStatusLog.Notes: null,
+                TransferNotes = transferNotes,
             };
             return notes;
         }
@@ -59,7 +64,7 @@ namespace Services.Implementation.Admin
             return await _requestNotesRepository.updateRequestNote(requestNote);
         }
 
-        public async Task<bool> addAdminTransform(CancelPopUp model)
+        public async Task<bool> cancleRequest(CancelPopUp model)
         {
             RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
             requestClient.Status = 3;
@@ -67,20 +72,31 @@ namespace Services.Implementation.Admin
             Request request = _requestRepository.getRequestByRequestId(model.RequestId);
             request.CaseTagId = model.Reason;
             await _requestRepository.updateRequest(request);
-            RequestStatusLog requestStatusLog = _requestSatatusLogRepository.GetRequestStatusLogByRequestId(model.RequestId);
-            if (requestStatusLog == null)
+            RequestStatusLog _requestStatusLog = new()
             {
-                RequestStatusLog _requestStatusLog = new()
-                {
-                    RequestId = model.RequestId,
-                    Status = 3,
-                    CreatedDate = DateTime.Now,
-                    Notes = model.AdminTransferNotes,
-                };
-                return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
-            }
-            requestStatusLog.Notes = model.AdminTransferNotes;
-            return await _requestSatatusLogRepository.updateRequestSatatusLog(requestStatusLog);
+                RequestId = model.RequestId,
+                Status = 3,
+                CreatedDate = DateTime.Now,
+                Notes = model.AdminTransferNotes,
+            };
+            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
+        }
+
+        public async Task<bool> assignRequest(AssignPopUp model)
+        {
+            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            requestClient.Status = 2;
+            requestClient.PhysicianId = model.SelectedPhysician;
+            await _requestClientRepository.updateRequestClient(requestClient);
+            RequestStatusLog _requestStatusLog = new()
+            {
+                RequestId = model.RequestId,
+                Status = 2,
+                CreatedDate = DateTime.Now,
+                Notes = model.AdminTransferNotes,
+                PhysicianId = model.SelectedPhysician,
+            };
+            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
         }
     }
 }

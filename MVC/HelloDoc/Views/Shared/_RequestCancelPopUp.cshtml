@@ -1,6 +1,7 @@
 ﻿@model Repositories.ViewModels.Admin.CancelPopUp
 
-<link href="~/css/admin/_requestCancelPopUp.css" rel="stylesheet" />
+<link href="~/css/admin/_requestPopUp.css" rel="stylesheet" />
+<script src="~/js/Admin/requestPopUp.js"></script>
 <div class="modal" tabindex="-1" id="cancelRequest">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -13,9 +14,9 @@
             <form asp-controller="Admin" asp-action="CancelPopUp">
                 <div class="modal-body">
                     <div class="h5">
-                        Patient Name : <span class="modal-title" id="patientName"> @Model.PatientName </span>
+                        Patient Name : <span id="patientName"> @Model.PatientName </span>
                     </div>
-                    <input class="d-none" id="patientRequestId" asp-for="RequestId" type="text" />
+                    <input class="d-none patientRequestId" asp-for="RequestId" type="text" />
                     <select class="p-2 w-100 mb-2" asp-for="Reason">
                         <option disabled selected value="">Reasons For Cancellation</option>
                         @foreach (var item in Model.Reasons)

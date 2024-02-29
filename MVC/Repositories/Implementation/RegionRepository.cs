@@ -26,7 +26,7 @@ namespace Repositories.Implementation
             return region?.RegionId ?? 0;
         }
 
-        public List<Region> getRegions()
+        public List<Region> getAllRegions()
         {
             return _dbContext.Regions.ToList();
         }

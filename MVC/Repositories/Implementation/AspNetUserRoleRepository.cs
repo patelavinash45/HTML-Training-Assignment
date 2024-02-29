@@ -19,5 +19,11 @@ namespace Repositories.Implementation
             int temp = await _dbContext.SaveChangesAsync();
             return temp>0? true: false;
         }
+
+        public bool validateAspNetUserRole(int aspNetUserId, int userType)
+        {
+            AspNetUserRole aspNetUserRole = _dbContext.AspNetUserRoles.FirstOrDefault(a => a.UserId == aspNetUserId && a.RoleId == userType);
+            return aspNetUserRole != null;
+        }
     }
 }

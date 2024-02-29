@@ -78,10 +78,10 @@ public partial class Physician
     public short? Status { get; set; }
 
     [StringLength(100)]
-    public string BusinessName { get; set; } = null!;
+    public string? BusinessName { get; set; }
 
     [StringLength(200)]
-    public string BusinessWebsite { get; set; } = null!;
+    public string? BusinessWebsite { get; set; }
 
     [Column(TypeName = "bit(1)")]
     public BitArray? IsDeleted { get; set; }
@@ -126,6 +126,9 @@ public partial class Physician
     public virtual ICollection<PhysicianRegion> PhysicianRegions { get; set; } = new List<PhysicianRegion>();
 
     [InverseProperty("Physician")]
+    public virtual ICollection<RequestClient> RequestClients { get; set; } = new List<RequestClient>();
+
+    [InverseProperty("Physician")]
     public virtual ICollection<RequestStatusLog> RequestStatusLogPhysicians { get; set; } = new List<RequestStatusLog>();
 
     [InverseProperty("TransToPhysician")]
@@ -133,9 +136,6 @@ public partial class Physician
 
     [InverseProperty("Physician")]
     public virtual ICollection<RequestWiseFile> RequestWiseFiles { get; set; } = new List<RequestWiseFile>();
-
-    [InverseProperty("Physician")]
-    public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
     [InverseProperty("Physician")]
     public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();

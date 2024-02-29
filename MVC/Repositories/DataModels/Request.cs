@@ -29,8 +29,6 @@ public partial class Request
     [StringLength(50)]
     public string? Email { get; set; }
 
-    public int? PhysicianId { get; set; }
-
     [StringLength(20)]
     public string? ConfirmationNumber { get; set; }
 
@@ -89,10 +87,6 @@ public partial class Request
     [ForeignKey("CaseTagId")]
     [InverseProperty("Requests")]
     public virtual CaseTag? CaseTag { get; set; }
-
-    [ForeignKey("PhysicianId")]
-    [InverseProperty("Requests")]
-    public virtual Physician? Physician { get; set; }
 
     [InverseProperty("Request")]
     public virtual ICollection<RequestBusiness> RequestBusinesses { get; set; } = new List<RequestBusiness>();

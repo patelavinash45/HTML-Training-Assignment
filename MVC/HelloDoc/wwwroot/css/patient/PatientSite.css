@@ -44,6 +44,10 @@ button:hover{
     background-color: #0d1556;
 }
 
+#admin-button {
+    background-color: #64b57f;
+}
+
 #bottom-box{
     display: flex;
     justify-content: center;

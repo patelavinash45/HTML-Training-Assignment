@@ -21,6 +21,7 @@
     @await Component.InvokeAsync("Notyf")
     @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", Model.Header)
     @Html.Partial("~/Views/Shared/_RequestCancelPopUp.cshtml",Model.CancelPopup)
+    @Html.Partial("~/Views/Shared/_RequestAssignPopUp.cshtml",Model.AssignPopup)
     <div class="cancelPopUp"></div>
     <div id="mainbody">
         <div class="container-fluid">
@@ -155,7 +156,7 @@
                             <option value="">All Region</option>
                             @foreach(var item in Model.Regions)
                             {
-                                <option value="@item">@item</option>
+                                <option value="@item">@item.Name</option>
                             }
                         </select>
                     </div>
@@ -163,36 +164,36 @@
                         <button class="px-3" id="allButton">
                             All
                         </button>
-                        <div class="d-flex align-items-center colorOption">
+                        <button class="d-flex align-items-center colorOption border-0 bg-transparent">
                             <i class="bi bi-circle-fill text-success mx-1"></i>
                             <span class="colorText">
                                 Patient
                             </span>
-                        </div>
-                        <div class="d-flex align-items-center colorOption">
+                        </button>
+                        <button class="d-flex align-items-center colorOption border-0 bg-transparent">
                             <i class="bi bi-circle-fill text-warning mx-1"></i>
                             <span class="colorText">
                                 Family/Friend
                             </span>
-                        </div>
-                        <div class="d-flex align-items-center colorOption">
+                        </button>
+                        <button class="d-flex align-items-center colorOption border-0 bg-transparent">
                             <i class="bi bi-circle-fill text-danger mx-1"></i>
                             <span class="colorText">
                                 Business
                             </span>
-                        </div>
-                        <div class="d-flex align-items-center colorOption">
+                        </button>
+                        <button class="d-flex align-items-center colorOption border-0 bg-transparent">
                             <i class="bi bi-circle-fill text-primary mx-1"></i>
                             <span class="colorText">
                                 Concierge
                             </span>
-                        </div>
-                        <div class="d-flex align-items-center colorOption">
+                        </button>
+                        <button class="d-flex align-items-center colorOption border-0 bg-transparent">
                             <i class="bi bi-circle-fill text-info mx-1"></i>
                             <span class="colorText">
                                 VIP
                             </span>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>

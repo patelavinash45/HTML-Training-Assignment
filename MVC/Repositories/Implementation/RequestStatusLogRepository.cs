@@ -13,9 +13,9 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
-        public RequestStatusLog GetRequestStatusLogByRequestId(int requestId)
+        public List<RequestStatusLog> GetRequestStatusLogByRequestId(int requestId)
         {
-            return _dbContext.RequestStatusLogs.FirstOrDefault(a => a.RequestId == requestId);
+            return _dbContext.RequestStatusLogs.Where(a => a.RequestId == requestId).ToList();
         }
 
         public async Task<int> addRequestSatatusLog(RequestStatusLog requestStatusLog)

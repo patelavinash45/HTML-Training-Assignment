@@ -1,25 +1,34 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
 using Services.Interfaces.Admin;
+using Services.Interfaces.Auth;
 
 namespace HelloDoc.Controllers
 {
     public class AdminController : Controller
     {
         private readonly INotyfService _notyfService;
+        private readonly ILoginService _loginService;
         private readonly IAdminDashboardService _adminDashboardService;
         private readonly IViewCaseService _viewCaseService;
         private readonly IViewNotesService _viewNotesService;
 
         public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
-                                IViewNotesService viewNotesService)
+                                IViewNotesService viewNotesService, ILoginService loginService)
         {
             _notyfService = notyfService;
+            _loginService = loginService;
             _adminDashboardService = adminDashboardService;
             _viewCaseService = viewCaseService;
             _viewNotesService = viewNotesService;
         }
+        public IActionResult LoginPage()
+        {
+            return View();
+        }
+
         public IActionResult Dashboard()
         {
             return View(_adminDashboardService.getallRequests());
@@ -40,7 +49,7 @@ namespace HelloDoc.Controllers
             if(ModelState.IsValid)
             {
                 
-                if (await _viewNotesService.addAdminTransform(model))
+                if (await _viewNotesService.cancleRequest(model))
                 {
                     _notyfService.Success("Successfully Reuqest Cancel");
                 }
@@ -51,6 +60,46 @@ namespace HelloDoc.Controllers
                 return RedirectToAction("Dashboard", "Admin");
             }
             return View(model);
+        }
+
+        public async Task<IActionResult> AssignPopUp(AssignPopUp model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (await _viewNotesService.assignRequest(model))
+                {
+                    _notyfService.Success("Successfully Reuqest Assign");
+                }
+                else
+                {
+                    _notyfService.Error("Request Assign Faild!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult LoginPage(Login model)
+        {
+            if (ModelState.IsValid)
+            {
+                int aspNetUserId = _loginService.auth(model,2);
+                if (aspNetUserId == 0)
+                {
+                    _notyfService.Error("Invalid credentials");
+                    return View(null);
+                }
+                else
+                {
+                    HttpContext.Session.SetInt32("aspNetUserId", aspNetUserId);
+                    _notyfService.Success("Successfully Login");
+                    return RedirectToAction("Dashboard", "Admin");
+                }
+            }
+            return View(null);
         }
 
         [HttpPost]
