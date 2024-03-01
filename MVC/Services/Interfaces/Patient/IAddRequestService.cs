@@ -6,13 +6,13 @@ namespace Services.Interfaces.Patient
     {
         bool IsEmailExists(String email);
 
-        Task<bool> addPatientRequest(AddPatientRequest model);
-
         AddRequestByPatient getModelForRequestByMe(int aspNetUserId);
 
-        Task<bool> addRequestForMe(AddRequestByPatient model);
-
         AddRequestByPatient getModelForRequestForSomeoneelse(int aspNetUserId);
+
+        Task<bool> addPatientRequest(AddPatientRequest model);
+
+        Task<bool> addRequestForMe(AddRequestByPatient model);
 
         Task<bool> addRequestForSomeOneelse(AddRequestByPatient model, int aspNetUserIdMe);
 

@@ -124,6 +124,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZXF1ZXN0QXNzaWduUG9wVXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_RequestBlockPopUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZXF1ZXN0QmxvY2tQb3BVcC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_RequestCancelPopUp.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZXF1ZXN0Q2FuY2VsUG9wVXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -142,6 +146,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_WarningPopUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9XYXJuaW5nUG9wVXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/_ViewImports.cshtml]

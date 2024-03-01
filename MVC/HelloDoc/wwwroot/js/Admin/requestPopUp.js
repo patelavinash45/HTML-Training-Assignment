@@ -7,5 +7,5 @@ function changeSelect() {
 function displayPopUp(id) {
     var idName = "#name-" + id;
     $(".patientRequestId").val(id);
-    $("#patientName").text($(idName).text());
+    $(".patientName").text($(idName).text());
 }

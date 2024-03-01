@@ -6,8 +6,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Concierge Request</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/patient/conciergeRequest.css" rel="stylesheet" />
     <link href="~/css/international-telephone-input.css" rel="stylesheet" />
@@ -16,27 +16,7 @@
 </head>
 <body>
     <partial name="_RequestHeader" />
-    <div class="alert vw-100 vh-100" id="alert-message">
-        <div id="alert-box">
-            <img class="w-25" src="~/images/informtion-icon.png" />
-            <h4>
-                Information
-            </h4>
-            <span>
-                When submitting a request, you must provide correct
-            </span>
-            <span>
-                contact information for the patient or responsibly
-            </span>
-            <span>
-                party. Failure to provide the correct email phone
-            </span>
-            <span> number will delay service or be declined.</span>
-            <button class="btn" onclick="alert_close(this)">
-                ok
-            </button>
-        </div>
-    </div>
+    <partial name="_WarningPopUp" />
     <div id="main-body">
         <div class="d-flex justify-content-end container">
             <a id="back-box" asp-controller="Patient" asp-action="SubmitRequest">
@@ -51,13 +31,13 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="ConciergeFirstName" class="form-control" id="first-name" placeholder />
-                        <label for="first-name">Your First Name</label>
+                        <input asp-for="ConciergeFirstName" class="form-control" id="firstName" placeholder />
+                        <label for="firstName">Your First Name</label>
                         <span asp-validation-for="ConciergeFirstName" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="ConciergeLastName" class="form-control" id="last-name" placeholder />
-                        <label for="last-name">Your Last Name</label>
+                        <input asp-for="ConciergeLastName" class="form-control" id="lastName" placeholder />
+                        <label for="lastName">Your Last Name</label>
                         <span asp-validation-for="ConciergeLastName" class="text-danger"></span>
                     </div>
                 </div>
@@ -85,25 +65,25 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="ConciergeStreet" class="form-control" id="street" placeholder />
-                        <label for="street">Street</label>
+                        <input asp-for="ConciergeStreet" class="form-control" id="street1" placeholder />
+                        <label for="street1">Street</label>
                         <span asp-validation-for="ConciergeStreet" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="ConciergeCity" class="form-control" id="city" placeholder />
-                        <label for="city">City</label>
+                        <input asp-for="ConciergeCity" class="form-control" id="city1" placeholder />
+                        <label for="city1">City</label>
                         <span asp-validation-for="ConciergeCity" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="ConciergeState" class="form-control" id="state" placeholder />
-                        <label for="state">State</label>
+                        <input asp-for="ConciergeState" class="form-control" id="state1" placeholder />
+                        <label for="state1">State</label>
                         <span asp-validation-for="ConciergeState" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="ConciergeZipCode" class="form-control" id="zip-code" placeholder />
-                        <label for="zip-code">Zip-Code</label>
+                        <input asp-for="ConciergeZipCode" class="form-control" id="zipCode" placeholder />
+                        <label for="zipCode">Zip-Code</label>
                         <span asp-validation-for="ConciergeZipCode" class="text-danger"></span>
                     </div>
                 </div>

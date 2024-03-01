@@ -1,10 +1,4 @@
-﻿
-function alert_close(element) {
-    element.parentNode.parentNode.style.display = 'none';
-    document.getElementById("main-body").style.opacity = 1;
-}
-
-function checkEmail(element) {
+﻿function checkEmail(element) {
     var email = $(element).val();
     $.ajax({
         url: '/Patient/CheckEmailExists',
@@ -20,5 +14,9 @@ function checkEmail(element) {
         }
     });
 }
+
+$(document).ready(function () {
+    $("#popup").modal('show');
+});
 
 

@@ -74,14 +74,11 @@ function changeRadio(element) {
     }
 }
 
-//function NavigatToViewDocument(id) {
-//    $.ajax({
-//        url: '/Patient/SetRequestId',
-//        type: 'GET',
-//        contentType: 'application/json',
-//        data: { requestId: id },
-//        success: function (response) {
-//            $(document).html(response);
-//        }
-//    })
-//}
+function NavigatToViewDocument(id) {
+    $.ajax({
+        url: '/Patient/SetRequestId',
+        type: 'GET',
+        contentType: 'application/json',
+        data: { requestId: id },
+    })
+}

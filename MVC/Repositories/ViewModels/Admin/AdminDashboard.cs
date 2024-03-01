@@ -35,5 +35,7 @@ namespace Repositories.ViewModels.Admin
         public CancelPopUp CancelPopup { get; set; }
 
         public AssignPopUp AssignPopup { get; set; }
+
+        public BlockPopUp BlockPopup { get; set; }
     }
 }

@@ -2,30 +2,6 @@ body {
     background-color: #dcdbdb;
 }
 
-#main-body {
-    opacity: 0.5;
-}
-
-#alert-message {
-    position: fixed;
-    display: flex;
-    z-index: 3;
-    justify-content: center;
-    align-items: center;
-}
-
-#alert-box {
-    width: 550px;
-    background-color: white;
-    height: 450px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 10px;
-    margin-bottom: 150px;
-}
-
 #logo-image {
     width: 150px;
     margin-left: 4vh;

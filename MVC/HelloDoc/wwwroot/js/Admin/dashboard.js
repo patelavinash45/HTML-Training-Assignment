@@ -58,9 +58,21 @@ $(document).ready(function () {
 
 
 function tableSearch(document) {
-    console.log($('.bg-primary'));
-    $('table.myTable').DataTable().search($('.bg-primary').val()).draw();
-    //$('table.myTable').DataTable().search($(document).val()).draw();
+    $('table.myTable').DataTable().column(0).search($(document).val()).draw();
+}
+
+function filterOnButton(temp) {
+    /*$("body").css("filter", "invert(1)");*/
+    $('.tableRow').css("display", "none");
+    $('.buttonHr').css("display", "none");
+    switch (temp) {
+        case 1: $('.bg-success').css("display", "table-row"); $('#hr-1').css("display", "block"); break;
+        case 2: $('.bg-warning').css("display", "table-row"); $('#hr-2').css("display", "block"); break;
+        case 3: $('.bg-danger').css("display", "table-row"); $('#hr-3').css("display", "block"); break;
+        case 4: $('.bg-primary').css("display", "table-row"); $('#hr-4').css("display", "block"); break;
+        case 5: $('.bg-info').css("display", "table-row"); $('#hr-5').css("display", "block"); break;
+        default: $('.tableRow').css("display", "table-row");
+    }
 }
 
 

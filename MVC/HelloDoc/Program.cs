@@ -50,6 +50,7 @@ builder.Services.AddScoped<ICaseTagRepository, CaseTagRepository>();
 builder.Services.AddScoped<IBusinessRepository, BusinessRepository>();
 builder.Services.AddScoped<IRequestBusinessRepository, RequestBusinessRepository>();
 builder.Services.AddScoped<IPhysicianRepository, PhysicianRepository>();
+builder.Services.AddScoped<IBlockRequestsRepository, BlockRequestsRepository>();
 
 
 var app = builder.Build();

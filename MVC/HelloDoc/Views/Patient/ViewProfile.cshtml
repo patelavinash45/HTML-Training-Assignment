@@ -8,8 +8,7 @@
     <title>
         Dashboard
     </title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -36,6 +35,8 @@
             </a>
         </div>
         <form class="w-100" enctype="multipart/form-data" id="form" asp-controller="Patient" asp-action="ViewProfile">
+            <input readonly class="form-control d-none" asp-for="AspNetUserId">
+            <input readonly class="form-control d-none" asp-for="Email">
             <fieldset disabled id="Fieldset">
             <h5 class="fw-semibold">
                 General Information
@@ -87,8 +88,6 @@
                     @*<span asp-validation-for="Email" class="text-danger"></span>*@
                 </div>
             </div>
-            <input class="form-control d-none" placeholder="" id="" asp-for="AspNetUserId">
-               <input class="form-control d-none" placeholder="" id="" asp-for="Email">
             <h5 class="fw-semibold mt-4">
                 Location Information
             </h5>

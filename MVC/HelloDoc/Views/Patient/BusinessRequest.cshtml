@@ -6,8 +6,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Business Request</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/patient/businessRequest.css" rel="stylesheet" />
     <link href="~/css/international-telephone-input.css" rel="stylesheet" />
@@ -16,27 +16,7 @@
 </head>
 <body>
     <partial name="_RequestHeader" />
-    <div class="alert vw-100 vh-100" id="alert-message">
-        <div id="alert-box">
-            <img class="w-25" src="~/images/informtion-icon.png" />
-            <h4>
-                Information
-            </h4>
-            <span>
-                When submitting a request, you must provide correct
-            </span>
-            <span>
-                contact information for the patient or responsibly
-            </span>
-            <span>
-                party. Failure to provide the correct email phone
-            </span>
-            <span> number will delay service or be declined.</span>
-            <button class="btn" onclick="alert_close(this)">
-                ok
-            </button>
-        </div>
-    </div>
+    <partial name="_WarningPopUp" />
     <div id="main-body">
         <div class="d-flex justify-content-end container">
             <a id="back-box" asp-controller="Patient" asp-action="SubmitRequest">
@@ -49,13 +29,13 @@
                 <h5 class="fw-semibold">Business Information</h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="BusinessFirstName" class="form-control" id="first-name" />
-                        <label for="first-name">Your First Name</label>
+                        <input asp-for="BusinessFirstName" class="form-control" id="firstName" />
+                        <label for="firstName">Your First Name</label>
                         <span asp-validation-for="BusinessFirstName" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input asp-for="BusinessLastName" class="form-control" id="last-name" />
-                        <label for="last-name">Your Last Name</label>
+                        <input asp-for="BusinessLastName" class="form-control" id="lastName" />
+                        <label for="lastName">Your Last Name</label>
                         <span asp-validation-for="BusinessLastName" class="text-danger"></span>
                     </div>
                 </div>

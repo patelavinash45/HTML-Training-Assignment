@@ -11,5 +11,7 @@ namespace Services.Interfaces.Admin
         Task<bool> cancleRequest(CancelPopUp model);
 
         Task<bool> assignRequest(AssignPopUp model);
+
+        Task<bool> blockRequest(BlockPopUp model);
     }
 }

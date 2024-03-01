@@ -22,13 +22,9 @@ namespace Services.Implementation.Admin
             _physicianRepository = physicianRepository;
         }
 
-        public AdminDashboard getallRequests()
+        public AdminDashboard getallRequests(int aspNetUserId)
         {
             List<Region> allRegion = _regionRepository.getAllRegions();
-            DashboardHeader dashboardHeader = new()
-            {
-                PageType = 1,
-            };
             CancelPopUp cancelPopUp = new()
             {
                 Reasons= _caseTagRepository.getAllReason(),
@@ -37,6 +33,10 @@ namespace Services.Implementation.Admin
             {
                 Regions = allRegion,
                 Physics = _physicianRepository.getAllPhysicians(),
+            };
+            DashboardHeader dashboardHeader = new()
+            {
+                PageType = 1,
             };
             AdminDashboard adminDashboard = new()
             {

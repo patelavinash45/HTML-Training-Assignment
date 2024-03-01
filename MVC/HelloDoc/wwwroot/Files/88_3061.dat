@@ -1,0 +1,63 @@
+short status ="";
+                    // 1-Unassigned,2-Accepted,3-Cancelled,4-Reserving,5-MDEnRoute,6-MDOnSite,7-FollowUp,8-Closed,9-Locked,10-Declined,11-Consult,
+                    // 12-Clear,13-CancelledByProvider,14-CCUploadedByClient,15-CCApprovedByAdmin
+                    if (requestClient.Status==1)
+                    {
+                        status = "Unassigned";
+                    }
+                    else if (requestClient.Status == 2)
+                    {
+                        status = "Accepted";
+                    }
+                    else if (requestClient.Status == 3)
+                    {
+                        status = "Cancelled";
+                    }
+                    else if (requestClient.Status == 4)
+                    {
+                        status = "Reserving";
+                    }
+                    else if (requestClient.Status == 5)
+                    {
+                        status = "MDEnRoute";
+                    }
+                    else if (requestClient.Status == 6)
+                    {
+                        status = "MDOnSite";
+                    }
+                    else if (requestClient.Status == 7)
+                    {
+                        status = "FollowUp";
+                    }
+                    else if (requestClient.Status == 8)
+                    {
+                        status = "Closed";
+                    }
+                    else if (requestClient.Status == 9)
+                    {
+                        status = "Locked";
+                    }
+                    else if (requestClient.Status == 10)
+                    {
+                        status = "Reserving";
+                    }
+                    else if (requestClient.Status == 11)
+                    {
+                        status = "Consult";
+                    }
+                    else if (requestClient.Status == 12)
+                    {
+                        status = "Clear";
+                    }
+                    else if (requestClient.Status == 13)
+                    {
+                        status = "CancelledByProvider";
+                    }
+                    else if (requestClient.Status == 14)
+                    {
+                        status = "CCUploadedByClient";
+                    }
+                    else
+                    {
+                        status = "CCApprovedByAdmin";
+                    }

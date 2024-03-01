@@ -7,8 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
                     <div class="input-group w-100 mb-4 mt-4">
                         <input class="form-control" placeholder="Select File" type="file" id="file-picker" asp-for="File">
                         <span asp-validation-for="File" class="text-danger"></span>
-                        <input class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="RequestId">
-                        <input class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="Header.FirstName">
-                        <input class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="Header.LastName">
+                        <input readonly class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="RequestId">
+                        <input readonly class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="Header.FirstName">
+                        <input readonly class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="Header.LastName">
                         <button class="fs-5 button" id="uploadButton" type="submit">
                             <i class="bi bi-cloud-arrow-up-fill "></i>
                             Upload
@@ -91,24 +90,24 @@
                         </thead>
                         <tbody>
                             @*<tr>
-                                <td>
-                                    <input type="checkbox">
-                                    <i class="bi bi-file-earmark-pdf-fill mx-2"></i>
-                                    demo.pdf
-                                </td>
-                                <td>
-                                    test test
-                                </td>
-                                <td>
-                                    Aug 4,2023
-                                </td>
-                                <td>
-                                    <button id="downloadButton">
-                                        <i class="bi bi-cloud-arrow-down"></i>
-                                    </button>
-                                </td>
+                            <td>
+                            <input type="checkbox">
+                            <i class="bi bi-file-earmark-pdf-fill mx-2"></i>
+                            demo.pdf
+                            </td>
+                            <td>
+                            test test
+                            </td>
+                            <td>
+                            Aug 4,2023
+                            </td>
+                            <td>
+                            <button id="downloadButton">
+                            <i class="bi bi-cloud-arrow-down"></i>
+                            </button>
+                            </td>
                             </tr>*@
-                            @foreach(var item in Model.FileList)
+                            @foreach (var item in Model.FileList)
                             {
                                 <tr>
                                     <td>
@@ -123,11 +122,11 @@
                                         @item.CreatedDate.ToString("MMM dd, yyyy")
                                     </td>
                                     <td>
-                                         <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" class="download">
-                                              <button id="downloadButton">
-                                                   <i class="bi bi-cloud-arrow-down"></i>
-                                              </button>
-                                         </a>
+                                        <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" class="download">
+                                            <button id="downloadButton">
+                                                <i class="bi bi-cloud-arrow-down"></i>
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                             }
@@ -136,7 +135,7 @@
                 </div>
                 <div class="accordion accordion-flush w-100"
                      id="accordionFlushExample">
-                    @foreach(var item in Model.FileList)
+                    @foreach (var item in Model.FileList)
                     {
                         <div class="accordion-item">
                             <h2 class="accordion-header"

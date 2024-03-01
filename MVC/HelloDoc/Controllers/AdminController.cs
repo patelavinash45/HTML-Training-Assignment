@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.DataModels;
 using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
 using Services.Interfaces.Admin;
@@ -29,9 +30,16 @@ namespace HelloDoc.Controllers
             return View();
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("aspNetUserId");
+            return RedirectToAction("LoginPage", "Admin");
+        }
+
         public IActionResult Dashboard()
         {
-            return View(_adminDashboardService.getallRequests());
+            int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            return aspNetUseId > 0 ? View(_adminDashboardService.getallRequests(aspNetUseId)) : View(null);
         }
 
         public IActionResult ViewCase(int requestId)
@@ -80,6 +88,24 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> BlockPopUp(BlockPopUp model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (await _viewNotesService.blockRequest(model))
+                {
+                    _notyfService.Success("Successfully Reuqest Block");
+                }
+                else
+                {
+                    _notyfService.Error("Request Block Faild!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult LoginPage(Login model)
@@ -90,7 +116,6 @@ namespace HelloDoc.Controllers
                 if (aspNetUserId == 0)
                 {
                     _notyfService.Error("Invalid credentials");
-                    return View(null);
                 }
                 else
                 {
@@ -117,7 +142,7 @@ namespace HelloDoc.Controllers
                 }
                 return RedirectToAction("ViewCase", "Admin", new { requestId = model.RequestId });
             }
-            return View(null);
+            return View(model);
         }
 
         [HttpGet]

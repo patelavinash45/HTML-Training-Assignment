@@ -8,13 +8,13 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Assign Request</h5>
                 <button type="button" class="border-0 bg-transparent" data-bs-dismiss="modal">
-                    <i class="bi bi-x-octagon h3"></i>
+                    <i class="bi bi-x-circle-fill h3 modal-title"></i>
                 </button>
             </div>
             <form asp-controller="Admin" asp-action="AssignPopUp">
                 <div class="modal-body">
                     To assign this request search and select another Physician.
-                    <input class="d-none patientRequestId" asp-for="RequestId" type="text" />
+                    <input readonly class="d-none patientRequestId" asp-for="RequestId" type="text" />
                     <select class="p-2 w-100 mb-2" asp-for="SelectedRegion" id="selectRegion" onchange="changeSelect()">
                         <option disabled selected value="">Regions</option>
                         @foreach (var item in Model.Regions)

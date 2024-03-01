@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "N5ZzzFQxXVF59GYEv3GEJ7ZBEBXL9xPYCGrflERbiGw=",
+  "Hash": "XaHl48OOISyMAXqNGDv/5esD6ERJf1i4E7h+UCACTWk=",
   "Source": "HelloDoc",
   "BasePath": "_content/HelloDoc",
   "Mode": "Default",
@@ -814,6 +814,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\86_Bing.url"
+    },
+    {
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\88_3061.dat",
+      "SourceId": "HelloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
+      "BasePath": "_content/HelloDoc",
+      "RelativePath": "Files/88_3061.dat",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\88_3061.dat"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\bootstrap-5.3.2-dist.zip43.zip",

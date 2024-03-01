@@ -8,15 +8,15 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Conform Cancellation</h5>
                 <button type="button" class="border-0 bg-transparent" data-bs-dismiss="modal" >
-                    <i class="bi bi-x-octagon h3"></i>
+                    <i class="bi bi-x-circle-fill h3 modal-title"></i>
                 </button>
             </div>
             <form asp-controller="Admin" asp-action="CancelPopUp">
                 <div class="modal-body">
                     <div class="h5">
-                        Patient Name : <span id="patientName"> @Model.PatientName </span>
+                        Patient Name : <span class="patientName">  </span>
                     </div>
-                    <input class="d-none patientRequestId" asp-for="RequestId" type="text" />
+                    <input readonly class="d-none patientRequestId" asp-for="RequestId" type="text" />
                     <select class="p-2 w-100 mb-2" asp-for="Reason">
                         <option disabled selected value="">Reasons For Cancellation</option>
                         @foreach (var item in Model.Reasons)

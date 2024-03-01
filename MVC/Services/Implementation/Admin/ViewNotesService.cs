@@ -1,5 +1,4 @@
 ﻿using Repositories.DataModels;
-using Repositories.Implementation;
 using Repositories.Interfaces;
 using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
@@ -13,15 +12,17 @@ namespace Services.Implementation.Admin
         private readonly IRequestStatusLogRepository _requestSatatusLogRepository;
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IRequestRepository _requestRepository;
-
+        private readonly IBlockRequestsRepository _blockRequestsRepository;
 
         public ViewNotesService(IRequestNotesRepository requestNotesRepository, IRequestStatusLogRepository requestSatatusLogRepository, 
-                                      IRequestClientRepository requestClientRepository, IRequestRepository requestRepository)
+                                      IRequestClientRepository requestClientRepository, IRequestRepository requestRepository, 
+                                      IBlockRequestsRepository blockRequestsRepository)
         {
             _requestNotesRepository = requestNotesRepository;
             _requestSatatusLogRepository = requestSatatusLogRepository;
             _requestRepository = requestRepository;
-            _requestClientRepository= requestClientRepository;
+            _requestClientRepository = requestClientRepository;
+            _blockRequestsRepository = blockRequestsRepository;
         }
         public async Task<ViewNotes> GetNotes(int RequestId)
         {
@@ -95,6 +96,30 @@ namespace Services.Implementation.Admin
                 CreatedDate = DateTime.Now,
                 Notes = model.AdminTransferNotes,
                 PhysicianId = model.SelectedPhysician,
+            };
+            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
+        }
+
+        public async Task<bool> blockRequest(BlockPopUp model)
+        {
+            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            requestClient.Status = 10;
+            await _requestClientRepository.updateRequestClient(requestClient);
+            BlockRequest blockRequest = new()
+            {
+                PhoneNumber = requestClient.PhoneNumber,
+                Email = requestClient.Email,
+                Reason = model.AdminTransferNotes,
+                RequestId = model.RequestId,
+                CreatedDate = DateTime.Now,
+            };
+            await _blockRequestsRepository.addBlockRequest(blockRequest);
+            RequestStatusLog _requestStatusLog = new()
+            {
+                RequestId = model.RequestId,
+                Status = 10,
+                CreatedDate = DateTime.Now,
+                Notes = model.AdminTransferNotes,
             };
             return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
         }

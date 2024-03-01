@@ -42,7 +42,7 @@
         <tbody class="text-white">
             @foreach(var data in Model)
             {
-                <tr class="@requesterBgColor[data.Requester - 1] align-middle">
+                <tr class="@requesterBgColor[data.Requester - 1] align-middle tableRow">
                     <td>
                         <div class="d-flex justify-content-between  align-items-center">
                             <span id="name-@data.RequestId">
@@ -116,9 +116,9 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <button class="dropdown-item" onclick="displayPopUp(@data.RequestId)" data-bs-target="#blockRequest" data-bs-toggle="modal">
                                         Block Patient
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                         </div>

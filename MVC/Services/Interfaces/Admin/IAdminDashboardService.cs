@@ -4,7 +4,7 @@ namespace Services.Interfaces.Admin
 {
     public interface IAdminDashboardService
     {
-        AdminDashboard getallRequests();
+        AdminDashboard getallRequests(int aspNetUserId);
 
         List<NewTables> GetNewRequest(String status);
     }

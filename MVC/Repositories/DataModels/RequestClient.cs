@@ -38,9 +38,6 @@ public partial class RequestClient
     [StringLength(50)]
     public string? NotiEmail { get; set; }
 
-    [StringLength(500)]
-    public string? Notes { get; set; }
-
     [StringLength(50)]
     public string? Email { get; set; }
 

@@ -96,7 +96,7 @@ namespace HelloDoc.Controllers
         public IActionResult ViewDocument(int id)
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-            //int RequestId = HttpContext.Session.GetInt32("requestId").Value;
+            //int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_viewDocumentsServices.getDocumentList(requestId: id,aspNetUserId: aspNetUserId));
         }
 
@@ -157,7 +157,7 @@ namespace HelloDoc.Controllers
                 if(await _resetPasswordService.changePassword(model))
                 {
                     _notyfService.Success("Successfully Password Updated");
-                    return RedirectToAction("LoginPage", "Patient");
+                    return RedirectToAction("PatientSite", "Patient");
                 }
             }
             return View(null);
@@ -189,14 +189,15 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewDocument(ViewDocument model)
         {
-            if (model.File != null)
+            if (ModelState.IsValid)
             {
                 if(await _viewDocumentsServices.uploadFile(model)>0)
                 {
                     return RedirectToAction("ViewDocument", "Patient", new { id = model.RequestId });
                 }
             }
-            return View(null);
+            _notyfService.Warning("Please, Add Required Field.");
+            return View(model);
         }
 
         [HttpPost]
@@ -215,7 +216,8 @@ namespace HelloDoc.Controllers
                     _notyfService.Error("Add Request Faild");
                 }
             }
-            return View(null);
+            _notyfService.Warning("Please, Add Required Field.");
+            return View(model);
         }
 
         [HttpPost]
@@ -235,6 +237,7 @@ namespace HelloDoc.Controllers
                     _notyfService.Error("Add Request Faild");
                 }
             }
+            _notyfService.Warning("Please, Add Required Field.");
             return View(null);
         }
 
@@ -254,6 +257,7 @@ namespace HelloDoc.Controllers
                     _notyfService.Error("Add Request Faild");
                 }
             };
+            _notyfService.Warning("Please, Add Required Field.");
             return View(null);
         }
 
@@ -273,6 +277,7 @@ namespace HelloDoc.Controllers
                     _notyfService.Error("Add Request Faild");
                 }
             }
+            _notyfService.Warning("Please, Add Required Field.");
             return View(null);
         }
 
@@ -292,6 +297,7 @@ namespace HelloDoc.Controllers
                     _notyfService.Error("Add Request Faild");
                 }
             }
+            _notyfService.Warning("Please, Add Required Field.");
             return View(null);
         }
 
@@ -311,6 +317,7 @@ namespace HelloDoc.Controllers
                     _notyfService.Error("Add Request Faild");
                 }
             }
+            _notyfService.Warning("Please, Add Required Field.");
             return View(null);
         }
     }

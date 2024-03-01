@@ -1,7 +1,6 @@
 ﻿using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
-using Repositories.ViewModels;
 
 namespace Repositories.Implementation
 {

@@ -16,16 +16,132 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\project\HTML Training Assignment\MVC\HelloDoc
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/LoginPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTG9naW5QYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/ViewCase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld0Nhc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/ViewNotes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld05vdGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/BusinessRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxCdXNpbmVzc1JlcXVlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/ConciergeRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxDb25jaWVyZ2VSZXF1ZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/FamilyFriendRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxGYW1pbHlGcmllbmRSZXF1ZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/LoginPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxMb2dpblBhZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/NewPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxOZXdQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/PatientRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxQYXRpZW50UmVxdWVzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/PatientSite.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxQYXRpZW50U2l0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/RequestForMe.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxSZXF1ZXN0Rm9yTWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/RequestForSomeOne.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxSZXF1ZXN0Rm9yU29tZU9uZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/SubmitRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxTdWJtaXRSZXF1ZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/ViewDocument.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxWaWV3RG9jdW1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Patient/ViewProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxWaWV3UHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_ActiveTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BY3RpdmVUYWJsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_AdminDashboardHeader.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkRhc2hib2FyZEhlYWRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_CloseTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DbG9zZVRhYmxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_ConcludeTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Db25jbHVkZVRhYmxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_NewTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OZXdUYWJsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_PatientDashboardHeader.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QYXRpZW50RGFzaGJvYXJkSGVhZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_PendingTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QZW5kaW5nVGFibGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_RequestAssignPopUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZXF1ZXN0QXNzaWduUG9wVXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_RequestBlockPopUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZXF1ZXN0QmxvY2tQb3BVcC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_RequestCancelPopUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZXF1ZXN0Q2FuY2VsUG9wVXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_RequestFooter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZXF1ZXN0Rm9vdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_RequestHeader.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZXF1ZXN0SGVhZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_UnpaidTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9VbnBhaWRUYWJsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_ValidationScriptsPartial.cshtml]
@@ -38,6 +154,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/wwwroot/EmailTemplate/resetPasswordEmail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = d3d3cm9vdFxFbWFpbFRlbXBsYXRlXHJlc2V0UGFzc3dvcmRFbWFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_Layout.cshtml]

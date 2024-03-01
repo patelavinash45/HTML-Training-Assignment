@@ -11,6 +11,10 @@ thead {
     --bs-table-color: white;
 }
 
+.notyf__dismiss-btn{
+    border-radius: 5px;
+}
+
 a {
     border-radius: 10px;
     text-decoration: none;
@@ -94,13 +98,13 @@ button:hover{
     color: white;
 }
 
-.accordion {
+/*.accordion {
     display: none;
 }
 
 .dropdown-toggle::after {
     display: none;
-}
+}*/
 
 #allButton {
     height: 40px;
@@ -110,13 +114,28 @@ button:hover{
     margin: 15px;
 }
 
-#close,#closeText,
-#unpaid,#unpaidText,
-#conclude,#concludeText,
-#active,#activeText,
-#pending,#pendingText {
+.dropdown-toggle::after,
+.accordion,
+.accordion-button::after,
+.buttonHr,
+.dt-column-order,
+.dt-length,
+.dt-search,
+#close, #closeText,
+#unpaid, #unpaidText,
+#conclude, #concludeText,
+#active, #activeText,
+#pending, #pendingText {
     display: none;
 }
+
+/*.accordion-button::after,
+.buttonHr,
+.dt-column-order,
+.dt-length,
+.dt-search {
+    display: none;
+}*/
 
 .accordion-button:not(.collapsed) {
     color: White;
@@ -144,27 +163,14 @@ button:hover{
     border-radius: 5px;
 }
 
-.accordion-button::after {
-    display: none;
-}
-
-.dt-column-order,
-.dt-length,
-.dt-search{
-    display: none;
-}
 
 table.dataTable td.dt-type-numeric,
 table.dataTable th.dt-type-numeric {
     text-align: left;
 }
 
-
-
 /* -------------------media-queries-------------------*/
-
 @media screen and (max-width:576px) {
-
     .h5 {
         font-size: 0.5rem;
     }

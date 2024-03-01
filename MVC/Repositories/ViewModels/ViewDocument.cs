@@ -6,12 +6,12 @@ namespace Repositories.ViewModels
 {
     public class ViewDocument
     { 
-        public List<RequestWiseFile> FileList { get; set; }
+        public List<RequestWiseFile>? FileList { get; set; }
 
         public DashboardHeader Header { get; set; }
 
         [Required]
-        public IFormFile? File { get; set; }
+        public IFormFile File { get; set; }
 
         public int RequestId { get; set; }
 

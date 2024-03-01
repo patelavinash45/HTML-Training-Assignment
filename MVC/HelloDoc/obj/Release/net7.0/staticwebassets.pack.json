@@ -1,0 +1,557 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\obj\\Release\\net7.0\\scopedcss\\projectbundle\\HelloDoc.bundle.scp.css",
+      "PackagePath": "staticwebassets\\HelloDoc.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\11116016_415.jpg39.jpg",
+      "PackagePath": "staticwebassets\\Files\\11116016_415.jpg39.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\11116016_415.jpg40.jpg",
+      "PackagePath": "staticwebassets\\Files\\11116016_415.jpg40.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\29.txt",
+      "PackagePath": "staticwebassets\\Files\\29.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\30.txt",
+      "PackagePath": "staticwebassets\\Files\\30.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\31.txt",
+      "PackagePath": "staticwebassets\\Files\\31.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\32.txt",
+      "PackagePath": "staticwebassets\\Files\\32.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\34.txt",
+      "PackagePath": "staticwebassets\\Files\\34.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\36.txt",
+      "PackagePath": "staticwebassets\\Files\\36.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\37.txt",
+      "PackagePath": "staticwebassets\\Files\\37.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\44_Fig1. Platform login page.jpg",
+      "PackagePath": "staticwebassets\\Files\\44_Fig1. Platform login page.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\47_7774236_3736765.jpg",
+      "PackagePath": "staticwebassets\\Files\\47_7774236_3736765.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\47_Samples-DoctorsNote-DemandLetter_FINAL_20180630.doc",
+      "PackagePath": "staticwebassets\\Files\\47_Samples-DoctorsNote-DemandLetter_FINAL_20180630.doc"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\79_Fig21. Admin My profile..jpg",
+      "PackagePath": "staticwebassets\\Files\\79_Fig21. Admin My profile..jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\81_Fig22 Regions menu.jpg",
+      "PackagePath": "staticwebassets\\Files\\81_Fig22 Regions menu.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\82_Fig22 Regions menu.jpg",
+      "PackagePath": "staticwebassets\\Files\\82_Fig22 Regions menu.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\82_MVC.pdf",
+      "PackagePath": "staticwebassets\\Files\\82_MVC.pdf"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\85_.gitconfig",
+      "PackagePath": "staticwebassets\\Files\\85_.gitconfig"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\86_Bing.url",
+      "PackagePath": "staticwebassets\\Files\\86_Bing.url"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\88_3061.dat",
+      "PackagePath": "staticwebassets\\Files\\88_3061.dat"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Create Business Request_mobile.png41.png",
+      "PackagePath": "staticwebassets\\Files\\Create Business Request_mobile.png41.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Fig1. Platform login page.jpg43.jpg",
+      "PackagePath": "staticwebassets\\Files\\Fig1. Platform login page.jpg43.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Fig10. View case.jpg44.jpg",
+      "PackagePath": "staticwebassets\\Files\\Fig10. View case.jpg44.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Fig16. Orders.jpg40.jpg",
+      "PackagePath": "staticwebassets\\Files\\Fig16. Orders.jpg40.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Fig18.Clear Case.png42.png",
+      "PackagePath": "staticwebassets\\Files\\Fig18.Clear Case.png42.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Fig22 Regions menu.jpg43.jpg",
+      "PackagePath": "staticwebassets\\Files\\Fig22 Regions menu.jpg43.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Fig39. Provider Location.jpg48.jpg",
+      "PackagePath": "staticwebassets\\Files\\Fig39. Provider Location.jpg48.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Fig52. Encounter Finalize popup.png42.png",
+      "PackagePath": "staticwebassets\\Files\\Fig52. Encounter Finalize popup.png42.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Patient site_forget password_mobile.png0.png",
+      "PackagePath": "staticwebassets\\Files\\Patient site_forget password_mobile.png0.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Patient site_forget password_mobile.png40.png",
+      "PackagePath": "staticwebassets\\Files\\Patient site_forget password_mobile.png40.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Patient site_login_mobile.png40.png",
+      "PackagePath": "staticwebassets\\Files\\Patient site_login_mobile.png40.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Patient site_mobile.png0.png",
+      "PackagePath": "staticwebassets\\Files\\Patient site_mobile.png0.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Patient site_mobile.png41.png",
+      "PackagePath": "staticwebassets\\Files\\Patient site_mobile.png41.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Phase 1 - Training Plan .net.pdf40.pdf",
+      "PackagePath": "staticwebassets\\Files\\Phase 1 - Training Plan .net.pdf40.pdf"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Plan_till_1Feb2024.pdf42.pdf",
+      "PackagePath": "staticwebassets\\Files\\Plan_till_1Feb2024.pdf42.pdf"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Submit Request Screen-mobile.png40.png",
+      "PackagePath": "staticwebassets\\Files\\Submit Request Screen-mobile.png40.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\View documents_1.png40.png",
+      "PackagePath": "staticwebassets\\Files\\View documents_1.png40.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\View documents_1.png41.png",
+      "PackagePath": "staticwebassets\\Files\\View documents_1.png41.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\bootstrap-5.3.2-dist.zip43.zip",
+      "PackagePath": "staticwebassets\\Files\\bootstrap-5.3.2-dist.zip43.zip"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\dashboard_1.png40.png",
+      "PackagePath": "staticwebassets\\Files\\dashboard_1.png40.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\dashboard_1.png41.png",
+      "PackagePath": "staticwebassets\\Files\\dashboard_1.png41.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\image-removebg-preview.png41.png",
+      "PackagePath": "staticwebassets\\Files\\image-removebg-preview.png41.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ViewCase.css",
+      "PackagePath": "staticwebassets\\css\\admin\\ViewCase.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ViewNotes.css",
+      "PackagePath": "staticwebassets\\css\\admin\\ViewNotes.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\_dashboardHeader.css",
+      "PackagePath": "staticwebassets\\css\\admin\\_dashboardHeader.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\_requestPopUp.css",
+      "PackagePath": "staticwebassets\\css\\admin\\_requestPopUp.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\dashboard.css",
+      "PackagePath": "staticwebassets\\css\\admin\\dashboard.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\loginPage.css",
+      "PackagePath": "staticwebassets\\css\\admin\\loginPage.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\international-telephone-input.css",
+      "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\PatientSite.css",
+      "PackagePath": "staticwebassets\\css\\patient\\PatientSite.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\_dashboardHeader.css",
+      "PackagePath": "staticwebassets\\css\\patient\\_dashboardHeader.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\_requestFooter.css",
+      "PackagePath": "staticwebassets\\css\\patient\\_requestFooter.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\_requestHeader.css",
+      "PackagePath": "staticwebassets\\css\\patient\\_requestHeader.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\businessRequest.css",
+      "PackagePath": "staticwebassets\\css\\patient\\businessRequest.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\conciergeRequest.css",
+      "PackagePath": "staticwebassets\\css\\patient\\conciergeRequest.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\dashboard.css",
+      "PackagePath": "staticwebassets\\css\\patient\\dashboard.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\familyFriendRequest.css",
+      "PackagePath": "staticwebassets\\css\\patient\\familyFriendRequest.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\loginPage.css",
+      "PackagePath": "staticwebassets\\css\\patient\\loginPage.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\patientRequest.css",
+      "PackagePath": "staticwebassets\\css\\patient\\patientRequest.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\requestForMe.css",
+      "PackagePath": "staticwebassets\\css\\patient\\requestForMe.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\resetPassword.css",
+      "PackagePath": "staticwebassets\\css\\patient\\resetPassword.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\submitRequest.css",
+      "PackagePath": "staticwebassets\\css\\patient\\submitRequest.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\viewDocument.css",
+      "PackagePath": "staticwebassets\\css\\patient\\viewDocument.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\LoginImage-removeBG.png",
+      "PackagePath": "staticwebassets\\images\\LoginImage-removeBG.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\flags.png",
+      "PackagePath": "staticwebassets\\images\\flags.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\flags@2x.png",
+      "PackagePath": "staticwebassets\\images\\flags@2x.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\helloDocLogo.png",
+      "PackagePath": "staticwebassets\\images\\helloDocLogo.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\informtion-icon.png",
+      "PackagePath": "staticwebassets\\images\\informtion-icon.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\loginImage.jpg",
+      "PackagePath": "staticwebassets\\images\\loginImage.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\dashboard.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\dashboard.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\loginPage.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\loginPage.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\requestPopUp.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\requestPopUp.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\viewCase.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\viewCase.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\Request.js",
+      "PackagePath": "staticwebassets\\js\\Patient\\Request.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\dashboard.js",
+      "PackagePath": "staticwebassets\\js\\Patient\\dashboard.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\international-telephone-input.js",
+      "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.HelloDoc.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.build.HelloDoc.props",
+      "PackagePath": "build\\HelloDoc.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.HelloDoc.props",
+      "PackagePath": "buildMultiTargeting\\HelloDoc.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.buildTransitive.HelloDoc.props",
+      "PackagePath": "buildTransitive\\HelloDoc.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

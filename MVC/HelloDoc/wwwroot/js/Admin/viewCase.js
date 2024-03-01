@@ -22,5 +22,5 @@ function sidebar() {
 
 function cancelPopUp(id) {
     $("#patientRequestId").val(id);
-    $("#patientName").text($('#first-name').val() + ' ' + $('#last-name').val());
+    $(".patientName").text($('#first-name').val() + ' ' + $('#last-name').val());
 }

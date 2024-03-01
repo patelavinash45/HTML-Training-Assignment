@@ -7,8 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ViewCase</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/css/international-telephone-input.css" rel="stylesheet" />
     <script src="~/js/international-telephone-input.js"></script>
@@ -39,11 +38,11 @@
             </a>
         </div>
         <form class="w-100" enctype="multipart/form-data" id="form" asp-controller="Admin" asp-action="ViewCase">
-            <input class="form-control d-none" id="email" type="email" asp-for="Email" />
-            <input class="form-control d-none" type="text" asp-for="RequestId" />
-            <input class="form-control d-none" id="rgion" asp-for="Region" />
-            <input class="form-control d-none" id="add" asp-for="Address" />
-            <input class="form-control d-none" id="room" asp-for="Room" />
+            <input readonly class="form-control d-none" id="email" type="email" asp-for="Email" />
+            <input readonly class="form-control d-none" type="text" asp-for="RequestId" />
+            <input readonly class="form-control d-none" id="rgion" asp-for="Region" />
+            <input readonly class="form-control d-none" id="add" asp-for="Address" />
+            <input readonly class="form-control d-none" id="room" asp-for="Room" />
             <fieldset disabled id="Fieldset">
                 <h5 class="fw-semibold mb-3">
                     Patient Information
@@ -52,6 +51,10 @@
                 <h5 class="fw-semibold">
                     MD48456498456
                 </h5>
+                <div class="d-none">
+                    @Html.EditorFor(model => model.Header,new { htmlAttributes = new { @class = "d-none"} })
+                    @Html.EditorFor(model => model.CancelPopup,new { htmlAttributes = new { @class = "d-none"} })
+                </div>
                 <textarea asp-for="PatientNotes" class="form-control" placeholder="Patient Notes" rows="3"></textarea>
                 <hr />
                 <div class="row">

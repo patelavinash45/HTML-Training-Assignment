@@ -2,8 +2,8 @@
 textarea {
     border-radius: 5px;
 }
-
-#patientName {
+    
+.patientName {
     color: cadetblue;
 }
 

@@ -9,6 +9,7 @@
     body {
         font-family: roboto;
     }*/
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 :root {
     --bs-blue: #0d6efd;
     --bs-indigo: #6610f2;
