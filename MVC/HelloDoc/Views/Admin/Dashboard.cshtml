@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <link href="https://cdn.datatables.net/v/bs5/dt-2.0.0/datatables.min.css" rel="stylesheet">
-    <script src="https://cdn.datatables.net/v/bs5/dt-2.0.0/datatables.min.js"></script>
+    <link href="https://cdn.datatables.net/v/dt/dt-2.0.1/r-3.0.0/sb-1.7.0/sp-2.3.0/datatables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/v/dt/dt-2.0.1/r-3.0.0/sb-1.7.0/sp-2.3.0/datatables.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/Admin/dashboard.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -152,12 +152,12 @@
             <div>
                 <div class="p-3 bg-white rounded-top-3 row">
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                        <input placeholder="Search Patient" class="p-2" onchange="tableSearch(this)">
-                        <select aria-placeholder="Region" class="p-2" onchange="tableSearch(this)">
+                        <input placeholder="Search Patient" class="p-2 searchPatient" oninput="tableSearch(this)">
+                        <select aria-placeholder="Region" class="p-2 searchRegion" onchange="regionSearch(this)">
                             <option value="">All Region</option>
                             @foreach(var item in Model.Regions)
                             {
-                                <option value="@item">@item.Name</option>
+                                <option value="@item.RegionId">@item.Name</option>
                             }
                         </select>
                     </div>

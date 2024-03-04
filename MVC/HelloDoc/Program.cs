@@ -3,12 +3,14 @@ using AspNetCoreHero.ToastNotification.Extensions;
 using Repositories.Implementation;
 using Repositories.Interface;
 using Repositories.Interfaces;
-using Services.Implementation.Admin;
-using Services.Implementation.Auth;
-using Services.Implementation.Patient;
-using Services.Interfaces.Admin;
-using Services.Interfaces.Auth;
-using Services.Interfaces.Patient;
+using Services.Implementation;
+using Services.Implementation.AdminServices;
+using Services.Implementation.AuthServices;
+using Services.Implementation.PatientServices;
+using Services.Interfaces;
+using Services.Interfaces.AdminServices;
+using Services.Interfaces.AuthServices;
+using Services.Interfaces.PatientServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +53,7 @@ builder.Services.AddScoped<IBusinessRepository, BusinessRepository>();
 builder.Services.AddScoped<IRequestBusinessRepository, RequestBusinessRepository>();
 builder.Services.AddScoped<IPhysicianRepository, PhysicianRepository>();
 builder.Services.AddScoped<IBlockRequestsRepository, BlockRequestsRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 
 var app = builder.Build();

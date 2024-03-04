@@ -1,0 +1,11 @@
+﻿using Repositories.ViewModels;
+
+namespace Services.Interfaces.PatientServices
+{
+    public interface IViewProfileService
+    {
+        ViewProfile getProfileDetails(int aspNetUserId);
+
+        Task<bool> updatePatientProfile(ViewProfile model);
+    }
+}

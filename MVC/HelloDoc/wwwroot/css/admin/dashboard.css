@@ -169,6 +169,11 @@ table.dataTable th.dt-type-numeric {
     text-align: left;
 }
 
+.text-warnig,
+bg-warning{
+    
+}
+
 /* -------------------media-queries-------------------*/
 @media screen and (max-width:576px) {
     .h5 {

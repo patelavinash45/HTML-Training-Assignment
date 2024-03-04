@@ -1,9 +1,9 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Repositories.DataModels;
 using Repositories.ViewModels;
-using Services.Interfaces.Auth;
-using Services.Interfaces.Patient;
+using Services.Interfaces;
+using Services.Interfaces.AuthServices;
+using Services.Interfaces.PatientServices;
 
 namespace HelloDoc.Controllers
 {

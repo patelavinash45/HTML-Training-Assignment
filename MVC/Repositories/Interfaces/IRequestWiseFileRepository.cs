@@ -9,5 +9,9 @@ namespace Repositories.Interfaces
         Task<int> addFile(RequestWiseFile requestWiseFile);
 
         List<RequestWiseFile> getFilesByrequestId(int requestId);
+
+        RequestWiseFile getFilesByrequestWiseFileId(int requestWiseFileId);
+
+        Task<bool> updateRequestWiseFile(RequestWiseFile requestWiseFile);
     }
 }

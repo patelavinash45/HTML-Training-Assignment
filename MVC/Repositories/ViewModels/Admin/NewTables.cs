@@ -19,6 +19,8 @@ namespace Repositories.ViewModels.Admin
 
         public int RequestId { get; set; }
 
+        public int? RegionId { get; set; }
+
         [StringLength(100)]
         public string RequesterFirstName { get; set; }
 

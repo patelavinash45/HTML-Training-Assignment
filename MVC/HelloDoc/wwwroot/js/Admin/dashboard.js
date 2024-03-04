@@ -10,6 +10,10 @@ function sidebar() {
 function changeTable(temp) {
     $(".tables").css("display", "none");
     $(".optionButton").css('box-shadow', 'none');
+    $(".searchPatient").val("");
+    $(".searchRegion").val("");
+    $('.tableRow').css("display", "table-row");
+    $('.buttonHr').css("display", "none");
     switch (temp) {
         case 1: $("#new").css("display", "block"); $("#newOption").css('box-shadow', '10px 10px 5px #AAA'); $("#newText").css("display", "block");
                   getTableData("New"); break;
@@ -58,12 +62,16 @@ $(document).ready(function () {
 
 
 function tableSearch(document) {
+    $('table.myTable').DataTable().search($(document).val()).draw();
+}
+
+function regionSearch(document) {
     $('table.myTable').DataTable().column(0).search($(document).val()).draw();
 }
 
 function filterOnButton(temp) {
     /*$("body").css("filter", "invert(1)");*/
-    $('.tableRow').css("display", "none");
+    $('.tableRows').css("display", "none");
     $('.buttonHr').css("display", "none");
     switch (temp) {
         case 1: $('.bg-success').css("display", "table-row"); $('#hr-1').css("display", "block"); break;

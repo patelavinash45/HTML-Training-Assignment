@@ -1,6 +1,7 @@
 ﻿using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
+using System.Collections;
 
 namespace Repositories.Implementation
 {
@@ -15,7 +16,8 @@ namespace Repositories.Implementation
 
         public int countFile(int requestId)
         {
-            List<RequestWiseFile> requestWiseFile = _dbContext.RequestWiseFiles.Where(a => a.RequestId == requestId).ToList();
+            List<RequestWiseFile> requestWiseFile = _dbContext.RequestWiseFiles.Where(a => a.RequestId == requestId && a.IsDeleted 
+                                                                                                      == new BitArray(1, false)).ToList();
             return requestWiseFile.Count;
         }
 
@@ -28,7 +30,19 @@ namespace Repositories.Implementation
 
         public List<RequestWiseFile> getFilesByrequestId(int requestId)
         {
-            return _dbContext.RequestWiseFiles.Where(a => a.RequestId == requestId).ToList();
+            return _dbContext.RequestWiseFiles.Where(a => a.RequestId == requestId && a.IsDeleted == new BitArray(1, false)).ToList();
+        }
+
+        public RequestWiseFile getFilesByrequestWiseFileId(int requestWiseFileId)
+        {
+            return _dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestWiseFileId == requestWiseFileId);
+        }
+
+        public async Task<bool> updateRequestWiseFile(RequestWiseFile requestWiseFile)
+        {
+            _dbContext.Update(requestWiseFile);
+            int temp = await _dbContext.SaveChangesAsync();
+            return temp > 0;
         }
     }
 }

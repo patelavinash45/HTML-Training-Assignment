@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\patient\LoginPage.js" />
-    <None Include="wwwroot\js\patient\viewDocument.js" />
+    <None Include="wwwroot\js\viewDocument.js" />
   </ItemGroup>
 
   <ItemGroup>

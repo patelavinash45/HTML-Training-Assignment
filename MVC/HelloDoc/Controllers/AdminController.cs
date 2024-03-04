@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Repositories.DataModels;
 using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
-using Services.Interfaces.Admin;
-using Services.Interfaces.Auth;
+using Services.Interfaces;
+using Services.Interfaces.AdminServices;
+using Services.Interfaces.AuthServices;
 
 namespace HelloDoc.Controllers
 {
@@ -15,15 +16,17 @@ namespace HelloDoc.Controllers
         private readonly IAdminDashboardService _adminDashboardService;
         private readonly IViewCaseService _viewCaseService;
         private readonly IViewNotesService _viewNotesService;
+        private readonly IViewDocumentsServices _viewDocumentsServices;
 
         public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
-                                IViewNotesService viewNotesService, ILoginService loginService)
+                                IViewNotesService viewNotesService, ILoginService loginService,IViewDocumentsServices viewDocumentsServices)
         {
             _notyfService = notyfService;
             _loginService = loginService;
             _adminDashboardService = adminDashboardService;
             _viewCaseService = viewCaseService;
             _viewNotesService = viewNotesService;
+            _viewDocumentsServices = viewDocumentsServices;
         }
         public IActionResult LoginPage()
         {
@@ -47,16 +50,49 @@ namespace HelloDoc.Controllers
             return View(_viewCaseService.getRequestDetails(requestId));
         }
 
-        public async Task<IActionResult> ViewNotes(int requestId)
+        public IActionResult ViewNotes(int requestId)
         {
-            return View(await _viewNotesService.GetNotes(requestId));
+            return View(_viewNotesService.GetNotes(requestId));
+        }
+
+        public IActionResult ViewDocument(int requestId)
+        {
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            return View(_viewDocumentsServices.getDocumentList(requestId: requestId, aspNetUserId: aspNetUserId));
+        }
+
+        public async Task<IActionResult> DeleteAll(List<RequestWiseFile> IdList)
+        {
+            int requestId = await _viewDocumentsServices.deleteAllFile(IdList);
+            if (requestId > 0)
+            {
+                _notyfService.Success("Successfully File Deleted");
+            }
+            else
+            {
+                _notyfService.Error("Faild!");
+            }
+            return RedirectToAction("ViewDocument", "Admin", new { requestId = requestId });
+        }
+
+        public async Task<IActionResult> DeleteFiles(int requestWiseFileId)
+        {
+            int requestId = await _viewDocumentsServices.deleteFile(requestWiseFileId);
+            if (requestId > 0)
+            {
+                _notyfService.Success("Successfully File Deleted");
+            }
+            else
+            {
+                _notyfService.Error("Faild!");
+            }
+            return RedirectToAction("ViewDocument", "Admin",new { requestId = requestId});
         }
 
         public async Task<IActionResult> CancelPopUp(CancelPopUp model)
         {
             if(ModelState.IsValid)
             {
-                
                 if (await _viewNotesService.cancleRequest(model))
                 {
                     _notyfService.Success("Successfully Reuqest Cancel");
@@ -103,6 +139,21 @@ namespace HelloDoc.Controllers
                 }
                 return RedirectToAction("Dashboard", "Admin");
             }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ViewDocument(ViewDocument model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (await _viewDocumentsServices.uploadFile(model) > 0)
+                {
+                    return RedirectToAction("ViewDocument", "Admin", new { requestId = model.RequestId });
+                }
+            }
+            _notyfService.Warning("Please, Add Required Field.");
             return View(model);
         }
 

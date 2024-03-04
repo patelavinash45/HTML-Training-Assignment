@@ -15,20 +15,8 @@ namespace Repositories.ViewModels
 
         public int RequestId { get; set; }
 
-        //[StringLength(500)]
-        //public string FileName { get; set; } = null!;
+        public string? FirstName { get; set; }
 
-        //[StringLength(100)]
-        //public string Uploder { get; set; } = null!;
-
-        //public int Day { get; set; }
-
-        //public int Month { get; set; } 
-
-        //public int Year { get; set; }
-
-        //public int? PhysicianId { get; set; }
-
-        //public int? AdminId { get; set; }
+        public string? LastName { get; set; }
     }
 }

@@ -198,15 +198,16 @@ tr {
 }
 
 .accordion-button[aria-expanded="true"] {
-    background-color: #f9f9f9;
+    background-color: cadetblue;
     border: none;
-}
-
-.accordion-button[aria-expanded="true"] {
-    /*background-image: none;*/
-    /*background-color: white;*/
     box-shadow: none;
 }
+
+/*.accordion-button[aria-expanded="true"] {*/
+    /*background-image: none;*/
+    /*background-color: white;*/
+    /*box-shadow: none;
+}*/
 
 .accordion-flush .accordion-item .accordion-button {
     border-start-start-radius: 5px;

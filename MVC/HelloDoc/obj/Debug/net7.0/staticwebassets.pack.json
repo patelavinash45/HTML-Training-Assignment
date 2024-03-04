@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\Files\\37.txt"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\42_Session 2 (1).txt",
+      "PackagePath": "staticwebassets\\Files\\42_Session 2 (1).txt"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\44_Fig1. Platform login page.jpg",
       "PackagePath": "staticwebassets\\Files\\44_Fig1. Platform login page.jpg"
     },
@@ -51,6 +55,22 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\47_Samples-DoctorsNote-DemandLetter_FINAL_20180630.doc",
       "PackagePath": "staticwebassets\\Files\\47_Samples-DoctorsNote-DemandLetter_FINAL_20180630.doc"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\48_LoginImage-removeBG.png",
+      "PackagePath": "staticwebassets\\Files\\48_LoginImage-removeBG.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\48___Files_48_LoginImage-removeBG (1).png",
+      "PackagePath": "staticwebassets\\Files\\48___Files_48_LoginImage-removeBG (1).png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\48___Files_48_LoginImage-removeBG.png",
+      "PackagePath": "staticwebassets\\Files\\48___Files_48_LoginImage-removeBG.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\48___Files_Fig39. Provider Location.jpg48.jpg",
+      "PackagePath": "staticwebassets\\Files\\48___Files_Fig39. Provider Location.jpg48.jpg"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\79_Fig21. Admin My profile..jpg",
@@ -249,8 +269,8 @@
       "PackagePath": "staticwebassets\\css\\patient\\submitRequest.css"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\patient\\viewDocument.css",
-      "PackagePath": "staticwebassets\\css\\patient\\viewDocument.css"
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\viewDocument.css",
+      "PackagePath": "staticwebassets\\css\\viewDocument.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\favicon.ico",
@@ -307,6 +327,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\international-telephone-input.js",
       "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\viewDocument.js",
+      "PackagePath": "staticwebassets\\js\\viewDocument.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\lib\\bootstrap\\LICENSE",
