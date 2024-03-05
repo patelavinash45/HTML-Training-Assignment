@@ -11,7 +11,7 @@ namespace Services.Interfaces
 
         Task<int> deleteFile(int requestWiseFileId);
 
-        Task<int> deleteAllFile(List<RequestWiseFile> requestWiseFileIds);
+        Task<int> deleteAllFile(List<int> requestWiseFileIds);
 
     }
 }

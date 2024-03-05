@@ -1,4 +1,5 @@
-﻿using Repositories.Interface;
+﻿using Microsoft.AspNetCore.Http;
+using Repositories.Interface;
 using Repositories.Interfaces;
 using Repositories.ViewModels;
 using Services.Interfaces.AuthServices;
@@ -11,11 +12,13 @@ namespace Services.Implementation.AuthServices
     {
         private readonly IAspNetUserRepository _aspNetUserRepository;
         private readonly IAspNetUserRoleRepository _aspNetUserRoleRepository;
+        private HttpContextAccessor _contextAccessor;
 
-        public LoginService(IAspNetUserRepository aspNetUserRepository, IAspNetUserRoleRepository aspNetUserRoleRepository)
+        public LoginService(IAspNetUserRepository aspNetUserRepository, IAspNetUserRoleRepository aspNetUserRoleRepository, HttpContextAccessor contextAccessor)
         {
             _aspNetUserRepository = aspNetUserRepository;
             _aspNetUserRoleRepository = aspNetUserRoleRepository;
+            _contextAccessor = contextAccessor;
         }
 
         public int auth(Login model,int userType)

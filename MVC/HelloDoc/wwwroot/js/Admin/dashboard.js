@@ -1,3 +1,5 @@
+var statusStrings = ["", "New", "Pending", "Active", "Conclude", "Close", "Unpaid"];
+
 function sidebar() {
     var temp = document.getElementById("side-bar").style.display;
     if (temp == "none") {
@@ -16,35 +18,37 @@ function changeTable(temp) {
     $('.buttonHr').css("display", "none");
     switch (temp) {
         case 1: $("#new").css("display", "block"); $("#newOption").css('box-shadow', '10px 10px 5px #AAA'); $("#newText").css("display", "block");
-                  getTableData("New"); break;
+                  getTableData("New",1); break;
         case 2: $("#pending").css("display", "block"); $("#pendingOption").css('box-shadow', '10px 10px 5px #AAA'); $("#pendingText").css("display", "block");
-                  getTableData("Pending"); break;
-        case 3: $("#active").css("display", "block"); $("#activeOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Active");
+                  getTableData("Pending",1); break;
+        case 3: $("#active").css("display", "block"); $("#activeOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Active",1);
                   $("#activeText").css("display", "block"); break;
-        case 4: $("#conclude").css("display", "block"); $("#concludeOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Conclude");
+        case 4: $("#conclude").css("display", "block"); $("#concludeOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Conclude",1);
                   $("#concludeText").css("display", "block"); break;
-        case 5: $("#close").css("display", "block"); $("#tocloseOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Close");
+        case 5: $("#close").css("display", "block"); $("#tocloseOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Close",1);
                   $("#closeText").css("display", "block"); break;
-        case 6: $("#unpaid").css("display", "block"); $("#unpaidOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Unpaid");
+        case 6: $("#unpaid").css("display", "block"); $("#unpaidOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Unpaid",1);
                   $("#unpaidText").css("display", "block");
     }
 }
 
-function getTableData(temp) {
-
+function getTableData(status,pageNo) {
     $.ajax({
         url: '/Admin/GetTablesData',
         type: 'GET',
         contentType: 'application/json',
-        data: { status: temp },
+        data: {
+            pageNo : pageNo,
+            status: status,
+        },
         success: function (response) {
-            setTableData(temp, response);
+            setTableData(status, response);
         }
     })
 }
 
-function setTableData(temp, response) {
-    switch (temp) {
+function setTableData(status, response) {
+    switch (status) {
         case "New": $("#new").html(response); break;
         case "Pending": $("#pending").html(response); break;
         case "Active": $("#active").html(response); break;
@@ -53,27 +57,21 @@ function setTableData(temp, response) {
         case "Unpaid": $("#unpaid").html(response); break;
         default: return View();
     }
-    $('table.myTable').dataTable();
 }
 
-$(document).ready(function () {
-    $('table.myTable').dataTable();
-});
-
-
 function tableSearch(document) {
-    $('table.myTable').DataTable().search($(document).val()).draw();
+    //$('table.myTable').DataTable().search($(document).val()).draw();
 }
 
 function regionSearch(document) {
-    $('table.myTable').DataTable().column(0).search($(document).val()).draw();
+    //$('table.myTable').DataTable().column(0).search($(document).val()).draw();
 }
 
-function filterOnButton(temp) {
+function filterOnButton(status) {
     /*$("body").css("filter", "invert(1)");*/
     $('.tableRows').css("display", "none");
     $('.buttonHr').css("display", "none");
-    switch (temp) {
+    switch (status) {
         case 1: $('.bg-success').css("display", "table-row"); $('#hr-1').css("display", "block"); break;
         case 2: $('.bg-warning').css("display", "table-row"); $('#hr-2').css("display", "block"); break;
         case 3: $('.bg-danger').css("display", "table-row"); $('#hr-3').css("display", "block"); break;
@@ -84,17 +82,26 @@ function filterOnButton(temp) {
 }
 
 
-////PopUp Functions
+///
 
-//function cancelPopUp(id) {
-//    var idName = "#name-" + id;
-//    $("#patientRequestId").val(id);
-//    $("#patientName").text($(idName).text());
-//}
+function getNextPageData(currentPageNo, totalRequestCount, status) {
+    var totalPages = (totalRequestCount / 10) + 1;
+    if (currentPageNo < totalRequestCount) {
+        getTableData(statusStrings[status], currentPageNo + 1);
+    }
+}
 
-//function changeSelect() {
-//    var id = "#region" + $('#selectRegion').val();
-//    $('.physicianOptions').css("display", "none");
-//    $(id).css("display", "block");
-//}
+function getPreviousPageData(currentPageNo, status) {
+    if (currentPageNo > 1) {
+        getTableData(statusStrings[status], currentPageNo - 1);
+    }
+}
 
+function navigateToFirstPage(status) {
+    getTableData(statusStrings[status], 1);
+}
+
+function navigateToLastPage(status, totalRequestCount) {
+    var lastPageNo = parseInt(totalRequestCount / 10, 10) + 1;
+    getTableData(statusStrings[status], lastPageNo);
+}

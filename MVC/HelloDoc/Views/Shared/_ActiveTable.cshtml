@@ -1,4 +1,4 @@
-﻿@model List<Repositories.ViewModels.Admin.NewTables>
+﻿@model Repositories.ViewModels.Admin.TableModel
 
 @{
     List<String> requesterBgColor = new List<String>() { "bg-danger", "bg-success", "bg-warning", "bg-primary" };
@@ -8,7 +8,7 @@
 
 
 <div class="table-responsive row">
-    <table class="table myTable">
+    <table class="table">
         <thead>
             <tr>
                 <th class="col-2 text-black">
@@ -46,9 +46,9 @@
         <tbody class="text-white">
             @if(Model != null)
             {
-                @foreach (var data in Model)
+                @foreach (var data in Model.TableDatas)
                 {
-                    <tr class="@requesterBgColor[data.Requester - 1] align-middle tableRows">
+                    <tr class="@requesterBgColor[data.Requester - 1] align-middle">
                         <td>
                             <div class="d-flex justify-content-between  align-items-center">
                                 @data.FirstName @data.LastName
@@ -105,7 +105,8 @@
                         </td>
                         <td>
                             <div class="dropdown">
-                                <button class="btn p-2 btn-secondary dropdown-toggle bg-transparent text-white border-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn p-2 btn-secondary dropdown-toggle bg-transparent text-white border-white" type="button"
+                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     Actions
                                 </button>
                                 <ul class="dropdown-menu">
@@ -161,7 +162,7 @@
 <div class="accordion row" id="accordionFlushExample">
     @if (Model != null)
     {
-        @foreach (var data in Model)
+        @foreach (var data in Model.TableDatas)
         {
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
@@ -280,3 +281,27 @@
         }
     }
 </div>
+@if (Model != null)
+{
+    <div class="d-flex justify-content-between">
+        Showing @Model.StartRange to @Model.EndRange of @Model.TotalRequests entries
+        <div class="d-flex">
+            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToFirstPage(3)">
+                «
+            </button>
+            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="getPreviousPageData(@Model.PageNo,3)" disabled=@(!Model.IsPreviousPage)>
+                ‹
+            </button>
+            <button class="border-1 rounded-0 mx-2 px-3 currentPage">
+                @Model.PageNo
+            </button>
+            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="getNextPageData(@Model.PageNo,@Model.TotalRequests,3)"
+            disabled=@(!Model.IsNextPage)>
+                ›
+            </button>
+            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToLastPage(3,@Model.TotalRequests)">
+                »
+            </button>
+        </div>
+    </div>
+}

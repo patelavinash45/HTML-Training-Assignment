@@ -10,7 +10,9 @@ namespace Repositories.Interfaces
 {
     public interface IRequestClientRepository
     {
-        List<RequestClient> getRequestClientByStatus(int status);
+        List<RequestClient> getRequestClientByStatus(int status,int skip);
+
+        int countRequestClientByStatus(int status);
 
         List<RequestClient> getAllRequestClientForUser(int userId);
 

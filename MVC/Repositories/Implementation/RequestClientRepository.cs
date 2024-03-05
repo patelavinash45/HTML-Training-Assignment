@@ -14,9 +14,15 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
-        public List<RequestClient> getRequestClientByStatus(int status)
+        public List<RequestClient> getRequestClientByStatus(int status,int skip)
         {
-            return _dbContext.RequestClients.Include(a => a.Request).Where(a => a.Status==status).ToList();
+            return _dbContext.RequestClients.Include(a => a.Request).Where(a => a.Status==status).Skip(skip).OrderByDescending(a => a.RequestClientId)
+                                                       .Take(10).ToList();
+        }
+
+        public int countRequestClientByStatus(int status)
+        {
+            return _dbContext.RequestClients.Include(a => a.Request).Where(a => a.Status == status).ToList().Count;
         }
 
         public List<RequestClient> getAllRequestClientForUser(int userId)

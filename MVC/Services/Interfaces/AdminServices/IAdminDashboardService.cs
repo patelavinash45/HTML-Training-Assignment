@@ -6,6 +6,6 @@ namespace Services.Interfaces.AdminServices
     {
         AdminDashboard getallRequests(int aspNetUserId);
 
-        List<NewTables> GetNewRequest(String status);
+        TableModel GetNewRequest(String status, int pageNo);
     }
 }

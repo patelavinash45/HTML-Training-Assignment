@@ -40,16 +40,16 @@ namespace Services.Implementation.AdminServices
             };
             AdminDashboard adminDashboard = new()
             {
-                NewRequests = GetNewRequest("New"),
-                NewRequestCount = _requestClientRepository.getRequestClientByStatus(1).Count,
-                PendingRequestCount = _requestClientRepository.getRequestClientByStatus(2).Count,
-                ActiveRequestCount = _requestClientRepository.getRequestClientByStatus(4).Count +
-                                     _requestClientRepository.getRequestClientByStatus(5).Count,
-                ConcludeRequestCount = _requestClientRepository.getRequestClientByStatus(6).Count,
-                TocloseRequestCount = _requestClientRepository.getRequestClientByStatus(3).Count +
-                                      _requestClientRepository.getRequestClientByStatus(7).Count +
-                                      _requestClientRepository.getRequestClientByStatus(8).Count,
-                UnpaidRequestCount = _requestClientRepository.getRequestClientByStatus(9).Count,
+                NewRequests = GetNewRequest(status:"New",pageNo:1),
+                NewRequestCount = _requestClientRepository.countRequestClientByStatus(1),
+                PendingRequestCount = _requestClientRepository.countRequestClientByStatus(2),
+                ActiveRequestCount = _requestClientRepository.countRequestClientByStatus(4)  +
+                                     _requestClientRepository.countRequestClientByStatus(5),
+                ConcludeRequestCount = _requestClientRepository.countRequestClientByStatus(6),
+                TocloseRequestCount = _requestClientRepository.countRequestClientByStatus(3) +
+                                      _requestClientRepository.countRequestClientByStatus(7) +
+                                      _requestClientRepository.countRequestClientByStatus(8),
+                UnpaidRequestCount = _requestClientRepository.countRequestClientByStatus(9),
                 Regions = allRegion,
                 Header = dashboardHeader,
                 CancelPopup = cancelPopUp,
@@ -58,35 +58,44 @@ namespace Services.Implementation.AdminServices
             return adminDashboard;
         }
 
-        public List<NewTables> GetNewRequest(String status)
+        public TableModel GetNewRequest(String status,int pageNo)
         {
+            int skip = (pageNo - 1) * 10;
+            int totalRequests = 0;
             List<RequestClient> requestClients= new List<RequestClient>();
             if (status=="New")
             {
-                requestClients = _requestClientRepository.getRequestClientByStatus(1);
+                totalRequests = _requestClientRepository.countRequestClientByStatus(1);
+                requestClients = _requestClientRepository.getRequestClientByStatus(status:1,skip:skip);
             }
             else if(status == "Pending")
             {
-                requestClients = _requestClientRepository.getRequestClientByStatus(2);
+                totalRequests = _requestClientRepository.countRequestClientByStatus(2);
+                requestClients = _requestClientRepository.getRequestClientByStatus(status: 2, skip: skip);
             }
             else if (status == "Active")
             {
-                requestClients = _requestClientRepository.getRequestClientByStatus(4);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(5));
+                totalRequests = _requestClientRepository.countRequestClientByStatus(4)+ _requestClientRepository.countRequestClientByStatus(5);
+                requestClients = _requestClientRepository.getRequestClientByStatus(status: 4, skip: skip);
+                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(status: 5, skip: skip));
             }
             else if (status == "Conclude")
             {
-                requestClients = _requestClientRepository.getRequestClientByStatus(6);
+                totalRequests = _requestClientRepository.countRequestClientByStatus(6);
+                requestClients = _requestClientRepository.getRequestClientByStatus(status: 6, skip: skip);
             }
             else if (status == "Close")
             {
-                requestClients = _requestClientRepository.getRequestClientByStatus(3);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(7));
-                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(8));
+                totalRequests = _requestClientRepository.countRequestClientByStatus(3) + _requestClientRepository.countRequestClientByStatus(7)
+                                               + _requestClientRepository.countRequestClientByStatus(8);
+                requestClients = _requestClientRepository.getRequestClientByStatus(status: 3, skip: skip);
+                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(status: 7, skip: skip));
+                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(status: 8, skip: skip));
             }
             else if (status == "Unpaid")
             {
-                requestClients = _requestClientRepository.getRequestClientByStatus(9);
+                totalRequests = _requestClientRepository.countRequestClientByStatus(9);
+                requestClients = _requestClientRepository.getRequestClientByStatus(status: 9, skip: skip);
             }
             //
             //var allnewRequests = (from req in requests
@@ -99,10 +108,10 @@ namespace Services.Implementation.AdminServices
             //                          reqClient
             //                      }).ToList();
             //
-            List<NewTables> newTables = new List<NewTables>();
+            List<TablesData> tablesDatas = new List<TablesData>();
             foreach(RequestClient requestClient in requestClients)
             {
-                NewTables newTable = new()
+                TablesData tablesData = new()
                 {
                     RequestId = requestClient.RequestId,
                     FirstName = requestClient.FirstName,
@@ -125,9 +134,20 @@ namespace Services.Implementation.AdminServices
                     DateOfService = null,
                     PhysicianName = "",
                 };
-                newTables.Add(newTable);
+                tablesDatas.Add(tablesData);
             }
-            return newTables;
+            int totalPages = (totalRequests / 10) + 1;
+            TableModel tableModel = new()
+            {
+                IsNextPage = pageNo < totalPages,
+                IsPreviousPage = pageNo > 1,
+                TableDatas = tablesDatas,
+                TotalRequests = totalRequests,
+                PageNo = pageNo,
+                StartRange = skip+1,
+                EndRange = skip+10 < totalRequests ? skip+10 : totalRequests,
+            };
+            return tableModel;
         }
     }
 }

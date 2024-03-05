@@ -1,4 +1,4 @@
-﻿@model List<Repositories.ViewModels.Admin.NewTables>
+﻿@model Repositories.ViewModels.Admin.TableModel
 
 @{
     List<String> requesterBgColor = new List<String>() { "bg-danger", "bg-success", "bg-warning", "bg-primary" };
@@ -7,7 +7,7 @@
 }
 
 <div class="table-responsive row">
-    <table class="table myTable">
+    <table class="table">
         <thead>
             <tr>
                 <th class="col-2 text-black">
@@ -40,9 +40,9 @@
             </tr>
         </thead>
         <tbody class="text-white">
-            @foreach(var data in Model)
+            @foreach(var data in Model.TableDatas)
             {
-                <tr class="@requesterBgColor[data.Requester - 1] align-middle tableRows">
+                <tr class="@requesterBgColor[data.Requester - 1] align-middle">
                     <td>
                         <div class="d-flex justify-content-between  align-items-center">
                             <span id="name-@data.RequestId">
@@ -139,7 +139,7 @@
 <div class="accordion row" id="accordionFlushExample">
     @if(Model != null)
     {
-        @foreach(var data in  Model)
+        @foreach (var data in Model.TableDatas)
         {
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
@@ -230,4 +230,25 @@
             </div>
         }
     }
+</div>
+<div class="d-flex justify-content-between">
+    Showing @Model.StartRange to @Model.EndRange of @Model.TotalRequests entries
+    <div class="d-flex">
+        <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToFirstPage(1)">
+            «
+        </button>
+        <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="getPreviousPageData(@Model.PageNo,1)" disabled=@(!Model.IsPreviousPage)>
+            ‹
+        </button>
+        <button class="border-1 rounded-0 mx-2 px-3 currentPage">
+            @Model.PageNo
+        </button>
+        <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="getNextPageData(@Model.PageNo,@Model.TotalRequests,1)" 
+                                                                                    disabled=@(!Model.IsNextPage)>
+            ›
+        </button>
+        <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToLastPage(1,@Model.TotalRequests)">
+            »
+        </button>
+    </div>
 </div>

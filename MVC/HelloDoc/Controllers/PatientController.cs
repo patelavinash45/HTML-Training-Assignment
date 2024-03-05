@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.ViewModels;
 using Services.Interfaces;
@@ -31,6 +32,7 @@ namespace HelloDoc.Controllers
         }
 
         [Route("/")]
+        [Authentication("Patient")]
         public IActionResult PatientSite()
         {
             return View();

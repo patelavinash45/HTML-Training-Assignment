@@ -24,6 +24,19 @@ $('#downloadAll').click(function () {
     }
 });
 
+$('#deleteAll').click(function () {
+    $.ajax({
+        url: "/Admin/DeleteAll",
+        type: 'post',
+        contentType: 'application/json',
+        data: JSON.stringify(IdList),
+        traditional: true,
+        success: function (response) {
+            window.location.href = response.redirect;
+        }
+    })
+})
+
 function onCheckboxChnage(fileId,totalcount) {
     var id = $(fileId).attr("id");
     if ($(fileId).is(":checked")) {

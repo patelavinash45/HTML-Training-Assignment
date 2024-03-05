@@ -73,6 +73,18 @@
       "PackagePath": "staticwebassets\\Files\\48___Files_Fig39. Provider Location.jpg48.jpg"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\49_LoginImage-removeBG.png",
+      "PackagePath": "staticwebassets\\Files\\49_LoginImage-removeBG.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\49_MVC.pdf",
+      "PackagePath": "staticwebassets\\Files\\49_MVC.pdf"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\49_restore.sql",
+      "PackagePath": "staticwebassets\\Files\\49_restore.sql"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\79_Fig21. Admin My profile..jpg",
       "PackagePath": "staticwebassets\\Files\\79_Fig21. Admin My profile..jpg"
     },

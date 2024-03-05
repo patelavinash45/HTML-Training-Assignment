@@ -1,6 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Repositories.DataModels;
 using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
 using Services.Interfaces;
@@ -61,9 +60,9 @@ namespace HelloDoc.Controllers
             return View(_viewDocumentsServices.getDocumentList(requestId: requestId, aspNetUserId: aspNetUserId));
         }
 
-        public async Task<IActionResult> DeleteAll(List<RequestWiseFile> IdList)
+        public async Task<JsonResult> DeleteAll([FromBody]List<int> requestWiseFileIdsList)
         {
-            int requestId = await _viewDocumentsServices.deleteAllFile(IdList);
+            int requestId = await _viewDocumentsServices.deleteAllFile(requestWiseFileIdsList);
             if (requestId > 0)
             {
                 _notyfService.Success("Successfully File Deleted");
@@ -72,7 +71,7 @@ namespace HelloDoc.Controllers
             {
                 _notyfService.Error("Faild!");
             }
-            return RedirectToAction("ViewDocument", "Admin", new { requestId = requestId });
+            return Json(new { redirect = Url.Action("ViewDocument", "Admin", new { requestId = requestId }) });
         }
 
         public async Task<IActionResult> DeleteFiles(int requestWiseFileId)
@@ -197,17 +196,17 @@ namespace HelloDoc.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTablesData(String status)
+        public IActionResult GetTablesData(String status,int pageNo)
         {
-           List<NewTables> tableData= _adminDashboardService.GetNewRequest(status);
+           TableModel tableModel= _adminDashboardService.GetNewRequest(status, pageNo);
            switch(status)
             {
-                case "New": return PartialView("_NewTable", tableData); 
-                case "Pending": return PartialView("_PendingTable", tableData);
-                case "Active": return PartialView("_ActiveTable", tableData);
-                case "Conclude": return PartialView("_ConcludeTable", tableData);
-                case "Close": return PartialView("_CloseTable", tableData);
-                case "Unpaid": return PartialView("_UnpaidTable", tableData);
+                case "New": return PartialView("_NewTable", tableModel); 
+                case "Pending": return PartialView("_PendingTable", tableModel);
+                case "Active": return PartialView("_ActiveTable", tableModel);
+                case "Conclude": return PartialView("_ConcludeTable", tableModel);
+                case "Close": return PartialView("_CloseTable", tableModel);
+                case "Unpaid": return PartialView("_UnpaidTable", tableModel);
                 default: return View();
             }
         }

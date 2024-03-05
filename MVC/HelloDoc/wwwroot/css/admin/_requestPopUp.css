@@ -37,3 +37,8 @@ option{
     border-color: cadetblue;
 }
 
+.currentPage {
+    background-color: cadetblue;
+    color : white;
+}
+

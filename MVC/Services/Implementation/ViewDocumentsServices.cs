@@ -1,6 +1,4 @@
-﻿
-using Repositories.DataModels;
-using Repositories.Interface;
+﻿using Repositories.DataModels;
 using Repositories.Interfaces;
 using Repositories.ViewModels;
 using Services.Interfaces;
@@ -63,12 +61,12 @@ namespace Services.Implementation
             return 0;
         }
 
-        public async Task<int> deleteAllFile(List<RequestWiseFile> requestWiseFileIds)
+        public async Task<int> deleteAllFile(List<int> requestWiseFileIds)
         {
             int requestId = 0;
             foreach(var item in requestWiseFileIds)
             {
-                requestId = await deleteFile(item.RequestWiseFileId);
+                requestId = await deleteFile(item);
             }
             return requestId;
         }

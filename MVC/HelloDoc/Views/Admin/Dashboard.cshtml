@@ -18,7 +18,6 @@
 
 <body>
     @await Component.InvokeAsync("Notyf")
-    <partial></partial>
     @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", Model.Header)
     @Html.Partial("~/Views/Shared/_RequestCancelPopUp.cshtml",Model.CancelPopup)
     @Html.Partial("~/Views/Shared/_RequestAssignPopUp.cshtml",Model.AssignPopup)
