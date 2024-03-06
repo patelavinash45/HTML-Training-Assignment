@@ -1,7 +1,9 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
+using Services.Implementation.AuthServices;
 using Services.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.Interfaces.AuthServices;
@@ -16,9 +18,11 @@ namespace HelloDoc.Controllers
         private readonly IViewCaseService _viewCaseService;
         private readonly IViewNotesService _viewNotesService;
         private readonly IViewDocumentsServices _viewDocumentsServices;
+        private readonly IJwtService _jwtService;
 
         public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
-                                IViewNotesService viewNotesService, ILoginService loginService,IViewDocumentsServices viewDocumentsServices)
+                                IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
+                                         IJwtService jwtService)
         {
             _notyfService = notyfService;
             _loginService = loginService;
@@ -26,7 +30,15 @@ namespace HelloDoc.Controllers
             _viewCaseService = viewCaseService;
             _viewNotesService = viewNotesService;
             _viewDocumentsServices = viewDocumentsServices;
+            _jwtService = jwtService;
         }
+
+        public IActionResult WrongLogInPage()
+        {
+            _notyfService.Information("LogIn To Access Page");
+            return RedirectToAction("LoginPage", "Admin");
+        }
+
         public IActionResult LoginPage()
         {
             return View();
@@ -35,25 +47,31 @@ namespace HelloDoc.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("aspNetUserId");
+            HttpContext.Session.Remove("role");
+            Response.Cookies.Delete("jwtToken");
             return RedirectToAction("LoginPage", "Admin");
         }
 
+        [Authorization("Admin")]
         public IActionResult Dashboard()
         {
             int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
             return aspNetUseId > 0 ? View(_adminDashboardService.getallRequests(aspNetUseId)) : View(null);
         }
 
+        [Authorization("Admin")]
         public IActionResult ViewCase(int requestId)
         {
             return View(_viewCaseService.getRequestDetails(requestId));
         }
 
+        [Authorization("Admin")]
         public IActionResult ViewNotes(int requestId)
         {
             return View(_viewNotesService.GetNotes(requestId));
         }
 
+        [Authorization("Admin")]
         public IActionResult ViewDocument(int requestId)
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
@@ -170,6 +188,15 @@ namespace HelloDoc.Controllers
                 else
                 {
                     HttpContext.Session.SetInt32("aspNetUserId", aspNetUserId);
+                    HttpContext.Session.SetString("role", "Admin");
+                    string token = _jwtService.GenerateJwtToken(role: "Admin", aspNetUserId: aspNetUserId);
+                    CookieOptions cookieOptions = new CookieOptions()
+                    {
+                        Secure = true,
+                        Expires = DateTime.UtcNow.AddMinutes(20),
+                    };
+                    Response.Cookies.Append("jwtToken", token, cookieOptions);
+                    //HttpContext.Session.SetString("jwtToken", token);
                     _notyfService.Success("Successfully Login");
                     return RedirectToAction("Dashboard", "Admin");
                 }

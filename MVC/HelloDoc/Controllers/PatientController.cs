@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.ViewModels;
@@ -17,10 +18,11 @@ namespace HelloDoc.Controllers
         private readonly IViewProfileService _viewProfileService;
         private readonly IResetPasswordService _resetPasswordService;
         private readonly IViewDocumentsServices _viewDocumentsServices;
+        private readonly IJwtService _jwtService;
 
         public PatientController(INotyfService notyfService,ILoginService loginService ,IPatientDashboardService dashboardService,
                                  IAddRequestService addRequestService,IViewProfileService viewProfileService, IResetPasswordService resetPasswordService,
-                                 IViewDocumentsServices viewDocumentsServices)
+                                 IViewDocumentsServices viewDocumentsServices,IJwtService jwtService)
         {
             _notyfService = notyfService;
             _loginService = loginService;
@@ -29,13 +31,25 @@ namespace HelloDoc.Controllers
             _viewProfileService= viewProfileService;
             _resetPasswordService= resetPasswordService;
             _viewDocumentsServices = viewDocumentsServices;
+            _jwtService = jwtService;
         }
 
         [Route("/")]
-        [Authentication("Patient")]
         public IActionResult PatientSite()
         {
             return View();
+        }
+
+        public IActionResult AccessDenied()
+        {
+            _notyfService.Warning("Access Denied !!");
+            return RedirectToAction("PatientSite", "Patient");
+        }
+
+        public IActionResult WrongLogInPage()
+        {
+            _notyfService.Information("LogIn To Access Page");
+            return RedirectToAction("LoginPage", "Patient");
         }
 
         public IActionResult LoginPage()
@@ -77,31 +91,36 @@ namespace HelloDoc.Controllers
             return View(_resetPasswordService.validatePasswordLink(token, id, time));
         }
 
+        [Authorization("Patient")]
         public IActionResult RequestForSomeOne()
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
             return View(_addRequestService.getModelForRequestForSomeoneelse(aspNetUserId));
         }
 
+        [Authorization("Patient")]
         public IActionResult RequestForMe()
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
             return View(_addRequestService.getModelForRequestByMe(aspNetUserId));
         }
 
+        [Authorization("Patient")]
         public IActionResult ViewProfile()
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
             return View(_viewProfileService.getProfileDetails(aspNetUserId));
         }
 
-        public IActionResult ViewDocument(int id)
+        [Authorization("Patient")]
+        public IActionResult ViewDocument()
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-            //int requestId = HttpContext.Session.GetInt32("requestId").Value;
-            return View(_viewDocumentsServices.getDocumentList(requestId: id,aspNetUserId: aspNetUserId));
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
+            return View(_viewDocumentsServices.getDocumentList(requestId: requestId,aspNetUserId: aspNetUserId));
         }
 
+        [Authorization("Patient")]
         public IActionResult Dashboard()
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
@@ -111,15 +130,17 @@ namespace HelloDoc.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("aspNetUserId");
+            HttpContext.Session.Remove("role");
+            Response.Cookies.Delete("jwtToken");
             return RedirectToAction("LoginPage", "Patient");
         }
 
-        //[HttpGet]
-        //public IActionResult SetRequestId(int requestId)
-        //{
-        //    HttpContext.Session.SetInt32("requestId", requestId);
-        //    return RedirectToAction("ViewDocument", "Patient");
-        //}
+        [HttpGet]
+        public JsonResult SetRequestId(int requestId)
+        {
+            HttpContext.Session.SetInt32("requestId", requestId);
+            return Json(new { redirect = Url.Action("ViewDocument","Patient") });
+        }
 
         [HttpGet]
         public JsonResult CheckEmailExists(string email)
@@ -143,7 +164,16 @@ namespace HelloDoc.Controllers
                 else
                 {
                     HttpContext.Session.SetInt32("aspNetUserId", aspNetUserId);
+                    HttpContext.Session.SetString("role", "Patient");
                     _notyfService.Success("Successfully Login");
+                    string token = _jwtService.GenerateJwtToken(role: "Patient",aspNetUserId : aspNetUserId);
+                    CookieOptions cookieOptions = new CookieOptions()
+                    {
+                        Secure = true,
+                        Expires = DateTime.UtcNow.AddMinutes(20),
+                    };
+                    Response.Cookies.Append("jwtToken", token, cookieOptions);
+                    //HttpContext.Session.SetString("jwtToken", token);
                     return RedirectToAction("Dashboard", "Patient");
                 }
             }

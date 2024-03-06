@@ -98,14 +98,14 @@
                                     @{
                                         if (@item.Document >0)
                                         {
-                                            //<button id="document" onclick="NavigatToViewDocument(@item.RequestId)">
-                                            //    (@item.Document) Document
-                                            //</button>
-                                            <a asp-controller="Patient" asp-action="ViewDocument" asp-route-id="@item.RequestId">
-                                                <button id="document">
-                                                    (@item.Document) Document
-                                                </button>
-                                            </a>
+                                            <button id="document" onclick="NavigatToViewDocument(@item.RequestId)">
+                                                (@item.Document) Document
+                                            </button>
+                                            //<a asp-controller="Patient" asp-action="ViewDocument" asp-route-id="@item.RequestId">
+                                            //    <button id="document">
+                                            //        (@item.Document) Document
+                                            //    </button>
+                                            //</a>
                                         }
                                     }
                                 </td>

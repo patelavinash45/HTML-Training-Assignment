@@ -1,4 +1,5 @@
-﻿using Repositories.DataContext;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
 
@@ -22,6 +23,8 @@ namespace Repositories.Implementation
 
         public bool validateAspNetUserRole(int aspNetUserId, int userType)
         {
+            //AspNetUserRole aspNetUserRole = _dbContext.AspNetUserRoles.Include(a => a.User).Include(a => a.Role).
+            //                                            FirstOrDefault(a => a.UserId == aspNetUserId && a.RoleId == userType);
             AspNetUserRole aspNetUserRole = _dbContext.AspNetUserRoles.FirstOrDefault(a => a.UserId == aspNetUserId && a.RoleId == userType);
             return aspNetUserRole != null;
         }

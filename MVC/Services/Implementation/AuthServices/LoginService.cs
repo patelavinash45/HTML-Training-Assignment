@@ -12,13 +12,11 @@ namespace Services.Implementation.AuthServices
     {
         private readonly IAspNetUserRepository _aspNetUserRepository;
         private readonly IAspNetUserRoleRepository _aspNetUserRoleRepository;
-        private HttpContextAccessor _contextAccessor;
 
-        public LoginService(IAspNetUserRepository aspNetUserRepository, IAspNetUserRoleRepository aspNetUserRoleRepository, HttpContextAccessor contextAccessor)
+        public LoginService(IAspNetUserRepository aspNetUserRepository, IAspNetUserRoleRepository aspNetUserRoleRepository)
         {
             _aspNetUserRepository = aspNetUserRepository;
             _aspNetUserRoleRepository = aspNetUserRoleRepository;
-            _contextAccessor = contextAccessor;
         }
 
         public int auth(Login model,int userType)

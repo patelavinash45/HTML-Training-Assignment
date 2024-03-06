@@ -80,5 +80,8 @@ function NavigatToViewDocument(id) {
         type: 'GET',
         contentType: 'application/json',
         data: { requestId: id },
+        success: function (response) {
+            window.location.href = response.redirect;
+        }
     })
 }

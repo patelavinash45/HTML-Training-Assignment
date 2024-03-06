@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSession(
     options => {
         options.Cookie.Name = ".MySession";
-        options.IdleTimeout = TimeSpan.FromDays(1);
+        options.IdleTimeout = TimeSpan.FromMinutes(20);
         options.Cookie.HttpOnly = true;
         options.Cookie.IsEssential = true;
     }
@@ -27,6 +27,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddDbContext<Repositories.DataContext.HalloDocDbContext>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAspNetUserRepository, AspNetUserRepository>();
 builder.Services.AddScoped<IAspNetRoleRepository, AspNetRoleRepository>();
 builder.Services.AddScoped<IAspNetUserRoleRepository, AspNetUserRoleRepository>();

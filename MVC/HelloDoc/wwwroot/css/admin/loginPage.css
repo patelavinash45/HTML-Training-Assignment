@@ -9,6 +9,13 @@
     bottom: 30px;
 }
 
+#back-button {
+    width: 400px;
+    text-decoration: none;
+    font-size: 20px;
+    height: 45px;
+}
+
 .button {
     color: white;
     height: 50px;

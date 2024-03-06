@@ -29,8 +29,8 @@ namespace Services.Implementation
             Admin admin = _adminRepository.getAdmionByAspNetUserId(aspNetUserId);
             DashboardHeader dashboardHeader = new()
             {
-                FirstName = admin.FirstName, 
-                LastName = admin.LastName,
+                FirstName = admin!=null?admin.FirstName:requestClient.FirstName, 
+                LastName = admin != null ? admin.LastName:requestClient.LastName,
                 AspNetUserId = aspNetUserId,
             };
             ViewDocument viewDocument = new()
@@ -69,6 +69,11 @@ namespace Services.Implementation
                 requestId = await deleteFile(item);
             }
             return requestId;
+        }
+
+        public Task<bool> sendFileMail(List<int> requestWiseFileIds)
+        {
+            return await true;
         }
     }
 }

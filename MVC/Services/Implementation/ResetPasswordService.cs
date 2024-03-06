@@ -31,6 +31,10 @@ namespace Services.Implementation
                     From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
                     Subject = "Reset Password Link",
                     IsBodyHtml = true,
+                    Attachments=
+                    {
+
+                    }
                 };
                 string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EmailTemplate/resetPasswordEmail.cshtml");
                 string body = File.ReadAllText(templatePath).Replace("EmailLink", link);

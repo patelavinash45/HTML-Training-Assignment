@@ -22,6 +22,12 @@
                 <img class="w-100 h-100" src="~/images/loginImage.jpg" />
             </div>
             <form asp-controller="Admin" asp-action="LoginPage" class="col-xl-6 col-md-6 col-lg-6 col-12 d-flex flex-column justify-content-center align-items-center vh-100">
+                <span class="d-flex justify-content-end" id="back-button">
+                    <a class="mt-4 mb-5 backto-patientsite" asp-controller="Patient" asp-action="PatientSite">
+                        <i class="bi bi-chevron-left bi-xl"></i>
+                        Back
+                    </a>
+                </span>
                 <img class="w-25" src="~/images/helloDocLogo.png" />
                 <span class="mt-4 mb-2 fw-bold fs-4">
                     Login To Your Account
