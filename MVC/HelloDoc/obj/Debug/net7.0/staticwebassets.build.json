@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "m8HYdQ1xy6dfTE31rMF1etRUFeCjl36PKAk0bAAEfCE=",
+  "Hash": "9zgroGjgGOS09isSZYswuOE+1/vezpY/U7hZmAXr8wY=",
   "Source": "HelloDoc",
   "BasePath": "_content/HelloDoc",
   "Mode": "Default",
@@ -952,6 +952,23 @@
       "OriginalItemSpec": "wwwroot\\Files\\86_Bing.url"
     },
     {
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\87_Fig42.Edit business page.png",
+      "SourceId": "HelloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
+      "BasePath": "_content/HelloDoc",
+      "RelativePath": "Files/87_Fig42.Edit business page.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\87_Fig42.Edit business page.png"
+    },
+    {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\88_3061.dat",
       "SourceId": "HelloDoc",
       "SourceType": "Discovered",
@@ -969,12 +986,12 @@
       "OriginalItemSpec": "wwwroot\\Files\\88_3061.dat"
     },
     {
-      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\89_Fig11. View Notes.jpg",
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\89_Fig42.Edit business page.png",
       "SourceId": "HelloDoc",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
       "BasePath": "_content/HelloDoc",
-      "RelativePath": "Files/89_Fig11. View Notes.jpg",
+      "RelativePath": "Files/89_Fig42.Edit business page.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -983,7 +1000,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Files\\89_Fig11. View Notes.jpg"
+      "OriginalItemSpec": "wwwroot\\Files\\89_Fig42.Edit business page.png"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\bootstrap-5.3.2-dist.zip43.zip",

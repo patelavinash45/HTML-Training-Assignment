@@ -3,6 +3,8 @@ using Repositories.Interfaces;
 using Repositories.ViewModels;
 using Services.Interfaces;
 using System.Collections;
+using System.Net.Mail;
+using System.Net;
 
 namespace Services.Implementation
 {
@@ -71,9 +73,44 @@ namespace Services.Implementation
             return requestId;
         }
 
-        public Task<bool> sendFileMail(List<int> requestWiseFileIds)
+        public async Task<int> sendFileMail(List<int> requestWiseFileIds)
         {
-            return await true;
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
+                Subject = "Reset Password Link",
+                IsBodyHtml = true,
+            };
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+            RequestWiseFile requestWiseFile = new RequestWiseFile();
+            foreach (var item in requestWiseFileIds)
+            {
+                requestWiseFile = _requestWiseFileRepository.getFilesByrequestWiseFileId(item);
+                path = Path.Combine(path, requestWiseFile.FileName);
+                Attachment attachment = new Attachment(path);
+                mailMessage.Attachments.Add(attachment);
+            }
+            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestWiseFile.RequestId);
+            mailMessage.Body = "All The Documents For RequestId : " + requestWiseFile.RequestId.ToString();
+            //mailMessage.To.Add(requestClient.Email);
+            mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
+            SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
+            {
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                EnableSsl = true,
+                Port = 587,
+                Credentials = new NetworkCredential(userName: "tatva.dotnet.avinashpatel@outlook.com", password: "Avinash@6351"),
+            };
+            try
+            {
+                await smtpClient.SendMailAsync(mailMessage);
+                return requestWiseFile.RequestId;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
         }
     }
 }

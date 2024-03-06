@@ -48,5 +48,11 @@ namespace Repositories.Implementation
             int temp = await _dbContext.SaveChangesAsync();
             return temp > 0 ? true : false;
         }
+
+        public List<RequestClient> getRequestClientByName(string firstName,string lastName)
+        {
+            return _dbContext.RequestClients.Include(a => a.Request).Where(a => a.FirstName.Contains(firstName) && a.LastName.Contains(lastName)).
+                                        ToList();
+        }
     }
 }

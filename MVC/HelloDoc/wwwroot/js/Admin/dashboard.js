@@ -55,7 +55,6 @@ function setTableData(status, response) {
         case "Conclude": $("#conclude").html(response); break;
         case "Close": $("#close").html(response); break;
         case "Unpaid": $("#unpaid").html(response); break;
-        default: return View();
     }
 }
 
@@ -104,4 +103,20 @@ function navigateToFirstPage(status) {
 function navigateToLastPage(status, totalRequestCount) {
     var lastPageNo = parseInt(totalRequestCount / 10, 10) + 1;
     getTableData(statusStrings[status], lastPageNo);
+}
+
+function searchPatient(status, document) {
+    console.log(status);
+    $.ajax({
+        url: '/Admin/SearchPatient',
+        type: 'GET',
+        contentType: 'application/json',
+        data: {
+            patientName: $(document).val(),
+            status: statusStrings[status],
+        },
+        success: function (response) {
+            setTableData(statusStrings[status], response);
+        }
+    })
 }

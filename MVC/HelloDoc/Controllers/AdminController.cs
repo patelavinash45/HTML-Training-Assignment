@@ -1,6 +1,7 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.DataModels;
 using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
 using Services.Implementation.AuthServices;
@@ -78,7 +79,7 @@ namespace HelloDoc.Controllers
             return View(_viewDocumentsServices.getDocumentList(requestId: requestId, aspNetUserId: aspNetUserId));
         }
 
-        public async Task<JsonResult> DeleteAll([FromBody]List<int> requestWiseFileIdsList)
+        public async Task<JsonResult> DeleteAllFiles([FromBody]List<int> requestWiseFileIdsList)
         {
             int requestId = await _viewDocumentsServices.deleteAllFile(requestWiseFileIdsList);
             if (requestId > 0)
@@ -92,7 +93,7 @@ namespace HelloDoc.Controllers
             return Json(new { redirect = Url.Action("ViewDocument", "Admin", new { requestId = requestId }) });
         }
 
-        public async Task<IActionResult> DeleteFiles(int requestWiseFileId)
+        public async Task<IActionResult> DeleteFile(int requestWiseFileId)
         {
             int requestId = await _viewDocumentsServices.deleteFile(requestWiseFileId);
             if (requestId > 0)
@@ -104,6 +105,20 @@ namespace HelloDoc.Controllers
                 _notyfService.Error("Faild!");
             }
             return RedirectToAction("ViewDocument", "Admin",new { requestId = requestId});
+        }
+
+        public async Task<IActionResult> SendMail([FromBody] List<int> requestWiseFileIdsList)
+        {
+            int requestId = await _viewDocumentsServices.sendFileMail(requestWiseFileIdsList);
+            if (requestId > 0)
+            {
+                _notyfService.Success("Successfully Send Mail");
+            }
+            else
+            {
+                _notyfService.Error("Faild!");
+            }
+            return RedirectToAction("ViewDocument", "Admin", new { requestId = requestId });
         }
 
         public async Task<IActionResult> CancelPopUp(CancelPopUp model)
@@ -229,6 +244,22 @@ namespace HelloDoc.Controllers
            switch(status)
             {
                 case "New": return PartialView("_NewTable", tableModel); 
+                case "Pending": return PartialView("_PendingTable", tableModel);
+                case "Active": return PartialView("_ActiveTable", tableModel);
+                case "Conclude": return PartialView("_ConcludeTable", tableModel);
+                case "Close": return PartialView("_CloseTable", tableModel);
+                case "Unpaid": return PartialView("_UnpaidTable", tableModel);
+                default: return View();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult SearchPatient(String patientName,String status)
+        {
+            TableModel tableModel = _adminDashboardService.searchPatient(patientName);
+            switch (status)
+            {
+                case "New": return PartialView("_NewTable", tableModel);
                 case "Pending": return PartialView("_PendingTable", tableModel);
                 case "Active": return PartialView("_ActiveTable", tableModel);
                 case "Conclude": return PartialView("_ConcludeTable", tableModel);

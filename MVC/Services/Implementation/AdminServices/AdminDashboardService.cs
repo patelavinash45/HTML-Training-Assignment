@@ -1,4 +1,5 @@
-﻿using Repositories.DataModels;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Repositories.DataModels;
 using Repositories.Interfaces;
 using Repositories.ViewModels;
 using Repositories.ViewModels.Admin;
@@ -146,6 +147,52 @@ namespace Services.Implementation.AdminServices
                 PageNo = pageNo,
                 StartRange = skip+1,
                 EndRange = skip+10 < totalRequests ? skip+10 : totalRequests,
+            };
+            return tableModel;
+        }
+
+        public TableModel searchPatient(String patientName)
+        {
+            String[] names = patientName.Split(" ");
+            List<RequestClient> requestClients = _requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1]);
+            List<TablesData> tablesDatas = new List<TablesData>();
+            foreach (RequestClient requestClient in requestClients)
+            {
+                TablesData tablesData = new()
+                {
+                    RequestId = requestClient.RequestId,
+                    FirstName = requestClient.FirstName,
+                    LastName = requestClient.LastName,
+                    Requester = requestClient.Request.RequestTypeId,
+                    RequesterFirstName = requestClient.Request.FirstName,
+                    RequesterLastName = requestClient.Request.LastName,
+                    Mobile = requestClient.PhoneNumber,
+                    RequesterMobile = requestClient.Request.PhoneNumber,
+                    State = requestClient.State,
+                    Street = requestClient.Street,
+                    ZipCode = requestClient.ZipCode,
+                    City = requestClient.City,
+                    RegionId = requestClient.RegionId,
+                    RequesterType = requestClient.Request.RequestTypeId,
+                    BirthDate = requestClient.IntYear != null ? DateTime.Parse(requestClient.IntYear + "-" + requestClient.StrMonth
+                                 + "-" + requestClient.IntDate) : null,
+                    RequestdDate = requestClient.Request.CreatedDate != null ? requestClient.Request.CreatedDate : null,
+                    Email = requestClient.Email,
+                    DateOfService = null,
+                    PhysicianName = "",
+                };
+                tablesDatas.Add(tablesData);
+            }
+            int totalPages = (requestClients.Count / 10) + 1;
+            TableModel tableModel = new()
+            {
+                IsNextPage = 1 < totalPages,
+                IsPreviousPage = false,
+                TableDatas = tablesDatas,
+                TotalRequests = requestClients.Count,
+                PageNo = 1,
+                StartRange = 1,
+                EndRange = 10 < requestClients.Count ? 10 : requestClients.Count,
             };
             return tableModel;
         }

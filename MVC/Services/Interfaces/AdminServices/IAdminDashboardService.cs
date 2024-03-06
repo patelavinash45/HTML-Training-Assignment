@@ -7,5 +7,7 @@ namespace Services.Interfaces.AdminServices
         AdminDashboard getallRequests(int aspNetUserId);
 
         TableModel GetNewRequest(String status, int pageNo);
+
+        TableModel searchPatient(String patientName);
     }
 }

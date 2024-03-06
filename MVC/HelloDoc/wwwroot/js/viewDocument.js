@@ -26,14 +26,25 @@ $('#downloadAll').click(function () {
 
 $('#deleteAll').click(function () {
     $.ajax({
-        url: "/Admin/DeleteAll",
+        url: "/Admin/DeleteAllFiles",
         type: 'post',
         contentType: 'application/json',
         data: JSON.stringify(IdList),
-        traditional: true,
         success: function (response) {
             window.location.href = response.redirect;
         }
+    })
+})
+
+$("#sendMail").click(function () {
+    $.ajax({
+        url: "/Admin/SendMail",
+        type: "post",
+        contentType: "application/json",
+        data: JSON.stringify(IdList),
+        success: function (response) {
+            window.location.href = response.redirect;
+        } 
     })
 })
 
