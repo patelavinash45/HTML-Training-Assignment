@@ -17,7 +17,7 @@ public partial class RequestWiseFile
     public int RequestId { get; set; }
 
     [StringLength(500)]
-    public string? FileName { get; set; } = null!;
+    public string FileName { get; set; } = null!;
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedDate { get; set; }

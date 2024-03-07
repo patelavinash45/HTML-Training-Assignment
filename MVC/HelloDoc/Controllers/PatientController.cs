@@ -1,11 +1,11 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using AspNetCoreHero.ToastNotification.Notyf;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Repositories.ViewModels;
+using Repositories.DataModels;
 using Services.Interfaces;
 using Services.Interfaces.AuthServices;
 using Services.Interfaces.PatientServices;
+using Services.ViewModels;
 
 namespace HelloDoc.Controllers
 {
@@ -155,18 +155,19 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                int aspNetUserId = _loginService.auth(model,1);
-                if (aspNetUserId == 0)
+                UserDataModel user = _loginService.auth(model,1);
+                if (user == null)
                 {
                     _notyfService.Error("Invalid credentials");
                     return View(null);
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32("aspNetUserId", aspNetUserId);
-                    HttpContext.Session.SetString("role", "Patient");
-                    _notyfService.Success("Successfully Login");
-                    string token = _jwtService.GenerateJwtToken(role: "Patient",aspNetUserId : aspNetUserId);
+                    HttpContext.Session.SetInt32("aspNetUserId", user.AspNetUserId);
+                    HttpContext.Session.SetString("role", user.UserType);
+                    HttpContext.Session.SetString("firstName", user.FirstName);
+                    HttpContext.Session.SetString("lastName", user.LastName);
+                    string token = _jwtService.GenerateJwtToken(role: user.UserType, aspNetUserId: user.AspNetUserId);
                     CookieOptions cookieOptions = new CookieOptions()
                     {
                         Secure = true,
@@ -174,6 +175,7 @@ namespace HelloDoc.Controllers
                     };
                     Response.Cookies.Append("jwtToken", token, cookieOptions);
                     //HttpContext.Session.SetString("jwtToken", token);
+                    _notyfService.Success("Successfully Login");
                     return RedirectToAction("Dashboard", "Patient");
                 }
             }
@@ -223,7 +225,9 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(await _viewDocumentsServices.uploadFile(model)>0)
+                String firstname = HttpContext.Session.GetString("firstName");
+                String lastName = HttpContext.Session.GetString("lastName");
+                if (await _viewDocumentsServices.uploadFile(model, firstName: firstname, lastName: lastName) > 0)
                 {
                     return RedirectToAction("ViewDocument", "Patient", new { id = model.RequestId });
                 }

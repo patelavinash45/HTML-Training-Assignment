@@ -1,8 +1,8 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interfaces;
-using Repositories.ViewModels;
-using Repositories.ViewModels.Admin;
 using Services.Interfaces.AdminServices;
+using Services.ViewModels;
+using Services.ViewModels.Admin;
 
 namespace Services.Implementation.AdminServices
 {
@@ -19,18 +19,19 @@ namespace Services.Implementation.AdminServices
 
         public ViewCase getRequestDetails(int requestId)
         {
-            DashboardHeader dashboardHeader = new()
+            List<CaseTag> caseTags = _caseTagRepository.getAllReason();
+            Dictionary<int, string> reasons = new Dictionary<int, string>();
+            foreach (CaseTag caseTag in caseTags)
             {
-                PageType = 1,
-            };
+                reasons.Add(caseTag.CaseTagId, caseTag.Reason);
+            }
             CancelPopUp cancelPopUp = new()
             {
-                Reasons = _caseTagRepository.getAllReason(),
+                Reasons = reasons,
             };
             RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
             ViewCase viewCase = new() 
             { 
-                Header = dashboardHeader,
                 RequestId = requestId,
                 FirstName = requestClient.FirstName,
                 LastName = requestClient.LastName,

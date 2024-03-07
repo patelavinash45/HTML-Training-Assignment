@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Repositories.ViewModels.Admin
+namespace Services.ViewModels.Admin
 {
     public class ViewCase
     {
-        public DashboardHeader Header { get; set; }
-
         public int RequestId { get; set; }
 
         [StringLength(100)]

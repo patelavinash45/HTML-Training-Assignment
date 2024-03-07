@@ -1,7 +1,7 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interfaces;
-using Repositories.ViewModels;
 using Services.Interfaces.PatientServices;
+using Services.ViewModels;
 
 namespace Services.Implementation.PatientServices
 {
@@ -37,20 +37,12 @@ namespace Services.Implementation.PatientServices
             //                }).ToList();
             //
             List<Dashboard> dashboards = new List<Dashboard>() { };
-            DashboardHeader dashboardHeader = new()
-            {
-                PageType = 1,
-                FirstName = requestClients[0].FirstName,
-                LastName = requestClients[0].LastName,
-                AspNetUserId = aspNetUserId,
-            };
             foreach (RequestClient requestClient in requestClients)
             {
                 Dashboard dashboard = new()
                 {
                     RequestId = requestClient.RequestId,
                     StrMonth = requestClient.StrMonth,
-                    Header = dashboardHeader,
                     IntYear = requestClient.IntYear,
                     IntDate = requestClient.IntDate,
                     Status = requestClient.Status,

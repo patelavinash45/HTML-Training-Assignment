@@ -2,6 +2,7 @@ function changeSelect() {
     var id = ".region-" + $('#selectRegion').val();
     $('.physicianOptions').css("display", "none");
     $(id).css("display", "block");
+    $('.physician').val("").change();
 }
 
 function displayPopUp(id) {

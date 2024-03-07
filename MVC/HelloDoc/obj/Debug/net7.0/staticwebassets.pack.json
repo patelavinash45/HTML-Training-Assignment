@@ -233,6 +233,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\loginPage.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\sendOrder.css",
+      "PackagePath": "staticwebassets\\css\\admin\\sendOrder.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\international-telephone-input.css",
       "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
     },
@@ -319,6 +323,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\loginImage.jpg",
       "PackagePath": "staticwebassets\\images\\loginImage.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\SendOrder.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\SendOrder.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\dashboard.js",

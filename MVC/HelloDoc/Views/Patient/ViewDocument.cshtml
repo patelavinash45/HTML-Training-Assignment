@@ -1,4 +1,4 @@
-﻿@model Repositories.ViewModels.ViewDocument
+﻿@model Services.ViewModels.ViewDocument
 
 
 <!DOCTYPE html>
@@ -14,7 +14,7 @@
 </head>
 <body>
     @{
-        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml",Model.Header)
+        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml",0)
     }
     @await Component.InvokeAsync("Notyf")
     <div class="container tab-content" id="dashboard_content">
@@ -35,7 +35,7 @@
                     Patient Name
                 </div>
                 <div class="h3 w-100">
-                    @Model.Header.FirstName @Model.Header.LastName
+                    @*@Model.Header.FirstName @Model.Header.LastName*@
                 </div>
                 <div class="w-100">
                     Check here for any files that you or the doctors of your
@@ -46,8 +46,6 @@
                         <input class="form-control" placeholder="Select File" type="file" id="file-picker" asp-for="File">
                         <span asp-validation-for="File" class="text-danger"></span>
                         <input readonly class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="RequestId">
-                        <input readonly class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="Header.FirstName">
-                        <input readonly class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="Header.LastName">
                         <button class="fs-5 button" id="uploadButton" type="submit">
                             <i class="bi bi-cloud-arrow-up-fill "></i>
                             Upload
@@ -100,7 +98,7 @@
                                     </td>
                                     <td>
                                         <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" class="download @item.RequestWiseFileId">
-                                            <button id="downloadButton">
+                                            <button id="downloadButton" class="px-3">
                                                 <i class="bi bi-cloud-arrow-down"></i>
                                             </button>
                                         </a>
@@ -134,7 +132,7 @@
                                         </div>
                                     </div>
                                     <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" class="download @item.RequestWiseFileId">
-                                        <button id="downloadButton">
+                                        <button id="downloadButton" class="px-3">
                                             <i class="bi bi-cloud-arrow-down"></i>
                                         </button>
                                     </a>

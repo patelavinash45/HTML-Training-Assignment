@@ -1,9 +1,9 @@
-﻿using Services.Interfaces.AuthServices;
-using System.Security.Claims;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.Extensions.Configuration;
+using Services.Interfaces.AuthServices;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Services.Implementation.AuthServices
 {

@@ -180,7 +180,9 @@ public partial class HalloDocDbContext : DbContext
         {
             entity.HasKey(e => e.VendorId).HasName("HealthProfessionals_pkey");
 
-            entity.HasOne(d => d.ProfessionNavigation).WithMany(p => p.HealthProfessionals).HasConstraintName("HealthProfessionals_Profession_fkey");
+            entity.HasOne(d => d.ProfessionNavigation).WithMany(p => p.HealthProfessionals)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("HealthProfessionals_Profession_fkey");
         });
 
         modelBuilder.Entity<HealthProfessionalType>(entity =>

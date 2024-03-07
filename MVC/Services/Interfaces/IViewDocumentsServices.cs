@@ -1,5 +1,4 @@
-﻿using Repositories.DataModels;
-using Repositories.ViewModels;
+﻿using Services.ViewModels;
 
 namespace Services.Interfaces
 {
@@ -7,7 +6,7 @@ namespace Services.Interfaces
     {
         ViewDocument getDocumentList(int requestId, int aspNetUserId);
 
-        Task<int> uploadFile(ViewDocument model);
+        Task<int> uploadFile(ViewDocument model,String firstName,String lastName);
 
         Task<int> deleteFile(int requestWiseFileId);
 

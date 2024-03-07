@@ -1,4 +1,4 @@
-﻿@model Repositories.ViewModels.Admin.AdminDashboard
+﻿@model Services.ViewModels.Admin.AdminDashboard
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,7 @@
 
 <body>
     @await Component.InvokeAsync("Notyf")
-    @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", Model.Header)
+    @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", 1)
     @Html.Partial("~/Views/Shared/_RequestCancelPopUp.cshtml",Model.CancelPopup)
     @Html.Partial("~/Views/Shared/_RequestAssignPopUp.cshtml",Model.AssignPopup)
     @Html.Partial("~/Views/Shared/_RequestBlockPopUp.cshtml",Model.BlockPopup)
@@ -156,7 +156,7 @@
                             <option value="">All Region</option>
                             @foreach(var item in Model.Regions)
                             {
-                                <option value="@item.RegionId">@item.Name</option>
+                                <option value="@item.Key">@item.Value</option>
                             }
                         </select>
                     </div>

@@ -2,8 +2,8 @@
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.DataModels;
-using Repositories.ViewModels;
-using Repositories.ViewModels.Admin;
+using Services.ViewModels;
+using Services.ViewModels.Admin;
 using Services.Implementation.AuthServices;
 using Services.Interfaces;
 using Services.Interfaces.AdminServices;
@@ -20,10 +20,11 @@ namespace HelloDoc.Controllers
         private readonly IViewNotesService _viewNotesService;
         private readonly IViewDocumentsServices _viewDocumentsServices;
         private readonly IJwtService _jwtService;
+        private readonly ISendOrderService _sendOrderService;
 
         public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
                                 IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
-                                         IJwtService jwtService)
+                                         IJwtService jwtService, ISendOrderService sendOrderService)
         {
             _notyfService = notyfService;
             _loginService = loginService;
@@ -32,6 +33,7 @@ namespace HelloDoc.Controllers
             _viewNotesService = viewNotesService;
             _viewDocumentsServices = viewDocumentsServices;
             _jwtService = jwtService;
+            _sendOrderService = sendOrderService;
         }
 
         public IActionResult WrongLogInPage()
@@ -77,6 +79,12 @@ namespace HelloDoc.Controllers
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
             return View(_viewDocumentsServices.getDocumentList(requestId: requestId, aspNetUserId: aspNetUserId));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult SendOrder(int requestId)
+        {
+            return View(_sendOrderService.getSendOrderDetails(requestId));
         }
 
         public async Task<JsonResult> DeleteAllFiles([FromBody]List<int> requestWiseFileIdsList)
@@ -180,7 +188,9 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await _viewDocumentsServices.uploadFile(model) > 0)
+                String firstname = HttpContext.Session.GetString("firstName");
+                String lastName = HttpContext.Session.GetString("lastName");
+                if (await _viewDocumentsServices.uploadFile(model,firstName:firstname,lastName: lastName) > 0)
                 {
                     return RedirectToAction("ViewDocument", "Admin", new { requestId = model.RequestId });
                 }
@@ -191,20 +201,43 @@ namespace HelloDoc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SendOrder(SendOrder model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (await _sendOrderService.addOrderDetails(model) > 0)
+                {
+                    _notyfService.Success("Successfully Order Added");
+                }
+                else
+                {
+                    _notyfService.Error("Order Faild !!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult LoginPage(Login model)
         {
             if (ModelState.IsValid)
             {
-                int aspNetUserId = _loginService.auth(model,2);
-                if (aspNetUserId == 0)
+                UserDataModel user = _loginService.auth(model, 2);
+                if (user == null)
                 {
                     _notyfService.Error("Invalid credentials");
+                    return View(null);
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32("aspNetUserId", aspNetUserId);
-                    HttpContext.Session.SetString("role", "Admin");
-                    string token = _jwtService.GenerateJwtToken(role: "Admin", aspNetUserId: aspNetUserId);
+                    HttpContext.Session.SetInt32("aspNetUserId", user.AspNetUserId);
+                    HttpContext.Session.SetString("role", user.UserType);
+                    HttpContext.Session.SetString("firstName", user.FirstName);
+                    HttpContext.Session.SetString("lastName", user.LastName);
+                    string token = _jwtService.GenerateJwtToken(role: user.UserType, aspNetUserId: user.AspNetUserId);
                     CookieOptions cookieOptions = new CookieOptions()
                     {
                         Secure = true,
@@ -285,6 +318,12 @@ namespace HelloDoc.Controllers
                 return RedirectToAction("ViewNotes", "Admin", new { requestId = model.RequestId });
             }
             return View();
+        }
+
+        [HttpGet]
+        public HealthProfessional GetBussinessData(int venderId)
+        {
+            return _sendOrderService.getBussinessData(venderId);
         }
     }
 }

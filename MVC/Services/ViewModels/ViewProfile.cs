@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Repositories.ViewModels
+namespace Services.ViewModels
 {
     public class ViewProfile
     {
@@ -33,7 +33,5 @@ namespace Repositories.ViewModels
         public DateTime? BirthDate { get; set; }
 
         public int? AspNetUserId { get; set; }
-
-        public DashboardHeader Header { get; set; }
     }
 }

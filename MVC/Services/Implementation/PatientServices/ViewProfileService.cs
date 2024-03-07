@@ -1,7 +1,7 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interfaces;
-using Repositories.ViewModels;
 using Services.Interfaces.PatientServices;
+using Services.ViewModels;
 
 namespace Services.Implementation.PatientServices
 {
@@ -19,13 +19,6 @@ namespace Services.Implementation.PatientServices
         {
             User user = _userRepository.getUser(aspNetUserId);
             DateTime birthDay = DateTime.Parse(user.IntYear + "-" + user.StrMonth + "-" + user.IntDate);
-            DashboardHeader dashboardHeader = new()
-            {
-                PageType = 2,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                AspNetUserId = aspNetUserId,
-            };
             ViewProfile viewProfile = new()
             {
                 AspNetUserId = aspNetUserId,
@@ -38,7 +31,6 @@ namespace Services.Implementation.PatientServices
                 Street = user.Street,
                 City = user.City,
                 ZipCode = user.ZipCode,
-                Header = dashboardHeader,
             };
             return viewProfile;
         }

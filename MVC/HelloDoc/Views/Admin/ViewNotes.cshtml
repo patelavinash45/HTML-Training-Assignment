@@ -1,4 +1,4 @@
-﻿@model Repositories.ViewModels.Admin.ViewNotes
+﻿@model Services.ViewModels.Admin.ViewNotes
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +14,7 @@
 
 <body>
     @await Component.InvokeAsync("Notyf")
-    @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", Model.Header)
+    @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", 0)
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
             <h3>

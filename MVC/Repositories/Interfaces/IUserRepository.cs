@@ -1,5 +1,4 @@
 ﻿using Repositories.DataModels;
-using Repositories.ViewModels;
 
 namespace Repositories.Interfaces
 {

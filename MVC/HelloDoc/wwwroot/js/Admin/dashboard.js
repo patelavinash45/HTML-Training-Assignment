@@ -1,4 +1,5 @@
 var statusStrings = ["", "New", "Pending", "Active", "Conclude", "Close", "Unpaid"];
+var currentStatus = 1;
 
 function sidebar() {
     var temp = document.getElementById("side-bar").style.display;
@@ -18,17 +19,17 @@ function changeTable(temp) {
     $('.buttonHr').css("display", "none");
     switch (temp) {
         case 1: $("#new").css("display", "block"); $("#newOption").css('box-shadow', '10px 10px 5px #AAA'); $("#newText").css("display", "block");
-                  getTableData("New",1); break;
+                getTableData("New", 1); currentStatus = 1; break;
         case 2: $("#pending").css("display", "block"); $("#pendingOption").css('box-shadow', '10px 10px 5px #AAA'); $("#pendingText").css("display", "block");
-                  getTableData("Pending",1); break;
+                getTableData("Pending", 1); currentStatus = 2; break;
         case 3: $("#active").css("display", "block"); $("#activeOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Active",1);
-                  $("#activeText").css("display", "block"); break;
+                $("#activeText").css("display", "block"); currentStatus = 3; break;
         case 4: $("#conclude").css("display", "block"); $("#concludeOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Conclude",1);
-                  $("#concludeText").css("display", "block"); break;
+                $("#concludeText").css("display", "block"); currentStatus = 4; break;
         case 5: $("#close").css("display", "block"); $("#tocloseOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Close",1);
-                  $("#closeText").css("display", "block"); break;
+                $("#closeText").css("display", "block"); currentStatus = 5; break;
         case 6: $("#unpaid").css("display", "block"); $("#unpaidOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Unpaid",1);
-                  $("#unpaidText").css("display", "block");
+                $("#unpaidText").css("display", "block"); currentStatus = 6;
     }
 }
 
@@ -83,9 +84,13 @@ function filterOnButton(status) {
 
 ///
 
+function getLastPageNo(totalRequestCount) {
+    return totalRequestCount % 10 != 0 ? parseInt(totalRequestCount / 10, 10) + 1 : parseInt(totalRequestCount / 10, 10);
+}
+
 function getNextPageData(currentPageNo, totalRequestCount, status) {
-    var totalPages = (totalRequestCount / 10) + 1;
-    if (currentPageNo < totalRequestCount) {
+    var lastPageNo = getLastPageNo(totalRequestCount);
+    if (currentPageNo < lastPageNo) {
         getTableData(statusStrings[status], currentPageNo + 1);
     }
 }
@@ -101,12 +106,11 @@ function navigateToFirstPage(status) {
 }
 
 function navigateToLastPage(status, totalRequestCount) {
-    var lastPageNo = parseInt(totalRequestCount / 10, 10) + 1;
+    var lastPageNo = getLastPageNo(totalRequestCount);
     getTableData(statusStrings[status], lastPageNo);
 }
 
 function searchPatient(status, document) {
-    console.log(status);
     $.ajax({
         url: '/Admin/SearchPatient',
         type: 'GET',
@@ -116,7 +120,7 @@ function searchPatient(status, document) {
             status: statusStrings[status],
         },
         success: function (response) {
-            setTableData(statusStrings[status], response);
+            setTableData(statusStrings[currentStatus], response);
         }
     })
 }

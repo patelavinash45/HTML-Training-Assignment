@@ -1,4 +1,4 @@
-﻿namespace Repositories.ViewModels
+﻿namespace Services.ViewModels
 {
     public class ResetPassword
     {

@@ -1,4 +1,4 @@
-﻿using Repositories.ViewModels;
+﻿using Services.ViewModels;
 
 namespace Services.Interfaces
 {

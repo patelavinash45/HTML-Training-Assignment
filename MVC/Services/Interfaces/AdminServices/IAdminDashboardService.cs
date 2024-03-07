@@ -1,4 +1,4 @@
-﻿using Repositories.ViewModels.Admin;
+﻿using Services.ViewModels.Admin;
 
 namespace Services.Interfaces.AdminServices
 {

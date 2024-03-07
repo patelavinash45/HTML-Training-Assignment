@@ -1,4 +1,4 @@
-﻿@model Repositories.ViewModels.DashboardHeader
+﻿@model int
 @inject IHttpContextAccessor HttpContextAccessor
 
 <link href="~/css/patient/_dashboardHeader.css" rel="stylesheet" />
@@ -12,9 +12,9 @@
         </div>
         <div class="d-flex align-items-center">
             <span id="welcome-text">
-                Welcome @* <b>Tests tests </b>*@
-                <b> @Model.FirstName </b>
-                <b> @Model.LastName </b>
+                Welcome
+                <b> @HttpContextAccessor.HttpContext.Session.GetString("firstName") </b>
+                <b> @HttpContextAccessor.HttpContext.Session.GetString("lastName") </b>
             </span>
             <a asp-controller="Patient" asp-action="Logout">
                 <button id="log-out">
@@ -35,7 +35,7 @@
             <div class="mx-2 h6">
                 Dashboard
             </div>
-            @if(Model.PageType == 1)
+            @if(Model == 1)
             {
                 <hr class="border-bottom border-3 border-dark h1" />
             }
@@ -44,7 +44,7 @@
             <div class="mx-2 h6">
                 Profile
             </div>
-            @if (Model.PageType == 2)
+            @if (Model == 2)
             {
                 <hr class="border-bottom border-3 border-dark h1" />
             }

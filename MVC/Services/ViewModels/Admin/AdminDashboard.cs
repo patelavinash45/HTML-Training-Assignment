@@ -1,11 +1,7 @@
-﻿using Repositories.DataModels;
-
-namespace Repositories.ViewModels.Admin
+﻿namespace Services.ViewModels.Admin
 {
     public class AdminDashboard
     {
-        public DashboardHeader Header { get; set; }
-
         public TableModel NewRequests { get; set; }
 
         public int NewRequestCount { get; set; }
@@ -30,7 +26,7 @@ namespace Repositories.ViewModels.Admin
 
         public int UnpaidRequestCount { get; set; }
 
-        public List<Region> Regions { get; set; }
+        public Dictionary<int,String> Regions { get; set; }
 
         public CancelPopUp CancelPopup { get; set; }
 

@@ -1,4 +1,4 @@
-﻿@model Repositories.ViewModels.AddRequestByPatient
+﻿@model Services.ViewModels.AddRequestByPatient
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +13,7 @@
 </head>
 <body>
     @{
-        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml", Model.Header)
+        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml", 0)
     }
     <div id="main-body">
         <div class="d-flex justify-content-between container align-items-center">
@@ -26,9 +26,6 @@
             </a>
         </div>
         <form class="w-100" asp-controller="Patient" asp-action="RequestForMe" enctype="multipart/form-data">
-            <div class="d-none">
-                @Html.EditorFor(model => model.Header,new { htmlAttributes = new { @class = "d-none"} })
-            </div>
             <input readonly asp-for="AspNetUserId" class="d-none" type="text" />
             <div class="container" id="form">
                 <h5 class="fw-semibold">

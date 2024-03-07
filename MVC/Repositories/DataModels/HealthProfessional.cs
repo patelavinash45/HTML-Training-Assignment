@@ -15,7 +15,7 @@ public partial class HealthProfessional
     [StringLength(100)]
     public string VendorName { get; set; } = null!;
 
-    public int? Profession { get; set; }
+    public int Profession { get; set; }
 
     [StringLength(50)]
     public string FaxNumber { get; set; } = null!;
@@ -58,5 +58,5 @@ public partial class HealthProfessional
 
     [ForeignKey("Profession")]
     [InverseProperty("HealthProfessionals")]
-    public virtual HealthProfessionalType? ProfessionNavigation { get; set; }
+    public virtual HealthProfessionalType ProfessionNavigation { get; set; } = null!;
 }

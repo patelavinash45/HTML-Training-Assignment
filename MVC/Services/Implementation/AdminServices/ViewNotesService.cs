@@ -1,8 +1,8 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interfaces;
-using Repositories.ViewModels;
-using Repositories.ViewModels.Admin;
 using Services.Interfaces.AdminServices;
+using Services.ViewModels;
+using Services.ViewModels.Admin;
 
 namespace Services.Implementation.AdminServices
 {
@@ -33,13 +33,8 @@ namespace Services.Implementation.AdminServices
             {
                 transferNotes.Add(requestStatusLog.Notes);
             };
-            DashboardHeader dashboardHeader = new()
-            {
-                PageType = 1,
-            };
             ViewNotes notes = new()
             {
-                Header = dashboardHeader,
                 RequestId = RequestId,
                 AdminNotes = requestNote!=null?requestNote.AdminNotes:null,
                 PhysicianNotes = requestNote != null ? requestNote.PhysicianNotes : null,

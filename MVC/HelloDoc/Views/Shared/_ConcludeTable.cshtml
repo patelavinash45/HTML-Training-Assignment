@@ -1,4 +1,4 @@
-﻿@model Repositories.ViewModels.Admin.TableModel
+﻿@model Services.ViewModels.Admin.TableModel
 
 @{
     List<String> requesterBgColor = new List<String>() { "bg-danger", "bg-success", "bg-warning", "bg-primary" };
@@ -249,7 +249,7 @@
     <div class="d-flex justify-content-between">
         Showing @Model.StartRange to @Model.EndRange of @Model.TotalRequests entries
         <div class="d-flex">
-            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToFirstPage(4)">
+            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToFirstPage(4)" disabled=@(!Model.IsFirstPage)>
                 «
             </button>
             <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="getPreviousPageData(@Model.PageNo,4)" disabled=@(!Model.IsPreviousPage)>
@@ -262,7 +262,7 @@
             disabled=@(!Model.IsNextPage)>
                 ›
             </button>
-            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToLastPage(4,@Model.TotalRequests)">
+            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToLastPage(4,@Model.TotalRequests)" disabled=@(!Model.IsLastPage)>
                 »
             </button>
         </div>

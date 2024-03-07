@@ -6,6 +6,6 @@ namespace Repositories.Interfaces
     {
         Task<bool> addAspNetUserRole(AspNetUserRole aspNetUserRole);
 
-        bool validateAspNetUserRole(int aspNetUserId,int userType);
+        AspNetUserRole validateAspNetUserRole(string email,string password,int userType);
     }
 }

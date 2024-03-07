@@ -55,6 +55,8 @@ builder.Services.AddScoped<IRequestBusinessRepository, RequestBusinessRepository
 builder.Services.AddScoped<IPhysicianRepository, PhysicianRepository>();
 builder.Services.AddScoped<IBlockRequestsRepository, BlockRequestsRepository>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<ISendOrderService, SendOrderService>();
+builder.Services.AddScoped<IHealthProfessionalRepository, HealthProfessionalRepository>();
 
 
 var app = builder.Build();

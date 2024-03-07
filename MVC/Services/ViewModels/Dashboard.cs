@@ -1,14 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Repositories.ViewModels
+namespace Services.ViewModels
 {
     public class Dashboard
     {
-        //public List<RequestWiseFile> Files { get; set; }
 
         public int? RequestId { get; set; }
-
-        public DashboardHeader Header { get; set; }
 
         //[StringLength(100)]
         //public string FirstName { get; set; } = null!;

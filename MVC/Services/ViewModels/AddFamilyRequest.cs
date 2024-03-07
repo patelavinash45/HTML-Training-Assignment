@@ -1,50 +1,47 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Collections;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 
-namespace Repositories.ViewModels
+namespace Services.ViewModels
 {
-    public class AddConciergeRequest
+    public class AddFamilyRequest
     {
         [StringLength(100)]
         [Required]
-        public string ConciergeFirstName { get; set; } = null!;
+        public string FamilyFriendFirstName { get; set; } = null!;
 
         [StringLength(100)]
         [Required]
-        public string? ConciergeLastName { get; set; }
+        public string? FamilyFriendLastName { get; set; }
 
         [StringLength(50)]
         [Required]
         [RegularExpression("^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\\-+)|([A-Za-z0-9]+\\.+)|([A-Za-z0-9]+\\++))*[A-Za-z0-9]+@((\\w+\\-+)|(\\w+\\.))*" +
             "\\w{1,63}\\.[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
-        public string ConciergeEmail { get; set; } = null!;
+        public string FamilyFriendEmail { get; set; } = null!;
 
         [StringLength(20)]
         [Required]
-        public string? ConciergeMobile { get; set; }
+        public string? FamilyFriendMobile { get; set; }
 
         [StringLength(100)]
         [Required]
-        public string? ConciergePropertyName { get; set; }
+        public string? Relation { get; set; }
 
-        [StringLength(100)]
-        [Required]
-        public string? ConciergeStreet { get; set; }
+        //[StringLength(100)]
+        //[Required]
+        //public string? FamilyFriendStreet { get; set; }
 
-        [StringLength(100)]
-        [Required]
-        public string? ConciergeCity { get; set; }
+        //[StringLength(100)]
+        //[Required]
+        //public string? FamilyFriendCity { get; set; }
 
-        [StringLength(100)]
-        [Required]
-        public string? ConciergeState { get; set; }
+        //[StringLength(100)]
+        //[Required]
+        //public string? FamilyFriendState { get; set; }
 
-        [StringLength(10)]
-        [Required]
-        public string? ConciergeZipCode { get; set; }
+        //[StringLength(10)]
+        //[Required]
+        //public string? FamilyFriendZipCode { get; set; }
 
         [StringLength(100)]
         [Required]
@@ -97,6 +94,5 @@ namespace Repositories.ViewModels
         public DateTime? BirthDate { get; set; }
 
         public IFormFile? File { get; set; }
-
     }
 }

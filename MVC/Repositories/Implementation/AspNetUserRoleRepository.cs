@@ -21,12 +21,10 @@ namespace Repositories.Implementation
             return temp>0? true: false;
         }
 
-        public bool validateAspNetUserRole(int aspNetUserId, int userType)
+        public AspNetUserRole validateAspNetUserRole(String email,String password, int userType)
         {
-            //AspNetUserRole aspNetUserRole = _dbContext.AspNetUserRoles.Include(a => a.User).Include(a => a.Role).
-            //                                            FirstOrDefault(a => a.UserId == aspNetUserId && a.RoleId == userType);
-            AspNetUserRole aspNetUserRole = _dbContext.AspNetUserRoles.FirstOrDefault(a => a.UserId == aspNetUserId && a.RoleId == userType);
-            return aspNetUserRole != null;
+             return _dbContext.AspNetUserRoles.Include(a => a.User).Include(a => a.Role).
+                        FirstOrDefault(a => a.RoleId == userType && a.User.Email==email && a.User.PasswordHash==password);
         }
     }
 }

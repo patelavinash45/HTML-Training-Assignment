@@ -1,10 +1,11 @@
-﻿using Repositories.ViewModels;
+﻿using Repositories.DataModels;
+using Services.ViewModels;
 
 namespace Services.Interfaces.AuthServices
 {
     public interface ILoginService
     {
-        int auth(Login model,int userType);
+        UserDataModel auth(Login model,int userType);
 
     }
 }

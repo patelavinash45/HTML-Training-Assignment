@@ -1,4 +1,4 @@
-﻿@model Repositories.ViewModels.Admin.CancelPopUp
+﻿@model Services.ViewModels.Admin.CancelPopUp
 
 <link href="~/css/admin/_requestPopUp.css" rel="stylesheet" />
 <script src="~/js/Admin/requestPopUp.js"></script>
@@ -21,7 +21,7 @@
                         <option disabled selected value="">Reasons For Cancellation</option>
                         @foreach (var item in Model.Reasons)
                         {
-                            <option value="@item.CaseTagId">@item.Reason</option>
+                            <option value="@item.Key">@item.Value</option>
                         }
                     </select>
                     <textarea asp-for="AdminTransferNotes" class="w-100 p-2 border-2 mb-4" placeholder="Additional Notes" rows="5"></textarea>

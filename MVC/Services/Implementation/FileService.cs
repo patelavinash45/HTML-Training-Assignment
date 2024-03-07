@@ -40,19 +40,5 @@ namespace Services.Implementation
             return await _requestWiseFileRepository.addFile(requestWiseFile);
         }
 
-        public bool removeFile(string filePath)
-        {
-            try
-            {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-                path = Path.Combine(path, filePath);
-                File.Delete(path);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
     }
 }

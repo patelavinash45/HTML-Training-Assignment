@@ -1,4 +1,4 @@
-﻿@model List<Repositories.ViewModels.Dashboard>
+﻿@model List<Services.ViewModels.Dashboard>
 
 @{
     List<String> status = new List<string>() {"Unassigned", "Accepted", "Cancelled", "Reserving", "MDEnRoute", "MDOnSite", "FollowUp", "Closed", "Locked", "Declined", "Consult", "Clear",
@@ -26,7 +26,7 @@
 </head>
 <body>
     @{
-        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml", Model[0].Header)
+        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml", 1)
     }
     @await Component.InvokeAsync("Notyf")
     <div class="modal" tabindex="-1" id="createNewRequest">

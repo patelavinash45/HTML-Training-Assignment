@@ -1,9 +1,9 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interface;
 using Repositories.Interfaces;
-using Repositories.ViewModels;
 using Services.Interfaces;
 using Services.Interfaces.PatientServices;
+using Services.ViewModels;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -139,16 +139,9 @@ namespace Services.Implementation.PatientServices
         {
             User user = _userRepository.getUser(aspNetUserId);
             DateTime birthDay = DateTime.Parse(user.IntYear + "-" + user.StrMonth + "-" + user.IntDate);
-            DashboardHeader dashboardHeader = new()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                AspNetUserId = aspNetUserId,
-            };
             AddRequestByPatient addRequestForMe = new()
             {
                 AspNetUserId = aspNetUserId,
-                Header = dashboardHeader,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 BirthDate = birthDay,
@@ -181,19 +174,8 @@ namespace Services.Implementation.PatientServices
 
         public AddRequestByPatient getModelForRequestForSomeoneelse(int aspNetUserId)
         {
-            User user = _userRepository.getUser(aspNetUserId);
-            DateTime birthDay = DateTime.Parse(user.IntYear + "-" + user.StrMonth + "-" + user.IntDate);
-            DashboardHeader dashboardHeader = new()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                AspNetUserId = aspNetUserId,
-            };
-            AddRequestByPatient addRequestForMe = new()
-            {
-               Header = dashboardHeader,
-            };
-            return addRequestForMe;
+            AddRequestByPatient addRequestByPatient = new AddRequestByPatient();
+            return addRequestByPatient;
         }
 
         public async Task<bool> addRequestForSomeOneelse(AddRequestByPatient model,int aspNetUserIdMe)

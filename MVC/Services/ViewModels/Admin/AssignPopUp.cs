@@ -1,6 +1,4 @@
-﻿using Repositories.DataModels;
-
-namespace Repositories.ViewModels.Admin
+﻿namespace Services.ViewModels.Admin
 {
     public class AssignPopUp
     {
@@ -8,9 +6,9 @@ namespace Repositories.ViewModels.Admin
 
         public int SelectedPhysician { get; set; }
 
-        public List<Region>? Regions { get; set; }
+        public Dictionary<int,String>? Regions { get; set; }
 
-        public List<Physician>? Physics { get; set; }
+        public Dictionary<int, Tuple<int,String>>? Physicians { get; set; }
 
         public int RequestId { get; set; }
 

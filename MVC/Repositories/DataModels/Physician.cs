@@ -57,7 +57,7 @@ public partial class Physician
     [StringLength(100)]
     public string? City { get; set; }
 
-    public int? RegionId { get; set; }
+    public int RegionId { get; set; }
 
     [StringLength(10)]
     public string? Zip { get; set; }

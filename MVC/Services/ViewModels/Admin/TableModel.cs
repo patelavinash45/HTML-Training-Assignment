@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Repositories.ViewModels.Admin
+﻿namespace Services.ViewModels.Admin
 {
     public class TableModel
     {
@@ -13,6 +7,10 @@ namespace Repositories.ViewModels.Admin
         public int TotalRequests { get; set; }
 
         public int PageNo { get; set; }
+
+        public bool IsFirstPage { get; set; }
+
+        public bool IsLastPage { get; set; }
 
         public bool IsNextPage { get; set; }
 

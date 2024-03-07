@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Repositories.DataModels;
 using System.ComponentModel.DataAnnotations;
 
-namespace Repositories.ViewModels
+namespace Services.ViewModels
 {
     public class ViewDocument
     { 
-        public List<RequestWiseFile>? FileList { get; set; }
-
-        public DashboardHeader Header { get; set; }
+        public List<FileModel>? FileList { get; set; }
 
         [Required]
         public IFormFile File { get; set; }

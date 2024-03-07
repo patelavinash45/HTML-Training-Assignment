@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Repositories.DataModels;
 using Repositories.Interface;
 using Repositories.Interfaces;
-using Repositories.ViewModels;
 using Services.Interfaces.AuthServices;
+using Services.ViewModels;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -10,23 +10,52 @@ namespace Services.Implementation.AuthServices
 {
     public class LoginService : ILoginService
     {
-        private readonly IAspNetUserRepository _aspNetUserRepository;
+        private readonly IAdminRepository _adminRepository;
         private readonly IAspNetUserRoleRepository _aspNetUserRoleRepository;
+        private readonly IUserRepository _userRepository;
 
-        public LoginService(IAspNetUserRepository aspNetUserRepository, IAspNetUserRoleRepository aspNetUserRoleRepository)
+        public LoginService(IAdminRepository adminRepository, IAspNetUserRoleRepository aspNetUserRoleRepository,
+                                       IUserRepository userRepository)
         {
-            _aspNetUserRepository = aspNetUserRepository;
+            _adminRepository = adminRepository;
             _aspNetUserRoleRepository = aspNetUserRoleRepository;
+            _userRepository = userRepository;
         }
 
-        public int auth(Login model,int userType)
+        public UserDataModel auth(Login model,int userType)
         {
-            int aspNetUserId = _aspNetUserRepository.validateUser(email: model.Email.Trim(), password: genrateHash(model.PasswordHash));
-            if (aspNetUserId > 0)
+            AspNetUserRole aspNetUserRole = _aspNetUserRoleRepository.
+                           validateAspNetUserRole(email: model.Email, password: genrateHash(model.PasswordHash), userType: userType);
+            if (aspNetUserRole != null)
             {
-                return _aspNetUserRoleRepository.validateAspNetUserRole(aspNetUserId: aspNetUserId, userType: userType) ? aspNetUserId : 0;
+                if (userType == 1)
+                {
+                    User user = _userRepository.getUser(aspNetUserRole.UserId);
+                    UserDataModel userDataModel = new UserDataModel()
+                    {
+                        AspNetUserId = aspNetUserRole.UserId,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        UserId = user.UserId,
+                        UserType = aspNetUserRole.Role.Name,
+                    };
+                    return userDataModel;
+                }
+                else
+                {
+                    Admin admin = _adminRepository.getAdmionByAspNetUserId(aspNetUserRole.UserId);
+                    UserDataModel userDataModel = new UserDataModel()
+                    {
+                        AspNetUserId = aspNetUserRole.UserId,
+                        FirstName = admin.FirstName,
+                        LastName = admin.LastName,
+                        AdminId = admin.AdminId,
+                        UserType = aspNetUserRole.Role.Name,
+                    };
+                    return userDataModel;
+                }
             }
-            return 0;
+            return null;
         }
 
         private string genrateHash(string password)

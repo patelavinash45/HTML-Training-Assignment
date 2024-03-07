@@ -1,4 +1,4 @@
-﻿@model Repositories.ViewModels.Admin.AssignPopUp
+﻿@model Services.ViewModels.Admin.AssignPopUp
 
 <link href="~/css/admin/_requestPopUp.css" rel="stylesheet" />
 <script src="~/js/Admin/requestPopUp.js"></script>
@@ -19,14 +19,14 @@
                         <option disabled selected value="">Regions</option>
                         @foreach (var item in Model.Regions)
                         {
-                            <option value="@item.RegionId">@item.Name</option>
+                            <option value="@item.Key">@item.Value</option>
                         }
                     </select>
-                    <select class="p-2 w-100 mb-2" asp-for="SelectedPhysician">
+                    <select class="p-2 w-100 mb-2 physician" asp-for="SelectedPhysician">
                         <option disabled selected value="">Physicians</option>
-                        @foreach (var item in Model.Physics)
+                        @foreach (var item in Model.Physicians)
                         {
-                            <option value="@item.PhysicianId" class="physicianOptions region-@item.RegionId">@item.FirstName @item.LastName</option>
+                            <option value="@item.Key" class="physicianOptions region-@item.Value.Item1">@item.Value.Item2</option>
                         }
                     </select>
                     <textarea asp-for="AdminTransferNotes" class="w-100 p-2 border-2 mb-4 mt-3" placeholder="Additional Notes" rows="5"></textarea>

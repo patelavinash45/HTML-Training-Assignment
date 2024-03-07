@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Repositories.DataModels;
+﻿using Repositories.DataModels;
 using Repositories.Interfaces;
-using Repositories.ViewModels;
-using Repositories.ViewModels.Admin;
 using Services.Interfaces.AdminServices;
+using Services.ViewModels;
+using Services.ViewModels.Admin;
 
 namespace Services.Implementation.AdminServices
 {
@@ -26,18 +25,31 @@ namespace Services.Implementation.AdminServices
         public AdminDashboard getallRequests(int aspNetUserId)
         {
             List<Region> allRegion = _regionRepository.getAllRegions();
+            Dictionary<int,string> regions = new Dictionary<int,string>();
+            foreach (Region region in allRegion)
+            {
+                regions.Add(region.RegionId, region.Name);
+            }
+            List<Physician> allPhysicians = _physicianRepository.getAllPhysicians();
+            Dictionary<int, Tuple<int,string>> physicians = new Dictionary<int, Tuple<int, string>>();
+            foreach (Physician physician in allPhysicians)
+            {
+                physicians.Add(physician.PhysicianId, new Tuple<int,string>(physician.RegionId,physician.FirstName + physician.LastName));
+            }
+            List<CaseTag> caseTags = _caseTagRepository.getAllReason();
+            Dictionary<int, string> reasons = new Dictionary<int, string>();
+            foreach (CaseTag caseTag in caseTags)
+            {
+                reasons.Add(caseTag.CaseTagId, caseTag.Reason );
+            }
             CancelPopUp cancelPopUp = new()
             {
-                Reasons= _caseTagRepository.getAllReason(),
+                Reasons= reasons,
             };
             AssignPopUp assignPopUp = new()
             {
-                Regions = allRegion,
-                Physics = _physicianRepository.getAllPhysicians(),
-            };
-            DashboardHeader dashboardHeader = new()
-            {
-                PageType = 1,
+                Regions = regions,
+                Physicians = physicians,
             };
             AdminDashboard adminDashboard = new()
             {
@@ -51,8 +63,7 @@ namespace Services.Implementation.AdminServices
                                       _requestClientRepository.countRequestClientByStatus(7) +
                                       _requestClientRepository.countRequestClientByStatus(8),
                 UnpaidRequestCount = _requestClientRepository.countRequestClientByStatus(9),
-                Regions = allRegion,
-                Header = dashboardHeader,
+                Regions = regions,
                 CancelPopup = cancelPopUp,
                 AssignPopup = assignPopUp,
             };
@@ -137,9 +148,11 @@ namespace Services.Implementation.AdminServices
                 };
                 tablesDatas.Add(tablesData);
             }
-            int totalPages = (totalRequests / 10) + 1;
+            int totalPages = totalRequests % 10 != 0? (totalRequests / 10) + 1 : totalRequests / 10;
             TableModel tableModel = new()
             {
+                IsFirstPage = pageNo !=1 ,
+                IsLastPage = pageNo != totalPages,
                 IsNextPage = pageNo < totalPages,
                 IsPreviousPage = pageNo > 1,
                 TableDatas = tablesDatas,
@@ -183,9 +196,11 @@ namespace Services.Implementation.AdminServices
                 };
                 tablesDatas.Add(tablesData);
             }
-            int totalPages = (requestClients.Count / 10) + 1;
+            int totalPages = requestClients.Count % 10 != 0 ? (requestClients.Count / 10) + 1 : requestClients.Count / 10;
             TableModel tableModel = new()
             {
+                IsFirstPage = false,
+                IsLastPage = 1 < totalPages,
                 IsNextPage = 1 < totalPages,
                 IsPreviousPage = false,
                 TableDatas = tablesDatas,

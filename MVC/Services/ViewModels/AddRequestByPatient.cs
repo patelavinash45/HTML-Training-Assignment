@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace Repositories.ViewModels
+namespace Services.ViewModels
 {
-    public class AddPatientRequest
-    { 
-        [StringLength(100)]
-        [Required]
-        public string FirstName { get; set; } 
+    public class AddRequestByPatient
+    {
+        public int AspNetUserId { get; set; }
 
         [StringLength(100)]
         [Required]
-        public string LastName { get; set; }
+        public string FirstName { get; set; } = null!;
+
+        [StringLength(100)]
+        [Required]
+        public string? LastName { get; set; }
 
         [StringLength(50)]
         [Required]
@@ -46,10 +48,12 @@ namespace Repositories.ViewModels
         [Required]
         public string? ZipCode { get; set; }
 
+        public string? Relation { get; set; }
+
         [Required]
         public DateTime? BirthDate { get; set; }
 
-        public IFormFile? File { get; set; }
+        public IFormFile File { get; set; }
 
         [StringLength(100)]
         public string? House { get; set; }
