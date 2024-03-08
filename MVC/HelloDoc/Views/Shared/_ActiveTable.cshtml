@@ -73,7 +73,7 @@
                             @data.RequestdDate
                         </td>
                         <td>
-                            <button class="bg-transparent text-white p-2 border-white">
+                            <button class="bg-transparent text-white p-2 border-white w-50">
                                 @data.Mobile
                             </button>
                             (Patient)
@@ -126,7 +126,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" asp-controller="Admin" asp-action="SendOrder" asp-route-requestId="@data.RequestId">
+                                        <a class="dropdown-item" onclick="navigatToSendOrder(@data.RequestId)">
                                             Send Order
                                         </a>
                                     </li>

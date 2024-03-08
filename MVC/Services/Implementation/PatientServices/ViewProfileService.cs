@@ -12,7 +12,6 @@ namespace Services.Implementation.PatientServices
         public ViewProfileService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-
         }
 
         public ViewProfile getProfileDetails(int aspNetUserId)

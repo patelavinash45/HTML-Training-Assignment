@@ -10,7 +10,7 @@ namespace Services.Interfaces.AdminServices
 
         Task<bool> cancleRequest(CancelPopUp model);
 
-        Task<bool> assignRequest(AssignPopUp model);
+        Task<bool> assignRequest(AssignAndTransferPopUp model);
 
         Task<bool> blockRequest(BlockPopUp model);
     }

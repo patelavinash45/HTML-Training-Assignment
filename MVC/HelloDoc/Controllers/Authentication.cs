@@ -42,10 +42,8 @@ namespace HelloDoc.Authentication
             IJwtService jwtService = context.HttpContext.RequestServices.GetService<IJwtService>();
             if (jwtService != null)
             {
-                String role = context.HttpContext.Session.GetString("role");
-                int? aspnetUserId = context.HttpContext.Session.GetInt32("aspNetUserId");
                 String token = context.HttpContext.Request.Cookies["jwtToken"];
-                if (token == null || aspnetUserId == null)
+                if (token == null)
                 {
                     context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                     {
@@ -62,18 +60,12 @@ namespace HelloDoc.Authentication
                         action = "PatientSite",
                     }));
                 }
-                if(token!=null)
+                else if (token != null)
                 {
-                    var jwtRole = jwtToken.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Role);
-                    if (jwtRole == null || role == null)
-                    {
-                        context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
-                        {
-                            Controller = _role,
-                            action = "WrongLogInPage",
-                        }));
-                    }
-                    else if (jwtRole.Value != _role)
+                    String role = context.HttpContext.Session.GetString("role");
+                    int? aspnetUserId = context.HttpContext.Session.GetInt32("aspNetUserId");
+                    string jwtRole = jwtToken.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Role).Value;
+                    if (jwtRole != _role)
                     {
                         context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                         {
@@ -83,7 +75,7 @@ namespace HelloDoc.Authentication
                     }
                 }
             }
-            return;
         }
+
     }
 }

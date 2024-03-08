@@ -11,5 +11,9 @@ namespace Repositories.Interfaces
         User getUser(int aspNetUserID);
 
         Task<bool> updateProfile(User user);
+
+        Admin getAdmionByAspNetUserId(int aspNetUserId);
+
+        List<Physician> getAllPhysicians();
     }
 }

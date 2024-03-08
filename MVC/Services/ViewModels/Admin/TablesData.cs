@@ -10,7 +10,7 @@
 
         public int RequesterType { get; set; }
 
-        //public int TotalRequestCount { get; set; }
+        public int? AssignPhysician { get; set; }
 
         public int Requester { get; set; }
 

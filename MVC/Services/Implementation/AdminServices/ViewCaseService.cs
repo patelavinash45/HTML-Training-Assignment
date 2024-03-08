@@ -9,17 +9,15 @@ namespace Services.Implementation.AdminServices
     public class ViewCaseService : IViewCaseService
     {
         private readonly IRequestClientRepository _requestClientRepository;
-        private readonly ICaseTagRepository _caseTagRepository;
 
-        public ViewCaseService(IRequestClientRepository requestClientRepository, ICaseTagRepository caseTagRepository)
+        public ViewCaseService(IRequestClientRepository requestClientRepository)
         {
             _requestClientRepository = requestClientRepository;
-            _caseTagRepository = caseTagRepository;
         }
 
         public ViewCase getRequestDetails(int requestId)
         {
-            List<CaseTag> caseTags = _caseTagRepository.getAllReason();
+            List<CaseTag> caseTags = _requestClientRepository.getAllReason();
             Dictionary<int, string> reasons = new Dictionary<int, string>();
             foreach (CaseTag caseTag in caseTags)
             {

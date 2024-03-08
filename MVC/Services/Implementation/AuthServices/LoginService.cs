@@ -1,25 +1,31 @@
-﻿using Repositories.DataModels;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Repositories.DataModels;
 using Repositories.Interface;
 using Repositories.Interfaces;
 using Services.Interfaces.AuthServices;
 using Services.ViewModels;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace Services.Implementation.AuthServices
 {
     public class LoginService : ILoginService
     {
-        private readonly IAdminRepository _adminRepository;
         private readonly IAspNetUserRoleRepository _aspNetUserRoleRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IJwtService _jwtService;
 
-        public LoginService(IAdminRepository adminRepository, IAspNetUserRoleRepository aspNetUserRoleRepository,
-                                       IUserRepository userRepository)
+        public LoginService(IAspNetUserRoleRepository aspNetUserRoleRepository,
+                                       IUserRepository userRepository,IJwtService jwtService)
         {
-            _adminRepository = adminRepository;
             _aspNetUserRoleRepository = aspNetUserRoleRepository;
             _userRepository = userRepository;
+            _jwtService = jwtService;
         }
 
         public UserDataModel auth(Login model,int userType)
@@ -43,7 +49,7 @@ namespace Services.Implementation.AuthServices
                 }
                 else
                 {
-                    Admin admin = _adminRepository.getAdmionByAspNetUserId(aspNetUserRole.UserId);
+                    Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserRole.UserId);
                     UserDataModel userDataModel = new UserDataModel()
                     {
                         AspNetUserId = aspNetUserRole.UserId,
@@ -56,6 +62,31 @@ namespace Services.Implementation.AuthServices
                 }
             }
             return null;
+        }
+
+        public bool isTokenValid(HttpContext httpContext, String userType)
+        {
+            String token = httpContext.Request.Cookies["jwtToken"];
+            if (token != null)
+            {
+                JwtSecurityToken jwtToken = new JwtSecurityToken();
+                if (_jwtService.ValidateToken(token, out jwtToken))
+                {
+                    var jwtRole = jwtToken.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Role);
+                    if(jwtRole.Value == userType)
+                    {
+                        var jwtId = jwtToken.Claims.FirstOrDefault(a => a.Type == "aspNetUserId");
+                        var jwtFirstName = jwtToken.Claims.FirstOrDefault(a => a.Type == "firstName");
+                        var jwtLastName = jwtToken.Claims.FirstOrDefault(a => a.Type == "lastName");
+                        httpContext.Session.SetString("role", jwtRole.Value);
+                        httpContext.Session.SetString("firstName", jwtFirstName.Value);
+                        httpContext.Session.SetString("lastName", jwtLastName.Value);
+                        httpContext.Session.SetInt32("aspNetUserId", int.Parse(jwtId.Value));
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private string genrateHash(string password)

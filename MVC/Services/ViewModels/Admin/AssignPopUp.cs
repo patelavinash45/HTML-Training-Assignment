@@ -1,6 +1,6 @@
 ﻿namespace Services.ViewModels.Admin
 {
-    public class AssignPopUp
+    public class AssignAndTransferPopUp
     {
         public int SelectedRegion { get; set; }
 

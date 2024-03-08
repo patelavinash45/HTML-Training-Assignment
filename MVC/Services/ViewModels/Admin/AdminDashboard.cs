@@ -30,7 +30,7 @@
 
         public CancelPopUp CancelPopup { get; set; }
 
-        public AssignPopUp AssignPopup { get; set; }
+        public AssignAndTransferPopUp AssignAndTransferPopup { get; set; }
 
         public BlockPopUp BlockPopup { get; set; }
     }

@@ -9,34 +9,29 @@ namespace Services.Implementation.AdminServices
     public class AdminDashboardService : IAdminDashboardService
     {
         private readonly IRequestClientRepository _requestClientRepository;
-        private readonly IRegionRepository _regionRepository;
-        private readonly ICaseTagRepository _caseTagRepository;
-        private readonly IPhysicianRepository _physicianRepository;
+        private readonly IUserRepository _userRepository;
 
-        public AdminDashboardService(IRegionRepository regionRepository,IRequestClientRepository requestClientRepository,
-                                       ICaseTagRepository caseTagRepository, IPhysicianRepository physicianRepository)
+        public AdminDashboardService(IRequestClientRepository requestClientRepository,IUserRepository userRepository)
         { 
-            _regionRepository = regionRepository;
             _requestClientRepository = requestClientRepository;
-            _caseTagRepository = caseTagRepository;
-            _physicianRepository = physicianRepository;
+            _userRepository = userRepository;
         }
 
         public AdminDashboard getallRequests(int aspNetUserId)
         {
-            List<Region> allRegion = _regionRepository.getAllRegions();
+            List<Region> allRegion = _requestClientRepository.getAllRegions();
             Dictionary<int,string> regions = new Dictionary<int,string>();
             foreach (Region region in allRegion)
             {
                 regions.Add(region.RegionId, region.Name);
             }
-            List<Physician> allPhysicians = _physicianRepository.getAllPhysicians();
+            List<Physician> allPhysicians = _userRepository.getAllPhysicians();
             Dictionary<int, Tuple<int,string>> physicians = new Dictionary<int, Tuple<int, string>>();
             foreach (Physician physician in allPhysicians)
             {
                 physicians.Add(physician.PhysicianId, new Tuple<int,string>(physician.RegionId,physician.FirstName + physician.LastName));
             }
-            List<CaseTag> caseTags = _caseTagRepository.getAllReason();
+            List<CaseTag> caseTags = _requestClientRepository.getAllReason();
             Dictionary<int, string> reasons = new Dictionary<int, string>();
             foreach (CaseTag caseTag in caseTags)
             {
@@ -46,7 +41,7 @@ namespace Services.Implementation.AdminServices
             {
                 Reasons= reasons,
             };
-            AssignPopUp assignPopUp = new()
+            AssignAndTransferPopUp assignAndTransferPopUp = new()
             {
                 Regions = regions,
                 Physicians = physicians,
@@ -65,7 +60,7 @@ namespace Services.Implementation.AdminServices
                 UnpaidRequestCount = _requestClientRepository.countRequestClientByStatus(9),
                 Regions = regions,
                 CancelPopup = cancelPopUp,
-                AssignPopup = assignPopUp,
+                AssignAndTransferPopup = assignAndTransferPopUp,
             };
             return adminDashboard;
         }
@@ -143,6 +138,7 @@ namespace Services.Implementation.AdminServices
                                  + "-" + requestClient.IntDate): null,
                     RequestdDate = requestClient.Request.CreatedDate != null ? requestClient.Request.CreatedDate : null,
                     Email = requestClient.Email,
+                    AssignPhysician = requestClient.PhysicianId,
                     DateOfService = null,
                     PhysicianName = "",
                 };

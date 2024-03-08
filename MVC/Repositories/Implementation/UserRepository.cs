@@ -37,5 +37,15 @@ namespace Repositories.Implementation
             int temp=await _dbContext.SaveChangesAsync();
             return temp > 0;
         }
+
+        public Admin getAdmionByAspNetUserId(int aspNetUserId)
+        {
+            return _dbContext.Admins.FirstOrDefault(a => a.AspNetUserId == aspNetUserId);
+        }
+
+        public List<Physician> getAllPhysicians()
+        {
+            return _dbContext.Physicians.ToList();
+        }
     }
 }

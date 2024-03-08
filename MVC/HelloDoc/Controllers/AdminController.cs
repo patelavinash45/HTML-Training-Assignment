@@ -36,14 +36,12 @@ namespace HelloDoc.Controllers
             _sendOrderService = sendOrderService;
         }
 
-        public IActionResult WrongLogInPage()
-        {
-            _notyfService.Information("LogIn To Access Page");
-            return RedirectToAction("LoginPage", "Admin");
-        }
-
         public IActionResult LoginPage()
         {
+            if (_loginService.isTokenValid(HttpContext,"Admin"))
+            {
+                return RedirectToAction("Dashboard", "Admin");
+            }
             return View();
         }
 
@@ -63,27 +61,31 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
-        public IActionResult ViewCase(int requestId)
+        public IActionResult ViewCase()
         {
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_viewCaseService.getRequestDetails(requestId));
         }
 
         [Authorization("Admin")]
-        public IActionResult ViewNotes(int requestId)
+        public IActionResult ViewNotes()
         {
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_viewNotesService.GetNotes(requestId));
         }
 
         [Authorization("Admin")]
-        public IActionResult ViewDocument(int requestId)
+        public IActionResult ViewDocument()
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_viewDocumentsServices.getDocumentList(requestId: requestId, aspNetUserId: aspNetUserId));
         }
 
         [Authorization("Admin")]
-        public IActionResult SendOrder(int requestId)
+        public IActionResult SendOrder()
         {
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_sendOrderService.getSendOrderDetails(requestId));
         }
 
@@ -98,7 +100,7 @@ namespace HelloDoc.Controllers
             {
                 _notyfService.Error("Faild!");
             }
-            return Json(new { redirect = Url.Action("ViewDocument", "Admin", new { requestId = requestId }) });
+            return Json(new { redirect = Url.Action("ViewDocument", "Admin") });
         }
 
         public async Task<IActionResult> DeleteFile(int requestWiseFileId)
@@ -112,13 +114,13 @@ namespace HelloDoc.Controllers
             {
                 _notyfService.Error("Faild!");
             }
-            return RedirectToAction("ViewDocument", "Admin",new { requestId = requestId});
+            return RedirectToAction("ViewDocument", "Admin");
         }
 
         public async Task<IActionResult> SendMail([FromBody] List<int> requestWiseFileIdsList)
         {
-            int requestId = await _viewDocumentsServices.sendFileMail(requestWiseFileIdsList);
-            if (requestId > 0)
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
+            if (await _viewDocumentsServices.sendFileMail(requestWiseFileIdsList,requestId))
             {
                 _notyfService.Success("Successfully Send Mail");
             }
@@ -126,7 +128,7 @@ namespace HelloDoc.Controllers
             {
                 _notyfService.Error("Faild!");
             }
-            return RedirectToAction("ViewDocument", "Admin", new { requestId = requestId });
+            return Json(new { redirect = Url.Action("ViewDocument", "Admin") });
         }
 
         public async Task<IActionResult> CancelPopUp(CancelPopUp model)
@@ -146,7 +148,7 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> AssignPopUp(AssignPopUp model)
+        public async Task<IActionResult> AssignPopUp(AssignAndTransferPopUp model)
         {
             if (ModelState.IsValid)
             {
@@ -158,6 +160,24 @@ namespace HelloDoc.Controllers
                 else
                 {
                     _notyfService.Error("Request Assign Faild!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> TransferPopUp(AssignAndTransferPopUp model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (await _viewNotesService.assignRequest(model))
+                {
+                    _notyfService.Success("Successfully Reuqest Transfer");
+                }
+                else
+                {
+                    _notyfService.Error("Request Transfer Faild!");
                 }
                 return RedirectToAction("Dashboard", "Admin");
             }
@@ -182,6 +202,13 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public JsonResult SetRequestId(int requestId,String actionName)
+        {
+            HttpContext.Session.SetInt32("requestId", requestId);
+            return Json(new { redirect = Url.Action(actionName, "Admin") });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewDocument(ViewDocument model)
@@ -192,7 +219,7 @@ namespace HelloDoc.Controllers
                 String lastName = HttpContext.Session.GetString("lastName");
                 if (await _viewDocumentsServices.uploadFile(model,firstName:firstname,lastName: lastName) > 0)
                 {
-                    return RedirectToAction("ViewDocument", "Admin", new { requestId = model.RequestId });
+                    return RedirectToAction("ViewDocument", "Admin");
                 }
             }
             _notyfService.Warning("Please, Add Required Field.");
@@ -237,7 +264,7 @@ namespace HelloDoc.Controllers
                     HttpContext.Session.SetString("role", user.UserType);
                     HttpContext.Session.SetString("firstName", user.FirstName);
                     HttpContext.Session.SetString("lastName", user.LastName);
-                    string token = _jwtService.GenerateJwtToken(role: user.UserType, aspNetUserId: user.AspNetUserId);
+                    string token = _jwtService.GenerateJwtToken(user);
                     CookieOptions cookieOptions = new CookieOptions()
                     {
                         Secure = true,
@@ -265,7 +292,7 @@ namespace HelloDoc.Controllers
                 {
                     _notyfService.Error("Update Request Faild");
                 }
-                return RedirectToAction("ViewCase", "Admin", new { requestId = model.RequestId });
+                return RedirectToAction("ViewCase", "Admin");
             }
             return View(model);
         }
@@ -315,11 +342,12 @@ namespace HelloDoc.Controllers
                 {
                     _notyfService.Error("Add Notes Faild");
                 }
-                return RedirectToAction("ViewNotes", "Admin", new { requestId = model.RequestId });
+                return RedirectToAction("ViewNotes", "Admin");
             }
             return View();
         }
 
+        [Authorization("Admin")]
         [HttpGet]
         public HealthProfessional GetBussinessData(int venderId)
         {

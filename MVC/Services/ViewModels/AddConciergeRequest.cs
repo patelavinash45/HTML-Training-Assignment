@@ -11,7 +11,7 @@ namespace Services.ViewModels
 
         [StringLength(100)]
         [Required]
-        public string? ConciergeLastName { get; set; }
+        public string ConciergeLastName { get; set; }
 
         [StringLength(50)]
         [Required]
@@ -21,19 +21,19 @@ namespace Services.ViewModels
 
         [StringLength(20)]
         [Required]
-        public string? ConciergeMobile { get; set; }
+        public string ConciergeMobile { get; set; }
 
         [StringLength(100)]
         [Required]
-        public string? ConciergePropertyName { get; set; }
+        public string ConciergePropertyName { get; set; }
 
         [StringLength(100)]
         [Required]
-        public string? ConciergeStreet { get; set; }
+        public string ConciergeStreet { get; set; }
 
         [StringLength(100)]
         [Required]
-        public string? ConciergeCity { get; set; }
+        public string ConciergeCity { get; set; }
 
         [StringLength(100)]
         [Required]

@@ -86,7 +86,7 @@ namespace Services.ViewModels
 
         [StringLength(10)]
         [Required]
-        public string? ZipCode { get; set; }
+        public string ZipCode { get; set; }
 
         [StringLength(500)]
         public string? Symptoms { get; set; }
@@ -95,7 +95,7 @@ namespace Services.ViewModels
         public string? House { get; set; }
 
         [Required]
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public IFormFile? File { get; set; }
     }

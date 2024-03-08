@@ -1,4 +1,4 @@
-﻿@model Services.ViewModels.Admin.AssignPopUp
+﻿@model Services.ViewModels.Admin.AssignAndTransferPopUp
 
 <link href="~/css/admin/_requestPopUp.css" rel="stylesheet" />
 <script src="~/js/Admin/requestPopUp.js"></script>
@@ -15,7 +15,7 @@
                 <div class="modal-body">
                     To assign this request search and select another Physician.
                     <input readonly class="d-none patientRequestId" asp-for="RequestId" type="text" />
-                    <select class="p-2 w-100 mb-2" asp-for="SelectedRegion" id="selectRegion" onchange="changeSelect()">
+                    <select class="p-2 w-100 mb-2 selectRegion" asp-for="SelectedRegion" onchange="changeSelect(this)">
                         <option disabled selected value="">Regions</option>
                         @foreach (var item in Model.Regions)
                         {

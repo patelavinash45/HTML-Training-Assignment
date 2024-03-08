@@ -20,8 +20,9 @@
     @await Component.InvokeAsync("Notyf")
     @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", 1)
     @Html.Partial("~/Views/Shared/_RequestCancelPopUp.cshtml",Model.CancelPopup)
-    @Html.Partial("~/Views/Shared/_RequestAssignPopUp.cshtml",Model.AssignPopup)
+    @Html.Partial("~/Views/Shared/_RequestAssignPopUp.cshtml",Model.AssignAndTransferPopup)
     @Html.Partial("~/Views/Shared/_RequestBlockPopUp.cshtml",Model.BlockPopup)
+    @Html.Partial("~/Views/Shared/_RequestTransferPopUp.cshtml",Model.AssignAndTransferPopup)
     <div class="cancelPopUp"></div>
     <div id="mainbody">
         <div class="container-fluid">

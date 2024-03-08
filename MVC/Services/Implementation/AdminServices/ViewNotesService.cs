@@ -78,7 +78,7 @@ namespace Services.Implementation.AdminServices
             return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
         }
 
-        public async Task<bool> assignRequest(AssignPopUp model)
+        public async Task<bool> assignRequest(AssignAndTransferPopUp model)
         {
             RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
             requestClient.Status = 2;

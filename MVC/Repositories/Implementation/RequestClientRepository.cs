@@ -14,6 +14,11 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
+        public List<Region> getAllRegions()
+        {
+            return _dbContext.Regions.ToList();
+        }
+
         public List<RequestClient> getRequestClientByStatus(int status,int skip)
         {
             return _dbContext.RequestClients.Include(a => a.Request).Where(a => a.Status==status).Skip(skip).OrderByDescending(a => a.RequestClientId)
@@ -53,6 +58,11 @@ namespace Repositories.Implementation
         {
             return _dbContext.RequestClients.Include(a => a.Request).Where(a => a.FirstName.Contains(firstName) && a.LastName.Contains(lastName)).
                                         ToList();
+        }
+
+        public List<CaseTag> getAllReason()
+        {
+            return _dbContext.CaseTags.ToList();
         }
     }
 }

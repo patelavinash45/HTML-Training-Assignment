@@ -19,16 +19,12 @@ namespace Services.Implementation.PatientServices
         private readonly IRequestWiseFileRepository _requestWiseFileRepository;
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IFileService _fileService;
-        private readonly IConciergeRepository _conciergeRepository;
-        private readonly IRequestConciergeRepository _requestConciergeRepository;
-        private readonly IBusinessRepository _businessRepository;
-        private readonly IRequestBusinessRepository _requestBusinessRepository;
+        private readonly IBusinessConciergeRepository _businessConciergeRepository;
 
         public AddRequestService(IAspNetRoleRepository aspNetRoleRepository, IAspNetUserRepository aspNetUserRepository,
                                     IUserRepository userRepository, IAspNetUserRoleRepository aspNetuserRoleRepository, IRequestRepository requestRepository,
-                                    IRequestWiseFileRepository requestWiseFileRepository, IRequestBusinessRepository requestBusinessRepository,
-                                    IRequestClientRepository requestClientRepository, IFileService fileService, IConciergeRepository conciergeRepository,
-                                    IRequestConciergeRepository requestConciergeRepository, IBusinessRepository businessRepository)
+                                    IRequestWiseFileRepository requestWiseFileRepository, IBusinessConciergeRepository businessConciergeRepository,
+                                    IRequestClientRepository requestClientRepository, IFileService fileService)
         {
             _aspNetRoleRepository = aspNetRoleRepository;
             _aspNetUserRepository = aspNetUserRepository;
@@ -38,10 +34,7 @@ namespace Services.Implementation.PatientServices
             _requestWiseFileRepository = requestWiseFileRepository;
             _requestClientRepository = requestClientRepository;
             _fileService = fileService;
-            _conciergeRepository = conciergeRepository;
-            _requestConciergeRepository = requestConciergeRepository;
-            _businessRepository = businessRepository;
-            _requestBusinessRepository = requestBusinessRepository;
+            _businessConciergeRepository = businessConciergeRepository;
         }
 
         public bool IsEmailExists(String email)
@@ -274,7 +267,7 @@ namespace Services.Implementation.PatientServices
                     UserName = model.FirstName,
                     Email = model.Email,
                     PhoneNumber = model.Mobile,
-                    PasswordHash = genrateHash(model.Password),
+                    PasswordHash = genrateHash(password: model.Password),
                     CreatedDate = DateTime.Now,
                 };
                 aspNetUserId = await _aspNetUserRepository.addUser(aspNetUser);
@@ -328,13 +321,13 @@ namespace Services.Implementation.PatientServices
                 ZipCode = model.ConciergeZipCode,
                 CreatedDate = DateTime.Now,
             };
-            int conciergeId = await _conciergeRepository.addConcierge(concierge);
+            int conciergeId = await _businessConciergeRepository.addConcierge(concierge);
             RequestConcierge requestConcierge = new()
             {
                 RequestId = request.RequestId,
                 ConciergeId = concierge.ConciergeId
             };
-            await _requestConciergeRepository.addRequestConcierge(requestConcierge);
+            await _businessConciergeRepository.addRequestConcierge(requestConcierge);
             RequestClient requestClient = new()
             {
                 RequestId = requestId,
@@ -511,13 +504,13 @@ namespace Services.Implementation.PatientServices
                 PhoneNumber = model.BusinessMobile,
                 CreatedDate = DateTime.Now,
             };
-            int businessId = await _businessRepository.addBusiness(business);
+            int businessId = await _businessConciergeRepository.addBusiness(business);
             RequestBusiness requestBusiness = new()
             {
                 RequestId = request.RequestId,
                 BusinessId = business.BusinessId,
             };
-            await _requestBusinessRepository.addRequestBusiness(requestBusiness);
+            await _businessConciergeRepository.addRequestBusiness(requestBusiness);
             RequestClient requestClient = new()
             {
                 RequestId = requestId,

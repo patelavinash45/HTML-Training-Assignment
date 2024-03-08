@@ -12,7 +12,7 @@ namespace Services.Interfaces
 
         Task<int> deleteAllFile(List<int> requestWiseFileIds);
 
-        Task<int> sendFileMail(List<int> requestWiseFileIds);
+        Task<bool> sendFileMail(List<int> requestWiseFileIds,int requestId);
 
     }
 }

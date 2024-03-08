@@ -24,7 +24,7 @@ namespace Services.Implementation
             {
                 int aspNetUserId = _userRepository.checkUser(email);
                 string guiId = Guid.NewGuid().ToString();
-                _userRepository.setToken(token: guiId, aspNetUserId: aspNetUserId);
+                await _userRepository.setToken(token: guiId, aspNetUserId: aspNetUserId);
                 string link = "token=" + guiId + "&&id=" + aspNetUserId + "&&time=" + genrateHash(DateTime.Now.ToString("yyyyMMddHHmm"));
                 MailMessage mailMessage = new MailMessage
                 {

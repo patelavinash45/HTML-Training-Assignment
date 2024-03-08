@@ -13,15 +13,15 @@ namespace Services.Implementation
         private readonly IRequestWiseFileRepository _requestWiseFileRepository;
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IFileService _fileService;
-        private readonly IAdminRepository _adminRepository;
+        private readonly IUserRepository _userRepository;
 
         public ViewDocumentsServices(IRequestWiseFileRepository requestWiseFileRepository, IRequestClientRepository requestClientRepository,
-                                      IFileService fileService, IAdminRepository adminRepository)
+                                      IFileService fileService, IUserRepository userRepository)
         {
             _requestWiseFileRepository = requestWiseFileRepository;
             _requestClientRepository = requestClientRepository;
             _fileService = fileService;
-            _adminRepository = adminRepository;
+            _userRepository = userRepository;
         }
 
         public ViewDocument getDocumentList(int requestId, int aspNetUserId)
@@ -41,7 +41,7 @@ namespace Services.Implementation
                 fileList.Add(fileModel);
             }
             RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
-            Admin admin = _adminRepository.getAdmionByAspNetUserId(aspNetUserId);
+            Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserId);
             ViewDocument viewDocument = new()
             {
                 FirstName = requestClient.FirstName,
@@ -74,25 +74,24 @@ namespace Services.Implementation
             return requestId;
         }
 
-        public async Task<int> sendFileMail(List<int> requestWiseFileIds)
+        public async Task<bool> sendFileMail(List<int> requestWiseFileIds ,int requestId)
         {
             MailMessage mailMessage = new MailMessage
             {
                 From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
-                Subject = "Reset Password Link",
+                Subject = "Document List",
                 IsBodyHtml = true,
+                Body = "All The Documents For RequestId : " + requestId.ToString(),
             };
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-            RequestWiseFile requestWiseFile = new RequestWiseFile();
             foreach (var item in requestWiseFileIds)
             {
-                requestWiseFile = _requestWiseFileRepository.getFilesByrequestWiseFileId(item);
+                RequestWiseFile requestWiseFile = _requestWiseFileRepository.getFilesByrequestWiseFileId(item);
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
                 path = Path.Combine(path, requestWiseFile.FileName);
                 Attachment attachment = new Attachment(path);
                 mailMessage.Attachments.Add(attachment);
             }
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestWiseFile.RequestId);
-            mailMessage.Body = "All The Documents For RequestId : " + requestWiseFile.RequestId.ToString();
+            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
             //mailMessage.To.Add(requestClient.Email);
             mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
             SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
@@ -106,11 +105,11 @@ namespace Services.Implementation
             try
             {
                 await smtpClient.SendMailAsync(mailMessage);
-                return requestWiseFile.RequestId;
+                return true;
             }
             catch (Exception ex)
             {
-                return 0;
+                return false;
             }
         }
     }

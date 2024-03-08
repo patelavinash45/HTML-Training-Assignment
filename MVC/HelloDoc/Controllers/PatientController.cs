@@ -1,7 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Repositories.DataModels;
 using Services.Interfaces;
 using Services.Interfaces.AuthServices;
 using Services.Interfaces.PatientServices;
@@ -46,14 +45,12 @@ namespace HelloDoc.Controllers
             return RedirectToAction("PatientSite", "Patient");
         }
 
-        public IActionResult WrongLogInPage()
-        {
-            _notyfService.Information("LogIn To Access Page");
-            return RedirectToAction("LoginPage", "Patient");
-        }
-
         public IActionResult LoginPage()
         {
+            if (_loginService.isTokenValid(HttpContext, "Patient"))
+            {
+                return RedirectToAction("Dashboard", "Patient");
+            }
             return View();
         }
 
@@ -167,7 +164,7 @@ namespace HelloDoc.Controllers
                     HttpContext.Session.SetString("role", user.UserType);
                     HttpContext.Session.SetString("firstName", user.FirstName);
                     HttpContext.Session.SetString("lastName", user.LastName);
-                    string token = _jwtService.GenerateJwtToken(role: user.UserType, aspNetUserId: user.AspNetUserId);
+                    string token = _jwtService.GenerateJwtToken(user);
                     CookieOptions cookieOptions = new CookieOptions()
                     {
                         Secure = true,

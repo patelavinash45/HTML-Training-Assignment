@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Services.Interfaces.AuthServices;
+using Services.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -16,16 +17,18 @@ namespace Services.Implementation.AuthServices
             _configuration = configuration;
         }
 
-        public string GenerateJwtToken(String role, int aspNetUserId)
+        public string GenerateJwtToken(UserDataModel user)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, role),
-                new Claim("aspNetUserId", aspNetUserId.ToString()),
+                new Claim(ClaimTypes.Role, user.UserType),
+                new Claim("firstName", user.FirstName),
+                new Claim("lastName", user.LastName),
+                new Claim("aspNetUserId", user.AspNetUserId.ToString()),
             };
             SymmetricSecurityKey Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]));
             SigningCredentials creds = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
-            var expries = DateTime.UtcNow.AddMinutes(20);
+            var expries = DateTime.Now.AddMinutes(20);
             JwtSecurityToken token = new JwtSecurityToken(
                 _configuration["Jwt:Issuer"],
                 _configuration["Jwt:Audience"],

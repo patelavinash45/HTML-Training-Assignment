@@ -13,8 +13,10 @@
         <div class="d-flex align-items-center">
             <span id="welcome-text">
                 Welcome
-                <b> @HttpContextAccessor.HttpContext.Session.GetString("firstName") </b>
-                <b> @HttpContextAccessor.HttpContext.Session.GetString("lastName") </b>
+                <b class="name">
+                    @HttpContextAccessor.HttpContext.Session.GetString("firstName")
+                    @HttpContextAccessor.HttpContext.Session.GetString("lastName")
+                </b>
             </span>
             <a asp-controller="Admin" asp-action="Logout">
                 <button id="log-out" class="bg-transparent ">

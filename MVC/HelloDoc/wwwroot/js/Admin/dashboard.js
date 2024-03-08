@@ -111,16 +111,22 @@ function navigateToLastPage(status, totalRequestCount) {
 }
 
 function searchPatient(status, document) {
-    $.ajax({
-        url: '/Admin/SearchPatient',
-        type: 'GET',
-        contentType: 'application/json',
-        data: {
-            patientName: $(document).val(),
-            status: statusStrings[status],
-        },
-        success: function (response) {
-            setTableData(statusStrings[currentStatus], response);
-        }
-    })
+    var patientName = $(document).val();
+    if (patientName.length !== 0) {
+        $.ajax({
+            url: '/Admin/SearchPatient',
+            type: 'GET',
+            contentType: 'application/json',
+            data: {
+                patientName: $(document).val(),
+                status: statusStrings[status],
+            },
+            success: function (response) {
+                setTableData(statusStrings[currentStatus], response);
+            }
+        })
+    }
+    else {
+        changeTable(currentStatus);
+    }
 }

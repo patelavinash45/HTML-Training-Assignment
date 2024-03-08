@@ -4,6 +4,10 @@ namespace Repositories.Interfaces
 {
     public interface IRequestClientRepository
     {
+        List<Region> getAllRegions();
+
+        List<CaseTag> getAllReason();
+
         List<RequestClient> getRequestClientByStatus(int status,int skip);
 
         int countRequestClientByStatus(int status);
