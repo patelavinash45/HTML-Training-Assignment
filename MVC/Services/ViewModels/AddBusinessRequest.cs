@@ -95,7 +95,7 @@ namespace Services.ViewModels
         public string? House { get; set; }
 
         [Required]
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         public IFormFile? File { get; set; }
     }

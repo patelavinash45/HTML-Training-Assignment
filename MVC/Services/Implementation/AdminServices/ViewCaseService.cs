@@ -1,7 +1,6 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
-using Services.ViewModels;
 using Services.ViewModels.Admin;
 
 namespace Services.Implementation.AdminServices

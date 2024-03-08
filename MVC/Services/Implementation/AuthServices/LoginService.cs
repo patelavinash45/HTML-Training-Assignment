@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Http;
 using Repositories.DataModels;
-using Repositories.Interface;
 using Repositories.Interfaces;
 using Services.Interfaces.AuthServices;
 using Services.ViewModels;
@@ -10,7 +7,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.AspNetCore.Http;
 
 namespace Services.Implementation.AuthServices
 {

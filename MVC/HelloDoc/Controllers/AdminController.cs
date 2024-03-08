@@ -2,12 +2,11 @@
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.DataModels;
-using Services.ViewModels;
-using Services.ViewModels.Admin;
-using Services.Implementation.AuthServices;
 using Services.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.Interfaces.AuthServices;
+using Services.ViewModels;
+using Services.ViewModels.Admin;
 
 namespace HelloDoc.Controllers
 {
@@ -232,7 +231,6 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 if (await _sendOrderService.addOrderDetails(model) > 0)
                 {
                     _notyfService.Success("Successfully Order Added");
