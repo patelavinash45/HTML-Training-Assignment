@@ -8,8 +8,6 @@
 
         public Dictionary<int,String>? Regions { get; set; }
 
-        public Dictionary<int, Tuple<int,String>>? Physicians { get; set; }
-
         public int RequestId { get; set; }
 
         public String AdminTransferNotes { get; set; }

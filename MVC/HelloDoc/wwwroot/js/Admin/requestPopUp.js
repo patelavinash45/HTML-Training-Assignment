@@ -1,14 +1,41 @@
 function changeSelect(document) {
-    var id = ".region-" + $(document).val();
-    $('.physicianOptions').css("display", "none");
-    $(id).css("display", "block");
-    $('.physician').val("").change();
+    $.ajax({
+        url: "/Admin/GetPhysicians",
+        type: "Get",
+        contentType: "application/json",
+        data: {
+            regionId: $(document).val(),
+        },
+        success: function (response) {
+            $(".physician").children().remove();
+            $(".physician").append('<option disabled selected value="">Physicians</option>');
+            $.each(response, function (index, item) {
+                var option = "<option value=" + index + ">"+item+"</option>";
+                $(".physician").append(option);
+            });
+        }
+    });
 }
 
 function displayPopUp(id) {
     var idName = "#name-" + id;
     $(".patientRequestId").val(id);
     $(".patientName").text($(idName).text());
+}
+
+function clearCase() {
+    $.ajax({
+        url: "/Admin/ClearPopUp",
+        type: "Get",
+        async: false,
+        contentType: "application/json",
+        data: {
+            requestId: $(".patientRequestId").val(),
+        },
+        success: function (response) {
+            window.location.href = response.redirect;
+        }
+    })
 }
 
 

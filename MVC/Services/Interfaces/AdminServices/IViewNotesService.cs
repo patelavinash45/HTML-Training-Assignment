@@ -13,5 +13,7 @@ namespace Services.Interfaces.AdminServices
         Task<bool> assignRequest(AssignAndTransferPopUp model);
 
         Task<bool> blockRequest(BlockPopUp model);
+
+        Task<bool> clearRequest(int requestId);
     }
 }

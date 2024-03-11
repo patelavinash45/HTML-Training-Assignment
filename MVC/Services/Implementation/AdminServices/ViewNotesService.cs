@@ -97,7 +97,7 @@ namespace Services.Implementation.AdminServices
         public async Task<bool> blockRequest(BlockPopUp model)
         {
             RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
-            requestClient.Status = 10;
+            requestClient.Status = 0;
             await _requestClientRepository.updateRequestClient(requestClient);
             BlockRequest blockRequest = new()
             {
@@ -116,6 +116,13 @@ namespace Services.Implementation.AdminServices
                 Notes = model.AdminTransferNotes,
             };
             return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
+        }
+
+        public async Task<bool> clearRequest(int requestId)
+        {
+            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
+            requestClient.Status = 12;
+            return await _requestClientRepository.updateRequestClient(requestClient);
         }
     }
 }

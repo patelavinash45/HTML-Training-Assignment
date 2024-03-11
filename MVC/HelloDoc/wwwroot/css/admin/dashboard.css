@@ -36,11 +36,15 @@ button {
     border-radius: 5px;
 }
 
-a:hover,
-button:hover{
-    font-weight:bold;
-    border-color: black;
-    cursor: pointer;
+    a:hover,
+    button:hover:enabled {
+        font-weight: bold;
+        border-color: black;
+        cursor: pointer;
+    }
+
+button:disabled{
+    color: black;
 }
 
 .mapButton {
@@ -49,7 +53,7 @@ button:hover{
 
 #newOption {
     box-shadow: 10px 10px 5px #AAA;
-    background-color: #203f9a;
+    background-color: #4c6dcf;
     color: white;
     border-color: #1348e8;
 }

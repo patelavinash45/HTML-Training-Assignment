@@ -6,6 +6,6 @@ namespace Services.Interfaces.PatientServices
     {
         ViewProfile getProfileDetails(int aspNetUserId);
 
-        Task<bool> updatePatientProfile(ViewProfile model);
+        Task<bool> updatePatientProfile(ViewProfile model, int aspNetUserId);
     }
 }

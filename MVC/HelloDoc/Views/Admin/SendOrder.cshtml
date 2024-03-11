@@ -43,10 +43,6 @@
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                     <select class="form-select" id="selectedBusiness" asp-for="SelectedBusiness" onchange="changeBussiness()">
                         <option disabled selected value="">Select Bussiness</option>
-                        @foreach (var item in Model.Businesses)
-                        {
-                            <option value="@item.Key" class="bussinessOptions item-@item.Value.Item1" >@item.Value.Item2</option>
-                        }
                     </select>
                     <label for="selectedBusiness">Business</label>
                     <span asp-validation-for="SelectedBusiness" class="text-danger"></span>
@@ -54,26 +50,29 @@
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input class="form-control" id="contact" asp-for="Contact"/>
+                    <input disabled class="form-control contact" id="contact" />
+                    <input readonly class="contact d-none"  asp-for="Contact" />
                     <label for="contact">Business Contact</label>
                     <span asp-validation-for="Contact" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input class="form-control" id="email" asp-for="Email"/>
+                    <input disabled class="form-control email" id="email" />
+                    <input readonly class="d-none email" asp-for="Email" />
                     <label for="email">Business Email</label>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input class="form-control" id="faxNumber" asp-for="FaxNumber"/>
+                    <input disabled class="form-control faxNumber" id="faxNumber"/>
+                    <input readonly class="d-none faxNumber" asp-for="FaxNumber" />
                     <label for="faxNumber">Fax Number</label>
                     <span asp-validation-for="FaxNumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating">
-                    <textarea class="form-control h-75" id="orderDetils" rows="3" asp-for="OrderDetails"></textarea>
+                    <textarea class="form-control h-75" id="orderDetils" rows="3" asp-for="OrderDetails" placeholder="OrderDeatails"></textarea>
                     <label for="orderDetils">Prescription or Order detils</label>
                     <span asp-validation-for="OrderDetails" class="text-danger"></span>
                 </div>

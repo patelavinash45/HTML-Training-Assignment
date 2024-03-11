@@ -47,14 +47,13 @@ namespace Services.Implementation
                 FirstName = requestClient.FirstName,
                 LastName = requestClient.LastName,
                 FileList = fileList,
-                RequestId = requestClient.RequestId,
             };
             return viewDocument;
         }
 
-        public async Task<int> uploadFile(ViewDocument model ,String firstName,String lastName)
+        public async Task<int> uploadFile(ViewDocument model ,String firstName,String lastName,int requestId)
         {
-            return await _fileService.addFile(requestId: model.RequestId, firstName: firstName, lastName: lastName,file: model.File);
+            return await _fileService.addFile(requestId: requestId, firstName: firstName, lastName: lastName,file: model.File);
         }
 
         public async Task<int> deleteFile(int requestWiseFileId)

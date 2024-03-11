@@ -24,12 +24,6 @@ namespace Services.Implementation.AdminServices
             {
                 regions.Add(region.RegionId, region.Name);
             }
-            List<Physician> allPhysicians = _userRepository.getAllPhysicians();
-            Dictionary<int, Tuple<int,string>> physicians = new Dictionary<int, Tuple<int, string>>();
-            foreach (Physician physician in allPhysicians)
-            {
-                physicians.Add(physician.PhysicianId, new Tuple<int,string>(physician.RegionId,physician.FirstName + physician.LastName));
-            }
             List<CaseTag> caseTags = _requestClientRepository.getAllReason();
             Dictionary<int, string> reasons = new Dictionary<int, string>();
             foreach (CaseTag caseTag in caseTags)
@@ -43,7 +37,6 @@ namespace Services.Implementation.AdminServices
             AssignAndTransferPopUp assignAndTransferPopUp = new()
             {
                 Regions = regions,
-                Physicians = physicians,
             };
             AdminDashboard adminDashboard = new()
             {
@@ -205,6 +198,17 @@ namespace Services.Implementation.AdminServices
                 EndRange = 10 < requestClients.Count ? 10 : requestClients.Count,
             };
             return tableModel;
+        }
+
+        public Dictionary<int, String> getPhysiciansByRegion(int regionId)
+        {
+            List<Physician> allPhysicians = _userRepository.getAllPhysiciansByRegionId(regionId);
+            Dictionary<int, String> physicians = new Dictionary<int, String>();
+            foreach (Physician physician in allPhysicians)
+            {
+                physicians.Add(physician.PhysicianId, physician.FirstName +" "+ physician.LastName);
+            }
+            return physicians;
         }
     }
 }

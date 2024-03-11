@@ -14,6 +14,7 @@ namespace Repositories.Interfaces
 
         Admin getAdmionByAspNetUserId(int aspNetUserId);
 
-        List<Physician> getAllPhysicians();
+        List<Physician> getAllPhysiciansByRegionId(int regionId);
+
     }
 }

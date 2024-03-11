@@ -16,22 +16,20 @@ namespace Services.ViewModels
         public string Email { get; set; } = null!;
 
         [StringLength(20)]
-        public string? Mobile { get; set; }
+        public string Mobile { get; set; }
 
         [StringLength(100)]
-        public string? Street { get; set; }
+        public string Street { get; set; }
 
         [StringLength(100)]
-        public string? City { get; set; }
+        public string City { get; set; }
 
         [StringLength(100)]
-        public string? State { get; set; }
+        public string State { get; set; }
 
         [StringLength(10)]
-        public string? ZipCode { get; set; }
+        public string ZipCode { get; set; }
 
         public DateTime? BirthDate { get; set; }
-
-        public int? AspNetUserId { get; set; }
     }
 }

@@ -78,9 +78,14 @@
             <div class="col-12">
                 <form asp-controller="Admin" asp-action="ViewNotes">
                     <div class="card p-3 d-flex align-items-end">
-                        <input readonly class="d-none" asp-for="RequestId" type="text"/>
-                        <textarea class="form-control border-2 mb-4" placeholder="Additional Notes" rows="5" asp-for="NewAdminNotes" id="newnotes"></textarea>
-                        <span asp-validation-for="NewAdminNotes" class="text-danger"></span>
+                       <div class="form-floating w-100">
+                            <input readonly class="d-none" asp-for="RequestId" type="text" />
+                            <textarea class="form-control border-2 mb-4 h-100" placeholder="Additional Notes" rows="5" asp-for="NewAdminNotes" id="newnotes">
+
+                            </textarea>
+                            <label for="newnotes">Additional Notes</label>
+                            <span asp-validation-for="NewAdminNotes" class="text-danger"></span>
+                       </div>
                         <button id="saveChanges" class="px-3" type="submit">
                             Save Changes
                         </button>

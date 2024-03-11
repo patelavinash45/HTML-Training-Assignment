@@ -1,6 +1,5 @@
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
-using Repositories.DataModels;
 using Repositories.Implementation;
 using Repositories.Interface;
 using Repositories.Interfaces;
@@ -25,7 +24,7 @@ builder.Services.AddSession(
     }
 );
 builder.Services.AddControllersWithViews();
-builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 5; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddDbContext<Repositories.DataContext.HalloDocDbContext>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IJwtService, JwtService>();

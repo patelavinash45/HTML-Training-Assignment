@@ -43,9 +43,9 @@ namespace Repositories.Implementation
             return _dbContext.Admins.FirstOrDefault(a => a.AspNetUserId == aspNetUserId);
         }
 
-        public List<Physician> getAllPhysicians()
+        public List<Physician> getAllPhysiciansByRegionId(int regionId)
         {
-            return _dbContext.Physicians.ToList();
+            return _dbContext.Physicians.Where(a => a.RegionId==regionId).ToList();
         }
     }
 }

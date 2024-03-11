@@ -126,7 +126,7 @@ namespace Services.Implementation.PatientServices
                 StrMonth = model.BirthDate.Value.Month.ToString(),
             };
             return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
-        }
+        }  
 
         public AddRequestByPatient getModelForRequestByMe(int aspNetUserId)
         {

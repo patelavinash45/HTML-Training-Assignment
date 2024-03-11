@@ -34,7 +34,6 @@
             </a>
         </div>
         <form class="w-100" enctype="multipart/form-data" id="form" asp-controller="Patient" asp-action="ViewProfile">
-            <input readonly class="form-control d-none" asp-for="AspNetUserId">
             <input readonly class="form-control d-none" asp-for="Email">
             <fieldset disabled id="Fieldset">
                 <h5 class="fw-semibold">
@@ -42,21 +41,21 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="first-name" asp-for="FirstName"/>
+                        <input class="form-control" id="first-name" asp-for="FirstName" placeholder="FirstName" />
                         <label for="first-name">First Name</label>
-                        @*<span asp-validation-for="FirstName" class="text-danger"></span>*@
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                            <input class="form-control" id="last-name" asp-for="LastName" />
+                        <input class="form-control" id="last-name" asp-for="LastName" placeholder="LastName" />
                         <label for="last-name">Last Name</label>
-                        @*<span asp-validation-for="LastName" class="text-danger"></span>*@
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                            <input class="form-control" id="date" type="date" asp-for="BirthDate" />
+                        <input class="form-control" id="date" type="date" asp-for="BirthDate" placeholder="BirthDate" />
                         <label id="date-picker" for="date">Date of Birth</label>
-                        @*<span asp-validation-for="BirthDate" class="text-danger"></span>*@
+                        <span asp-validation-for="BirthDate" class="text-danger"></span>
                     </div>
                 </div>
                 <h5 class="fw-semibold mt-4">
@@ -75,16 +74,16 @@
                                 <option value="2">Land Line</option>
                             </select>
                             <div class="form-floating w-75">
-                                    <input class="form-control" id="phone" type="tel" asp-for="Mobile" />
-                                @*<span asp-validation-for="Mobile" class="text-danger"></span>*@
-                                @*<label for="phone">Phone Number</label> *@
+                                <input class="form-control" id="phone" type="tel" asp-for="Mobile" />
+                                <span asp-validation-for="Mobile" class="text-danger"></span>
+                                <label for="phone">Phone Number</label> 
                             </div>
                         </div>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                            <input class="form-control" id="email" type="email" asp-for="Email" disabled/>
+                        <input class="form-control" id="email" type="email" asp-for="Email" disabled/>
                         <label for="email">Email</label>
-                        @*<span asp-validation-for="Email" class="text-danger"></span>*@
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                 </div>
                 <h5 class="fw-semibold mt-4">
@@ -92,26 +91,26 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                            <input class="form-control" id="street" asp-for="Street" />
+                        <input class="form-control" id="street" asp-for="Street" placeholder="Street" />
                         <label for="street">Street</label>
-                        @*<span asp-validation-for="Street" class="text-danger"></span>*@
+                        <span asp-validation-for="Street" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                            <input class="form-control" id="city" asp-for="City" />
+                        <input class="form-control" id="city" asp-for="City" placeholder="City" />
                         <label for="city">city</label>
-                        @*<span asp-validation-for="City" class="text-danger"></span>*@
+                        <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                            <input class="form-control" id="state" asp-for="State" />
+                        <input class="form-control" id="state" asp-for="State" placeholder="State" />
                         <label for="state">State</label>
-                        @*<span asp-validation-for="State" class="text-danger"></span>*@
+                        <span asp-validation-for="State" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                            <input class="form-control" id="zip-code" asp-for="ZipCode" />
+                        <input class="form-control" id="zip-code" asp-for="ZipCode" placeholder="ZipCode" />
                         <label for="zip-code">Zip-Code</label>
-                        @*<span asp-validation-for="ZipCode" class="text-danger"></span>*@
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
                     </div>
                 </div>
             </fieldset>

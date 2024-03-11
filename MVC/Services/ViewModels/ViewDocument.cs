@@ -10,8 +10,6 @@ namespace Services.ViewModels
         [Required]
         public IFormFile File { get; set; }
 
-        public int RequestId { get; set; }
-
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }

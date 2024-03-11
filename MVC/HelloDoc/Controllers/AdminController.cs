@@ -151,7 +151,6 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 if (await _viewNotesService.assignRequest(model))
                 {
                     _notyfService.Success("Successfully Reuqest Assign");
@@ -169,7 +168,6 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 if (await _viewNotesService.assignRequest(model))
                 {
                     _notyfService.Success("Successfully Reuqest Transfer");
@@ -187,7 +185,6 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 if (await _viewNotesService.blockRequest(model))
                 {
                     _notyfService.Success("Successfully Reuqest Block");
@@ -202,10 +199,36 @@ namespace HelloDoc.Controllers
         }
 
         [HttpGet]
+        public async Task<JsonResult> ClearPopUp(int requestId)
+        {
+            if (await _viewNotesService.clearRequest(requestId))
+            {
+                _notyfService.Success("Successfully Reuqest Clear");
+            }
+            else
+            {
+                _notyfService.Error("Request Clear Faild !!");
+            }
+            return Json(new { redirect = Url.Action("Dashboard", "Admin") });
+        }
+
+        [HttpGet]
         public JsonResult SetRequestId(int requestId,String actionName)
         {
             HttpContext.Session.SetInt32("requestId", requestId);
             return Json(new { redirect = Url.Action(actionName, "Admin") });
+        }
+
+        [HttpGet]
+        public JsonResult GetPhysicians(int regionId)
+        {
+            return Json(_adminDashboardService.getPhysiciansByRegion(regionId));
+        }
+
+        [HttpGet]
+        public JsonResult GetBussinesses(int professionId)
+        {
+            return Json(_sendOrderService.getBussinessByProfession(professionId));
         }
 
         [HttpPost]
@@ -216,7 +239,8 @@ namespace HelloDoc.Controllers
             {
                 String firstname = HttpContext.Session.GetString("firstName");
                 String lastName = HttpContext.Session.GetString("lastName");
-                if (await _viewDocumentsServices.uploadFile(model,firstName:firstname,lastName: lastName) > 0)
+                int requestId = HttpContext.Session.GetInt32("requestId").Value;
+                if (await _viewDocumentsServices.uploadFile(model,firstName:firstname,lastName: lastName,requestId) > 0)
                 {
                     return RedirectToAction("ViewDocument", "Admin");
                 }
@@ -266,7 +290,7 @@ namespace HelloDoc.Controllers
                     CookieOptions cookieOptions = new CookieOptions()
                     {
                         Secure = true,
-                        Expires = DateTime.UtcNow.AddMinutes(20),
+                        Expires = DateTime.Now.AddMinutes(20),
                     };
                     Response.Cookies.Append("jwtToken", token, cookieOptions);
                     //HttpContext.Session.SetString("jwtToken", token);
@@ -296,35 +320,17 @@ namespace HelloDoc.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTablesData(String status,int pageNo)
+        public IActionResult GetTablesData(String status,int pageNo,String partialViewName)
         {
            TableModel tableModel= _adminDashboardService.GetNewRequest(status, pageNo);
-           switch(status)
-            {
-                case "New": return PartialView("_NewTable", tableModel); 
-                case "Pending": return PartialView("_PendingTable", tableModel);
-                case "Active": return PartialView("_ActiveTable", tableModel);
-                case "Conclude": return PartialView("_ConcludeTable", tableModel);
-                case "Close": return PartialView("_CloseTable", tableModel);
-                case "Unpaid": return PartialView("_UnpaidTable", tableModel);
-                default: return View();
-            }
+           return PartialView(partialViewName, tableModel);
         }
 
         [HttpGet]
-        public IActionResult SearchPatient(String patientName,String status)
+        public IActionResult SearchPatient(String patientName,String status, String partialViewName)
         {
             TableModel tableModel = _adminDashboardService.searchPatient(patientName);
-            switch (status)
-            {
-                case "New": return PartialView("_NewTable", tableModel);
-                case "Pending": return PartialView("_PendingTable", tableModel);
-                case "Active": return PartialView("_ActiveTable", tableModel);
-                case "Conclude": return PartialView("_ConcludeTable", tableModel);
-                case "Close": return PartialView("_CloseTable", tableModel);
-                case "Unpaid": return PartialView("_UnpaidTable", tableModel);
-                default: return View();
-            }
+            return PartialView(partialViewName, tableModel);
         }
 
         [HttpPost]
@@ -345,7 +351,6 @@ namespace HelloDoc.Controllers
             return View();
         }
 
-        [Authorization("Admin")]
         [HttpGet]
         public HealthProfessional GetBussinessData(int venderId)
         {

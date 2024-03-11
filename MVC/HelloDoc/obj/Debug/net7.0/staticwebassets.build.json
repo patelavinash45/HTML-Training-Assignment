@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "FxWimzXoYBn1LCn6XieNuXJR3HFq8Cey1uiGrzu/2s8=",
+  "Hash": "SQuTYEqXFrjEuUKAYDxRGuzFTwrWjm1Xhil/7bWnq2M=",
   "Source": "HelloDoc",
   "BasePath": "_content/HelloDoc",
   "Mode": "Default",
@@ -901,6 +901,23 @@
       "OriginalItemSpec": "wwwroot\\Files\\81_Fig22 Regions menu.jpg"
     },
     {
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\82_Fig20.Close case.png",
+      "SourceId": "HelloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
+      "BasePath": "_content/HelloDoc",
+      "RelativePath": "Files/82_Fig20.Close case.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\82_Fig20.Close case.png"
+    },
+    {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\82_Fig22 Regions menu.jpg",
       "SourceId": "HelloDoc",
       "SourceType": "Discovered",
@@ -1154,6 +1171,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\88_Fig37. Create Shift.jpg"
+    },
+    {
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\88_Fig41.Add business page.png",
+      "SourceId": "HelloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
+      "BasePath": "_content/HelloDoc",
+      "RelativePath": "Files/88_Fig41.Add business page.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\88_Fig41.Add business page.png"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\88_Fig59.1.FamilyFriend Information1.jpg",

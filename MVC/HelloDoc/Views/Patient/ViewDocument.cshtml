@@ -1,6 +1,11 @@
 ﻿@model Services.ViewModels.ViewDocument
+@*@inject IHttpContextAccessor HttpContextAccessor
 
-
+@{
+    String FirstName = @HttpContextAccessor.HttpContext.Session.GetString("firstName");
+    String LastName = @HttpContextAccessor.HttpContext.Session.GetString("lastName");
+}
+*@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +40,7 @@
                     Patient Name
                 </div>
                 <div class="h3 w-100">
-                    @*@Model.Header.FirstName @Model.Header.LastName*@
+                    @Model.FirstName @Model.LastName
                 </div>
                 <div class="w-100">
                     Check here for any files that you or the doctors of your
@@ -45,7 +50,6 @@
                     <div class="input-group w-100 mb-4 mt-4">
                         <input class="form-control" placeholder="Select File" type="file" id="file-picker" asp-for="File">
                         <span asp-validation-for="File" class="text-danger"></span>
-                        <input readonly class="form-control d-none" placeholder="Select File" id="file-picker" asp-for="RequestId">
                         <button class="fs-5 button" id="uploadButton" type="submit">
                             <i class="bi bi-cloud-arrow-up-fill "></i>
                             Upload

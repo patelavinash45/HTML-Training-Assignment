@@ -6,7 +6,7 @@ namespace Services.Interfaces
     {
         ViewDocument getDocumentList(int requestId, int aspNetUserId);
 
-        Task<int> uploadFile(ViewDocument model,String firstName,String lastName);
+        Task<int> uploadFile(ViewDocument model,String firstName,String lastName,int requestId);
 
         Task<int> deleteFile(int requestWiseFileId);
 

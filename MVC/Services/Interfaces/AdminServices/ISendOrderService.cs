@@ -10,5 +10,7 @@ namespace Services.Interfaces.AdminServices
         HealthProfessional getBussinessData(int venderId);
 
         Task<int> addOrderDetails(SendOrder model); 
+
+        Dictionary<int, string> getBussinessByProfession(int professionId);
     }
 }

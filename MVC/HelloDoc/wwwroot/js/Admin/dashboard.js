@@ -1,4 +1,5 @@
 var statusStrings = ["", "New", "Pending", "Active", "Conclude", "Close", "Unpaid"];
+var statusTableStrings = ["", "_NewTable", "_PendingTable", "_ActiveTable", "_ConcludeTable", "_CloseTable", "_UnpaidTable"];
 var currentStatus = 1;
 
 function sidebar() {
@@ -18,18 +19,41 @@ function changeTable(temp) {
     $('.tableRow').css("display", "table-row");
     $('.buttonHr').css("display", "none");
     switch (temp) {
-        case 1: $("#new").css("display", "block"); $("#newOption").css('box-shadow', '10px 10px 5px #AAA'); $("#newText").css("display", "block");
-                getTableData("New", 1); currentStatus = 1; break;
-        case 2: $("#pending").css("display", "block"); $("#pendingOption").css('box-shadow', '10px 10px 5px #AAA'); $("#pendingText").css("display", "block");
-                getTableData("Pending", 1); currentStatus = 2; break;
-        case 3: $("#active").css("display", "block"); $("#activeOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Active",1);
-                $("#activeText").css("display", "block"); currentStatus = 3; break;
-        case 4: $("#conclude").css("display", "block"); $("#concludeOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Conclude",1);
-                $("#concludeText").css("display", "block"); currentStatus = 4; break;
-        case 5: $("#close").css("display", "block"); $("#tocloseOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Close",1);
-                $("#closeText").css("display", "block"); currentStatus = 5; break;
-        case 6: $("#unpaid").css("display", "block"); $("#unpaidOption").css('box-shadow', '10px 10px 5px #AAA'); getTableData("Unpaid",1);
-                $("#unpaidText").css("display", "block"); currentStatus = 6;
+        case 1: $("#new").css("display", "block");
+                $("#newOption").css('box-shadow', '10px 10px 5px #AAA');
+                $("#newText").css("display", "block");
+                currentStatus = 1;
+                getTableData("New", 1);
+                break;
+        case 2: $("#pending").css("display", "block");
+                $("#pendingOption").css('box-shadow', '10px 10px 5px #AAA');
+                $("#pendingText").css("display", "block");
+                currentStatus = 2;
+                getTableData("Pending", 1);
+                break;
+        case 3: $("#active").css("display", "block");
+                $("#activeOption").css('box-shadow', '10px 10px 5px #AAA');
+                $("#activeText").css("display", "block"); 
+                currentStatus = 3;
+                getTableData("Active", 1);
+                break;
+        case 4: $("#conclude").css("display", "block");
+                $("#concludeOption").css('box-shadow', '10px 10px 5px #AAA');
+                $("#concludeText").css("display", "block");
+                currentStatus = 4;
+                getTableData("Conclude", 1);
+                break;
+        case 5: $("#close").css("display", "block");
+                $("#tocloseOption").css('box-shadow', '10px 10px 5px #AAA');
+                $("#closeText").css("display", "block"); 
+                currentStatus = 5;
+                getTableData("Close", 1);
+                break;
+        case 6: $("#unpaid").css("display", "block");
+                $("#unpaidOption").css('box-shadow', '10px 10px 5px #AAA');
+                $("#unpaidText").css("display", "block"); 
+                currentStatus = 6;
+                getTableData("Unpaid", 1);
     }
 }
 
@@ -41,6 +65,7 @@ function getTableData(status,pageNo) {
         data: {
             pageNo : pageNo,
             status: status,
+            partialViewName: statusTableStrings[currentStatus],
         },
         success: function (response) {
             setTableData(status, response);
@@ -120,6 +145,7 @@ function searchPatient(status, document) {
             data: {
                 patientName: $(document).val(),
                 status: statusStrings[status],
+                partialViewName: statusTableStrings[currentStatus],
             },
             success: function (response) {
                 setTableData(statusStrings[currentStatus], response);

@@ -32,13 +32,13 @@
             <p class="mt-2 mb-3 w-100" id="heading-text">Login To Your Account</p>
             <form class="w-100" asp-controller="Patient" asp-action="LoginPage">
                 <div class="form-floating">
-                    <input asp-for="Email" class="form-control" id="email" />
+                    <input asp-for="Email" class="form-control" id="email" placeholder="Email" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                     <label for="email">Email</label>
                     <i class="bi bi-envelope input-icon"></i>
                 </div>
                 <div class="form-floating">
-                    <input asp-for="PasswordHash" class="form-control" id="password" type="password" />
+                    <input asp-for="PasswordHash" class="form-control" id="password" type="password" placeholder="PasswordHash" />
                     <span asp-validation-for="PasswordHash" class="text-danger"></span>
                     <label for="password">Password</label>
                     <button type="button" class="input-icon bg-transparent border-0" onclick="changeIcon()">

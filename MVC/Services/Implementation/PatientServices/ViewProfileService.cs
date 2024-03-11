@@ -20,7 +20,6 @@ namespace Services.Implementation.PatientServices
             DateTime birthDay = DateTime.Parse(user.IntYear + "-" + user.StrMonth + "-" + user.IntDate);
             ViewProfile viewProfile = new()
             {
-                AspNetUserId = aspNetUserId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 BirthDate = birthDay,
@@ -34,9 +33,9 @@ namespace Services.Implementation.PatientServices
             return viewProfile;
         }
 
-        public async Task<bool> updatePatientProfile(ViewProfile model)
+        public async Task<bool> updatePatientProfile(ViewProfile model,int aspnetUserId)
         {
-            User user = _userRepository.getUser((int)model.AspNetUserId);
+            User user = _userRepository.getUser(aspnetUserId);
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Email = model.Email;

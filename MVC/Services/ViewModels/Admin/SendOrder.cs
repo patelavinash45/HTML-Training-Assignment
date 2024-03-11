@@ -8,8 +8,6 @@
 
         public Dictionary<int, String>? Professions { get; set; }
 
-        public Dictionary<int, Tuple<int,String>>? Businesses { get; set; }
-
         public int SelectedProfession { get; set; }
 
         public int SelectedBusiness { get; set; }

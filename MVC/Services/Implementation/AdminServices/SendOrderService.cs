@@ -22,17 +22,10 @@ namespace Services.Implementation.AdminServices
             {
                 professions.Add(item.HealthProfessionalId, item.ProfessionName);
             }
-            List<HealthProfessional> healthProfessionals = _healthProfessionalRepository.getHealthProfessional();
-            Dictionary<int, Tuple<int,String>> businesses = new Dictionary<int, Tuple<int, String>>();
-            foreach (var item in healthProfessionals)
-            {
-                businesses.Add(item.VendorId, new Tuple<int, string>(item.Profession, item.VendorName));
-            }
             SendOrder sendOrder = new SendOrder()
             {
                 RequestId = requestId,
                 Professions = professions,
-                Businesses = businesses,
             };
             return sendOrder;
         }
@@ -56,6 +49,17 @@ namespace Services.Implementation.AdminServices
                 CreatedDate = DateTime.Now,
             };
             return await _healthProfessionalRepository.addOrderDetails(orderDetail);
+        }
+
+        public Dictionary<int, string> getBussinessByProfession(int professionId)
+        {
+            List<HealthProfessional> healthProfessionals = _healthProfessionalRepository.getHealthProfessionalByProfession(professionId);
+            Dictionary<int, String> businesses = new Dictionary<int, String>();
+            foreach (var item in healthProfessionals)
+            {
+                businesses.Add(item.VendorId, item.VendorName);
+            }
+            return businesses;
         }
     }
 }

@@ -24,12 +24,12 @@
                     </select>
                     <select class="p-2 w-100 mb-2 physician" asp-for="SelectedPhysician">
                         <option disabled selected value="">Physicians</option>
-                        @foreach (var item in Model.Physicians)
-                        {
-                            <option value="@item.Key" class="physicianOptions region-@item.Value.Item1">@item.Value.Item2</option>
-                        }
                     </select>
-                    <textarea asp-for="AdminTransferNotes" class="w-100 p-2 border-2 mb-4 mt-3" placeholder="Additional Notes" rows="5"></textarea>
+                    <div class="form-floating">
+                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-4 mt-3" placeholder="AdditionalNotes" id="Notes" rows="5">
+                        </textarea>
+                        <label for="Notes">Additional Notes</label>
+                    </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn mx-2" id="conformButton">
                             Conform

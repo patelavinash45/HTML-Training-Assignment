@@ -53,32 +53,32 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating">
-                        <textarea class="form-control h-75" id="orderDetils" rows="3"></textarea>
+                        <textarea class="form-control h-75" id="orderDetils" placeholder="Notes" rows="3"></textarea>
                         <label for="orderDetils">Patient Notes</label>
                     </div>
                 </div>
                 <hr />
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="first-name" asp-for="FirstName" />
+                        <input class="form-control" id="first-name" asp-for="FirstName" placeholder="FirstName" />
                         <label for="first-name">First Name</label>
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="last-name" asp-for="LastName" />
+                        <input class="form-control" id="last-name" asp-for="LastName" placeholder="LastName" />
                         <label for="last-name">Last Name</label>
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="date" type="date" asp-for="BirthDate" />
+                        <input class="form-control" id="date" type="date" asp-for="BirthDate" placeholder="BirthDate" />
                         <label id="date-picker" for="date">Date of Birth</label>
                         <span asp-validation-for="BirthDate" class="text-danger"></span>
                     </div>
                     <div class="col-xl-6 col-md-6 col-lg-6 d-flex align-items-end">
                         <div class="form-floating w-100">
-                            <input class="form-control" id="phone" type="tel" asp-for="Mobile" />
+                            <input class="form-control" id="phone" type="tel" asp-for="Mobile" placeholder="Mobile" />
                             <span asp-validation-for="Mobile" class="text-danger"></span>
                             @*<label for="phone">Phone Number</label> *@
                         </div>  
@@ -111,13 +111,13 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="rgion" asp-for="Region" />
+                        <input class="form-control" id="rgion" asp-for="Region" placeholder="Region" />
                         <label for="rgion">Rgion</label>
                         <span asp-validation-for="Region" class="text-danger"></span>
                     </div>
                     <div class="col-xl-6 col-md-6 col-lg-6 d-flex align-items-end">
                         <div class="form-floating w-100">
-                            <input class="form-control" id="add" asp-for="Address" />
+                            <input class="form-control" id="add" asp-for="Address" placeholder="Address" />
                             <label for="add">Address</label>
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="room" asp-for="Room" />
+                        <input class="form-control" id="room" asp-for="Room" placeholder="Room" />
                         <label for="room">Room #</label>
                         <span asp-validation-for="Room" class="text-danger"></span>
                     </div>
@@ -140,7 +140,7 @@
                         Assign
                     </button>
                 </a>
-                <a asp-controller="Admin" asp-action="ViewNotes" asp-route-requestId="@Model.RequestId">
+                <a asp-controller="Admin" asp-action="ViewNotes">
                     <button class="px-3 mx-1" id="viewNotesButton" type="button">
                         View Notes
                     </button>

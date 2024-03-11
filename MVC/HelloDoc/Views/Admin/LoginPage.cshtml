@@ -33,13 +33,13 @@
                     Login To Your Account
                 </span>
                 <div class="form-floating w-50 mt-2">
-                    <input asp-for="Email" class="form-control" id="email" type="text" />
+                    <input asp-for="Email" class="form-control" id="email" type="text" placeholder="Email"/>
                     <label for="email">Email</label>
                     <span asp-validation-for="Email" class="text-danger"></span>
                     <i class="bi bi-envelope input-icon"></i>
                 </div>
                 <div class="form-floating w-50 mt-3 mb-1">
-                    <input asp-for="PasswordHash" class="form-control" id="password" type="password" />
+                    <input asp-for="PasswordHash" class="form-control" id="password" type="password" placeholder="Password" />
                     <label for="password">Password</label>
                     <span asp-validation-for="PasswordHash" class="text-danger"></span>
                     <button class="input-icon bg-transparent border-0" type="button" onclick="changeIcon()">

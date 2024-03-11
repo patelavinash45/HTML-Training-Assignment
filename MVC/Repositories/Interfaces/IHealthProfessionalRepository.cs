@@ -11,7 +11,7 @@ namespace Repositories.Interfaces
     {
         List<HealthProfessionalType> getHealthProfessionalTypes();
 
-        List<HealthProfessional> getHealthProfessional();
+        List<HealthProfessional> getHealthProfessionalByProfession(int professionId);
 
         HealthProfessional getHealthProfessional(int VenderId);
 

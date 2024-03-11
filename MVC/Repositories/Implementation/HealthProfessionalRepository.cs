@@ -18,9 +18,9 @@ namespace Repositories.Implementation
             return _dbContext.HealthProfessionalTypes.ToList();
         }
 
-        public List<HealthProfessional> getHealthProfessional()
+        public List<HealthProfessional> getHealthProfessionalByProfession(int professionId)
         {
-            return _dbContext.HealthProfessionals.ToList();
+            return _dbContext.HealthProfessionals.Where(a => a.Profession ==  professionId).ToList();
         }
 
         public HealthProfessional getHealthProfessional(int VenderId)

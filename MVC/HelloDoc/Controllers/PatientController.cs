@@ -156,7 +156,6 @@ namespace HelloDoc.Controllers
                 if (user == null)
                 {
                     _notyfService.Error("Invalid credentials");
-                    return View(null);
                 }
                 else
                 {
@@ -168,7 +167,7 @@ namespace HelloDoc.Controllers
                     CookieOptions cookieOptions = new CookieOptions()
                     {
                         Secure = true,
-                        Expires = DateTime.UtcNow.AddMinutes(20),
+                        Expires = DateTime.Now.AddMinutes(20),
                     };
                     Response.Cookies.Append("jwtToken", token, cookieOptions);
                     //HttpContext.Session.SetString("jwtToken", token);
@@ -198,15 +197,21 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewProfile(ViewProfile model)
         {
-            if (await _viewProfileService.updatePatientProfile(model))
+            if(ModelState.IsValid)
             {
-                _notyfService.Success("Successfully Updated");
+                int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+                if (await _viewProfileService.updatePatientProfile(model,aspNetUserId))
+                {
+                    _notyfService.Success("Successfully Updated");
+                }
+                else
+                {
+                    _notyfService.Error("Faild!");
+                }
+                return RedirectToAction("ViewProfile", "Patient");
             }
-            else
-            {
-                _notyfService.Error("Faild!");
-            }
-            return RedirectToAction("ViewProfile", "Patient");
+            _notyfService.Warning("Please, Add Required Field.");
+            return View(null);
         }
 
         [HttpPost]
@@ -224,9 +229,10 @@ namespace HelloDoc.Controllers
             {
                 String firstname = HttpContext.Session.GetString("firstName");
                 String lastName = HttpContext.Session.GetString("lastName");
-                if (await _viewDocumentsServices.uploadFile(model, firstName: firstname, lastName: lastName) > 0)
+                int requestId = HttpContext.Session.GetInt32("requestId").Value;
+                if (await _viewDocumentsServices.uploadFile(model, firstName: firstname, lastName: lastName,requestId) > 0)
                 {
-                    return RedirectToAction("ViewDocument", "Patient", new { id = model.RequestId });
+                    return RedirectToAction("ViewDocument", "Patient", new { id = requestId });
                 }
             }
             _notyfService.Warning("Please, Add Required Field.");

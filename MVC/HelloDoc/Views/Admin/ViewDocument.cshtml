@@ -1,6 +1,5 @@
 ﻿@model Services.ViewModels.ViewDocument
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +43,6 @@
                     <div class="input-group w-100 mb-4 mt-4">
                         <input class="form-control" placeholder="Select File" type="file" id="file-picker" asp-for="File">
                         <span asp-validation-for="File" class="text-danger"></span>
-                        <input readonly class="form-control d-none" asp-for="RequestId">
                         <button class="fs-5 button" id="uploadButton" type="submit">
                             <i class="bi bi-cloud-arrow-up-fill "></i>
                             Upload
