@@ -11,25 +11,28 @@
                     <i class="bi bi-x-circle-fill h3 modal-title"></i>
                 </button>
             </div>
-            <form asp-controller="Admin" asp-action="TransferPopUp">
+            <form asp-controller="Admin" asp-action="TransferPopUp" id="transferForm">
                 <div class="modal-body">
                     To transfer this request search and select another Physician.
                     <input readonly class="d-none patientRequestId" asp-for="RequestId" type="text" />
-                    <select class="p-2 w-100 mb-2 selectRegion form-select" asp-for="SelectedRegion" onchange="changeSelect(this)">
-                        <option disabled selected value="">Regions</option>
+                    <select class="p-2 w-100 mb-2 mt-2 selectRegion form-select" id="transferRequestRegion" asp-for="SelectedRegion" onchange="changeSelect(this)">
+                        <option disabled selected value="">Regions*</option>
                         @foreach (var item in Model.Regions)
                         {
                             <option value="@item.Key">@item.Value</option>
                         }
                     </select>
-                    <select class="p-2 w-100 mb-2 physician" asp-for="SelectedPhysician">
-                        <option disabled selected value="">Physicians</option>
+                    <select class="p-2 w-100 mb-2 physician" asp-for="SelectedPhysician" id="transferRequestPhysician">
+                        <option disabled selected value="">Physicians*</option>
+                        <span class="text-danger"></span>
                     </select>
+                    <span class="text-danger"></span>
                     <div class="form-floating">
-                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-4 mt-3" placeholder="AdditionalNotes" id="Notes" rows="5">
+                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-2 mt-2" placeholder="AdditionalNotes" id="Notes" rows="5">
                         </textarea>
                         <label for="Notes">Additional Notes</label>
                     </div>
+                    <span class="text-danger validation mb-3" id="transferValidation">All * Field is Required</span>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn mx-2" id="conformButton">
                             Conform

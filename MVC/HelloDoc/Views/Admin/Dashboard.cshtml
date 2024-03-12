@@ -8,8 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <link href="https://cdn.datatables.net/v/dt/dt-2.0.1/r-3.0.0/sb-1.7.0/sp-2.3.0/datatables.min.css" rel="stylesheet">
-    <script src="https://cdn.datatables.net/v/dt/dt-2.0.1/r-3.0.0/sb-1.7.0/sp-2.3.0/datatables.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/Admin/dashboard.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -24,6 +23,7 @@
     @Html.Partial("~/Views/Shared/_RequestBlockPopUp.cshtml",Model.BlockPopup)
     @Html.Partial("~/Views/Shared/_RequestTransferPopUp.cshtml",Model.AssignAndTransferPopup)
     @Html.Partial("~/Views/Shared/_RequestClearPopUp.cshtml")
+    @Html.Partial("~/Views/Shared/_SendAgreementPopUp.cshtml",Model.SendAgreement)
     <div class="cancelPopUp"></div>
     <div id="mainbody">
         <div class="container-fluid">

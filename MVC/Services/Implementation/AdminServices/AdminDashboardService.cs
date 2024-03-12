@@ -1,7 +1,9 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
+using Services.Interfaces.AuthServices;
 using Services.ViewModels.Admin;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Services.Implementation.AdminServices
 {
@@ -9,11 +11,13 @@ namespace Services.Implementation.AdminServices
     {
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IJwtService _jwtService;
 
-        public AdminDashboardService(IRequestClientRepository requestClientRepository,IUserRepository userRepository)
+        public AdminDashboardService(IRequestClientRepository requestClientRepository,IUserRepository userRepository,IJwtService jwtService)
         { 
             _requestClientRepository = requestClientRepository;
             _userRepository = userRepository;
+            _jwtService = jwtService;
         }
 
         public AdminDashboard getallRequests(int aspNetUserId)
@@ -154,8 +158,16 @@ namespace Services.Implementation.AdminServices
 
         public TableModel searchPatient(String patientName)
         {
-            String[] names = patientName.Split(" ");
-            List<RequestClient> requestClients = _requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1]);
+            List<RequestClient> requestClients = new List<RequestClient>();
+            if (patientName.Contains(" "))
+            {
+                String[] names = patientName.Split(" ");
+                requestClients = _requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1]);
+            }
+            else
+            {
+                requestClients = _requestClientRepository.getRequestClientByName(firstName: patientName, lastName: "");
+            }
             List<TablesData> tablesDatas = new List<TablesData>();
             foreach (RequestClient requestClient in requestClients)
             {
@@ -209,6 +221,34 @@ namespace Services.Implementation.AdminServices
                 physicians.Add(physician.PhysicianId, physician.FirstName +" "+ physician.LastName);
             }
             return physicians;
+        }
+
+        public Tuple<String, String, int> getRequestClientEmailAndMobile(int requestId)
+        {
+            RequestClient requestClient = _requestClientRepository.GetRequestClientAndRequestByRequestId(requestId);
+            return new Tuple<string, string, int>(requestClient.Email, requestClient.PhoneNumber, requestClient.Request.RequestTypeId);
+        }
+
+        public Agreement getUserDetails(String token)
+        {
+            try
+            {
+                JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(token);
+                if (_jwtService.validateToken(token, out jwtSecurityToken))
+                {
+                    int requestId = int.Parse(jwtSecurityToken.Claims.FirstOrDefault(a => a.Type == "requestId").Value);
+                    RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
+                    Agreement agreement = new Agreement()
+                    {
+                        FirstName = requestClient.FirstName,
+                        LastName = requestClient.LastName,
+                        RequestId = requestId,
+                    };
+                    return agreement;
+                }
+            }
+            catch(Exception ex) { }
+            return null;
         }
     }
 }

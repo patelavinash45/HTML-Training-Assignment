@@ -90,7 +90,7 @@ namespace Services.Implementation
                 Attachment attachment = new Attachment(path);
                 mailMessage.Attachments.Add(attachment);
             }
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
+            //RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
             //mailMessage.To.Add(requestClient.Email);
             mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
             SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
@@ -103,7 +103,7 @@ namespace Services.Implementation
             };
             try
             {
-                await smtpClient.SendMailAsync(mailMessage);
+                smtpClient.SendMailAsync(mailMessage);
                 return true;
             }
             catch (Exception ex)

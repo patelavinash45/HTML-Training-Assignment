@@ -54,9 +54,6 @@
                                 @data.FirstName @data.LastName
                                 <button class="bg-transparent text-white p-2 border-white">
                                     <i class="bi bi-envelope-fill"></i>
-                                    <span class="d-none">
-                                        @data.RegionId
-                                    </span>
                                 </button>
                             </div>
                         </td>
@@ -135,7 +132,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" onclick="displaySendAgreementPopUp(@data.RequestId)" data-bs-target="#sendAgreement" data-bs-toggle="modal">
                                             Send Agreement
                                         </a>
                                     </li>

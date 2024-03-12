@@ -15,5 +15,11 @@ namespace Services.Interfaces.AdminServices
         Task<bool> blockRequest(BlockPopUp model);
 
         Task<bool> clearRequest(int requestId);
+
+        Task<bool> sendAgreement(Agreement model);
+
+        Task<bool> agreementDeclined(Agreement model);
+
+        Task<bool> agreementAgree(Agreement model);
     }
 }

@@ -144,7 +144,7 @@ function searchPatient(status, document) {
             contentType: 'application/json',
             data: {
                 patientName: $(document).val(),
-                status: statusStrings[status],
+                status: statusStrings[currentStatus],
                 partialViewName: statusTableStrings[currentStatus],
             },
             success: function (response) {

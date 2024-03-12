@@ -1,12 +1,15 @@
 ﻿using Services.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Services.Interfaces.AuthServices
 {
     public interface IJwtService
     {
-        string GenerateJwtToken(UserDataModel user);
+        string genrateJwtToken(UserDataModel user);
 
-        bool ValidateToken(String token, out JwtSecurityToken jwtToken);
+        string genrateJwtTokenForSendMail(List<Claim> claims, DateTime expries);
+
+        bool validateToken(String token, out JwtSecurityToken jwtToken);
     }
 }

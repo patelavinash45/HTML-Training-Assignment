@@ -30,6 +30,8 @@
 
         public CancelPopUp CancelPopup { get; set; }
 
+        public Agreement SendAgreement { get; set; }
+
         public AssignAndTransferPopUp AssignAndTransferPopup { get; set; }
 
         public BlockPopUp BlockPopup { get; set; }

@@ -10,6 +10,6 @@
 
         public int RequestId { get; set; }
 
-        public String AdminTransferNotes { get; set; }
+        public String? AdminTransferNotes { get; set; }
     }
 }

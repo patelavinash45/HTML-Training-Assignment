@@ -1,7 +1,11 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
+using Services.Interfaces.AuthServices;
 using Services.ViewModels.Admin;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Claims;
 
 namespace Services.Implementation.AdminServices
 {
@@ -12,16 +16,18 @@ namespace Services.Implementation.AdminServices
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IRequestRepository _requestRepository;
         private readonly IBlockRequestsRepository _blockRequestsRepository;
+        private readonly IJwtService _jwtService;
 
         public ViewNotesService(IRequestNotesRepository requestNotesRepository, IRequestStatusLogRepository requestSatatusLogRepository, 
                                       IRequestClientRepository requestClientRepository, IRequestRepository requestRepository, 
-                                      IBlockRequestsRepository blockRequestsRepository)
+                                      IBlockRequestsRepository blockRequestsRepository, IJwtService jwtService)
         {
             _requestNotesRepository = requestNotesRepository;
             _requestSatatusLogRepository = requestSatatusLogRepository;
             _requestRepository = requestRepository;
             _requestClientRepository = requestClientRepository;
             _blockRequestsRepository = blockRequestsRepository;
+            _jwtService = jwtService;
         }
         public ViewNotes GetNotes(int RequestId)
         {
@@ -77,6 +83,28 @@ namespace Services.Implementation.AdminServices
             return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
         }
 
+        public async Task<bool> agreementDeclined(Agreement model)
+        {
+            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            requestClient.Status = 10;
+            await _requestClientRepository.updateRequestClient(requestClient);
+            RequestStatusLog _requestStatusLog = new()
+            {
+                RequestId = model.RequestId,
+                Status = 10,
+                CreatedDate = DateTime.Now,
+                Notes = model.CancelationReson,
+            };
+            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
+        }
+
+        public async Task<bool> agreementAgree(Agreement model)
+        {
+            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            requestClient.Status = 4;
+            return await _requestClientRepository.updateRequestClient(requestClient);
+        }
+
         public async Task<bool> assignRequest(AssignAndTransferPopUp model)
         {
             RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
@@ -123,6 +151,42 @@ namespace Services.Implementation.AdminServices
             RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
             requestClient.Status = 12;
             return await _requestClientRepository.updateRequestClient(requestClient);
+        }
+
+        public async Task<bool> sendAgreement(Agreement model)
+        {
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim("requestId", model.RequestId.ToString()),
+            };
+            String token = _jwtService.genrateJwtTokenForSendMail(claims, DateTime.Now.AddDays(2));
+            String link = "https://localhost:44392/Admin/Agreement?token=" + token;
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
+                Subject = "Agreement",
+                IsBodyHtml = true,
+                Body = "To Further Proceed to your Request : " + link,
+            };
+            //mailMessage.To.Add(model.Email);
+            mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
+            SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
+            {
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                EnableSsl = true,
+                Port = 587,
+                Credentials = new NetworkCredential(userName: "tatva.dotnet.avinashpatel@outlook.com", password: "Avinash@6351"),
+            };
+            try
+            {
+                smtpClient.SendMailAsync(mailMessage);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

@@ -18,6 +18,8 @@ namespace Repositories.Interfaces
 
         RequestClient GetRequestClientByRequestId(int requestId);
 
+        RequestClient GetRequestClientAndRequestByRequestId(int requestId);
+
         Task<bool> updateRequestClient(RequestClient requestClient);
 
         List<RequestClient> getRequestClientByName(string firstName, string lastName);

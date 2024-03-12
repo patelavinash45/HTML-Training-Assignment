@@ -1,9 +1,12 @@
 ﻿using Repositories.DataModels;
 using Repositories.Interface;
 using Services.Interfaces;
+using Services.Interfaces.AuthServices;
 using Services.ViewModels;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,10 +15,12 @@ namespace Services.Implementation
     public class ResetPasswordService : IResetPasswordService
     {
         private readonly IAspNetUserRepository _userRepository;
+        private readonly IJwtService _jwtService;
 
-        public ResetPasswordService(IAspNetUserRepository userRepository)
+        public ResetPasswordService(IAspNetUserRepository userRepository,IJwtService jwtService)
         {
             _userRepository = userRepository;
+            _jwtService = jwtService;
         }
 
         public async Task<bool> resetPasswordLinkSend(string email)
@@ -23,18 +28,18 @@ namespace Services.Implementation
             try
             {
                 int aspNetUserId = _userRepository.checkUser(email);
-                string guiId = Guid.NewGuid().ToString();
-                await _userRepository.setToken(token: guiId, aspNetUserId: aspNetUserId);
-                string link = "token=" + guiId + "&&id=" + aspNetUserId + "&&time=" + genrateHash(DateTime.Now.ToString("yyyyMMddHHmm"));
+                List<Claim> claims = new List<Claim>()
+                {
+                    new Claim("aspNetUserId", aspNetUserId.ToString()),
+                };
+                String token = _jwtService.genrateJwtTokenForSendMail(claims, DateTime.Now.AddDays(1));
+                await _userRepository.setToken(token: token, aspNetUserId: aspNetUserId);
+                string link = "token=" + token;
                 MailMessage mailMessage = new MailMessage
                 {
                     From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
                     Subject = "Reset Password Link",
                     IsBodyHtml = true,
-                    Attachments=
-                    {
-
-                    }
                 };
                 string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EmailTemplate/resetPasswordEmail.cshtml");
                 string body = File.ReadAllText(templatePath).Replace("EmailLink", link);
@@ -48,7 +53,7 @@ namespace Services.Implementation
                     Port = 587,
                     Credentials = new NetworkCredential(userName: "tatva.dotnet.avinashpatel@outlook.com", password: "Avinash@6351"),
                 };
-                await smtpClient.SendMailAsync(mailMessage);
+                smtpClient.SendMailAsync(mailMessage);
                 return true;
             }
             catch (Exception ex)
@@ -57,20 +62,19 @@ namespace Services.Implementation
             }
         }
 
-        public SetNewPassword validatePasswordLink(string token, int aspNetUserId, string time)
+        public SetNewPassword validatePasswordLink(string token)
         {
             SetNewPassword setNewPassword = new()
             {
-                AspNetUserId = aspNetUserId.ToString(),
                 IsValidLink = false,
             };
-            for (int i = 0; i >= -3; i--)
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(token);
+            if (_jwtService.validateToken(token, out jwtSecurityToken))
             {
-                if (time == genrateHash(DateTime.Now.AddMinutes(i).ToString("yyyyMMddHHmm")))
-                {
-                    setNewPassword.IsValidLink = _userRepository.checkToken(token: token, aspNetUserId: aspNetUserId);
-                    return setNewPassword;
-                }
+                int aspNetUserId = int.Parse(jwtSecurityToken.Claims.FirstOrDefault(a => a.Type == "aspNetUserId").Value);
+                setNewPassword.IsValidLink = _userRepository.checkToken(token: token, aspNetUserId: aspNetUserId);
+                setNewPassword.AspNetUserId = aspNetUserId.ToString();
+                return setNewPassword;
             }
             return setNewPassword;
         }

@@ -47,6 +47,11 @@ namespace Repositories.Implementation
             return _dbContext.RequestClients.FirstOrDefault(a => a.RequestId==requestId);
         }
 
+        public RequestClient GetRequestClientAndRequestByRequestId(int requestId)
+        {
+            return _dbContext.RequestClients.Include(a => a.Request).FirstOrDefault(a => a.RequestId == requestId);
+        }
+
         public async Task<bool> updateRequestClient(RequestClient requestClient)
         {
             _dbContext.Update(requestClient);

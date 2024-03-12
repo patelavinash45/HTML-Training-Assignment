@@ -52,7 +52,7 @@ namespace HelloDoc.Authentication
                         action = "LoginPage",
                     }));
                 }
-                else if (token != null && !jwtService.ValidateToken(token, out jwtToken))
+                else if (token != null && !jwtService.validateToken(token, out jwtToken))
                 {
                     context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                     {

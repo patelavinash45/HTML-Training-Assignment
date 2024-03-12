@@ -66,7 +66,7 @@ namespace Services.Implementation.AuthServices
             if (token != null)
             {
                 JwtSecurityToken jwtToken = new JwtSecurityToken();
-                if (_jwtService.ValidateToken(token, out jwtToken))
+                if (_jwtService.validateToken(token, out jwtToken))
                 {
                     var jwtRole = jwtToken.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Role);
                     if(jwtRole.Value == userType)

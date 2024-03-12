@@ -6,7 +6,7 @@ namespace Services.Interfaces
     {
         Task<bool> resetPasswordLinkSend(string email);
 
-        SetNewPassword validatePasswordLink(string token, int aspNetUserId, string time);
+        SetNewPassword validatePasswordLink(string token);
 
         Task<bool> changePassword(SetNewPassword model);
     }

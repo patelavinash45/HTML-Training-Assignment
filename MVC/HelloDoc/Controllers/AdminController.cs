@@ -72,6 +72,17 @@ namespace HelloDoc.Controllers
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_viewNotesService.GetNotes(requestId));
         }
+        
+        public IActionResult Agreement(String token)
+        {
+            Agreement agreement = _adminDashboardService.getUserDetails(token);
+            if(agreement != null)
+            {
+                return View(agreement);
+            }
+            _notyfService.Error("Link is Invalid");
+            return RedirectToAction("PatientSite","Patient");
+        }
 
         [Authorization("Admin")]
         public IActionResult ViewDocument()
@@ -198,7 +209,7 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet] 
         public async Task<JsonResult> ClearPopUp(int requestId)
         {
             if (await _viewNotesService.clearRequest(requestId))
@@ -212,20 +223,55 @@ namespace HelloDoc.Controllers
             return Json(new { redirect = Url.Action("Dashboard", "Admin") });
         }
 
-        [HttpGet]
-        public JsonResult SetRequestId(int requestId,String actionName)
+        public async Task<IActionResult> SendAgreementPopUp(Agreement model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (await _viewNotesService.sendAgreement(model))
+                {
+                    _notyfService.Success("Successfully Send");
+                }
+                else
+                {
+                    _notyfService.Error("Agreement Send Faild!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> AgreementAgree(Agreement model)
+        {
+            await _viewNotesService.agreementAgree(model);
+            return RedirectToAction("Dashboard", "Patient");
+        }
+
+        public async Task<IActionResult> AgreementDeclined(Agreement model)
+        {
+            await _viewNotesService.agreementDeclined(model);
+            return RedirectToAction("Dashboard", "Patient");
+        }
+
+        [HttpGet] 
+        public JsonResult SetRequestId(int requestId, String actionName)
         {
             HttpContext.Session.SetInt32("requestId", requestId);
             return Json(new { redirect = Url.Action(actionName, "Admin") });
         }
 
-        [HttpGet]
+        [HttpGet]  // SendAgreementPopUp
+        public JsonResult GetEmailAndMobileNumber(int requestId)
+        {
+            return Json(_adminDashboardService.getRequestClientEmailAndMobile(requestId));
+        }
+
+        [HttpGet] // Assigncase and TransfercasePopUp
         public JsonResult GetPhysicians(int regionId)
         {
             return Json(_adminDashboardService.getPhysiciansByRegion(regionId));
         }
 
-        [HttpGet]
+        [HttpGet] // Send Order
         public JsonResult GetBussinesses(int professionId)
         {
             return Json(_sendOrderService.getBussinessByProfession(professionId));
@@ -286,7 +332,7 @@ namespace HelloDoc.Controllers
                     HttpContext.Session.SetString("role", user.UserType);
                     HttpContext.Session.SetString("firstName", user.FirstName);
                     HttpContext.Session.SetString("lastName", user.LastName);
-                    string token = _jwtService.GenerateJwtToken(user);
+                    string token = _jwtService.genrateJwtToken(user);
                     CookieOptions cookieOptions = new CookieOptions()
                     {
                         Secure = true,
@@ -319,14 +365,14 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet] // Dashboard 
         public IActionResult GetTablesData(String status,int pageNo,String partialViewName)
         {
            TableModel tableModel= _adminDashboardService.GetNewRequest(status, pageNo);
            return PartialView(partialViewName, tableModel);
         }
 
-        [HttpGet]
+        [HttpGet] // Dashboard
         public IActionResult SearchPatient(String patientName,String status, String partialViewName)
         {
             TableModel tableModel = _adminDashboardService.searchPatient(patientName);
@@ -351,7 +397,7 @@ namespace HelloDoc.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpGet] // Send Order
         public HealthProfessional GetBussinessData(int venderId)
         {
             return _sendOrderService.getBussinessData(venderId);

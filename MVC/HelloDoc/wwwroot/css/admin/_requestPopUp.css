@@ -46,3 +46,13 @@ option{
     display: none;
 }
 
+.validation{
+    display: none;
+}
+
+@media screen and (min-width:576px) {
+    .modal-dialog {
+        max-width: 550px;
+    }
+}
+

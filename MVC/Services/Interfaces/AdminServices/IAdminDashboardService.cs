@@ -11,5 +11,9 @@ namespace Services.Interfaces.AdminServices
         TableModel searchPatient(String patientName);
 
         Dictionary<int, String> getPhysiciansByRegion(int regionId);
+
+        Tuple<String, String, int> getRequestClientEmailAndMobile(int requestId);
+
+        Agreement getUserDetails(String token);
     }
 }

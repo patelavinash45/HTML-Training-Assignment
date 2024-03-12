@@ -85,7 +85,7 @@ namespace HelloDoc.Controllers
 
         public IActionResult NewPassword(String token, int id, string time)
         {
-            return View(_resetPasswordService.validatePasswordLink(token, id, time));
+            return View(_resetPasswordService.validatePasswordLink(token));
         }
 
         [Authorization("Patient")]
@@ -139,7 +139,7 @@ namespace HelloDoc.Controllers
             return Json(new { redirect = Url.Action("ViewDocument","Patient") });
         }
 
-        [HttpGet]
+        [HttpGet] 
         public JsonResult CheckEmailExists(string email)
         {
             var emailExists = _addRequestService.IsEmailExists(email);
@@ -163,7 +163,7 @@ namespace HelloDoc.Controllers
                     HttpContext.Session.SetString("role", user.UserType);
                     HttpContext.Session.SetString("firstName", user.FirstName);
                     HttpContext.Session.SetString("lastName", user.LastName);
-                    string token = _jwtService.GenerateJwtToken(user);
+                    string token = _jwtService.genrateJwtToken(user);
                     CookieOptions cookieOptions = new CookieOptions()
                     {
                         Secure = true,

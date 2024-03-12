@@ -121,9 +121,9 @@ namespace Services.Implementation.PatientServices
                 ZipCode = model.ZipCode,
                 Status = 1,
                 Symptoms = model.Symptoms,
-                IntYear = model.BirthDate.Value.Year,
-                IntDate = model.BirthDate.Value.Day,
-                StrMonth = model.BirthDate.Value.Month.ToString(),
+                IntYear = DateTime.Now.Year,
+                IntDate = DateTime.Now.Day,
+                StrMonth = DateTime.Now.Month.ToString(),
             };
             return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
         }  
@@ -221,6 +221,7 @@ namespace Services.Implementation.PatientServices
                 Email = userMe.Email,
                 PhoneNumber = userMe.Mobile,
                 UserId = userId,
+                RelationName = model.Relation,
             };
             int requestId = await _requestRepository.addRequest(request);
             if (model.File != null)
@@ -240,9 +241,9 @@ namespace Services.Implementation.PatientServices
                 ZipCode = model.ZipCode,
                 Status = 1,
                 Symptoms = model.Symptoms,
-                IntYear = model.BirthDate.Value.Year,
-                IntDate = model.BirthDate.Value.Day,
-                StrMonth = model.BirthDate.Value.Month.ToString(),
+                IntYear = DateTime.Now.Year,
+                IntDate = DateTime.Now.Day,
+                StrMonth = DateTime.Now.Month.ToString(),
             };
             return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
         }
@@ -341,9 +342,9 @@ namespace Services.Implementation.PatientServices
                 ZipCode = model.ZipCode,
                 Status = 1,
                 Symptoms = model.Symptoms,
-                IntYear = model.BirthDate.Value.Year,
-                IntDate = model.BirthDate.Value.Day,
-                StrMonth = model.BirthDate.Value.Month.ToString(),
+                IntYear = DateTime.Now.Year,
+                IntDate = DateTime.Now.Day,
+                StrMonth = DateTime.Now.Month.ToString(),
             };
             return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
         }
@@ -407,6 +408,7 @@ namespace Services.Implementation.PatientServices
                 Email = model.FamilyFriendEmail,
                 PhoneNumber = model.FamilyFriendMobile,
                 CreatedDate = DateTime.Now,
+                RelationName = model.Relation,
             };
             int requestId = await _requestRepository.addRequest(request);
             if (model.File != null)
@@ -426,9 +428,9 @@ namespace Services.Implementation.PatientServices
                 ZipCode = model.ZipCode,
                 Status = 1,
                 Symptoms = model.Symptoms,
-                IntYear = model.BirthDate.Value.Year,
-                IntDate = model.BirthDate.Value.Day,
-                StrMonth = model.BirthDate.Value.Month.ToString(),
+                IntYear = DateTime.Now.Year,
+                IntDate = DateTime.Now.Day,
+                StrMonth = DateTime.Now.Month.ToString(),
             };
             return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
         }
@@ -524,9 +526,9 @@ namespace Services.Implementation.PatientServices
                 ZipCode = model.ZipCode,
                 Status = 1,
                 Symptoms = model.Symptoms,
-                IntYear = model.BirthDate.Value.Year,
-                IntDate = model.BirthDate.Value.Day,
-                StrMonth = model.BirthDate.Value.Month.ToString(),
+                IntYear = DateTime.Now.Year,
+                IntDate = DateTime.Now.Day,
+                StrMonth = DateTime.Now.Month.ToString(),
             };
             return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
         }
