@@ -15,7 +15,7 @@ namespace Repositories.Implementation
 
         public async Task<int> addRequest(Request request)
         {
-            _dbContext.Add(request);
+            _dbContext.Requests.Add(request);
             await _dbContext.SaveChangesAsync();
             return request?.RequestId ?? 0;
         }
@@ -27,7 +27,7 @@ namespace Repositories.Implementation
 
         public async Task<bool> updateRequest(Request request)
         {
-            _dbContext.Update(request);
+            _dbContext.Requests.Update(request);
             int temp = await _dbContext.SaveChangesAsync();
             return temp > 0;
         }

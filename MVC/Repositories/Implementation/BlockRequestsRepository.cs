@@ -15,7 +15,7 @@ namespace Repositories.Implementation
 
         public async Task<int> addBlockRequest(BlockRequest blockRequest)
         {
-            _dbContext.Add(blockRequest);
+            _dbContext.BlockRequests.Add(blockRequest);
             int temp = await _dbContext.SaveChangesAsync(); 
             return temp >0 ? blockRequest.BlockRequestId : 0;
         }

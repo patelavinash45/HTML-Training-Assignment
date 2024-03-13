@@ -210,7 +210,7 @@ namespace HelloDoc.Controllers
                 }
                 return RedirectToAction("ViewProfile", "Patient");
             }
-            _notyfService.Warning("Please, Add Required Field.");
+            _notyfService.Warning("Add Required Field.");
             return View(null);
         }
 
@@ -232,11 +232,12 @@ namespace HelloDoc.Controllers
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
                 if (await _viewDocumentsServices.uploadFile(model, firstName: firstname, lastName: lastName,requestId) > 0)
                 {
+                    _notyfService.Success("Successfully File Added.");
                     return RedirectToAction("ViewDocument", "Patient", new { id = requestId });
                 }
             }
-            _notyfService.Warning("Please, Add Required Field.");
-            return View(model);
+            _notyfService.Warning("Add Required Field");
+            return RedirectToAction("viewDocument", "Patient");
         }
 
         [HttpPost]
@@ -254,8 +255,8 @@ namespace HelloDoc.Controllers
                 {
                     _notyfService.Error("Add Request Faild");
                 }
-            }
-            _notyfService.Warning("Please, Add Required Field.");
+            }   
+            _notyfService.Warning("Add Required Field.");
             return View(model);
         }
 
@@ -296,7 +297,7 @@ namespace HelloDoc.Controllers
                     _notyfService.Error("Add Request Faild");
                 }
             };
-            _notyfService.Warning("Please, Add Required Field.");
+            _notyfService.Warning("Add Required Field.");
             return View(null);
         }
 
@@ -316,7 +317,7 @@ namespace HelloDoc.Controllers
                     _notyfService.Error("Add Request Faild");
                 }
             }
-            _notyfService.Warning("Please, Add Required Field.");
+            _notyfService.Warning("Add Required Field.");
             return View(null);
         }
 
@@ -336,7 +337,7 @@ namespace HelloDoc.Controllers
                     _notyfService.Error("Add Request Faild");
                 }
             }
-            _notyfService.Warning("Please, Add Required Field.");
+            _notyfService.Warning("Add Required Field.");
             return View(null);
         }
 
@@ -356,7 +357,7 @@ namespace HelloDoc.Controllers
                     _notyfService.Error("Add Request Faild");
                 }
             }
-            _notyfService.Warning("Please, Add Required Field.");
+            _notyfService.Warning("Add Required Field.");
             return View(null);
         }
     }

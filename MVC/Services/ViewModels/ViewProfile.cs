@@ -8,7 +8,7 @@ namespace Services.ViewModels
         public string FirstName { get; set; } = null!;
 
         [StringLength(100)]
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
 
         [StringLength(50)]
         [RegularExpression("^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\\-+)|([A-Za-z0-9]+\\.+)|([A-Za-z0-9]+\\++))*[A-Za-z0-9]+@((\\w+\\-+)|(\\w+\\.))*" +
@@ -30,6 +30,7 @@ namespace Services.ViewModels
         [StringLength(10)]
         public string ZipCode { get; set; }
 
+        [Required]
         public DateTime? BirthDate { get; set; }
     }
 }

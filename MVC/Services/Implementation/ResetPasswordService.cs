@@ -14,10 +14,10 @@ namespace Services.Implementation
 {
     public class ResetPasswordService : IResetPasswordService
     {
-        private readonly IAspNetUserRepository _userRepository;
+        private readonly IAspRepository _userRepository;
         private readonly IJwtService _jwtService;
 
-        public ResetPasswordService(IAspNetUserRepository userRepository,IJwtService jwtService)
+        public ResetPasswordService(IAspRepository userRepository,IJwtService jwtService)
         {
             _userRepository = userRepository;
             _jwtService = jwtService;

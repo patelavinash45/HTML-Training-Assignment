@@ -39,10 +39,9 @@
                 <div class="w-100">
                     Check here to review and add file that you or the Client/member has attached to the Request.
                 </div>
-                <form asp-controller="Admin" asp-action="ViewDocument" enctype="multipart/form-data">
+                <form asp-controller="Admin" asp-action="ViewDocument" enctype="multipart/form-data" id="fileUploadForm">
                     <div class="input-group w-100 mb-4 mt-4">
-                        <input class="form-control" placeholder="Select File" type="file" id="file-picker" asp-for="File">
-                        <span asp-validation-for="File" class="text-danger"></span>
+                        <input class="form-control" placeholder="Select File" type="file" id="filePicker" asp-for="File">
                         <button class="fs-5 button" id="uploadButton" type="submit">
                             <i class="bi bi-cloud-arrow-up-fill "></i>
                             Upload
@@ -108,7 +107,7 @@
                                         @item.CreatedDate.ToString("MMM dd, yyyy")
                                     </td>
                                     <td class="d-flex">
-                                        <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" class="download me-2 @item.RequestWiseFileId">
+                                        <a href="~/Files/@item.RequestId/@item.FileName" download="@item.FileName" class="download me-2 @item.RequestWiseFileId">
                                             <button class="iconButtons">
                                                 <i class="bi bi-cloud-arrow-down"></i>
                                             </button>
@@ -147,7 +146,7 @@
                                             @item.CreatedDate.ToString("MMM dd, yyyy")
                                         </div>
                                     </div>
-                                    <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" class="download @item.RequestWiseFileId">
+                                    <a href="~/Files/@item.RequestId/@item.FileName" download="@item.FileName" class="download @item.RequestWiseFileId">
                                         <button id="downloadButton" class="px-3">
                                             <i class="bi bi-cloud-arrow-down"></i>
                                         </button>

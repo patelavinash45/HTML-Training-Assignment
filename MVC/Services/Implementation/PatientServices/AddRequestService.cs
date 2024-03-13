@@ -11,25 +11,21 @@ namespace Services.Implementation.PatientServices
 {
     public class AddRequestService : IAddRequestService
     {
-        private readonly IAspNetRoleRepository _aspNetRoleRepository;
-        private readonly IAspNetUserRepository _aspNetUserRepository;
+        private readonly IAspRepository _aspRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IAspNetUserRoleRepository _aspNetuserRoleRepository;
         private readonly IRequestRepository _requestRepository;
         private readonly IRequestWiseFileRepository _requestWiseFileRepository;
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IFileService _fileService;
         private readonly IBusinessConciergeRepository _businessConciergeRepository;
 
-        public AddRequestService(IAspNetRoleRepository aspNetRoleRepository, IAspNetUserRepository aspNetUserRepository,
-                                    IUserRepository userRepository, IAspNetUserRoleRepository aspNetuserRoleRepository, IRequestRepository requestRepository,
+        public AddRequestService(IAspRepository aspRepository,
+                                    IUserRepository userRepository, IRequestRepository requestRepository,
                                     IRequestWiseFileRepository requestWiseFileRepository, IBusinessConciergeRepository businessConciergeRepository,
                                     IRequestClientRepository requestClientRepository, IFileService fileService)
         {
-            _aspNetRoleRepository = aspNetRoleRepository;
-            _aspNetUserRepository = aspNetUserRepository;
+            _aspRepository = aspRepository;
             _userRepository = userRepository;
-            _aspNetuserRoleRepository = aspNetuserRoleRepository;
             _requestRepository = requestRepository;
             _requestWiseFileRepository = requestWiseFileRepository;
             _requestClientRepository = requestClientRepository;
@@ -39,22 +35,22 @@ namespace Services.Implementation.PatientServices
 
         public bool IsEmailExists(String email)
         {
-            int aspNetUserId = _aspNetUserRepository.checkUser(email);
+            int aspNetUserId = _aspRepository.checkUser(email);
             return aspNetUserId == 0 ? false : true;
         }
 
         public async Task<bool> addPatientRequest(AddPatientRequest model)
         {
-            int aspNetRoleId = _aspNetRoleRepository.checkUserRole(role: "Patient");
+            int aspNetRoleId = _aspRepository.checkUserRole(role: "Patient");
             if (aspNetRoleId == 0)
             {
                 AspNetRole aspNetRole = new()
                 {
                     Name = "Patient",
                 };
-                aspNetRoleId = await _aspNetRoleRepository.addUserRole(aspNetRole);
+                aspNetRoleId = await _aspRepository.addUserRole(aspNetRole);
             }
-            int aspNetUserId = _aspNetUserRepository.checkUser(email: model.Email);
+            int aspNetUserId = _aspRepository.checkUser(email: model.Email);
             int userId = _userRepository.getUserID(aspNetUserId);
             if (aspNetUserId == 0)
             {
@@ -66,7 +62,7 @@ namespace Services.Implementation.PatientServices
                     PasswordHash = genrateHash(model.Password),
                     CreatedDate = DateTime.Now,
                 };
-                aspNetUserId = await _aspNetUserRepository.addUser(aspNetUser);
+                aspNetUserId = await _aspRepository.addUser(aspNetUser);
                 User user = new()
                 {
                     FirstName = model.FirstName,
@@ -91,7 +87,7 @@ namespace Services.Implementation.PatientServices
                     UserId = aspNetUserId,
                     RoleId = aspNetRoleId,
                 };
-                await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
+                await _aspRepository.addAspNetUserRole(aspNetUserRole);
             }
             Request request = new()
             {
@@ -173,7 +169,7 @@ namespace Services.Implementation.PatientServices
 
         public async Task<bool> addRequestForSomeOneelse(AddRequestByPatient model,int aspNetUserIdMe)
         {
-            int aspNetUserId = _aspNetUserRepository.checkUser(email: model.Email);
+            int aspNetUserId = _aspRepository.checkUser(email: model.Email);
             int userId = _userRepository.getUserID(aspNetUserId);
             if (aspNetUserId == 0)
             {
@@ -185,7 +181,7 @@ namespace Services.Implementation.PatientServices
                     PasswordHash = genrateHash(model.Password),
                     CreatedDate = DateTime.Now,
                 };
-                aspNetUserId = await _aspNetUserRepository.addUser(aspNetUser);
+                aspNetUserId = await _aspRepository.addUser(aspNetUser);
                 User user = new()
                 {
                     FirstName = model.FirstName,
@@ -208,9 +204,9 @@ namespace Services.Implementation.PatientServices
                 AspNetUserRole aspNetUserRole = new()
                 {
                     UserId = aspNetUserId,
-                    RoleId = _aspNetRoleRepository.checkUserRole(role: "Patient"),
+                    RoleId = _aspRepository.checkUserRole(role: "Patient"),
                 };
-                await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
+                await _aspRepository.addAspNetUserRole(aspNetUserRole);
             }
             User userMe = _userRepository.getUser(aspNetUserIdMe);
             Request request = new()
@@ -250,16 +246,16 @@ namespace Services.Implementation.PatientServices
 
         public async Task<bool> addConciergeRequest(AddConciergeRequest model)
         {
-            int aspNetRoleId = _aspNetRoleRepository.checkUserRole(role: "Patient");
+            int aspNetRoleId = _aspRepository.checkUserRole(role: "Patient");
             if (aspNetRoleId == 0)
             {
                 AspNetRole aspNetRole = new()
                 {
                     Name = "Patient",
                 };
-                aspNetRoleId = await _aspNetRoleRepository.addUserRole(aspNetRole);
+                aspNetRoleId = await _aspRepository.addUserRole(aspNetRole);
             }
-            int aspNetUserId = _aspNetUserRepository.checkUser(email: model.Email);
+            int aspNetUserId = _aspRepository.checkUser(email: model.Email);
             int userId = _userRepository.getUserID(aspNetUserId);
             if (aspNetUserId == 0)
             {
@@ -271,7 +267,7 @@ namespace Services.Implementation.PatientServices
                     PasswordHash = genrateHash(password: model.Password),
                     CreatedDate = DateTime.Now,
                 };
-                aspNetUserId = await _aspNetUserRepository.addUser(aspNetUser);
+                aspNetUserId = await _aspRepository.addUser(aspNetUser);
                 User user = new()
                 {
                     FirstName = model.FirstName,
@@ -296,7 +292,7 @@ namespace Services.Implementation.PatientServices
                     UserId = aspNetUserId,
                     RoleId = aspNetRoleId,
                 };
-                await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
+                await _aspRepository.addAspNetUserRole(aspNetUserRole);
             }
             Request request = new()
             {
@@ -311,7 +307,7 @@ namespace Services.Implementation.PatientServices
             int requestId = await _requestRepository.addRequest(request);
             if (model.File != null)
             {
-                await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FirstName, lastName: model.LastName);
+                await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.ConciergeFirstName, lastName: model.ConciergeLastName);
             }
             Concierge concierge = new()
             {
@@ -351,16 +347,16 @@ namespace Services.Implementation.PatientServices
 
         public async Task<bool> addFamilyFriendRequest(AddFamilyRequest model)
         {
-            int aspNetRoleId = _aspNetRoleRepository.checkUserRole(role: "Patient");
+            int aspNetRoleId = _aspRepository.checkUserRole(role: "Patient");
             if (aspNetRoleId == 0)
             {
                 AspNetRole aspNetRole = new()
                 {
                     Name = "Patient",
                 };
-                aspNetRoleId = await _aspNetRoleRepository.addUserRole(aspNetRole);
+                aspNetRoleId = await _aspRepository.addUserRole(aspNetRole);
             }
-            int aspNetUserId = _aspNetUserRepository.checkUser(email: model.Email);
+            int aspNetUserId = _aspRepository.checkUser(email: model.Email);
             int userId = _userRepository.getUserID(aspNetUserId);
             if (aspNetUserId == 0)
             {
@@ -372,7 +368,7 @@ namespace Services.Implementation.PatientServices
                     PasswordHash = genrateHash(model.Password),
                     CreatedDate = DateTime.Now,
                 };
-                aspNetUserId = await _aspNetUserRepository.addUser(aspNetUser);
+                aspNetUserId = await _aspRepository.addUser(aspNetUser);
                 User user = new()
                 {
                     FirstName = model.FirstName,
@@ -397,7 +393,7 @@ namespace Services.Implementation.PatientServices
                     UserId = aspNetUserId,
                     RoleId = aspNetRoleId,
                 };
-                await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
+                await _aspRepository.addAspNetUserRole(aspNetUserRole);
             }
             Request request = new()
             {
@@ -413,7 +409,7 @@ namespace Services.Implementation.PatientServices
             int requestId = await _requestRepository.addRequest(request);
             if (model.File != null)
             {
-                await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FirstName, lastName: model.LastName);
+                await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FamilyFriendFirstName, lastName: model.FamilyFriendLastName);
             }
             RequestClient requestClient = new()
             {
@@ -437,16 +433,16 @@ namespace Services.Implementation.PatientServices
 
         public async Task<bool> addBusinessRequest(AddBusinessRequest model)
         {
-            int aspNetRoleId = _aspNetRoleRepository.checkUserRole(role: "Patient");
+            int aspNetRoleId = _aspRepository.checkUserRole(role: "Patient");
             if (aspNetRoleId == 0)
             {
                 AspNetRole aspNetRole = new()
                 {
                     Name = "Patient",
                 };
-                aspNetRoleId = await _aspNetRoleRepository.addUserRole(aspNetRole);
+                aspNetRoleId = await _aspRepository.addUserRole(aspNetRole);
             }
-            int aspNetUserId = _aspNetUserRepository.checkUser(email: model.Email);
+            int aspNetUserId = _aspRepository.checkUser(email: model.Email);
             int userId = _userRepository.getUserID(aspNetUserId);
             if (aspNetUserId == 0)
             {
@@ -458,7 +454,7 @@ namespace Services.Implementation.PatientServices
                     PasswordHash = genrateHash(model.Password),
                     CreatedDate = DateTime.Now,
                 };
-                aspNetUserId = await _aspNetUserRepository.addUser(aspNetUser);
+                aspNetUserId = await _aspRepository.addUser(aspNetUser);
                 User user = new()
                 {
                     FirstName = model.FirstName,
@@ -483,7 +479,7 @@ namespace Services.Implementation.PatientServices
                     UserId = aspNetUserId,
                     RoleId = aspNetRoleId,
                 };
-                await _aspNetuserRoleRepository.addAspNetUserRole(aspNetUserRole);
+                await _aspRepository.addAspNetUserRole(aspNetUserRole);
             }
             Request request = new()
             {
@@ -498,7 +494,7 @@ namespace Services.Implementation.PatientServices
             int requestId = await _requestRepository.addRequest(request);
             if (model.File != null)
             {
-                await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FirstName, lastName: model.LastName);
+                await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.BusinessFirstName, lastName: model.BusinessLastName);
             }
             Business business = new()
             {

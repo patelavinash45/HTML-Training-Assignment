@@ -20,14 +20,14 @@ namespace Repositories.Implementation
 
         public async Task<int> addRequestNote(RequestNote requestNote)
         {
-            _dbContext.Add(requestNote);
+            _dbContext.RequestNotes.Add(requestNote);
             await _dbContext.SaveChangesAsync();
             return requestNote?.RequestNotesId ?? 0;
         }
 
         public async Task<bool> updateRequestNote(RequestNote requestNote)
         {
-            _dbContext.Update(requestNote);
+            _dbContext.RequestNotes.Update(requestNote);
             int temp= await _dbContext.SaveChangesAsync();
             return temp>0;
         }

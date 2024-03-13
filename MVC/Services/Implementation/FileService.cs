@@ -17,13 +17,13 @@ namespace Services.Implementation
 
         public async Task<int> addFile(IFormFile file, int requestId, string firstName, string lastName)
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files/"+requestId.ToString());
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             };
             FileInfo fileInfo = new FileInfo(file.FileName);
-            string fileName = requestId + "_" + fileInfo.Name;
+            string fileName = fileInfo.Name;
             string fileNameWithPath = Path.Combine(path, fileName);
             using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
             {

@@ -23,7 +23,7 @@ namespace Repositories.Implementation
 
         public async Task<int> addFile(RequestWiseFile requestWiseFile)
         {
-            _dbContext.Add(requestWiseFile);
+            _dbContext.RequestWiseFiles.Add(requestWiseFile);
             await _dbContext.SaveChangesAsync();
             return requestWiseFile?.RequestWiseFileId ?? 0;
         }
@@ -40,7 +40,7 @@ namespace Repositories.Implementation
 
         public async Task<bool> updateRequestWiseFile(RequestWiseFile requestWiseFile)
         {
-            _dbContext.Update(requestWiseFile);
+            _dbContext.RequestWiseFiles.Update(requestWiseFile);
             int temp = await _dbContext.SaveChangesAsync();
             return temp > 0;
         }

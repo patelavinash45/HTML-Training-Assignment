@@ -14,6 +14,7 @@
     <script src="~/js/Patient/Request.js"></script>
 </head>
 <body>
+    @await Component.InvokeAsync("Notyf")
     <partial name="_RequestHeader" />
     <div id="main-body">
         <div class="d-flex justify-content-end container">

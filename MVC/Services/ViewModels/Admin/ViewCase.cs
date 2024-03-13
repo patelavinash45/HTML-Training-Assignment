@@ -19,7 +19,7 @@ namespace Services.ViewModels.Admin
 
         [StringLength(20)]
         [Required]
-        public string? Mobile { get; set; }
+        public string Mobile { get; set; }
 
         [StringLength(100)]
         public string? Region { get; set; }
@@ -41,7 +41,7 @@ namespace Services.ViewModels.Admin
 
         public int? AspNetUserId { get; set; }
 
-        public CancelPopUp CancelPopup { get; set; }
+        public CancelPopUp? CancelPopup { get; set; }
 
     }
 }

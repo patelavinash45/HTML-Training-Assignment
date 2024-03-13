@@ -21,7 +21,7 @@ namespace Repositories.Implementation
 
         public async Task<int> addUser(User user)
         {
-            _dbContext.Add(user);
+            _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
             return user?. UserId ?? 0;
         }
@@ -33,7 +33,7 @@ namespace Repositories.Implementation
 
         public async Task<bool> updateProfile(User user)
         {
-            _dbContext.Update(user);
+            _dbContext.Users.Update(user);
             int temp=await _dbContext.SaveChangesAsync();
             return temp > 0;
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Repositories.DataModels;
+using Repositories.Interface;
 using Repositories.Interfaces;
 using Services.Interfaces.AuthServices;
 using Services.ViewModels;
@@ -12,21 +13,21 @@ namespace Services.Implementation.AuthServices
 {
     public class LoginService : ILoginService
     {
-        private readonly IAspNetUserRoleRepository _aspNetUserRoleRepository;
+        private readonly IAspRepository _aspRepository;
         private readonly IUserRepository _userRepository;
         private readonly IJwtService _jwtService;
 
-        public LoginService(IAspNetUserRoleRepository aspNetUserRoleRepository,
+        public LoginService(IAspRepository aspRepository,
                                        IUserRepository userRepository,IJwtService jwtService)
         {
-            _aspNetUserRoleRepository = aspNetUserRoleRepository;
+            _aspRepository = aspRepository;
             _userRepository = userRepository;
             _jwtService = jwtService;
         }
 
         public UserDataModel auth(Login model,int userType)
         {
-            AspNetUserRole aspNetUserRole = _aspNetUserRoleRepository.
+            AspNetUserRole aspNetUserRole = _aspRepository.
                            validateAspNetUserRole(email: model.Email, password: genrateHash(model.PasswordHash), userType: userType);
             if (aspNetUserRole != null)
             {

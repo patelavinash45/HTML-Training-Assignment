@@ -85,7 +85,7 @@ namespace Services.Implementation
             foreach (var item in requestWiseFileIds)
             {
                 RequestWiseFile requestWiseFile = _requestWiseFileRepository.getFilesByrequestWiseFileId(item);
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files/"+requestWiseFile.RequestId.ToString());
                 path = Path.Combine(path, requestWiseFile.FileName);
                 Attachment attachment = new Attachment(path);
                 mailMessage.Attachments.Add(attachment);

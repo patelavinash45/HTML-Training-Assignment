@@ -37,12 +37,8 @@
                 </button>
             </a>
         </div>
-        <form class="w-100" enctype="multipart/form-data" id="form" asp-controller="Admin" asp-action="ViewCase">
-            <input readonly class="form-control d-none" id="email" type="email" asp-for="Email" />
+        <form class="w-100" enctype="multipart/form-data" id="form" asp-controller="Admin" asp-action="ViewCase" >
             <input readonly class="form-control d-none" type="text" asp-for="RequestId" />
-            <input readonly class="form-control d-none" id="rgion" asp-for="Region" />
-            <input readonly class="form-control d-none" id="add" asp-for="Address" />
-            <input readonly class="form-control d-none" id="room" asp-for="Room" />
             <fieldset disabled id="Fieldset">
                 <h5 class="fw-semibold mb-3">
                     Patient Information
@@ -60,26 +56,26 @@
                 <hr />
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="first-name" asp-for="FirstName" placeholder="FirstName" />
+                        <input class="form-control" id="firstName" asp-for="FirstName" placeholder="FirstName" />
                         <label for="first-name">First Name</label>
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                        <span id="firstNameValidation" class="text-danger validation">The FirstName field is required.</span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="last-name" asp-for="LastName" placeholder="LastName" />
-                        <label for="last-name">Last Name</label>
-                        <span asp-validation-for="LastName" class="text-danger"></span>
+                        <input class="form-control" id="lastName" asp-for="LastName" placeholder="LastName" />
+                        <label for="lastName">Last Name</label>
+                        <span id="lastNameValidation" class="text-danger validation">The LastName field is required.</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input class="form-control" id="date" type="date" asp-for="BirthDate" placeholder="BirthDate" />
-                        <label id="date-picker" for="date">Date of Birth</label>
-                        <span asp-validation-for="BirthDate" class="text-danger"></span>
+                        <input class="form-control" id="birthDate" type="date" asp-for="BirthDate" placeholder="BirthDate" />
+                        <label for="birthDate">Date of Birth</label>
+                        <span id="birthDateValidation" class="text-danger validation">The BirthDate field is required.</span>
                     </div>
-                    <div class="col-xl-6 col-md-6 col-lg-6 d-flex align-items-end">
+                    <div class="col-xl-6 col-md-6 col-lg-6 d-flex align-items-baseline">
                         <div class="form-floating w-100">
                             <input class="form-control" id="phone" type="tel" asp-for="Mobile" placeholder="Mobile" />
-                            <span asp-validation-for="Mobile" class="text-danger"></span>
+                            <span id="phoneValidation" class="text-danger validation">The PhoneNumber field is required.</span>
                             @*<label for="phone">Phone Number</label> *@
                         </div>  
                         <button class="px-3 mx-3">

@@ -27,7 +27,7 @@
                 User Profile
             </span>
             <a asp-controller="Patient" asp-action="Dashboard">
-                <button id="backBox">
+                <button id="backBox" class="bg-white">
                     <i class="bi bi-chevron-left"> </i>
                     Back
                 </button>
@@ -76,7 +76,6 @@
                             <div class="form-floating w-75">
                                 <input class="form-control" id="phone" type="tel" asp-for="Mobile" />
                                 <span asp-validation-for="Mobile" class="text-danger"></span>
-                                <label for="phone">Phone Number</label> 
                             </div>
                         </div>
                     </div>

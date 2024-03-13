@@ -12,6 +12,14 @@ namespace Repositories.Interfaces
 
         int countRequestClientByStatus(int status);
 
+        List<RequestClient> getRequestClientByName(string firstName, string lastName, int status, int skip);
+
+        int countRequestClientByName(string firstName, string lastName, int status);
+
+        List<RequestClient> getRequestClientByRegion(int regionId, int status, int skip);
+
+        int countRequestClientByRegion(int regionId, int status);
+
         List<RequestClient> getAllRequestClientForUser(int userId);
 
         Task<int> addRequestClient(RequestClient requestClient);
@@ -21,7 +29,5 @@ namespace Repositories.Interfaces
         RequestClient GetRequestClientAndRequestByRequestId(int requestId);
 
         Task<bool> updateRequestClient(RequestClient requestClient);
-
-        List<RequestClient> getRequestClientByName(string firstName, string lastName);
     }
 }

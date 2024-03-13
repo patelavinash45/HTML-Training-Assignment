@@ -37,7 +37,7 @@ namespace Repositories.Implementation
 
         public async Task<int> addRequestClient(RequestClient requestClient)
         {
-            _dbContext.Add(requestClient);
+            _dbContext.RequestClients.Add(requestClient);
             int temp = await _dbContext.SaveChangesAsync();
             return temp>0 ? requestClient.RequestClientId : 0;
         }
@@ -54,15 +54,37 @@ namespace Repositories.Implementation
 
         public async Task<bool> updateRequestClient(RequestClient requestClient)
         {
-            _dbContext.Update(requestClient);
+            _dbContext.RequestClients.Update(requestClient);
             int temp = await _dbContext.SaveChangesAsync();
             return temp > 0 ? true : false;
         }
 
-        public List<RequestClient> getRequestClientByName(string firstName,string lastName)
+        public List<RequestClient> getRequestClientByName(string firstName, string lastName, int status, int skip)
         {
-            return _dbContext.RequestClients.Include(a => a.Request).Where(a => a.FirstName.Contains(firstName) && a.LastName.Contains(lastName)).
-                                        ToList();
+            return _dbContext.RequestClients
+               .Include(a => a.Request).Where(a => a.Status == status).Where(a => (a.FirstName.ToLower().Contains(firstName) && a.LastName.ToLower().Contains(lastName)) 
+                || (a.FirstName.ToLower().Contains(lastName) && a.LastName.ToLower().Contains(firstName))).
+                Skip(skip).OrderByDescending(a => a.RequestClientId).Take(10).ToList();
+        }
+
+        public int countRequestClientByName(string firstName, string lastName,int status)
+        {
+            return _dbContext.RequestClients
+               .Include(a => a.Request).Where(a => a.Status == status).Where(a => (a.FirstName.ToLower().Contains(firstName) && a.LastName.ToLower().Contains(lastName))
+                || (a.FirstName.ToLower().Contains(lastName) && a.LastName.ToLower().Contains(firstName))).ToList().Count;
+        }
+
+        public List<RequestClient> getRequestClientByRegion(int regionId, int status, int skip)
+        {
+            return _dbContext.RequestClients
+               .Include(a => a.Request).Where(a => a.Status == status).Where(a => a.RegionId == regionId).
+                        Skip(skip).OrderByDescending(a => a.RequestClientId).Take(10).ToList();
+        }
+
+        public int countRequestClientByRegion(int regionId, int status)
+        {
+            return _dbContext.RequestClients
+               .Include(a => a.Request).Where(a => a.Status == status).Where(a => a.RegionId == regionId).ToList().Count;
         }
 
         public List<CaseTag> getAllReason()

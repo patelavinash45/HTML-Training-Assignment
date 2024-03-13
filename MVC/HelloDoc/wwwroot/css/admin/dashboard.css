@@ -29,19 +29,24 @@ input {
     border-width: 1px;
 }
 
+input[type=search] {
+    outline-offset: 0px;
+}
+
 button {
+    border-radius: 10px;
     border: 0.5px solid;
     margin-top: 5px;
     margin-bottom: 5px;
     border-radius: 5px;
 }
 
-    a:hover,
-    button:hover:enabled {
-        font-weight: bold;
-        border-color: black;
-        cursor: pointer;
-    }
+ a:hover,
+ button:hover:enabled {
+    font-weight: bold;
+    border-color: black;
+    cursor: pointer;
+ }
 
 button:disabled{
     color: black;
@@ -88,14 +93,14 @@ button:disabled{
     border-color: #f2d9fc;
 }
 
-    #newOption:hover,
-    #activeOption:hover,
-    #concludeOption:hover,
-    #tocloseOption:hover,
-    #unpaidOption:hover,
-    #pendingOption:hover {
-        box-shadow: 10px 10px 5px #AAA;
-    }
+ #newOption:hover,
+ #activeOption:hover,
+ #concludeOption:hover,
+ #tocloseOption:hover,
+ #unpaidOption:hover,
+ #pendingOption:hover {
+     box-shadow: 10px 10px 5px #AAA;
+ }
 
 .middleOptionButtons {
     background-color: cadetblue;

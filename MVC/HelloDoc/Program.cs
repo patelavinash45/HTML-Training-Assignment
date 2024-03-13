@@ -28,9 +28,7 @@ builder.Services.AddNotyf(config => { config.DurationInSeconds = 5; config.IsDis
 builder.Services.AddDbContext<Repositories.DataContext.HalloDocDbContext>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<IAspNetUserRepository, AspNetUserRepository>();
-builder.Services.AddScoped<IAspNetRoleRepository, AspNetRoleRepository>();
-builder.Services.AddScoped<IAspNetUserRoleRepository, AspNetUserRoleRepository>();
+builder.Services.AddScoped<IAspRepository, AspRepository>();
 builder.Services.AddScoped<IPatientDashboardService, PatientDashboardService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();

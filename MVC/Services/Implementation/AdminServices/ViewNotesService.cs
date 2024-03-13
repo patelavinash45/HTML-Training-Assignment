@@ -91,7 +91,7 @@ namespace Services.Implementation.AdminServices
             RequestStatusLog _requestStatusLog = new()
             {
                 RequestId = model.RequestId,
-                Status = 10,
+                Status = 8,
                 CreatedDate = DateTime.Now,
                 Notes = model.CancelationReson,
             };

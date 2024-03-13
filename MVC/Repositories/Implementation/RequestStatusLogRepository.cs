@@ -20,14 +20,14 @@ namespace Repositories.Implementation
 
         public async Task<int> addRequestSatatusLog(RequestStatusLog requestStatusLog)
         {
-            _dbContext.Add(requestStatusLog);
+            _dbContext.RequestStatusLogs.Add(requestStatusLog);
             await _dbContext.SaveChangesAsync();
             return requestStatusLog?.RequestStatusLogId ?? 0;
         }  
 
         public async Task<bool> updateRequestSatatusLog(RequestStatusLog requestStatusLog)
         {
-            _dbContext.Update(requestStatusLog);
+            _dbContext.RequestStatusLogs.Update(requestStatusLog);
             int temp = await _dbContext.SaveChangesAsync();
             return temp > 0;
         }

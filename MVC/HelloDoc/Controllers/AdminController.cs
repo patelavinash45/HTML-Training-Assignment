@@ -288,11 +288,12 @@ namespace HelloDoc.Controllers
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
                 if (await _viewDocumentsServices.uploadFile(model,firstName:firstname,lastName: lastName,requestId) > 0)
                 {
+                    _notyfService.Success("Successfully File Added.");
                     return RedirectToAction("ViewDocument", "Admin");
                 }
             }
-            _notyfService.Warning("Please, Add Required Field.");
-            return View(model);
+            _notyfService.Warning("Add Required Field");
+            return RedirectToAction("viewDocument", "Admin");
         }
 
         [HttpPost]
@@ -354,11 +355,11 @@ namespace HelloDoc.Controllers
             {
                 if (await _viewCaseService.updateRequest(model))
                 {
-                    _notyfService.Success("Successfully Request Updated");
+                    _notyfService.Success("Successfully Updated");
                 }
                 else
                 {
-                    _notyfService.Error("Update Request Faild");
+                    _notyfService.Error("Update Faild");
                 }
                 return RedirectToAction("ViewCase", "Admin");
             }
@@ -373,9 +374,9 @@ namespace HelloDoc.Controllers
         }
 
         [HttpGet] // Dashboard
-        public IActionResult SearchPatient(String patientName,String status, String partialViewName)
+        public IActionResult Search(String patientName,String status, String partialViewName, int pageNo, int type)
         {
-            TableModel tableModel = _adminDashboardService.searchPatient(patientName);
+            TableModel tableModel = _adminDashboardService.patientSearch(patientName,status,pageNo,type);
             return PartialView(partialViewName, tableModel);
         }
 

@@ -30,7 +30,7 @@ namespace Repositories.Implementation
 
         public async Task<int> addOrderDetails(OrderDetail orderDetail)
         {
-            _dbContext.Add(orderDetail);
+            _dbContext.OrderDetails.Add(orderDetail);
             await _dbContext.SaveChangesAsync();
             return orderDetail?.Id ?? 0;
         }

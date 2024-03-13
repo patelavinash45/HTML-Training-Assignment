@@ -70,9 +70,9 @@
                             @data.RequestdDate
                         </td>
                         <td>
-                            <button class="bg-transparent text-white p-2 border-white w-50">
+                            <a class="bg-transparent text-white p-2 border-white w-50">
                                 @data.Mobile
-                            </button>
+                            </a>
                             (Patient)
                             @if (data.Requester == 1 || data.Requester == 3 || data.Requester == 4)
                             {
@@ -264,20 +264,20 @@
     <div class="d-flex justify-content-between">
         Showing @Model.StartRange to @Model.EndRange of @Model.TotalRequests entries
         <div class="d-flex">
-            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToFirstPage(2)" disabled=@(!Model.IsFirstPage)>
+            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToFirstPage()" disabled=@(!Model.IsFirstPage)>
                 «
             </button>
-            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="getPreviousPageData(@Model.PageNo,2)" disabled=@(!Model.IsPreviousPage)>
+            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="getPreviousPageData(@Model.PageNo)" disabled=@(!Model.IsPreviousPage)>
                 ‹
             </button>
             <button class="border-1 rounded-0 mx-2 px-3 currentPage">
                 @Model.PageNo
             </button>
-            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="getNextPageData(@Model.PageNo,@Model.TotalRequests,2)"
+            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="getNextPageData(@Model.PageNo,@Model.TotalRequests)"
                                       disabled=@(!Model.IsNextPage)>
                 ›
             </button>
-            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToLastPage(2,@Model.TotalRequests)" disabled=@(!Model.IsLastPage)>
+            <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToLastPage(@Model.TotalRequests)" disabled=@(!Model.IsLastPage)>
                 »
             </button>
         </div>

@@ -101,7 +101,7 @@
                                         @item.CreatedDate.ToString("MMM dd, yyyy")
                                     </td>
                                     <td>
-                                        <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" class="download @item.RequestWiseFileId">
+                                        <a href="~/Files/@item.RequestId/@item.FileName" download="@item.FileName" class="download @item.RequestWiseFileId">
                                             <button id="downloadButton" class="px-3">
                                                 <i class="bi bi-cloud-arrow-down"></i>
                                             </button>
@@ -135,7 +135,7 @@
                                             @item.CreatedDate.ToString("MMM dd, yyyy")
                                         </div>
                                     </div>
-                                    <a href="~/Files/@item.FileName" download="~/Files/@item.FileName" class="download @item.RequestWiseFileId">
+                                    <a href="~/Files/@item.RequestId/@item.FileName" download="@item.FileName" class="download @item.RequestWiseFileId">
                                         <button id="downloadButton" class="px-3">
                                             <i class="bi bi-cloud-arrow-down"></i>
                                         </button>

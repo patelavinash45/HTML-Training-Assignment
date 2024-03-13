@@ -15,6 +15,7 @@
     <script src="~/js/Patient/Request.js"></script>
 </head>
 <body>
+    @await Component.InvokeAsync("Notyf")
     <partial name="_RequestHeader" />
     <partial name="_WarningPopUp" />
     <div id="main-body">
