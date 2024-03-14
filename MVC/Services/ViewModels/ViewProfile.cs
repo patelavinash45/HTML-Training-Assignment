@@ -30,6 +30,8 @@ namespace Services.ViewModels
         [StringLength(10)]
         public string ZipCode { get; set; }
 
+        public int IsMobile { get; set; }
+
         [Required]
         public DateTime? BirthDate { get; set; }
     }

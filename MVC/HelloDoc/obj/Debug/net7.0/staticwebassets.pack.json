@@ -205,6 +205,10 @@
       "PackagePath": "staticwebassets\\js\\Admin\\viewCase.js"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\viewNotes.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\viewNotes.js"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\Request.js",
       "PackagePath": "staticwebassets\\js\\Patient\\Request.js"
     },

@@ -45,7 +45,6 @@ builder.Services.AddScoped<IViewNotesService, ViewNotesService>();
 builder.Services.AddScoped<IRequestNotesRepository, RequestNotesRepository>();
 builder.Services.AddScoped<IRequestStatusLogRepository, RequestStatusLogRepository>();
 builder.Services.AddScoped<IBusinessConciergeRepository, BusinessConciergeRepository>();
-builder.Services.AddScoped<IBlockRequestsRepository, BlockRequestsRepository>();
 builder.Services.AddScoped<ISendOrderService, SendOrderService>();
 builder.Services.AddScoped<IHealthProfessionalRepository, HealthProfessionalRepository>();
 

@@ -7,20 +7,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ViewCase</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/Admin/viewNotes.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/admin/ViewNotes.css" rel="stylesheet" />
 </head>
 
 <body>
     @await Component.InvokeAsync("Notyf")
-    @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", 0)
+    <partial name="_AdminDashboardHeader" model="0">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
             <h3>
                 Notes
             </h3>
-            <a asp-controller="Admin" asp-action="Dashboard" asp-route-requestId="@Model.RequestId">
+            <a asp-controller="Admin" asp-action="Dashboard">
                 <button id="back-box">
                     <i class="bi bi-chevron-left"> </i>
                     Back
@@ -35,18 +37,14 @@
                         <h4 class="mt-1">
                             Transfer Notes
                         </h4>
-                        @for(int i=0;i<Model.TransferNotes.Count;i++)
-                        {
-                            <div class="d-flex">
-                                <i class="bi bi-@(i+1)-square h4 me-2"></i>
-                                @Model.TransferNotes[i]
-                            </div>
-                        }
-                        @*@foreach(var item in Model.TransferNotes)
-                        {
-                            @item
-                        }*@
-                    </div>
+                            @for (int i = 0; i < Model.TransferNotes.Count; i++)
+                            {
+                                <div class="d-flex">
+                                    <i class="bi bi-@(i+1)-square h4 me-2"></i>
+                                    @Model.TransferNotes[i]
+                                </div>
+                            }
+                        </div>
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
@@ -76,15 +74,14 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <form asp-controller="Admin" asp-action="ViewNotes">
+                <form asp-controller="Admin" asp-action="ViewNotes" id="form">
                     <div class="card p-3 d-flex align-items-end">
                        <div class="form-floating w-100">
-                            <input readonly class="d-none" asp-for="RequestId" type="text" />
-                            <textarea class="form-control border-2 mb-4 h-100" placeholder="Additional Notes" rows="5" asp-for="NewAdminNotes" id="newnotes">
+                            <textarea class="form-control border-2 mb-2 h-100" placeholder="Additional Notes" rows="5" asp-for="NewAdminNotes" id="newnotes">
 
                             </textarea>
                             <label for="newnotes">Additional Notes</label>
-                            <span asp-validation-for="NewAdminNotes" class="text-danger"></span>
+                            <span class="text-danger validation mb-2">this Additional Notes Field is required</span>
                        </div>
                         <button id="saveChanges" class="px-3" type="submit">
                             Save Changes

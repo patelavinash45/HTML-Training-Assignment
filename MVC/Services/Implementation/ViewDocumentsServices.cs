@@ -40,7 +40,7 @@ namespace Services.Implementation
                 };
                 fileList.Add(fileModel);
             }
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
+            RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(requestId);
             Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserId);
             ViewDocument viewDocument = new()
             {
@@ -73,7 +73,7 @@ namespace Services.Implementation
             return requestId;
         }
 
-        public async Task<bool> sendFileMail(List<int> requestWiseFileIds ,int requestId)
+        public bool sendFileMail(List<int> requestWiseFileIds ,int requestId)
         {
             MailMessage mailMessage = new MailMessage
             {

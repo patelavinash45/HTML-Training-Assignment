@@ -47,5 +47,10 @@ namespace Repositories.Implementation
         {
             return _dbContext.Physicians.Where(a => a.RegionId==regionId).ToList();
         }
+
+        public Physician getPhysicianNameByPhysicianId(int physicianId)
+        {
+            return _dbContext.Physicians.FirstOrDefault(a => a.PhysicianId == physicianId);
+        }
     }
 }

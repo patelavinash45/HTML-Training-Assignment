@@ -4,6 +4,8 @@ namespace Services.ViewModels.Admin
 {
     public class ViewCase
     {
+        public short? Status { get; set; }
+
         public int RequestId { get; set; }
 
         [StringLength(100)]
@@ -12,10 +14,10 @@ namespace Services.ViewModels.Admin
 
         [StringLength(100)]
         [Required]
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
 
         [StringLength(50)]
-        public string? Email { get; set; } = null!;
+        public string Email { get; set; } = null!;
 
         [StringLength(20)]
         [Required]
@@ -24,8 +26,7 @@ namespace Services.ViewModels.Admin
         [StringLength(100)]
         public string? Region { get; set; }
 
-        [StringLength(100)]
-        public string? Requester { get; set; }
+        public int Requester { get; set; } = 0;
 
         [StringLength(100)]
         public string? Room { get; set; }

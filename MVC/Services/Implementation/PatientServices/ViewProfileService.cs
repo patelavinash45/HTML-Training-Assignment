@@ -29,6 +29,7 @@ namespace Services.Implementation.PatientServices
                 Street = user.Street,
                 City = user.City,
                 ZipCode = user.ZipCode,
+                IsMobile = user.IsMobile[0] ? 1 : 0,
             };
             return viewProfile;
         }
@@ -43,6 +44,7 @@ namespace Services.Implementation.PatientServices
             user.Street = model.Street;
             user.City = model.City;
             user.State = model.State;
+            user.IsMobile[0] = model.IsMobile == 1 ? true : false;
             user.ZipCode = model.ZipCode;
             user.IntDate = model.BirthDate.Value.Day;
             user.StrMonth = model.BirthDate.Value.Month.ToString();

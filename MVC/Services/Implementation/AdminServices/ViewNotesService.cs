@@ -15,18 +15,16 @@ namespace Services.Implementation.AdminServices
         private readonly IRequestStatusLogRepository _requestSatatusLogRepository;
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IRequestRepository _requestRepository;
-        private readonly IBlockRequestsRepository _blockRequestsRepository;
         private readonly IJwtService _jwtService;
 
         public ViewNotesService(IRequestNotesRepository requestNotesRepository, IRequestStatusLogRepository requestSatatusLogRepository, 
                                       IRequestClientRepository requestClientRepository, IRequestRepository requestRepository, 
-                                      IBlockRequestsRepository blockRequestsRepository, IJwtService jwtService)
+                                      IJwtService jwtService)
         {
             _requestNotesRepository = requestNotesRepository;
             _requestSatatusLogRepository = requestSatatusLogRepository;
             _requestRepository = requestRepository;
             _requestClientRepository = requestClientRepository;
-            _blockRequestsRepository = blockRequestsRepository;
             _jwtService = jwtService;
         }
         public ViewNotes GetNotes(int RequestId)
@@ -48,26 +46,26 @@ namespace Services.Implementation.AdminServices
             return notes;
         }
 
-        public async Task<bool> addAdminNotes(ViewNotes model)
+        public async Task<bool> addAdminNotes(String adminNotes, int requestId)
         {
-            RequestNote requestNote = _requestNotesRepository.GetRequestNoteByRequestId(model.RequestId);
+            RequestNote requestNote = _requestNotesRepository.GetRequestNoteByRequestId(requestId);
             if(requestNote == null)
             {
                 RequestNote _requestNote = new()
                 {
-                    RequestId = model.RequestId,
-                    AdminNotes = model.NewAdminNotes,
+                    RequestId = requestId,
+                    AdminNotes = adminNotes,
                     CreatedDate = DateTime.Now,
                 };
                 return await _requestNotesRepository.addRequestNote(_requestNote) > 0;
             }
-            requestNote.AdminNotes= model.NewAdminNotes;
+            requestNote.AdminNotes= adminNotes;
             return await _requestNotesRepository.updateRequestNote(requestNote);
         }
 
         public async Task<bool> cancleRequest(CancelPopUp model)
         {
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
             requestClient.Status = 3;
             await _requestClientRepository.updateRequestClient(requestClient);
             Request request = _requestRepository.getRequestByRequestId(model.RequestId);
@@ -85,7 +83,7 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> agreementDeclined(Agreement model)
         {
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
             requestClient.Status = 10;
             await _requestClientRepository.updateRequestClient(requestClient);
             RequestStatusLog _requestStatusLog = new()
@@ -100,14 +98,14 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> agreementAgree(Agreement model)
         {
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
             requestClient.Status = 4;
             return await _requestClientRepository.updateRequestClient(requestClient);
         }
 
         public async Task<bool> assignRequest(AssignAndTransferPopUp model)
         {
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
             requestClient.Status = 2;
             requestClient.PhysicianId = model.SelectedPhysician;
             await _requestClientRepository.updateRequestClient(requestClient);
@@ -124,7 +122,7 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> blockRequest(BlockPopUp model)
         {
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
             requestClient.Status = 0;
             await _requestClientRepository.updateRequestClient(requestClient);
             BlockRequest blockRequest = new()
@@ -135,7 +133,7 @@ namespace Services.Implementation.AdminServices
                 RequestId = model.RequestId,
                 CreatedDate = DateTime.Now,
             };
-            await _blockRequestsRepository.addBlockRequest(blockRequest);
+            await _requestSatatusLogRepository.addBlockRequest(blockRequest);
             RequestStatusLog _requestStatusLog = new()
             {
                 RequestId = model.RequestId,
@@ -148,12 +146,12 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> clearRequest(int requestId)
         {
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
+            RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(requestId);
             requestClient.Status = 12;
             return await _requestClientRepository.updateRequestClient(requestClient);
         }
 
-        public async Task<bool> sendAgreement(Agreement model)
+        public bool sendAgreement(Agreement model)
         {
             List<Claim> claims = new List<Claim>()
             {

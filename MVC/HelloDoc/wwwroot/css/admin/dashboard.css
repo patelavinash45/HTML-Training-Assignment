@@ -56,6 +56,14 @@ button:disabled{
     width: 150px;
 }
 
+.viewcase {
+    width: 150px;
+    position: absolute;
+    z-index: 36;
+    margin-top: -40px;
+    right: 40px;
+}
+
 #newOption {
     box-shadow: 10px 10px 5px #AAA;
     background-color: #4c6dcf;
@@ -149,22 +157,21 @@ button:disabled{
 
 .accordion-button:not(.collapsed) {
     color: White;
+    font-weight: normal;
 }
 
 .accordion-button[aria-expanded="true"] {
     background-color: #dae8eb;
     border: none;
     color: black;
-}
-
-.accordion-button[aria-expanded="true"] {
-    /*background-image: none;*/
-    /*background-color: white;*/
     box-shadow: none;
-    border-radius: 10px;    
+    border-radius: 10px;
+    font-weight: normal;
 }
 
-.accordion-flush .accordion-item .accordion-button {
+.accordion-flush 
+.accordion-item 
+.accordion-button {
     border-start-start-radius: 5px;
     border-start-end-radius: 5px;
 }
@@ -199,6 +206,7 @@ bg-warning{
         font-size: 12px;
     }
 
+    .viewcase,
     .mapButton{
         width: 120px
     }

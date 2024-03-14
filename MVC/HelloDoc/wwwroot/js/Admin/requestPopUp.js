@@ -90,6 +90,16 @@ $("#cacelForm").submit(function (e) {
     }
 })
 
+$("#sendAgreementForm").submit(function (e) {
+    if ($("#patientEmail").val() == null || $("#patientNumber").val() == null) {
+        e.preventDefault();
+        $("#sendAgreementValidation").css("display", "block");
+    }
+    else {
+        $("#sendAgreementValidation").css("display", "none");
+    }
+})
+
 ////
 
 function navigatToViewCase(requestId) {

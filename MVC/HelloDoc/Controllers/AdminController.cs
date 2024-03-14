@@ -127,10 +127,10 @@ namespace HelloDoc.Controllers
             return RedirectToAction("ViewDocument", "Admin");
         }
 
-        public async Task<IActionResult> SendMail([FromBody] List<int> requestWiseFileIdsList)
+        public IActionResult SendMail([FromBody] List<int> requestWiseFileIdsList)
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
-            if (await _viewDocumentsServices.sendFileMail(requestWiseFileIdsList,requestId))
+            if (_viewDocumentsServices.sendFileMail(requestWiseFileIdsList,requestId))
             {
                 _notyfService.Success("Successfully Send Mail");
             }
@@ -223,11 +223,11 @@ namespace HelloDoc.Controllers
             return Json(new { redirect = Url.Action("Dashboard", "Admin") });
         }
 
-        public async Task<IActionResult> SendAgreementPopUp(Agreement model)
+        public IActionResult SendAgreementPopUp(Agreement model)
         {
             if (ModelState.IsValid)
             {
-                if (await _viewNotesService.sendAgreement(model))
+                if (_viewNotesService.sendAgreement(model))
                 {
                     _notyfService.Success("Successfully Send");
                 }
@@ -366,6 +366,12 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
+        //[HttpGet] // Dashboard 
+        //public IActionResult ExportAllData()
+        //{
+            
+        //}
+
         [HttpGet] // Dashboard 
         public IActionResult GetTablesData(String status,int pageNo,String partialViewName)
         {
@@ -373,11 +379,11 @@ namespace HelloDoc.Controllers
            return PartialView(partialViewName, tableModel);
         }
 
-        [HttpGet] // Dashboard
-        public IActionResult Search(String patientName,String status, String partialViewName, int pageNo, int type)
+        [HttpGet] // search on Dashboard 
+        public IActionResult Search(String searchElement,String status, String partialViewName, int pageNo, int type)
         {
-            TableModel tableModel = _adminDashboardService.patientSearch(patientName,status,pageNo,type);
-            return PartialView(partialViewName, tableModel);
+            TableModel tableModel = _adminDashboardService.patientSearch(searchElement, status,pageNo,type);
+            return tableModel.TableDatas.Count != 0 ? PartialView(partialViewName, tableModel) : PartialView("_NoTableDataFound");
         }
 
         [HttpPost]
@@ -385,7 +391,8 @@ namespace HelloDoc.Controllers
         {
             if(ModelState.IsValid)
             {
-                if (await _viewNotesService.addAdminNotes(model))
+                int requestId = HttpContext.Session.GetInt32("requestId").Value;
+                if (await _viewNotesService.addAdminNotes(model.NewAdminNotes,requestId))
                 {
                     _notyfService.Success("Successfully Notes Added");
                 }
@@ -393,9 +400,8 @@ namespace HelloDoc.Controllers
                 {
                     _notyfService.Error("Add Notes Faild");
                 }
-                return RedirectToAction("ViewNotes", "Admin");
             }
-            return View();
+            return RedirectToAction("ViewNotes", "Admin");
         }
 
         [HttpGet] // Send Order

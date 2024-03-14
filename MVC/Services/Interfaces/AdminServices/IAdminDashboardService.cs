@@ -8,7 +8,7 @@ namespace Services.Interfaces.AdminServices
 
         TableModel GetNewRequest(String status, int pageNo);
 
-        TableModel patientSearch(String patientName, String status, int pageNo, int type);
+        TableModel patientSearch(String searchElement, String status, int pageNo, int type);
 
         Dictionary<int, String> getPhysiciansByRegion(int regionId);
 

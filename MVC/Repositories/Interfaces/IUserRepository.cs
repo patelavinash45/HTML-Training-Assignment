@@ -16,5 +16,7 @@ namespace Repositories.Interfaces
 
         List<Physician> getAllPhysiciansByRegionId(int regionId);
 
+        Physician getPhysicianNameByPhysicianId(int physicianId);
+
     }
 }

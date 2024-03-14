@@ -12,9 +12,8 @@
     <script src="~/js/international-telephone-input.js"></script>
 </head>
 <body>
-    @{
-        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml", 0)
-    }
+    @await Component.InvokeAsync("Notyf")
+    <partial name="_PatientDashboardHeader" model="0">
     <div id="main-body">
         <div class="d-flex justify-content-between container align-items-center">
             <h3>

@@ -17,13 +17,13 @@
 
 <body>
     @await Component.InvokeAsync("Notyf")
-    @Html.Partial("~/Views/Shared/_AdminDashboardHeader.cshtml", 1)
-    @Html.Partial("~/Views/Shared/_RequestCancelPopUp.cshtml",Model.CancelPopup)
-    @Html.Partial("~/Views/Shared/_RequestAssignPopUp.cshtml",Model.AssignAndTransferPopup)
-    @Html.Partial("~/Views/Shared/_RequestBlockPopUp.cshtml",Model.BlockPopup)
-    @Html.Partial("~/Views/Shared/_RequestTransferPopUp.cshtml",Model.AssignAndTransferPopup)
-    @Html.Partial("~/Views/Shared/_RequestClearPopUp.cshtml")
-    @Html.Partial("~/Views/Shared/_SendAgreementPopUp.cshtml",Model.SendAgreement)
+    <partial name="_AdminDashboardHeader" model="1">
+    <partial name="_RequestCancelPopUp" model="@Model.CancelPopup">
+    <partial name="_RequestAssignPopUp" model="@Model.AssignAndTransferPopup">
+    <partial name="_RequestBlockPopUp" model="@Model.BlockPopup">
+    <partial name="_RequestTransferPopUp" model="@Model.AssignAndTransferPopup">
+    <partial name="_RequestClearPopUp">
+    <partial name="_SendAgreementPopUp" model="@Model.SendAgreement">
     <div class="cancelPopUp"></div>
     <div id="mainbody">
         <div class="container-fluid">
@@ -154,7 +154,7 @@
                 <div class="p-3 bg-white rounded-top-3 row">
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                         <input placeholder="Search Patient" class="p-2 searchPatient" oninput="patientSearch(1)" type="search">
-                        <select aria-placeholder="Region" class="p-2 searchRegion" onchange="regionSearch(this)">
+                        <select aria-placeholder="Region" class="p-2 searchRegion" onchange="regionSearch(1)">
                             <option value="">All Region</option>
                             @foreach(var item in Model.Regions)
                             {
@@ -163,38 +163,38 @@
                         </select>
                     </div>
                     <div class="d-flex justify-content-end col-xl-6 col-lg-6 col-md-12 col-sm-12 align-items-md-center">
-                        <button class="px-3 bg-transparent" id="allButton" onclick="filterOnButton(0)">
+                        <button class="px-3 bg-transparent" id="allButton" onclick="requesterTypeSearch(0,1)">
                             All
                         </button>
-                        <button class="d-flex align-items-center colorOption border-0 bg-transparent" onclick="filterOnButton(1)">
+                        <button class="d-flex align-items-center colorOption border-0 bg-transparent" onclick="requesterTypeSearch(2,1)">
                             <i class="bi bi-circle-fill text-success mx-1"></i>
                             <div class="colorText">
                                 Patient
-                                <hr class="border-bottom border-3 border-dark h1 buttonHr" id="hr-1"/>
+                                <hr class="border-bottom border-3 border-dark h1 buttonHr" id="hr-2"/>
                             </div>
                         </button>
-                        <button class="d-flex align-items-center colorOption border-0 bg-transparent" onclick="filterOnButton(2)">
+                        <button class="d-flex align-items-center colorOption border-0 bg-transparent" onclick="requesterTypeSearch(3,1)">
                             <i class="bi bi-circle-fill text-warning mx-1"></i>
                             <div class="colorText">
                                 Family/Friend
-                                <hr class="border-bottom border-3 border-dark h1 buttonHr" id="hr-2" />
-                            </div>
-                        </button>
-                        <button class="d-flex align-items-center colorOption border-0 bg-transparent" onclick="filterOnButton(3)">
-                            <i class="bi bi-circle-fill text-danger mx-1"></i>
-                            <div class="colorText">
-                                Business
                                 <hr class="border-bottom border-3 border-dark h1 buttonHr" id="hr-3" />
                             </div>
                         </button>
-                        <button class="d-flex align-items-center colorOption border-0 bg-transparent" onclick="filterOnButton(4)">
+                        <button class="d-flex align-items-center colorOption border-0 bg-transparent" onclick="requesterTypeSearch(1,1)">
+                            <i class="bi bi-circle-fill text-danger mx-1"></i>
+                            <div class="colorText">
+                                Business
+                                <hr class="border-bottom border-3 border-dark h1 buttonHr" id="hr-1" />
+                            </div>
+                        </button>
+                        <button class="d-flex align-items-center colorOption border-0 bg-transparent" onclick="requesterTypeSearch(4,1)">
                             <i class="bi bi-circle-fill text-primary mx-1"></i>
                             <div class="colorText">
                                 Concierge
                                 <hr class="border-bottom border-3 border-dark h1 buttonHr" id="hr-4" />
                             </div>
                         </button>
-                        <button class="d-flex align-items-center colorOption border-0 bg-transparent" onclick="filterOnButton(5)">
+                        <button class="d-flex align-items-center colorOption border-0 bg-transparent" onclick="requesterTypeSearch(5,1)">
                             <i class="bi bi-circle-fill text-info mx-1"></i>
                             <div class="colorText">
                                 VIP
@@ -205,22 +205,22 @@
                 </div>
             </div>
             <div id="new" class="tables">
-                @Html.Partial("~/Views/Shared/_NewTable.cshtml",Model.NewRequests)
+                <partial name="_NewTable" model="@Model.NewRequests">
             </div>
             <div id="pending" class="tables">
-                @Html.Partial("~/Views/Shared/_PendingTable.cshtml",Model.PendingRequests)
+                <partial name="_PendingTable" model="@Model.PendingRequests">
             </div>
             <div id="active" class="tables">
-                @Html.Partial("~/Views/Shared/_ActiveTable.cshtml",Model.ActiveRequests)
+                <partial name="_ActiveTable" model="@Model.ActiveRequests">
             </div>
             <div id="conclude" class="tables">
-                @Html.Partial("~/Views/Shared/_ConcludeTable.cshtml",Model.ConcludeRequests)
+                <partial name="_ConcludeTable" model="@Model.ConcludeRequests">
             </div>
             <div id="close" class="tables">
-                @Html.Partial("~/Views/Shared/_CloseTable.cshtml",Model.TocloseRequests)
+                <partial name="_CloseTable" model="@Model.TocloseRequests">
             </div>
             <div id="unpaid" class="tables">
-                @Html.Partial("~/Views/Shared/_UnpaidTable.cshtml",Model.UnpaidRequests)
+                <partial name="_UnpaidTable" model="@Model.UnpaidRequests">
             </div>
         </div>
     </div>

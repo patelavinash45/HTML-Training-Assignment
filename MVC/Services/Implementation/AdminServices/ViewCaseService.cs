@@ -26,10 +26,13 @@ namespace Services.Implementation.AdminServices
             {
                 Reasons = reasons,
             };
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
+            RequestClient requestClient = _requestClientRepository.getRequestClientAndRequestByRequestId(requestId);
             ViewCase viewCase = new() 
             { 
+                Status = requestClient.Status,
+                Requester = requestClient.Request.RequestTypeId,
                 RequestId = requestId,
+                PatientNotes = requestClient.Symptoms,
                 FirstName = requestClient.FirstName,
                 LastName = requestClient.LastName,
                 BirthDate= requestClient.IntYear != null ? DateTime.Parse(requestClient.IntYear + "-" + requestClient.StrMonth
@@ -45,7 +48,8 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> updateRequest(ViewCase model)
         {
-            RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(model.RequestId);
+            RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
+            requestClient.Symptoms = model.PatientNotes;
             requestClient.FirstName = model.FirstName;
             requestClient.LastName = model.LastName;
             requestClient.PhoneNumber = model.Mobile;

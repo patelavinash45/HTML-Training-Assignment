@@ -9,5 +9,7 @@ namespace Repositories.Interfaces
         Task<int> addRequestSatatusLog(RequestStatusLog requestStatusLog);
 
         Task<bool> updateRequestSatatusLog(RequestStatusLog requestStatusLog);
+
+        Task<int> addBlockRequest(BlockRequest blockRequest);
     }
 }

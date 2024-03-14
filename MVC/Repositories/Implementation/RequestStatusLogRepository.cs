@@ -31,5 +31,12 @@ namespace Repositories.Implementation
             int temp = await _dbContext.SaveChangesAsync();
             return temp > 0;
         }
+
+        public async Task<int> addBlockRequest(BlockRequest blockRequest)
+        {
+            _dbContext.BlockRequests.Add(blockRequest);
+            int temp = await _dbContext.SaveChangesAsync();
+            return temp > 0 ? blockRequest.BlockRequestId : 0;
+        }
     }
 }

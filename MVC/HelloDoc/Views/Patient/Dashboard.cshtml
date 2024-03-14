@@ -25,9 +25,8 @@
     <script src="~/js/patient/dashboard.js"></script>
 </head>
 <body>
-    @{
-        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml", 1)
-    }
+    @await Component.InvokeAsync("Notyf")
+    <partial name="_PatientDashboardHeader" model="1">
     @await Component.InvokeAsync("Notyf")
     <div class="modal" tabindex="-1" id="createNewRequest">
         <div class="modal-dialog modal-dialog-centered">

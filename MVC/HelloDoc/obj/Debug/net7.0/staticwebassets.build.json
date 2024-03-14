@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qM3phpTB73rANT8Abhjum0k2EiD4lCeZasZk0bj3H2c=",
+  "Hash": "O1PnLW8E9u+oIfuBpebnlZwQ7kkebyQVMwVhRQc02ZI=",
   "Source": "HelloDoc",
   "BasePath": "_content/HelloDoc",
   "Mode": "Default",
@@ -984,6 +984,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\Admin\\viewCase.js"
+    },
+    {
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\viewNotes.js",
+      "SourceId": "HelloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
+      "BasePath": "_content/HelloDoc",
+      "RelativePath": "js/Admin/viewNotes.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Admin\\viewNotes.js"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\international-telephone-input.js",

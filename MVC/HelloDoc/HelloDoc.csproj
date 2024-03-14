@@ -12,11 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\_NoTableDataFound.cshtml" />
     <_ContentIncludedByDefault Remove="wwwroot\js\patient\LoginPage.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\patient\viewDocument.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\_NoTableDataFound.cshtml" />
     <None Include="wwwroot\js\patient\LoginPage.js" />
     <None Include="wwwroot\js\viewDocument.js" />
   </ItemGroup>
@@ -43,6 +45,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Services\Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\_NoTableDataFound.cshtml" />
   </ItemGroup>
 
 </Project>

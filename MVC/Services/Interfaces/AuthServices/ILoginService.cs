@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Repositories.DataModels;
 using Services.ViewModels;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace Services.Interfaces.AuthServices
 {

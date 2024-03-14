@@ -14,9 +14,8 @@
     <script src="~/js/Patient/Request.js"></script>
 </head>
 <body>
-    @{
-        @Html.Partial("~/Views/Shared/_PatientDashboardHeader.cshtml", 0)
-    }
+    @await Component.InvokeAsync("Notyf")
+    <partial name="_PatientDashboardHeader" model="0">
     <div id="main-body">
         <div class="d-flex justify-content-between container align-items-center">
             <h3>

@@ -8,7 +8,7 @@ namespace Repositories.Interfaces
 
         List<CaseTag> getAllReason();
 
-        List<RequestClient> getRequestClientByStatus(int status,int skip);
+        List<RequestClient> getRequestClientByStatus(int status, int skip);
 
         int countRequestClientByStatus(int status);
 
@@ -20,13 +20,17 @@ namespace Repositories.Interfaces
 
         int countRequestClientByRegion(int regionId, int status);
 
+        List<RequestClient> getRequestClientByRequesterType(int requestTypeId, int status, int skip);
+
+        int countRequestClientByRequesterType(int requestTypeId, int status);
+
         List<RequestClient> getAllRequestClientForUser(int userId);
 
         Task<int> addRequestClient(RequestClient requestClient);
 
-        RequestClient GetRequestClientByRequestId(int requestId);
+        RequestClient getRequestClientByRequestId(int requestId);
 
-        RequestClient GetRequestClientAndRequestByRequestId(int requestId);
+        RequestClient getRequestClientAndRequestByRequestId(int requestId);
 
         Task<bool> updateRequestClient(RequestClient requestClient);
     }

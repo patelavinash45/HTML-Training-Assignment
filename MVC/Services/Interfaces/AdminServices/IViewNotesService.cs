@@ -6,7 +6,7 @@ namespace Services.Interfaces.AdminServices
     {
         ViewNotes GetNotes(int RequestId);
 
-        Task<bool> addAdminNotes(ViewNotes model);
+        Task<bool> addAdminNotes(String adminNotes, int requestId);
 
         Task<bool> cancleRequest(CancelPopUp model);
 
@@ -16,7 +16,7 @@ namespace Services.Interfaces.AdminServices
 
         Task<bool> clearRequest(int requestId);
 
-        Task<bool> sendAgreement(Agreement model);
+        bool sendAgreement(Agreement model);
 
         Task<bool> agreementDeclined(Agreement model);
 
