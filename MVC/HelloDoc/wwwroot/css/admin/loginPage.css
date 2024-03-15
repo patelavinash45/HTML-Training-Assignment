@@ -33,6 +33,14 @@ a {
     display: none;
 }
 
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+    color: #0a8185;
+    opacity: 1;
+    font-weight: 600;
+}
+
 /* ---------------------------media query---------------------------*/
 
 @media screen and (max-width: 1200px) {

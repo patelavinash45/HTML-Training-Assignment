@@ -1,4 +1,8 @@
-﻿function checkEmail(element) {
+﻿$(document).ready(function () {
+    $("#popup").modal('show');
+});
+
+function checkEmail(element) {
     var email = $(element).val();
     $.ajax({
         url: '/Patient/CheckEmailExists',
@@ -15,8 +19,7 @@
     });
 }
 
-$(document).ready(function () {
-    $("#popup").modal('show');
-});
+
+
 
 

@@ -37,8 +37,6 @@ button {
     border-radius: 10px;
     border: 0.5px solid;
     margin-top: 5px;
-    margin-bottom: 5px;
-    border-radius: 5px;
 }
 
  a:hover,
@@ -86,19 +84,19 @@ button:disabled{
 #concludeOption {
     background-color: #f7e6ee;
     color: #a84281;
-    border-color: #cdb2c2;
+    border-color: #e9e0e5;
 }
 
 #tocloseOption {
     background-color: #e5eef5;
     color: #1a6eb7;
-    border-color: #d7f3fd;
+    border-color: #e9f2f5;
 }
 
 #unpaidOption {
     background-color: #efeef4;
     color: #9674ad;
-    border-color: #f2d9fc;
+    border-color: #fbf5fd;
 }
 
  #newOption:hover,
@@ -197,6 +195,20 @@ bg-warning{
 
 
 /* -------------------media-queries-------------------*/
+
+@media screen and (max-width:450px) {
+
+    .colorOption{
+        margin: 0px;
+    }
+
+    .requesterButtons,
+    .heading {
+        flex-direction: column;
+    }
+}
+
+
 @media screen and (max-width:576px) {
     .h5 {
         font-size: 0.5rem;
@@ -210,6 +222,7 @@ bg-warning{
     .mapButton{
         width: 120px
     }
+
 }
 
 @media screen and (min-width:577px) and (max-width:768px) {
@@ -235,10 +248,6 @@ bg-warning{
         font-size: calc(0.7rem + .6vw);
     }
 
-    #allButton {
-        display: none;
-    }
-
 }
 
 @media screen and (max-width:615px) {
@@ -250,7 +259,6 @@ bg-warning{
 
     .colorOption {
         flex-direction: column;
-        margin: 5px;
     }
 }
 

@@ -2,31 +2,13 @@ body {
     background-color: #dcdbdb;
 }
 
-#logo-image {
-    width: 150px;
-    margin-left: 4vh;
-}
-
-#them-icon {
-    margin-right: 40px;
-    border-radius: 10px;
-    border-color: cadetblue;
-    border-width: 2px;
-    border-style: solid;
-    height: 50px;
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #back-box {
     background-color: white;
     margin-top: 15px;
     margin-bottom: 15px;
     border-radius: 10px;
     border-color: cadetblue;
-    border-width: 2px;
+    border-width: 1px;
     border-style: solid;
     height: 50px;
     width: 100px;
@@ -125,6 +107,14 @@ button:hover {
 
 #input-password {
     display: none;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+    color: #0a8185;
+    opacity: 1;
+    font-weight: 600;
 }
 
 /* media Queries */

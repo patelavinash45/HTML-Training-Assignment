@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Request For Me</title>
+    <title>Request For SomeOne</title>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/international-telephone-input.css" rel="stylesheet" />
@@ -33,7 +33,7 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating">
-                        <textarea class="form-control h-75" id="Symptoms" placeholder="Symptoms" rows="3"></textarea>
+                        <textarea asp-for="Symptoms" class="form-control h-75" id="Symptoms" placeholder="Symptoms" rows="3"></textarea>
                         <label for="Symptoms">Enter Brief Details Of Symptoms(Optional)</label>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                         <input asp-for="Relation" class="form-control" id="relation" placeholder="Relation" />
-                        <label for="street">relation</label>
+                        <label for="street">Relation</label>
                         <span asp-validation-for="Relation" class="text-danger"></span>
                     </div>
                 </div>
@@ -150,6 +150,8 @@
     <script>
         const phoneInputField = document.getElementById("phone");
         const phoneInput = window.intlTelInput(phoneInputField, {
+            initialCountry: "in",
+            separateDialCode: true,
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     </script>

@@ -50,13 +50,13 @@
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input disabled class="form-control contact" id="contact" />
+                        <input disabled class="form-control contact" id="contact" placeholder="Contact" />
                     <input readonly class="contact d-none"  asp-for="Contact" />
                     <label for="contact">Business Contact</label>
                     <span asp-validation-for="Contact" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input disabled class="form-control email" id="email" />
+                        <input disabled class="form-control email" id="email" placeholder="Email" />
                     <input readonly class="d-none email" asp-for="Email" />
                     <label for="email">Business Email</label>
                     <span asp-validation-for="Email" class="text-danger"></span>
@@ -64,7 +64,7 @@
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <input disabled class="form-control faxNumber" id="faxNumber"/>
+                        <input disabled class="form-control faxNumber" id="faxNumber" placeholder="FaxNumber" />
                     <input readonly class="d-none faxNumber" asp-for="FaxNumber" />
                     <label for="faxNumber">Fax Number</label>
                     <span asp-validation-for="FaxNumber" class="text-danger"></span>

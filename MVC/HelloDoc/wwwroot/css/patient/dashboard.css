@@ -135,6 +135,10 @@ input[type=file]::-webkit-file-upload-button {
     display: none;
 }
 
+select:disabled {
+    background-color: #e9ecef;
+}
+
 .bottom-button {
     margin-right: 20px;
     margin-top: 50px;

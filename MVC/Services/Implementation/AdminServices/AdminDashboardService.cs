@@ -1,10 +1,13 @@
-﻿using Repositories.DataModels;
-using Repositories.Implementation;
+﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Repositories.DataModels;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.Interfaces.AuthServices;
 using Services.ViewModels.Admin;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 
 namespace Services.Implementation.AdminServices
 {
@@ -152,6 +155,18 @@ namespace Services.Implementation.AdminServices
             }
             catch (Exception ex) { }
             return null;
+        }
+
+        //public DataTable exportData()
+        //{
+        //    List<RequestClient> requestClients = _requestClientRepository.getAllRequestClients();
+        //    return convertRequestClient(requestClients);
+        //}
+
+        public DataTable exportAllData()
+        {
+            List<RequestClient> requestClients = _requestClientRepository.getAllRequestClients();
+            return convertRequestClient(requestClients);
         }
 
         public TableModel patientSearch(String searchElement, String status, int pageNo, int type)
@@ -350,6 +365,36 @@ namespace Services.Implementation.AdminServices
                 EndRange = skip + 10 < totalRequests ? skip + 10 : totalRequests,
             };
             return tableModel;
+        }
+
+        private DataTable convertRequestClient(List<RequestClient> requestClients)
+        {
+            List<String> columnsNames = new List<String>();
+            DataTable dataTable = new DataTable();
+            dataTable.TableName = "RequestData";
+            int currentRow = 1, index = 1;
+            foreach (PropertyInfo propertyInfo in typeof(RequestClient).GetProperties())
+            {
+                dataTable.Columns.Add(propertyInfo.Name);
+                columnsNames.Add(propertyInfo.Name);
+                index++;
+            }
+            DataRow row;
+            foreach (RequestClient requestClient in requestClients)
+            {
+                row = dataTable.NewRow();
+                for (int i = 0; i < columnsNames.Count; i++)
+                {
+                    var value = typeof(RequestClient).GetProperty(columnsNames[i]).GetValue(requestClient);
+                    if (value != null)
+                    {
+                        row[columnsNames[i]] = value.ToString();
+                    }
+                }
+                dataTable.Rows.Add(row);
+                currentRow++;
+            }
+            return dataTable;
         }
     }
 }

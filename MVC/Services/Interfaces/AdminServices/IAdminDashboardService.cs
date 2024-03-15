@@ -1,4 +1,5 @@
 ﻿using Services.ViewModels.Admin;
+using System.Data;
 
 namespace Services.Interfaces.AdminServices
 {
@@ -15,5 +16,7 @@ namespace Services.Interfaces.AdminServices
         Tuple<String, String, int> getRequestClientEmailAndMobile(int requestId);
 
         Agreement getUserDetails(String token);
+
+        DataTable exportAllData();
     }
 }

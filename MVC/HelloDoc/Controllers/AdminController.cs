@@ -1,4 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.DataModels;
@@ -7,6 +9,7 @@ using Services.Interfaces.AdminServices;
 using Services.Interfaces.AuthServices;
 using Services.ViewModels;
 using Services.ViewModels.Admin;
+using System.Data;
 
 namespace HelloDoc.Controllers
 {
@@ -57,6 +60,12 @@ namespace HelloDoc.Controllers
         {
             int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
             return aspNetUseId > 0 ? View(_adminDashboardService.getallRequests(aspNetUseId)) : View(null);
+        }
+
+        [Authorization("Admin")]
+        public IActionResult EncounterForm()
+        {
+            return View();
         }
 
         [Authorization("Admin")]
@@ -366,11 +375,20 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
-        //[HttpGet] // Dashboard 
-        //public IActionResult ExportAllData()
-        //{
-            
-        //}
+        [HttpGet]   // Export All Data 
+        public IActionResult ExportAllData()
+        {
+            DataTable dataTable = _adminDashboardService.exportAllData();
+            using (XLWorkbook wb = new XLWorkbook())
+            { 
+                wb.Worksheets.Add(dataTable);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream); 
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AllData.xlsx");
+                }
+            }
+        }
 
         [HttpGet] // Dashboard 
         public IActionResult GetTablesData(String status,int pageNo,String partialViewName)

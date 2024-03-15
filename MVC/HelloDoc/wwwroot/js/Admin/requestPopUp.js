@@ -91,7 +91,7 @@ $("#cacelForm").submit(function (e) {
 })
 
 $("#sendAgreementForm").submit(function (e) {
-    if ($("#patientEmail").val() == null || $("#patientNumber").val() == null) {
+    if ($("#patientEmail").val().length == 0 || $("#patientNumber").val().length == 0) {
         e.preventDefault();
         $("#sendAgreementValidation").css("display", "block");
     }
@@ -116,6 +116,10 @@ function navigatToViewDocuments(requestId) {
 
 function navigatToSendOrder(requestId) {
     navigation("SendOrder", requestId);
+}
+
+function navigatToEncounterForm(requestId) {
+    navigation("EncounterForm", requestId);
 }
 
 

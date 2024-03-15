@@ -93,7 +93,7 @@
                 </h5>
                 <div class="row">
                     <div class="form-floating">
-                        <textarea class="form-control h-75" id="orderDetils" placeholder="orderDetils" rows="3"></textarea>
+                        <textarea asp-for="Symptoms" class="form-control h-75" id="orderDetils" placeholder="orderDetils" rows="3"></textarea>
                         <label for="orderDetils">Enter Brief Details Of Symptoms(Optional)</label>
                     </div>
                 </div>
@@ -204,11 +204,15 @@
     <script>
         const phoneInputField = document.getElementById("phone1");
         window.intlTelInput(phoneInputField, {
+            initialCountry: "in",
+            separateDialCode: true,
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
 
         const phoneInputField2 = document.getElementById("phone2");
         window.intlTelInput(phoneInputField2, {
+            initialCountry: "in",
+            separateDialCode: true,
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     </script>

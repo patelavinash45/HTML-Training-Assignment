@@ -8,6 +8,8 @@ namespace Repositories.Interfaces
 
         List<CaseTag> getAllReason();
 
+        List<RequestClient> getAllRequestClients();
+
         List<RequestClient> getRequestClientByStatus(int status, int skip);
 
         int countRequestClientByStatus(int status);

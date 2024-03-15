@@ -53,10 +53,17 @@ input {
     width: 100px;
 }
 
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+    color: #0a8185;
+    opacity: 1;
+    font-weight: 600;
+}
+
 
 /* -------------------media-queries-------------------*/
 @media screen and (max-width: 778px) {
-
     h3 {
         font-size: calc(1rem + .6vw);
     }

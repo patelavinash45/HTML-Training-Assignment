@@ -5,6 +5,50 @@
       "PackagePath": "staticwebassets\\HelloDoc.bundle.scp.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\37\\Fig34. Week wise Scheduling.jpg",
+      "PackagePath": "staticwebassets\\Files\\37\\Fig34. Week wise Scheduling.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\37\\Fig59.FamilyFriend Information2.jpg",
+      "PackagePath": "staticwebassets\\Files\\37\\Fig59.FamilyFriend Information2.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\40\\Fig43. Patient history.jpg",
+      "PackagePath": "staticwebassets\\Files\\40\\Fig43. Patient history.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\40\\Fig65.Patient Create New Request.jpg",
+      "PackagePath": "staticwebassets\\Files\\40\\Fig65.Patient Create New Request.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\43\\Fig38. View Shift.png",
+      "PackagePath": "staticwebassets\\Files\\43\\Fig38. View Shift.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\45\\Fig20.Close case.png",
+      "PackagePath": "staticwebassets\\Files\\45\\Fig20.Close case.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\45\\Fig38. View Shift.png",
+      "PackagePath": "staticwebassets\\Files\\45\\Fig38. View Shift.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\45\\Fig55. Provider My Profile Request to Admin.jpg",
+      "PackagePath": "staticwebassets\\Files\\45\\Fig55. Provider My Profile Request to Admin.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\46\\Fig22 Regions menu.jpg",
+      "PackagePath": "staticwebassets\\Files\\46\\Fig22 Regions menu.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\46\\Fig55. Provider My Profile Request to Admin.jpg",
+      "PackagePath": "staticwebassets\\Files\\46\\Fig55. Provider My Profile Request to Admin.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\47\\Fig32. Day wise Scheduling.jpg",
+      "PackagePath": "staticwebassets\\Files\\47\\Fig32. Day wise Scheduling.jpg"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\47\\Fig63.Reset Your Password Patient.jpg",
       "PackagePath": "staticwebassets\\Files\\47\\Fig63.Reset Your Password Patient.jpg"
     },
@@ -29,6 +73,14 @@
       "PackagePath": "staticwebassets\\Files\\85\\Fig43. Patient history.jpg"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\86\\Fig23.Request Support.png",
+      "PackagePath": "staticwebassets\\Files\\86\\Fig23.Request Support.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\86\\Fig26. Edit Physician Account.png",
+      "PackagePath": "staticwebassets\\Files\\86\\Fig26. Edit Physician Account.png"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\87\\Fig21. Admin My profile..jpg",
       "PackagePath": "staticwebassets\\Files\\87\\Fig21. Admin My profile..jpg"
     },
@@ -39,6 +91,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\87\\LesfImage.png",
       "PackagePath": "staticwebassets\\Files\\87\\LesfImage.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\88\\Fig40. Profession menu Vendors.jpg",
+      "PackagePath": "staticwebassets\\Files\\88\\Fig40. Profession menu Vendors.jpg"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\90\\Fig40. Profession menu Vendors.jpg",
@@ -69,6 +125,38 @@
       "PackagePath": "staticwebassets\\Files\\92\\LesfImage.png"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\93\\Fig40. Profession menu Vendors.jpg",
+      "PackagePath": "staticwebassets\\Files\\93\\Fig40. Profession menu Vendors.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\94\\Fig35. Provider on call (MDs On Call).jpg",
+      "PackagePath": "staticwebassets\\Files\\94\\Fig35. Provider on call (MDs On Call).jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\95\\Fig62.Login Patient Account Registered Patient.jpg",
+      "PackagePath": "staticwebassets\\Files\\95\\Fig62.Login Patient Account Registered Patient.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\96\\Fig43. Patient history.jpg",
+      "PackagePath": "staticwebassets\\Files\\96\\Fig43. Patient history.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\96\\Fig44. Patient Record Explore.jpg",
+      "PackagePath": "staticwebassets\\Files\\96\\Fig44. Patient Record Explore.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\96\\Fig57.Submit request screen.jpg",
+      "PackagePath": "staticwebassets\\Files\\96\\Fig57.Submit request screen.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\97\\Fig53. Provider transfer request pop-up.png",
+      "PackagePath": "staticwebassets\\Files\\97\\Fig53. Provider transfer request pop-up.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\97\\Fig54. Provider My Profile.jpg",
+      "PackagePath": "staticwebassets\\Files\\97\\Fig54. Provider My Profile.jpg"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ViewCase.css",
       "PackagePath": "staticwebassets\\css\\admin\\ViewCase.css"
     },
@@ -83,6 +171,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\_requestPopUp.css",
       "PackagePath": "staticwebassets\\css\\admin\\_requestPopUp.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ancounterForm.css",
+      "PackagePath": "staticwebassets\\css\\admin\\ancounterForm.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\dashboard.css",

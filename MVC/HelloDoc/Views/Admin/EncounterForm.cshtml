@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encounter Form</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/international-telephone-input.css" rel="stylesheet" />
+    <script src="~/js/international-telephone-input.js"></script>
+    <link href="~/css/admin/ancounterForm.css" rel="stylesheet" />
+</head>
+<body>
+    @await Component.InvokeAsync("Notyf")
+    <partial name="_AdminDashboardHeader" model="0">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+            <h3>
+                Encounter Form
+            </h3>
+            <a asp-controller="Admin" asp-action="Dashboard">
+                <button id="back-box" class="bg-white">
+                    <i class="bi bi-chevron-left"> </i>
+                    Back
+                </button>
+            </a>
+        </div>
+        <form>
+            <div class="text-center h3">
+                Medical Report - Confidential
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <input class="form-control" id="firstName" placeholder="BusinessFirstName" />
+                    <label for="firstName">First Name</label>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <input class="form-control" id="lastName" placeholder="BusinessLastName" />
+                    <label for="lastName">Last Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating">
+                    <input class="form-control" id="location" placeholder="BusinessFirstName" />
+                    <label for="location">Location</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <input class="form-control" id="date" type="date" placeholder="BirthDate" />
+                    <label for="date">Date of Birth</label>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <input class="form-control" id="date" type="date" placeholder="BirthDate" />
+                    <label for="date">Date</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <input class="form-control" id="phone" type="tel" placeholder="Mobile" />
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <input class="form-control" id="email" placeholder="BusinessLastName" />
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="presentIllness" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="presentIllness">History Of Present Illness Or Injury</label>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="medicalHistory" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="medicalHistory">Medical History</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="medications" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="medications">Medications</label>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="allergies" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="allergies">Allergies</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-4 col-md-4 col-lg-4">
+                    <input class="form-control" id="temp" placeholder="BirthDate" />
+                    <label for="temp">Temp</label>
+                </div>
+                <div class="form-floating col-xl-4 col-md-4 col-lg-4">
+                    <input class="form-control" id="hr" placeholder="BirthDate" />
+                    <label for="hr">HR</label>
+                </div>
+                <div class="form-floating col-xl-4 col-md-4 col-lg-4">
+                    <input class="form-control" id="rr" placeholder="BirthDate" />
+                    <label for="rr">RR</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-lg-4">
+                    <div class="row">
+                        <div class="form-floating col-6">
+                            <input class="form-control" id="bp-1" placeholder="BirthDate" />
+                            <label for="bp-1">Bood Pressure</label>
+                        </div>
+                        <div class="form-floating col-6">
+                            <input class="form-control" id="bp-2" placeholder="BirthDate" />
+                            <label for="bp-2">Bood Pressure</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-floating col-xl-4 col-md-6 col-lg-4">
+                    <input class="form-control" id="o2" placeholder="BirthDate" />
+                    <label for="o2">O2</label>
+                </div>
+                <div class="form-floating col-xl-4 col-md-6 col-lg-4">
+                    <input class="form-control" id="pain" placeholder="BirthDate" />
+                    <label for="pain">Pain</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="heent" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="heent">heent</label>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="CV" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="CV">CV</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="chest" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="chest">Chest</label>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="ABD" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="ABD">ABD</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="extr" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="extr">Extr</label>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="skin" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="skin">Skin</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="neuro" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="neuro">Neuro</label>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="other" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="other">Other</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="diagnosis" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="diagnosis">Diagnosis</label>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="treatmentPlan" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="treatmentPlan">Treatment Plan</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="dispensed" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="dispensed">Medications Dispensed</label>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <textarea class="form-control h-75" id="procedures" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="procedures">Procedures</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating">
+                    <textarea class="form-control h-75" id="followUp" placeholder="orderDetils" rows="2"></textarea>
+                    <label for="followUp">FollowUp</label>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-3 mb-2">
+                <button class="px-3 me-3 text-white saveButton fw-bold">
+                    Save Changes
+                </button>
+                <button class="px-3 me-3 text-white finalizeButton fw-bold">
+                    Finalize
+                </button>
+                <button class="px-3 bg-white cancleButton fw-bold">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+    <script>
+        const phoneInputField = document.getElementById("phone");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            initialCountry: "in",
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
+</body>
+</html>

@@ -199,6 +199,10 @@ function regionSearch(pageNo) {
 ///
 
 
-//$(document).on("click", "#", function () {
-
+//$(document).on("click", "#exportAllData", function () {
+//    $.ajax({
+//        url: '/Admin/ExportAllData',
+//        type: 'GET',
+//        contentType: 'application/json',
+//    })
 //})

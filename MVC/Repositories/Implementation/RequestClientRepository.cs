@@ -19,10 +19,15 @@ namespace Repositories.Implementation
             return _dbContext.Regions.ToList();
         }
 
+        public List<RequestClient> getAllRequestClients()
+        {
+            return _dbContext.RequestClients.Include(a => a.Request) .ToList();
+        }
+
         public List<RequestClient> getRequestClientByStatus(int status, int skip)
         {
-            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Where(a => a.Status == status).Skip(skip).OrderByDescending(a => a.RequestClientId)
-                                                       .Take(10).ToList();
+            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Where(a => a.Status == status)
+                                  .Skip(skip).OrderByDescending(a => a.RequestClientId).Take(10).ToList();
         }
 
         public int countRequestClientByStatus(int status)
@@ -32,7 +37,7 @@ namespace Repositories.Implementation
 
         public List<RequestClient> getAllRequestClientForUser(int userId)
         {
-            return _dbContext.RequestClients.Where(r => r.Request.UserId == userId).ToList();
+            return _dbContext.RequestClients.Where(r => r.Request.UserId == userId).OrderByDescending(a => a.RequestClientId).ToList();
         }
 
         public async Task<int> addRequestClient(RequestClient requestClient)

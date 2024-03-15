@@ -1,27 +1,10 @@
-#them-icon{
-    margin-right: 40px;
-    border-radius: 10px;
-    border-color: cadetblue;
-    border-width: 2px;
-    border-style: solid;
-    height: 50px;
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/*.remove-underline{
-    text-decoration: none;
-}*/
-
 #back-box {
     position: fixed;
     top: 100px;
     right: 100px;
     border-radius: 10px;
     border-color: cadetblue;
-    border-width: 2px;
+    border-width: 1px;
     border-style: solid;
     height: 50px;
     width: 100px;

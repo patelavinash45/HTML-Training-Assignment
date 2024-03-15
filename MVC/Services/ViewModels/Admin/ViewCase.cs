@@ -17,7 +17,7 @@ namespace Services.ViewModels.Admin
         public string LastName { get; set; }
 
         [StringLength(50)]
-        public string Email { get; set; } = null!;
+        public string? Email { get; set; } = null!;
 
         [StringLength(20)]
         [Required]
