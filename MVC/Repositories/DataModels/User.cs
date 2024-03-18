@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.DataModels;
 
@@ -25,7 +28,7 @@ public partial class User
     public string? Mobile { get; set; }
 
     [Column(TypeName = "bit(1)")]
-    public BitArray? IsMobile { get; set; } = new BitArray(1, true);
+    public BitArray? IsMobile { get; set; }
 
     [StringLength(100)]
     public string? Street { get; set; }

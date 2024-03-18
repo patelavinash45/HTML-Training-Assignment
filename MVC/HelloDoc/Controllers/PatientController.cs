@@ -118,7 +118,7 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Patient")]
-        public IActionResult Dashboard()
+        public IActionResult Dashboard(string tab)
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
             return View(_dashboardService.GetUsersMedicalData(aspNetUserId));

@@ -47,6 +47,8 @@ builder.Services.AddScoped<IRequestStatusLogRepository, RequestStatusLogReposito
 builder.Services.AddScoped<IBusinessConciergeRepository, BusinessConciergeRepository>();
 builder.Services.AddScoped<ISendOrderService, SendOrderService>();
 builder.Services.AddScoped<IHealthProfessionalRepository, HealthProfessionalRepository>();
+builder.Services.AddScoped<IEncounterService, EncounterService>();
+builder.Services.AddScoped<IEncounterRepository, EncounterRepository>();
 
 
 var app = builder.Build();

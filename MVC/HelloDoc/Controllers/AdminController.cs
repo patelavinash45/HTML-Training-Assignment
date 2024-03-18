@@ -1,6 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.DataModels;
@@ -10,6 +9,7 @@ using Services.Interfaces.AuthServices;
 using Services.ViewModels;
 using Services.ViewModels.Admin;
 using System.Data;
+using System.IO;
 
 namespace HelloDoc.Controllers
 {
@@ -23,10 +23,11 @@ namespace HelloDoc.Controllers
         private readonly IViewDocumentsServices _viewDocumentsServices;
         private readonly IJwtService _jwtService;
         private readonly ISendOrderService _sendOrderService;
+        private readonly IEncounterService _encounterService;
 
         public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
                                 IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
-                                         IJwtService jwtService, ISendOrderService sendOrderService)
+                                IJwtService jwtService, ISendOrderService sendOrderService, IEncounterService encounterService)
         {
             _notyfService = notyfService;
             _loginService = loginService;
@@ -36,6 +37,7 @@ namespace HelloDoc.Controllers
             _viewDocumentsServices = viewDocumentsServices;
             _jwtService = jwtService;
             _sendOrderService = sendOrderService;
+            _encounterService = encounterService;
         }
 
         public IActionResult LoginPage()
@@ -65,7 +67,8 @@ namespace HelloDoc.Controllers
         [Authorization("Admin")]
         public IActionResult EncounterForm()
         {
-            return View();
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
+            return View(_encounterService.getEncounterDetails(requestId,true));
         }
 
         [Authorization("Admin")]
@@ -326,6 +329,27 @@ namespace HelloDoc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EncounterForm(EncounterForm model)
+        {
+            if (ModelState.IsValid)
+            {
+                int requestId = HttpContext.Session.GetInt32("requestId").Value;
+                if (await _encounterService.updateEncounter(model,requestId))
+                {
+                    _notyfService.Success("Successfully Updated");
+                }
+                else
+                {
+                    _notyfService.Error("Update Faild !!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            _notyfService.Warning("Add Required Field.");
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult LoginPage(Login model)
         {
             if (ModelState.IsValid)
@@ -386,6 +410,21 @@ namespace HelloDoc.Controllers
                 {
                     wb.SaveAs(stream); 
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AllData.xlsx");
+                }
+            }
+        }
+
+        [HttpGet]   // Export All Data 
+        public IActionResult ExportData(int pageNo, String status, int type, String searchElement)
+        {
+            DataTable dataTable = _adminDashboardService.exportData(pageNo, status, type, searchElement);
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dataTable);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Data.xlsx");
                 }
             }
         }

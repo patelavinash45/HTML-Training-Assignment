@@ -22,17 +22,17 @@
                             <option value="@item.Key">@item.Value</option>
                         }
                     </select>
-                    <select class="p-2 w-100 mb-2 physician" asp-for="SelectedPhysician" id="transferRequestPhysician">
+                    <span class="text-danger validation mb-3" id="transferValidationforRegions">this Region Field is Required</span>
+                    <select class="p-2 w-100 mb-2 physician" id="transferRequestPhysician" asp-for="SelectedPhysician">
                         <option disabled selected value="">Physicians*</option>
-                        <span class="text-danger"></span>
                     </select>
+                    <span class="text-danger validation mb-3" id="transferValidationPhysician">this Physician Field is Required</span>
                     <span class="text-danger"></span>
                     <div class="form-floating">
-                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-2 mt-2" placeholder="AdditionalNotes" id="Notes" rows="5">
+                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-5 mt-2" placeholder="AdditionalNotes" id="Notes" rows="5">
                         </textarea>
                         <label for="Notes">Additional Notes</label>
                     </div>
-                    <span class="text-danger validation mb-3" id="transferValidation">All * Field is Required</span>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn mx-2" id="conformButton">
                             Conform

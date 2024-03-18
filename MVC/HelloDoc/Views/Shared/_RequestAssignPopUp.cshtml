@@ -22,15 +22,16 @@
                             <option value="@item.Key">@item.Value</option>
                         }
                     </select>
+                    <span class="text-danger validation mb-3" id="assignValidationforRegions">this Region Field is Required</span>
                     <select class="p-2 w-100 mb-2 physician" id="assignRequestPhysician" asp-for="SelectedPhysician">
                         <option disabled selected value="">Physicians*</option>
                     </select>
+                    <span class="text-danger validation mb-3" id="assignValidationPhysician">this Physician Field is Required</span>
                     <div class="form-floating">
-                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-2 mt-2" placeholder="AdditionalNotes" 
+                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-3 mt-2" placeholder="AdditionalNotes" 
                                      id="assignReuqestNotes" rows="5">  </textarea>
                         <label for="assignReuqestNotes">Additional Notes</label>
                     </div>
-                    <span class="text-danger validation mb-3" id="assignValidation">All * Field is Required</span>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn mx-2" id="conformButton">
                             Conform

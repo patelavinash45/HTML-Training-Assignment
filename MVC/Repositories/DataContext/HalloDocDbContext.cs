@@ -36,6 +36,8 @@ public partial class HalloDocDbContext : DbContext
 
     public virtual DbSet<EmailLog> EmailLogs { get; set; }
 
+    public virtual DbSet<Encounter> Encounters { get; set; }
+
     public virtual DbSet<HealthProfessional> HealthProfessionals { get; set; }
 
     public virtual DbSet<HealthProfessionalType> HealthProfessionalTypes { get; set; }
@@ -174,6 +176,11 @@ public partial class HalloDocDbContext : DbContext
         modelBuilder.Entity<EmailLog>(entity =>
         {
             entity.HasKey(e => e.EmailLogId).HasName("EmailLog_pkey");
+        });
+
+        modelBuilder.Entity<Encounter>(entity =>
+        {
+            entity.HasKey(e => e.EncounterId).HasName("Encounter_pkey");
         });
 
         modelBuilder.Entity<HealthProfessional>(entity =>
@@ -415,6 +422,8 @@ public partial class HalloDocDbContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("User_pkey");
+
+            entity.Property(e => e.IsMobile).HasDefaultValueSql("(1)::bit(1)");
 
             entity.HasOne(d => d.AspNetUser).WithMany(p => p.UserAspNetUsers).HasConstraintName("User_AspNetUserId_fkey");
 

@@ -1,4 +1,5 @@
-﻿using Repositories.DataModels;
+﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
+using Repositories.DataModels;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.Interfaces.AuthServices;
@@ -155,16 +156,20 @@ namespace Services.Implementation.AdminServices
             return null;
         }
 
-        //public DataTable exportData()
-        //{
-        //    List<RequestClient> requestClients = _requestClientRepository.getAllRequestClients();
-        //    return convertRequestClient(requestClients);
-        //}
+        public DataTable exportData(int pageNo, String status, int type, String searchElement)
+        {
+            switch(type)
+            {
+                case 1: return convertRequestClientToDataTable(GetNewRequest(status, pageNo).TableDatas);
+                case 2: return convertRequestClientToDataTable(patientSearch(searchElement ,status, pageNo, type).TableDatas);
+                default: return null;
+            }
+        }
 
         public DataTable exportAllData()
         {
             List<RequestClient> requestClients = _requestClientRepository.getAllRequestClients();
-            return convertRequestClient(requestClients);
+            return convertRequestClientToDataTable(requestClients);
         }
 
         public TableModel patientSearch(String searchElement, String status, int pageNo, int type)
@@ -365,11 +370,11 @@ namespace Services.Implementation.AdminServices
             return tableModel;
         }
 
-        private DataTable convertRequestClient(List<RequestClient> requestClients)
+        private DataTable convertRequestClientToDataTable(List<RequestClient> requestClients)
         {
             List<String> columnsNames = new List<String>();
             DataTable dataTable = new DataTable();
-            dataTable.TableName = "RequestData";
+            dataTable.TableName = "RequestDatas";
             int currentRow = 1, index = 1;
             foreach (PropertyInfo propertyInfo in typeof(RequestClient).GetProperties())
             {
@@ -384,6 +389,36 @@ namespace Services.Implementation.AdminServices
                 for (int i = 0; i < columnsNames.Count; i++)
                 {
                     var value = typeof(RequestClient).GetProperty(columnsNames[i]).GetValue(requestClient);
+                    if (value != null)
+                    {
+                        row[columnsNames[i]] = value.ToString();
+                    }
+                }
+                dataTable.Rows.Add(row);
+                currentRow++;
+            }
+            return dataTable;
+        }
+
+        private DataTable convertRequestClientToDataTable(List<TablesData> tablesDatas)
+        {
+            List<String> columnsNames = new List<String>();
+            DataTable dataTable = new DataTable();
+            dataTable.TableName = "RequestDatas";
+            int currentRow = 1, index = 1;
+            foreach (PropertyInfo propertyInfo in typeof(TablesData).GetProperties())
+            {
+                dataTable.Columns.Add(propertyInfo.Name);
+                columnsNames.Add(propertyInfo.Name);
+                index++;
+            }
+            DataRow row;
+            foreach (TablesData tablesData in tablesDatas)
+            {
+                row = dataTable.NewRow();
+                for (int i = 0; i < columnsNames.Count; i++)
+                {
+                    var value = typeof(TablesData).GetProperty(columnsNames[i]).GetValue(tablesData);
                     if (value != null)
                     {
                         row[columnsNames[i]] = value.ToString();

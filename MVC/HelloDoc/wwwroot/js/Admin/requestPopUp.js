@@ -61,22 +61,36 @@ function clearCase() {
 }
 
 $("#assignForm").submit(function (e) {
-    if ($("#assignRequestRegion").val() == null || $("#assignRequestPhysician").val() == null) {
+    if ($("#assignRequestRegion").val() == null) {
         e.preventDefault();
-        $("#assignValidation").css("display", "block");
+        $("#assignValidationforRegions").css("display", "block");
     }
     else {
-        $("#assignValidation").css("display", "none");
+        $("#assignValidationforRegions").css("display", "none");
+    }
+    if ($("#assignRequestPhysician").val() == null) {
+        e.preventDefault();
+        $("#assignValidationPhysician").css("display", "block");
+    }
+    else {
+        $("#assignValidationPhysician").css("display", "none");
     }
 })
 
 $("#transferForm").submit(function (e) {
-    if ($("#transferRequestRegion").val() == null || $("#transferRequestPhysician").val() == null) {
+    if ($("#transferRequestRegion").val() == null) {
         e.preventDefault();
-        $("#transferValidation").css("display", "block");
+        $("#transferValidationforRegions").css("display", "block");
     }
     else {
-        $("#transferValidation").css("display", "none");
+        $("#transferValidationforRegions").css("display", "none");
+    }
+    if ($("#transferRequestPhysician").val() == null) {
+        e.preventDefault();
+        $("#transferValidationPhysician").css("display", "block");
+    }
+    else {
+        $("#transferValidationPhysician").css("display", "none");
     }
 })
 
@@ -91,12 +105,19 @@ $("#cacelForm").submit(function (e) {
 })
 
 $("#sendAgreementForm").submit(function (e) {
-    if ($("#patientEmail").val().length == 0 || $("#patientNumber").val().length == 0) {
+    if ($("#patientNumber").val().length == 0) {
         e.preventDefault();
-        $("#sendAgreementValidation").css("display", "block");
+        $("#patientNumberValidation").css("display", "block");
     }
     else {
-        $("#sendAgreementValidation").css("display", "none");
+        $("#patientNumberValidation").css("display", "none");
+    }
+    if ($("#patientEmail").val().length == 0) {
+        e.preventDefault();
+        $("#patientEmailValidation").css("display", "block");
+    }
+    else {
+        $("#patientEmailValidation").css("display", "none");
     }
 })
 

@@ -130,14 +130,14 @@
                             Create Requests
                         </span>
                     </button>
-                    <button class="mx-1 middleOptionButtons">
+                    <button class="mx-1 middleOptionButtons" id="exportData">
                         <i class="bi bi-folder-symlink"></i>
                         <span class="buttonText">
                             Export
                         </span>
                     </button>
-                                                <a asp-controller="Admin" asp-action="ExportAllData">
-                        <button class="mx-1 middleOptionButtons" id="exportAllData" asp-controller="Admin" asp-action="ExportAllData">
+                    <a asp-controller="Admin" asp-action="ExportAllData">
+                        <button class="mx-1 middleOptionButtons" asp-controller="Admin" asp-action="ExportAllData">
                             <i class="bi bi-folder-symlink-fill"></i>
                             <span class="buttonText">
                                 Export All

@@ -18,5 +18,7 @@ namespace Services.Interfaces.AdminServices
         Agreement getUserDetails(String token);
 
         DataTable exportAllData();
+
+        DataTable exportData(int pageNo, String status, int type, String searchElement);
     }
 }

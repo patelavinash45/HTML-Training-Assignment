@@ -45,8 +45,13 @@ button {
     background-color: rgb(216 81 231);
 }
 
+.headingText,
 .cancleButton {
     color: cadetblue;
+}
+
+textarea{
+    resize: none;
 }
 
 .form-floating > .form-control:focus ~ label,

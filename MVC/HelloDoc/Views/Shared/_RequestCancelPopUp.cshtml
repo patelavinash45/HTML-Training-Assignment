@@ -24,12 +24,12 @@
                             <option value="@item.Key">@item.Value</option>
                         }
                     </select>
+                    <span class="text-danger validation mb-3" id="cancelValidation">this Reason Field is Required</span>
                     <div class="form-floating">
-                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-2 mt-3" placeholder="AdditionalNotes" id="Notes" rows="5">
+                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-5 mt-3" placeholder="AdditionalNotes" id="Notes" rows="5">
                         </textarea>
                         <label for="Notes">Additional Notes</label>
                     </div>
-                    <span class="text-danger validation mb-3" id="cancelValidation">All * Field is Required</span>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn mx-2" id="conformButton">
                             Conform
