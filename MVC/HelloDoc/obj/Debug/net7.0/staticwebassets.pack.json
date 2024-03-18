@@ -5,6 +5,34 @@
       "PackagePath": "staticwebassets\\HelloDoc.bundle.scp.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\100\\Fig18.Clear Case.png",
+      "PackagePath": "staticwebassets\\Files\\100\\Fig18.Clear Case.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\101\\Fig3. Admin Dashboard.jpg",
+      "PackagePath": "staticwebassets\\Files\\101\\Fig3. Admin Dashboard.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\102\\Fig3. Admin Dashboard.jpg",
+      "PackagePath": "staticwebassets\\Files\\102\\Fig3. Admin Dashboard.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\103\\Fig3. Admin Dashboard.jpg",
+      "PackagePath": "staticwebassets\\Files\\103\\Fig3. Admin Dashboard.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\104\\Providers_mobile_1.png",
+      "PackagePath": "staticwebassets\\Files\\104\\Providers_mobile_1.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\105\\Providers_mobile_1.png",
+      "PackagePath": "staticwebassets\\Files\\105\\Providers_mobile_1.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\108\\Schedulling_day view_mobile.png",
+      "PackagePath": "staticwebassets\\Files\\108\\Schedulling_day view_mobile.png"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\37\\Fig34. Week wise Scheduling.jpg",
       "PackagePath": "staticwebassets\\Files\\37\\Fig34. Week wise Scheduling.jpg"
     },
@@ -155,6 +183,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\97\\Fig54. Provider My Profile.jpg",
       "PackagePath": "staticwebassets\\Files\\97\\Fig54. Provider My Profile.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\98\\Fig52. Encounter Finalize popup.png",
+      "PackagePath": "staticwebassets\\Files\\98\\Fig52. Encounter Finalize popup.png"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ViewCase.css",
