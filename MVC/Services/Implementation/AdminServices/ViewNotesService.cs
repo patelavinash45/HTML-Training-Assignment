@@ -57,7 +57,7 @@ namespace Services.Implementation.AdminServices
                     AdminNotes = adminNotes,
                     CreatedDate = DateTime.Now,
                 };
-                return await _requestNotesRepository.addRequestNote(_requestNote) > 0;
+                return await _requestNotesRepository.addRequestNote(_requestNote);
             }
             requestNote.AdminNotes= adminNotes;
             return await _requestNotesRepository.updateRequestNote(requestNote);
@@ -78,13 +78,13 @@ namespace Services.Implementation.AdminServices
                 CreatedDate = DateTime.Now,
                 Notes = model.AdminTransferNotes,
             };
-            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
+            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
         }
 
         public async Task<bool> agreementDeclined(Agreement model)
         {
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
-            requestClient.Status = 10;
+            requestClient.Status = 8;
             await _requestClientRepository.updateRequestClient(requestClient);
             RequestStatusLog _requestStatusLog = new()
             {
@@ -93,7 +93,7 @@ namespace Services.Implementation.AdminServices
                 CreatedDate = DateTime.Now,
                 Notes = model.CancelationReson,
             };
-            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
+            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
         }
 
         public async Task<bool> agreementAgree(Agreement model)
@@ -117,7 +117,7 @@ namespace Services.Implementation.AdminServices
                 Notes = model.AdminTransferNotes,
                 PhysicianId = model.SelectedPhysician,
             };
-            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
+            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
         }
 
         public async Task<bool> blockRequest(BlockPopUp model)
@@ -137,11 +137,11 @@ namespace Services.Implementation.AdminServices
             RequestStatusLog _requestStatusLog = new()
             {
                 RequestId = model.RequestId,
-                Status = 10,
+                Status = 0,
                 CreatedDate = DateTime.Now,
                 Notes = model.AdminTransferNotes,
             };
-            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog) > 0;
+            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
         }
 
         public async Task<bool> clearRequest(int requestId)

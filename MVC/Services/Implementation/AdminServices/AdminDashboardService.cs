@@ -161,7 +161,7 @@ namespace Services.Implementation.AdminServices
             switch(type)
             {
                 case 1: return convertRequestClientToDataTable(GetNewRequest(status, pageNo).TableDatas);
-                case 2: return convertRequestClientToDataTable(patientSearch(searchElement ,status, pageNo, type).TableDatas);
+                case 2: case 3: case 4: return convertRequestClientToDataTable(patientSearch(searchElement ,status, pageNo, type).TableDatas);
                 default: return null;
             }
         }
@@ -184,10 +184,10 @@ namespace Services.Implementation.AdminServices
         }
         private TableModel searchOnPatientName(String searchElement, String status, int pageNo)
         {
-            searchElement = searchElement.ToLower();
             int totalRequests = 0;
             int skip = (pageNo - 1) * 10;
             List<RequestClient> requestClients = new List<RequestClient>();
+            searchElement = searchElement.ToLower();
             if (!searchElement.Contains(" "))
             {
                 searchElement += " ";

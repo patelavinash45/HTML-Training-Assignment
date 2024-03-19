@@ -49,7 +49,7 @@
                         <td>
                             <div class="d-flex justify-content-between  align-items-center">
                                 @data.FirstName @data.LastName
-                                <button class="bg-transparent text-white p-2 border-white">
+                                <button class="bg-transparent text-white p-2 border-white btn">
                                     <i class="bi bi-envelope-fill"></i>
                                 </button>
                             </div>
@@ -70,14 +70,14 @@
                             @data.Street, @data.City, @data.State, @data.ZipCode
                         </td>
                         <td>
-                            -
+                            @data.Notes
                         </td>
                         <td>
-                            <button class="bg-transparent text-white p-2 border-white">
+                            <button class="bg-transparent text-white p-2 border-white btn">
                                 <i class="bi bi-person"></i>
                                 Provider
                             </button>
-                            <button class="bg-transparent text-white p-2 border-white">
+                            <button class="bg-transparent text-white p-2 border-white btn">
                                 <i class="bi bi-person"></i>
                                 Patient
                             </button>
@@ -106,6 +106,11 @@
                                     <li>
                                         <button class="dropdown-item" onclick="navigatToEncounterForm(@data.RequestId)">
                                             Encounter Form
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item" onclick="navigatToCloseCase(@data.RequestId)">
+                                            Close Case
                                         </button>
                                     </li>
                                     <li>

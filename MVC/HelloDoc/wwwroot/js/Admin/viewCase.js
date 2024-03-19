@@ -55,9 +55,7 @@ $(document).on("change", "#birthDate", function () {
 })
 
 $(document).on("change", "#lastName", function () {
-    console.log($(this).val());
-    if ($(this).val().length==0) {
-        console.log("2");
+    if ($(this).val().length == 0) { 
         $("#lastNameValidation").css("display", "block");
     }
     else {

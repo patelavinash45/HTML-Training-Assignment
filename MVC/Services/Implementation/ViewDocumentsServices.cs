@@ -51,7 +51,7 @@ namespace Services.Implementation
             return viewDocument;
         }
 
-        public async Task<int> uploadFile(ViewDocument model ,String firstName,String lastName,int requestId)
+        public async Task<bool> uploadFile(ViewDocument model ,String firstName,String lastName,int requestId)
         {
             return await _fileService.addFile(requestId: requestId, firstName: firstName, lastName: lastName,file: model.File);
         }

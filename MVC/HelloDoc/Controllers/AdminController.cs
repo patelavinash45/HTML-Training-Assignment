@@ -9,7 +9,6 @@ using Services.Interfaces.AuthServices;
 using Services.ViewModels;
 using Services.ViewModels.Admin;
 using System.Data;
-using System.IO;
 
 namespace HelloDoc.Controllers
 {
@@ -24,10 +23,12 @@ namespace HelloDoc.Controllers
         private readonly IJwtService _jwtService;
         private readonly ISendOrderService _sendOrderService;
         private readonly IEncounterService _encounterService;
+        private readonly ICloseCaseService _closeCaseService;
 
         public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
                                 IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
-                                IJwtService jwtService, ISendOrderService sendOrderService, IEncounterService encounterService)
+                                IJwtService jwtService, ISendOrderService sendOrderService, IEncounterService encounterService, 
+                                ICloseCaseService closeCaseService)
         {
             _notyfService = notyfService;
             _loginService = loginService;
@@ -38,6 +39,7 @@ namespace HelloDoc.Controllers
             _jwtService = jwtService;
             _sendOrderService = sendOrderService;
             _encounterService = encounterService;
+            _closeCaseService = closeCaseService;
         }
 
         public IActionResult LoginPage()
@@ -84,16 +86,12 @@ namespace HelloDoc.Controllers
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_viewNotesService.GetNotes(requestId));
         }
-        
-        public IActionResult Agreement(String token)
+
+        [Authorization("Admin")]
+        public IActionResult CloseCase()
         {
-            Agreement agreement = _adminDashboardService.getUserDetails(token);
-            if(agreement != null)
-            {
-                return View(agreement);
-            }
-            _notyfService.Error("Link is Invalid");
-            return RedirectToAction("PatientSite","Patient");
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
+            return View(_closeCaseService.getDaetails(requestId));
         }
 
         [Authorization("Admin")]
@@ -109,6 +107,17 @@ namespace HelloDoc.Controllers
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_sendOrderService.getSendOrderDetails(requestId));
+        }
+
+        public IActionResult Agreement(String token)
+        {
+            Agreement agreement = _adminDashboardService.getUserDetails(token);
+            if(agreement != null)
+            {
+                return View(agreement);
+            }
+            _notyfService.Error("Link is Invalid");
+            return RedirectToAction("PatientSite","Patient");
         }
 
         public async Task<JsonResult> DeleteAllFiles([FromBody]List<int> requestWiseFileIdsList)
@@ -298,7 +307,7 @@ namespace HelloDoc.Controllers
                 String firstname = HttpContext.Session.GetString("firstName");
                 String lastName = HttpContext.Session.GetString("lastName");
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _viewDocumentsServices.uploadFile(model,firstName:firstname,lastName: lastName,requestId) > 0)
+                if (await _viewDocumentsServices.uploadFile(model,firstName:firstname,lastName: lastName,requestId))
                 {
                     _notyfService.Success("Successfully File Added.");
                     return RedirectToAction("ViewDocument", "Admin");
@@ -314,7 +323,7 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await _sendOrderService.addOrderDetails(model) > 0)
+                if (await _sendOrderService.addOrderDetails(model))
                 {
                     _notyfService.Success("Successfully Order Added");
                 }
@@ -399,6 +408,39 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CloseCase(CloseCase model)
+        {
+            if (ModelState.IsValid)
+            {
+                int requestId = HttpContext.Session.GetInt32("requestId").Value;
+                if (await _closeCaseService.updateDetails(model,requestId))
+                {
+                    _notyfService.Success("Successfully Updated");
+                }
+                else
+                {
+                    _notyfService.Error("Update Faild");
+                }
+                return RedirectToAction("CloseCase", "Admin");
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> RequestAddToCloseCase()
+        {
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
+            if (await _closeCaseService.requestAddToCloseCase(requestId))
+            {
+                _notyfService.Success("Successfully Closed");
+            }
+            else
+            {
+                _notyfService.Error("Faild");
+            }
+            return RedirectToAction("Dashboard", "Admin");
+        }
+
         [HttpGet]   // Export All Data 
         public IActionResult ExportAllData()
         {
@@ -414,7 +456,7 @@ namespace HelloDoc.Controllers
             }
         }
 
-        [HttpGet]   // Export All Data 
+        [HttpGet]      // Export All Data 
         public IActionResult ExportData(int pageNo, String status, int type, String searchElement)
         {
             DataTable dataTable = _adminDashboardService.exportData(pageNo, status, type, searchElement);
@@ -429,14 +471,14 @@ namespace HelloDoc.Controllers
             }
         }
 
-        [HttpGet] // Dashboard 
+        [HttpGet]        // Dashboard 
         public IActionResult GetTablesData(String status,int pageNo,String partialViewName)
         {
            TableModel tableModel= _adminDashboardService.GetNewRequest(status, pageNo);
            return PartialView(partialViewName, tableModel);
         }
 
-        [HttpGet] // search on Dashboard 
+        [HttpGet]       // search on Dashboard 
         public IActionResult Search(String searchElement,String status, String partialViewName, int pageNo, int type)
         {
             TableModel tableModel = _adminDashboardService.patientSearch(searchElement, status,pageNo,type);

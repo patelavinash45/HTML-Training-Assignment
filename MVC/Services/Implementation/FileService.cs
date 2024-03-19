@@ -15,7 +15,7 @@ namespace Services.Implementation
             _requestWiseFileRepository = requestWiseFileRepository;
         }
 
-        public async Task<int> addFile(IFormFile file, int requestId, string firstName, string lastName)
+        public async Task<bool> addFile(IFormFile file, int requestId, string firstName, string lastName)
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files/"+requestId.ToString());
             if (!Directory.Exists(path))

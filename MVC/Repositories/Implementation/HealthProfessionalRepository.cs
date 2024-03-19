@@ -28,11 +28,10 @@ namespace Repositories.Implementation
             return _dbContext.HealthProfessionals.FirstOrDefault(a => a.VendorId == VenderId);
         }
 
-        public async Task<int> addOrderDetails(OrderDetail orderDetail)
+        public async Task<bool> addOrderDetails(OrderDetail orderDetail)
         {
             _dbContext.OrderDetails.Add(orderDetail);
-            await _dbContext.SaveChangesAsync();
-            return orderDetail?.Id ?? 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }

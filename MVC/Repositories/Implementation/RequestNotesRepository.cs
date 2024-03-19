@@ -18,18 +18,16 @@ namespace Repositories.Implementation
             return _dbContext.RequestNotes.FirstOrDefault(a => a.RequestId == requestId);
         }
 
-        public async Task<int> addRequestNote(RequestNote requestNote)
+        public async Task<bool> addRequestNote(RequestNote requestNote)
         {
             _dbContext.RequestNotes.Add(requestNote);
-            await _dbContext.SaveChangesAsync();
-            return requestNote?.RequestNotesId ?? 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> updateRequestNote(RequestNote requestNote)
         {
             _dbContext.RequestNotes.Update(requestNote);
-            int temp= await _dbContext.SaveChangesAsync();
-            return temp>0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }

@@ -33,6 +33,18 @@
       "PackagePath": "staticwebassets\\Files\\108\\Schedulling_day view_mobile.png"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\26\\Patient site_forget password_mobile.png",
+      "PackagePath": "staticwebassets\\Files\\26\\Patient site_forget password_mobile.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\26\\Patient site_login_mobile.png",
+      "PackagePath": "staticwebassets\\Files\\26\\Patient site_login_mobile.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\26\\Patient site_mobile.png",
+      "PackagePath": "staticwebassets\\Files\\26\\Patient site_mobile.png"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\37\\Fig34. Week wise Scheduling.jpg",
       "PackagePath": "staticwebassets\\Files\\37\\Fig34. Week wise Scheduling.jpg"
     },
@@ -91,6 +103,14 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\80\\Fig43. Patient history.jpg",
       "PackagePath": "staticwebassets\\Files\\80\\Fig43. Patient history.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\82\\Patient site_forget password_mobile.png",
+      "PackagePath": "staticwebassets\\Files\\82\\Patient site_forget password_mobile.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\82\\Schedulling_month view_mobile.png",
+      "PackagePath": "staticwebassets\\Files\\82\\Schedulling_month view_mobile.png"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\85\\Fig33. Month wise Scheduling.jpg",
@@ -209,6 +229,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\ancounterForm.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\closeCase.css",
+      "PackagePath": "staticwebassets\\css\\admin\\closeCase.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\dashboard.css",
       "PackagePath": "staticwebassets\\css\\admin\\dashboard.css"
     },
@@ -307,6 +331,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\loginImage.jpg",
       "PackagePath": "staticwebassets\\images\\loginImage.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\CloseCase.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\CloseCase.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\SendOrder.js",

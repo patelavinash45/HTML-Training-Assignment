@@ -3,7 +3,7 @@
 }
 
 button {
-    height: 58px;
+    height: 50px;
     color: cadetblue;
     font-size: 20px;
     background-color: white;
@@ -35,11 +35,11 @@ button {
 }
 
 #backBox {
-    height: 50px;
     width: 100px;
 }
 
-.bussinessOptions{
+
+.validation{
     display : none;
 }
 

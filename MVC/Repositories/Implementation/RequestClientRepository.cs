@@ -32,7 +32,7 @@ namespace Repositories.Implementation
 
         public int countRequestClientByStatus(int status)
         {
-            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Where(a => a.Status == status).ToList().Count;
+            return _dbContext.RequestClients.Where(a => a.Status == status).ToList().Count;
         }
 
         public List<RequestClient> getAllRequestClientForUser(int userId)
@@ -60,8 +60,7 @@ namespace Repositories.Implementation
         public async Task<bool> updateRequestClient(RequestClient requestClient)
         {
             _dbContext.RequestClients.Update(requestClient);
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0 ? true : false;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public List<RequestClient> getRequestClientByName(string firstName, string lastName, int status, int skip)
@@ -69,7 +68,7 @@ namespace Repositories.Implementation
             return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician)
                 .Where(a => a.Status == status).Where(a => (a.FirstName.ToLower().Contains(firstName) && a.LastName.ToLower().Contains(lastName))
                 || (a.FirstName.ToLower().Contains(lastName) && a.LastName.ToLower().Contains(firstName))).
-                Skip(skip).OrderByDescending(a => a.RequestClientId).Take(10).ToList();
+                         Skip(skip).OrderByDescending(a => a.RequestClientId).Take(10).ToList();
         }
 
         public int countRequestClientByName(string firstName, string lastName, int status)

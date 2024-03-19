@@ -28,8 +28,7 @@ namespace Repositories.Implementation
         public async Task<bool> updateRequest(Request request)
         {
             _dbContext.Requests.Update(request);
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }

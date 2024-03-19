@@ -137,11 +137,11 @@ button:disabled{
 .dt-column-order,
 .dt-length,
 .dt-search,
-#close, #closeText,
-#unpaid, #unpaidText,
-#conclude, #concludeText,
-#active, #activeText,
-#pending, #pendingText {
+#close,
+#unpaid, 
+#conclude, 
+#active, 
+#pending{
     display: none;
 }
 

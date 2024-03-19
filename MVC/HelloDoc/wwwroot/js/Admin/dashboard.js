@@ -16,43 +16,43 @@ function changeTable(temp) {      /// change view according to status
     $(".tables").css("display", "none");
     $(".optionButton").css('box-shadow', 'none');
     $(".searchPatient").val("");
-    $(".searchRegion").val("");
+    $(".searchRegion").val(""); 
     $('.buttonHr').css("display", "none");
     currentDataType = 1;
     switch (temp) {
         case 1: $("#new").css("display", "block");
             $("#newOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#newText").css("display", "block");
+            $("#statusText").text("(New)");
             currentStatus = 1;
             getTableData(1);
             break;
         case 2: $("#pending").css("display", "block");
             $("#pendingOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#pendingText").css("display", "block");
+            $("#statusText").text("(Pending)");
             currentStatus = 2;
             getTableData(1);
             break;
         case 3: $("#active").css("display", "block");
             $("#activeOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#activeText").css("display", "block");
+            $("#statusText").text("(Active)");
             currentStatus = 3;
             getTableData(1);
             break;
         case 4: $("#conclude").css("display", "block");
             $("#concludeOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#concludeText").css("display", "block");
+            $("#statusText").text("(Conclude)");
             currentStatus = 4;
             getTableData(1);
             break;
         case 5: $("#close").css("display", "block");
             $("#tocloseOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#closeText").css("display", "block");
+            $("#statusText").text("(Close)");
             currentStatus = 5;
             getTableData(1);
             break;
         case 6: $("#unpaid").css("display", "block");
             $("#unpaidOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#unpaidText").css("display", "block");
+            $("#statusText").text("(UnPaid)");
             currentStatus = 6;
             getTableData(1);
     }
@@ -141,7 +141,7 @@ function navigateToFirstPage() {    /// for First page in pagination
     }
 }
 
-function navigateToLastPage(totalRequestCount) {    /// for last page in pagination
+function navigateToLastPage(totalRequestCount) {       /// for last page in pagination
     var lastPageNo = getLastPageNo(totalRequestCount);
     switch (currentDataType) {
         case 1: getTableData(lastPageNo); break;

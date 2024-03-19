@@ -143,6 +143,10 @@ function navigatToEncounterForm(requestId) {
     navigation("EncounterForm", requestId);
 }
 
+function navigatToCloseCase(requestId) {
+    navigation("CloseCase", requestId);
+}
+
 
 function navigation(actionName, requestId) {
     $.ajax({

@@ -18,7 +18,7 @@
                     </div>
                     <input readonly class="d-none patientRequestId" asp-for="RequestId" type="text" />
                     <select class="p-2 w-100 mb-2" asp-for="Reason" id="cancelRequestRegions">
-                        <option disabled selected value="">Reasons For Cancellation*</option>
+                        <option disabled selected value="">Reasons For Cancellation</option>
                         @foreach (var item in Model.Reasons)
                         {
                             <option value="@item.Key">@item.Value</option>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn mx-2" id="conformButton">
-                            Conform
+                            Confirm
                         </button>
                         <button type="button" class="btn" data-bs-dismiss="modal" id="closeButton">
                             Close

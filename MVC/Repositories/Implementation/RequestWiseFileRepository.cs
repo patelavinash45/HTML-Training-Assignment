@@ -16,16 +16,14 @@ namespace Repositories.Implementation
 
         public int countFile(int requestId)
         {
-            List<RequestWiseFile> requestWiseFile = _dbContext.RequestWiseFiles.Where(a => a.RequestId == requestId && a.IsDeleted 
-                                                                                                      == new BitArray(1, false)).ToList();
-            return requestWiseFile.Count;
+            return _dbContext.RequestWiseFiles.Where(a => a.RequestId == requestId && a.IsDeleted 
+                                                                                   == new BitArray(1, false)).ToList().Count;
         }
 
-        public async Task<int> addFile(RequestWiseFile requestWiseFile)
+        public async Task<bool> addFile(RequestWiseFile requestWiseFile)
         {
             _dbContext.RequestWiseFiles.Add(requestWiseFile);
-            await _dbContext.SaveChangesAsync();
-            return requestWiseFile?.RequestWiseFileId ?? 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public List<RequestWiseFile> getFilesByrequestId(int requestId)

@@ -34,8 +34,7 @@ namespace Repositories.Implementation
         public async Task<bool> updateProfile(User user)
         {
             _dbContext.Users.Update(user);
-            int temp=await _dbContext.SaveChangesAsync();
-            return temp > 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public Admin getAdmionByAspNetUserId(int aspNetUserId)

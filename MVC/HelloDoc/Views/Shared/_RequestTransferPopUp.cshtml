@@ -16,7 +16,7 @@
                     To transfer this request search and select another Physician.
                     <input readonly class="d-none patientRequestId" asp-for="RequestId" type="text" />
                     <select class="p-2 w-100 mb-2 mt-2 selectRegion form-select" id="transferRequestRegion" asp-for="SelectedRegion" onchange="changeSelect(this)">
-                        <option disabled selected value="">Regions*</option>
+                        <option disabled selected value="">Regions</option>
                         @foreach (var item in Model.Regions)
                         {
                             <option value="@item.Key">@item.Value</option>
@@ -24,7 +24,7 @@
                     </select>
                     <span class="text-danger validation mb-3" id="transferValidationforRegions">this Region Field is Required</span>
                     <select class="p-2 w-100 mb-2 physician" id="transferRequestPhysician" asp-for="SelectedPhysician">
-                        <option disabled selected value="">Physicians*</option>
+                        <option disabled selected value="">Physicians</option>
                     </select>
                     <span class="text-danger validation mb-3" id="transferValidationPhysician">this Physician Field is Required</span>
                     <span class="text-danger"></span>

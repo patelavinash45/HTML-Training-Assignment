@@ -6,7 +6,7 @@ namespace Repositories.Interfaces
     {
         int countFile(int requestId);
 
-        Task<int> addFile(RequestWiseFile requestWiseFile);
+        Task<bool> addFile(RequestWiseFile requestWiseFile);
 
         List<RequestWiseFile> getFilesByrequestId(int requestId);
 

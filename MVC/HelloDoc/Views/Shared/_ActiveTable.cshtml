@@ -52,7 +52,7 @@
                         <td>
                             <div class="d-flex justify-content-between  align-items-center">
                                 @data.FirstName @data.LastName
-                                <button class="bg-transparent text-white p-2 border-white">
+                                <button class="bg-transparent text-white p-2 border-white btn">
                                     <i class="bi bi-envelope-fill"></i>
                                 </button>
                             </div>
@@ -70,13 +70,13 @@
                             @data.RequestdDate
                         </td>
                         <td>
-                            <button class="bg-transparent text-white p-2 border-white w-50">
+                            <button class="bg-transparent text-white p-2 border-white w-50 btn">
                                 @data.Mobile
                             </button>
                             (Patient)
                             @if (data.Requester == 1 || data.Requester == 3 || data.Requester == 4)
                             {
-                                <button class="bg-transparent text-white p-2 border-white w-50">
+                                <button class="bg-transparent text-white p-2 border-white w-50 btn">
                                     @data.RequesterMobile
                                 </button>
                                 <span>
@@ -91,11 +91,11 @@
                             @data.Notes
                         </td>
                         <td>
-                            <button class="bg-transparent text-white p-2 border-white">
+                            <button class="bg-transparent text-white p-2 border-white btn">
                                 <i class="bi bi-person"></i>
                                 Provider
                             </button>
-                            <button class="bg-transparent text-white p-2 border-white">
+                            <button class="bg-transparent text-white p-2 border-white btn">
                                 <i class="bi bi-person"></i>
                                 Patient
                             </button>

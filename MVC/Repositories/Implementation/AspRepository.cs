@@ -46,8 +46,7 @@ namespace Repositories.Implementation
             {
                 aspNetUser.ResetPasswordToken = token;
                 _dbContext.Update(aspNetUser);
-                await _dbContext.SaveChangesAsync();
-                return true;
+                return await _dbContext.SaveChangesAsync() > 0;
             }
             return false;
         }
@@ -81,8 +80,7 @@ namespace Repositories.Implementation
         public async Task<bool> addAspNetUserRole(AspNetUserRole aspNetUserRole)
         {
             _dbContext.AspNetUserRoles.Add(aspNetUserRole);
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0 ? true : false;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public AspNetUserRole validateAspNetUserRole(String email, String password, int userType)

@@ -1,9 +1,4 @@
 ﻿using Repositories.DataModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.Interfaces
 {
@@ -15,6 +10,6 @@ namespace Repositories.Interfaces
 
         HealthProfessional getHealthProfessional(int VenderId);
 
-        Task<int> addOrderDetails(OrderDetail orderDetail);
+        Task<bool> addOrderDetails(OrderDetail orderDetail);
     }
 }

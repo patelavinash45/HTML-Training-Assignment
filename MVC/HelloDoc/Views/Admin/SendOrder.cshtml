@@ -38,43 +38,41 @@
                         }
                     </select>
                     <label for="selectedProfession">Select Profession</label>
-                    <span asp-validation-for="SelectedProfession" class="text-danger"></span>
+                    <span id="professionValidation" class="text-danger validation">The Profession field is required.</span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                     <select class="form-select" id="selectedBusiness" asp-for="SelectedBusiness" onchange="changeBussiness()">
                         <option disabled selected value="">Select Bussiness</option>
                     </select>
-                    <label for="selectedBusiness">Business</label>
-                    <span asp-validation-for="SelectedBusiness" class="text-danger"></span>
+                    <label for="selectedBusiness">Bussiness</label>
+                    <span id="bussinessValidation" class="text-danger validation">The Bussiness field is required.</span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input disabled class="form-control contact" id="contact" placeholder="Contact" />
+                    <input disabled class="form-control contact" id="contact" placeholder="Contact" />
                     <input readonly class="contact d-none"  asp-for="Contact" />
                     <label for="contact">Business Contact</label>
-                    <span asp-validation-for="Contact" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input disabled class="form-control email" id="email" placeholder="Email" />
+                    <input disabled class="form-control email" id="email" placeholder="Email" />
                     <input readonly class="d-none email" asp-for="Email" />
                     <label for="email">Business Email</label>
-                    <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                        <input disabled class="form-control faxNumber" id="faxNumber" placeholder="FaxNumber" />
+                    <input disabled class="form-control faxNumber" id="faxNumber" placeholder="FaxNumber" />
                     <input readonly class="d-none faxNumber" asp-for="FaxNumber" />
                     <label for="faxNumber">Fax Number</label>
-                    <span asp-validation-for="FaxNumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-floating">
                     <textarea class="form-control h-75" id="orderDetils" rows="3" asp-for="OrderDetails" placeholder="OrderDeatails"></textarea>
-                    <label for="orderDetils">Prescription or Order detils</label>
+                    <label for="orderDetils">Prescription or Order details</label>
                     <span asp-validation-for="OrderDetails" class="text-danger"></span>
+                    <span id="orderDetailsValidation" class="text-danger validation">The Prescription&OrderDetails field is required.</span>
                 </div>
             </div>
             <div class="row">
@@ -88,7 +86,6 @@
                         <option value="5">5</option>
                     </select>
                     <label for="refill">No Of Refill</label>
-                    <span asp-validation-for="NoOfRefill" class="text-danger"></span>
                 </div>
             </div>
             <div class="d-flex justify-content-end mt-3">

@@ -44,3 +44,50 @@ function changeBussiness() {
         $(".faxNumber").val("").change();
     }
 }
+function orderDetailsValidation() {
+    if ($("#orderDetils").val().length == 0) {
+        $("#orderDetailsValidation").css("display", "block");
+    }
+    else {
+        $("#orderDetailsValidation").css("display", "none");
+    }
+}
+
+function bussinessValidation() {
+    if ($("#selectedBusiness").val() == null) {
+        $("#bussinessValidation").css("display", "block");
+    }
+    else {
+        $("#bussinessValidation").css("display", "none");
+    }
+}
+
+function professionValidation() {
+    if ($("#selectedProfession").val() == null) {
+        $("#professionValidation").css("display", "block");
+    }
+    else {
+        $("#professionValidation").css("display", "none");
+    }
+}
+
+$(document).on("change", "#selectedProfession", function () {
+    professionValidation();
+});
+
+$(document).on("change", "#selectedBusiness", function () {
+    bussinessValidation();
+});
+
+$(document).on("change", "#orderDetils", function () {
+    orderDetailsValidation();
+});
+
+$(document).on("submit", "#form", function (e) {
+    if ($("#selectedProfession").val() == null || $("#selectedBusiness").val() == null || $("#orderDetils").val().length == 0) {
+        e.preventDefault();
+        orderDetailsValidation();
+        professionValidation();
+        bussinessValidation();
+    }
+})

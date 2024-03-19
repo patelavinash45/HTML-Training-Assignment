@@ -35,7 +35,7 @@ namespace Services.Implementation.AdminServices
             return _healthProfessionalRepository.getHealthProfessional(venderId);
         }
 
-        public async Task<int> addOrderDetails(SendOrder model)
+        public async Task<bool> addOrderDetails(SendOrder model)
         {
             OrderDetail orderDetail = new OrderDetail()
             {

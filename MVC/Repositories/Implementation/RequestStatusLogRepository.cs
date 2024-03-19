@@ -18,25 +18,22 @@ namespace Repositories.Implementation
             return _dbContext.RequestStatusLogs.Where(a => a.RequestId == requestId).ToList();
         }
 
-        public async Task<int> addRequestSatatusLog(RequestStatusLog requestStatusLog)
+        public async Task<bool> addRequestSatatusLog(RequestStatusLog requestStatusLog)
         {
             _dbContext.RequestStatusLogs.Add(requestStatusLog);
-            await _dbContext.SaveChangesAsync();
-            return requestStatusLog?.RequestStatusLogId ?? 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }  
 
         public async Task<bool> updateRequestSatatusLog(RequestStatusLog requestStatusLog)
         {
             _dbContext.RequestStatusLogs.Update(requestStatusLog);
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<int> addBlockRequest(BlockRequest blockRequest)
+        public async Task<bool> addBlockRequest(BlockRequest blockRequest)
         {
             _dbContext.BlockRequests.Add(blockRequest);
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0 ? blockRequest.BlockRequestId : 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }

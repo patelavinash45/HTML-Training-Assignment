@@ -21,15 +21,13 @@ namespace Repositories.Implementation
         public async Task<bool> addEncounter(Encounter encounter)
         {
             _dbContext.Encounters.Add(encounter);
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> updateEncounter(Encounter encounter)
         {
             _dbContext.Encounters.Update(encounter);
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }

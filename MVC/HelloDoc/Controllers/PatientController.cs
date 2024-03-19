@@ -230,7 +230,7 @@ namespace HelloDoc.Controllers
                 String firstname = HttpContext.Session.GetString("firstName");
                 String lastName = HttpContext.Session.GetString("lastName");
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _viewDocumentsServices.uploadFile(model, firstName: firstname, lastName: lastName,requestId) > 0)
+                if (await _viewDocumentsServices.uploadFile(model, firstName: firstname, lastName: lastName,requestId))
                 {
                     _notyfService.Success("Successfully File Added.");
                     return RedirectToAction("ViewDocument", "Patient", new { id = requestId });
