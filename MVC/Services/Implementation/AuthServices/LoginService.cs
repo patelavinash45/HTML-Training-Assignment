@@ -5,6 +5,8 @@ using Repositories.Interfaces;
 using Services.Interfaces.AuthServices;
 using Services.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -84,6 +86,69 @@ namespace Services.Implementation.AuthServices
                 }
             }
             return false;
+        }
+
+        public async Task<bool> resetPasswordLinkSend(string email)
+        {
+            try
+            {
+                int aspNetUserId = _aspRepository.checkUser(email);
+                List<Claim> claims = new List<Claim>()
+                {
+                    new Claim("aspNetUserId", aspNetUserId.ToString()),
+                };
+                String token = _jwtService.genrateJwtTokenForSendMail(claims, DateTime.Now.AddDays(1));
+                await _aspRepository.setToken(token: token, aspNetUserId: aspNetUserId);
+                string link = "token=" + token;
+                MailMessage mailMessage = new MailMessage
+                {
+                    From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
+                    Subject = "Reset Password Link",
+                    IsBodyHtml = true,
+                };
+                string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EmailTemplate/resetPasswordEmail.cshtml");
+                string body = File.ReadAllText(templatePath).Replace("EmailLink", link);
+                mailMessage.Body = body;
+                mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
+                SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
+                {
+                    UseDefaultCredentials = false,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    EnableSsl = true,
+                    Port = 587,
+                    Credentials = new NetworkCredential(userName: "tatva.dotnet.avinashpatel@outlook.com", password: "Avinash@6351"),
+                };
+                smtpClient.SendMailAsync(mailMessage);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public SetNewPassword validatePasswordLink(string token)
+        {
+            SetNewPassword setNewPassword = new()
+            {
+                IsValidLink = false,
+            };
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(token);
+            if (_jwtService.validateToken(token, out jwtSecurityToken))
+            {
+                int aspNetUserId = int.Parse(jwtSecurityToken.Claims.FirstOrDefault(a => a.Type == "aspNetUserId").Value);
+                setNewPassword.IsValidLink = _aspRepository.checkToken(token: token, aspNetUserId: aspNetUserId);
+                setNewPassword.AspNetUserId = aspNetUserId.ToString();
+                return setNewPassword;
+            }
+            return setNewPassword;
+        }
+
+        public Task<bool> changePassword(int aspNetUserId, String password)
+        {
+            AspNetUser aspNetUser = _aspRepository.getUser(aspNetUserId);
+            aspNetUser.PasswordHash = genrateHash(password);
+            return _aspRepository.changePassword(aspNetUser);
         }
 
         private string genrateHash(string password)

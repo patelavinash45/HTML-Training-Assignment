@@ -9,5 +9,11 @@ namespace Services.Interfaces.AuthServices
 
         bool isTokenValid(HttpContext httpContext,String userType);
 
+        Task<bool> resetPasswordLinkSend(string email);
+
+        SetNewPassword validatePasswordLink(string token);
+
+        Task<bool> changePassword(int aspNetUserId, String password);
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Repositories.DataContext;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
 
@@ -50,6 +51,17 @@ namespace Repositories.Implementation
         public Physician getPhysicianNameByPhysicianId(int physicianId)
         {
             return _dbContext.Physicians.FirstOrDefault(a => a.PhysicianId == physicianId);
+        }
+
+        public List<AdminRegion> getAdminRegionByAdminId(int adminId)
+        {
+            return _dbContext.AdminRegions.Where(a => a.AdminId == adminId).ToList();
+        }
+
+        public async Task<bool> updateAdmin(Admin admin)
+        {
+            _dbContext.Admins.Update(admin);
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }

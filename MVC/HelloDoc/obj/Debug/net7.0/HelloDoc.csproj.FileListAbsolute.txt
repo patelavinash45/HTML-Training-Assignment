@@ -41,7 +41,11 @@ D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\AspNetCoreHero
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Azure.Core.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Azure.Identity.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\ClosedXML.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\DocumentFormat.OpenXml.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\ExcelNumberFormat.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Humanizer.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Irony.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Microsoft.AspNetCore.Razor.Language.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -97,6 +101,7 @@ D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\NuGet.Packagin
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\NuGet.ProjectModel.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\NuGet.Protocol.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\NuGet.Versioning.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\SixLabors.Fonts.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.CodeDom.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Composition.AttributedModel.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Composition.Convention.dll
@@ -106,12 +111,14 @@ D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Composi
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Drawing.Common.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.IO.Packaging.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Memory.Data.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Reflection.MetadataLoadContext.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Runtime.Caching.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Security.Permissions.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.Windows.Extensions.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\XLParser.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\af\Humanizer.resources.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\ar\Humanizer.resources.dll
 D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\az\Humanizer.resources.dll
@@ -292,10 +299,3 @@ D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\refint\HelloDo
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\HelloDoc.pdb
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\HelloDoc.genruntimeconfig.cache
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\ref\HelloDoc.dll
-D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\ClosedXML.dll
-D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\DocumentFormat.OpenXml.dll
-D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\ExcelNumberFormat.dll
-D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\Irony.dll
-D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\SixLabors.Fonts.dll
-D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\System.IO.Packaging.dll
-D:\project\HTML Training Assignment\MVC\HelloDoc\bin\Debug\net7.0\XLParser.dll

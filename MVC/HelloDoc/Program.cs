@@ -38,7 +38,6 @@ builder.Services.AddScoped<IAddRequestService, AddRequestService>();
 builder.Services.AddScoped<IViewProfileService, ViewProfileService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
-builder.Services.AddScoped<IResetPasswordService, ResetPasswordService>();
 builder.Services.AddScoped<IViewDocumentsServices, ViewDocumentsServices>();
 builder.Services.AddScoped<IViewCaseService, ViewCaseService>();
 builder.Services.AddScoped<IViewNotesService, ViewNotesService>();

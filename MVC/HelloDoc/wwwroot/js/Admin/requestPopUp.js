@@ -11,7 +11,7 @@ function changeSelect(document) {
         },
         success: function (response) {
             $(".physician").children().remove();
-            $(".physician").append('<option disabled selected value="">Physicians*</option>');
+            $(".physician").append('<option disabled selected value="">Physicians</option>');
             $.each(response, function (index, item) {
                 var option = "<option value=" + index + ">"+item+"</option>";
                 $(".physician").append(option);
@@ -114,10 +114,19 @@ $("#sendAgreementForm").submit(function (e) {
     }
     if ($("#patientEmail").val().length == 0) {
         e.preventDefault();
-        $("#patientEmailValidation").css("display", "block");
+        $("#patientEmailValidation1").css("display", "block");
+        $("#patientEmailValidation2").css("display", "none");
     }
     else {
-        $("#patientEmailValidation").css("display", "none");
+        $("#patientEmailValidation1").css("display", "none");
+        var validRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+        if (!$("#patientEmail").val().match(validRegex)) {
+            e.preventDefault();
+            $("#patientEmailValidation2").css("display", "block");
+        }
+        else {
+            $("#patientEmailValidation2").css("display", "none");
+        }
     }
 })
 

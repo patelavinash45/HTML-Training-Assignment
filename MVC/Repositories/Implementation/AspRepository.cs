@@ -56,12 +56,10 @@ namespace Repositories.Implementation
             return _dbContext.AspNetUsers.FirstOrDefault(a => a.Id == aspNetUserId);
         }
 
-        public async Task<bool> changePassword(AspNetUser aspNetUser, String password)
+        public async Task<bool> changePassword(AspNetUser aspNetUser)
         {
-            aspNetUser.PasswordHash = password;
             _dbContext.Update(aspNetUser); 
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public int checkUserRole(string role)

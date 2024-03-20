@@ -57,6 +57,9 @@ public partial class Admin
 
     public bool? IsDeleted { get; set; }
 
+    [StringLength(50)]
+    public string? Role { get; set; }
+
     [InverseProperty("Admin")]
     public virtual ICollection<AdminRegion> AdminRegions { get; set; } = new List<AdminRegion>();
 

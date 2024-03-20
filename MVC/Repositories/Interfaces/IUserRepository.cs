@@ -18,5 +18,9 @@ namespace Repositories.Interfaces
 
         Physician getPhysicianNameByPhysicianId(int physicianId);
 
+        List<AdminRegion> getAdminRegionByAdminId(int adminId);
+
+        Task<bool> updateAdmin(Admin admin);
+
     }
 }

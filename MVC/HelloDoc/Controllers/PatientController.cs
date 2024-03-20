@@ -15,12 +15,11 @@ namespace HelloDoc.Controllers
         private readonly IPatientDashboardService _dashboardService;
         private readonly IAddRequestService _addRequestService;
         private readonly IViewProfileService _viewProfileService;
-        private readonly IResetPasswordService _resetPasswordService;
         private readonly IViewDocumentsServices _viewDocumentsServices;
         private readonly IJwtService _jwtService;
 
         public PatientController(INotyfService notyfService,ILoginService loginService ,IPatientDashboardService dashboardService,
-                                 IAddRequestService addRequestService,IViewProfileService viewProfileService, IResetPasswordService resetPasswordService,
+                                 IAddRequestService addRequestService,IViewProfileService viewProfileService, 
                                  IViewDocumentsServices viewDocumentsServices,IJwtService jwtService)
         {
             _notyfService = notyfService;
@@ -28,7 +27,6 @@ namespace HelloDoc.Controllers
             _dashboardService = dashboardService;
             _addRequestService = addRequestService;
             _viewProfileService= viewProfileService;
-            _resetPasswordService= resetPasswordService;
             _viewDocumentsServices = viewDocumentsServices;
             _jwtService = jwtService;
         }
@@ -85,7 +83,7 @@ namespace HelloDoc.Controllers
 
         public IActionResult NewPassword(String token, int id, string time)
         {
-            return View(_resetPasswordService.validatePasswordLink(token));
+            return View(_loginService.validatePasswordLink(token));
         }
 
         [Authorization("Patient")]
@@ -184,7 +182,7 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(await _resetPasswordService.changePassword(model))
+                if(await _loginService.changePassword(aspNetUserId: int.Parse(model.AspNetUserId),password: model.Password))
                 {
                     _notyfService.Success("Successfully Password Updated");
                     return RedirectToAction("PatientSite", "Patient");
@@ -218,7 +216,7 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPassword model)
         {
-            return await _resetPasswordService.resetPasswordLinkSend(model.Email) ? RedirectToAction("PatientSite", "Patient") : View(null);
+            return await _loginService.resetPasswordLinkSend(model.Email) ? RedirectToAction("PatientSite", "Patient") : View(null);
         }
 
         [HttpPost]

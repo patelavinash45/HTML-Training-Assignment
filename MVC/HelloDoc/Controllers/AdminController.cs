@@ -24,11 +24,12 @@ namespace HelloDoc.Controllers
         private readonly ISendOrderService _sendOrderService;
         private readonly IEncounterService _encounterService;
         private readonly ICloseCaseService _closeCaseService;
+        private readonly IViewProfileService _viewProfileService;
 
         public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
                                 IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
                                 IJwtService jwtService, ISendOrderService sendOrderService, IEncounterService encounterService, 
-                                ICloseCaseService closeCaseService)
+                                ICloseCaseService closeCaseService, IViewProfileService viewProfileService)
         {
             _notyfService = notyfService;
             _loginService = loginService;
@@ -40,6 +41,7 @@ namespace HelloDoc.Controllers
             _sendOrderService = sendOrderService;
             _encounterService = encounterService;
             _closeCaseService = closeCaseService;
+            _viewProfileService = viewProfileService;   
         }
 
         public IActionResult LoginPage()
@@ -85,6 +87,13 @@ namespace HelloDoc.Controllers
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_viewNotesService.GetNotes(requestId));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult ViewProfile()
+        {
+            int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            return View(_viewProfileService.GetAdminViewProfile(aspNetUseId));
         }
 
         [Authorization("Admin")]
@@ -456,7 +465,52 @@ namespace HelloDoc.Controllers
             }
         }
 
-        [HttpGet]      // Export All Data 
+        [HttpGet]   // reset password through view profile
+        public async Task<IActionResult> ViewProfileEditPassword(String newPassword)
+        {
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _loginService.changePassword(aspNetUserId, newPassword))
+            {
+                _notyfService.Success("Successfully Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild");
+            }
+            return Json(new { redirect = Url.Action("ViewProfile", "Admin") });
+        }
+
+        [HttpGet]   //  Edit Administrator Information view profile
+        public async Task<IActionResult> EditAdministratorInformation(String data)
+        {
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _viewProfileService.editEditAdministratorInformastion(data,aspNetUserId))
+            {
+                _notyfService.Success("Successfully Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild");
+            }
+            return Json(new { redirect = Url.Action("ViewProfile", "Admin") });
+        }
+
+        [HttpGet]   //  Edit Mailing And Billing Information view profile
+        public async Task<IActionResult> EditMailingAndBillingInformation(String data)
+        {
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _viewProfileService.editMailingAndBillingInformation(data, aspNetUserId))
+            {
+                _notyfService.Success("Successfully Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild");
+            }
+            return Json(new { redirect = Url.Action("ViewProfile", "Admin") });
+        }
+
+        [HttpGet]      // Export selected Data 
         public IActionResult ExportData(int pageNo, String status, int type, String searchElement)
         {
             DataTable dataTable = _adminDashboardService.exportData(pageNo, status, type, searchElement);

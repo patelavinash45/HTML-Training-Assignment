@@ -16,7 +16,7 @@ namespace Repositories.Interface
 
         bool checkToken(String token,int aspNetUserId);
 
-        Task<bool> changePassword(AspNetUser aspNetUser,String password);
+        Task<bool> changePassword(AspNetUser aspNetUser);
 
         int checkUserRole(string role);
 
