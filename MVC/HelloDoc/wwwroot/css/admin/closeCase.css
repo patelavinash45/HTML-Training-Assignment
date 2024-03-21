@@ -66,4 +66,8 @@ input {
     .table-responsive {
         display: none;
     }
+
+    .h4 {
+        font-size: calc(1rem + .3vw);
+    }
 }

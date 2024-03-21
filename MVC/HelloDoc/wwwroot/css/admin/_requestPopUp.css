@@ -50,6 +50,14 @@ option{
     display: none;
 }
 
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+    color: #0a8185;
+    opacity: 1;
+    font-weight: 600;
+}
+
 @media screen and (min-width:576px) {
     .modal-dialog {
         max-width: 550px;

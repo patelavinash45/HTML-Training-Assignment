@@ -87,8 +87,7 @@ namespace Services.Implementation
                 RequestWiseFile requestWiseFile = _requestWiseFileRepository.getFilesByrequestWiseFileId(item);
                 string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files/"+requestWiseFile.RequestId.ToString());
                 path = Path.Combine(path, requestWiseFile.FileName);
-                Attachment attachment = new Attachment(path);
-                mailMessage.Attachments.Add(attachment);
+                mailMessage.Attachments.Add(new Attachment(path));
             }
             //RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
             //mailMessage.To.Add(requestClient.Email);

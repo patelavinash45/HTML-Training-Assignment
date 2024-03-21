@@ -12,10 +12,10 @@ function enableEditForAdministrator(temp) {
         var radio = $(".form-check-input");
         for (i = 0; i < radio.length; i++) {
             if ($(radio[i]).is(":checked")) {
+                radioList.push($(radio[i]).attr("id"));
                 defaultRadioList.push($(radio[i]).attr("id"));
             }
         }
-        radioList = defaultRadioList;
     }
     else {
         $(".form-check-input").prop("checked", false);
@@ -41,10 +41,11 @@ function radioClick(doc) {
     if ($(doc).is(":checked")) {
         radioList.push($(doc).attr("id"));
     } else {
-        radioList.pop($(doc).attr("id"));
+        var index = radioList.indexOf($(doc).attr("id"));
+        if (index > -1) {
+            radioList.splice(index , 1);
+        }
     }
-    console.log(radioList);
-    console.log(defaultRadioList);
 }
 
 function enableEditForMailingAndBilling(temp) {
@@ -147,7 +148,7 @@ $(document).on("change", "#email", function () {
 
 $(document).on("change", "#confirmEmail", function () {
     if ($(this).val().length == 0) {
-        $("#confirmEmailValidation").text("this Confir Email Filed is required");
+        $("#confirmEmailValidation").text("this Confirm Email Filed is required");
     }
     else {
         $("#confirmEmailValidation").text("");
@@ -163,27 +164,35 @@ $(document).on("change", "#phone1", function () {
     }
 })
 
+var validRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 $(document).on("click", "#administratorForm", function () {
-    if ($("#lastName").val().length != 0 || $("#phone1").val().length != 0 || $("#confirmEmail").val().length != 0 || $("#email").val().length != 0
-        || $("#firstName").val().length != 0) {
-        var data = JSON.stringify({
+    if ($("#lastName").val().length != 0 && $("#phone1").val().length != 0 && $("#confirmEmail").val().length != 0 && $("#email").val().length != 0
+        && $("#firstName").val().length != 0 && $("#confirmEmail").val() == $("#email").val() && !$("#email").val().match(validRegex)) {
+        var data1 = JSON.stringify({
             FirstName: $("#firstName").val(),
             LastName: $("#lastName").val(),
             Email: $("#email").val(),
-            Mobile: $("#phone1").val()
-        })
+            Mobile: $("#phone1").val(),
+            SelectedRegions: radioList,
+        });
         $.ajax({
             url: "/Admin/EditAdministratorInformation",
             type: "Get",
             async: false,
             contentType: "application/json",
             data: {
-                data: data,
+                data1: data1,
             },
             success: function (response) {
                 window.location.href = response.redirect;
             }
         })
+    }
+    else if ($("#confirmEmail").val() != $("#email").val()) {
+        $("#confirmEmailValidation").text("this Confirm Email and Email is not Same");
+    }
+    if (!$("#email").val().match(validRegex)) {
+        $("#emailValidation").text("this Email is Not Valid");
     }
 })
 
@@ -235,15 +244,15 @@ $(document).on("change", "#phone2", function () {
 })
 
 $(document).on("click", "#mailingAndBillingForm", function () {
-    if ($("#address1").val().length != 0 || $("#phone2").val().length != 0 || $("#zip").val().length != 0 ||
-        $("#city").val().length != 0 || $("#address2").val().length != 0) {
+    if ($("#address1").val().length != 0 && $("#phone2").val().length != 0 && $("#zip").val().length != 0 ||
+        $("#city").val().length != 0 && $("#address2").val().length != 0) {
         var data = JSON.stringify({
             Address1: $("#address1").val(),
             Address2: $("#address2").val(),
             City: $("#city").val(),
             ZipCode: $("#zip").val(),
             Phone: $("#phone2").val(),
-            SelectedRegion: $("#state").val()
+            SelectedRegion: $("#state").val(),
         })
         $.ajax({
             url: "/Admin/EditMailingAndBillingInformation",
@@ -257,6 +266,5 @@ $(document).on("click", "#mailingAndBillingForm", function () {
                 window.location.href = response.redirect;
             }
         })
-
     }
 })

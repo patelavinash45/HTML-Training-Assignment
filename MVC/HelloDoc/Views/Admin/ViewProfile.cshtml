@@ -102,7 +102,7 @@
                         @foreach(var item in Model.Regions)
                             {
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" value="@item.Key" id="region-@item.Key" 
+                                    <input class="form-check-input" type="checkbox" value="@item.Key" id="@item.Key" 
                                                                checked=@Model.AdminRegions[item.Key] onclick="radioClick(this)">
                                     <label class="form-check-label" for="r-1">
                                         @item.Value

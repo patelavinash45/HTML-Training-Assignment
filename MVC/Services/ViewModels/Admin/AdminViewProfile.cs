@@ -24,7 +24,7 @@ namespace Services.ViewModels.Admin
 
         public string ZipCode { get; set; }
 
-        public int SelectedRegions { get; set; }
+        public List<String> SelectedRegions { get; set; }
 
         public string SelectedRegion { get; set; }
 

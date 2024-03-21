@@ -87,26 +87,50 @@ namespace Services.Implementation
                 Role = admin.Role,
                 City = admin.City,
                 ZipCode = admin.Zip,
+                SelectedRegion = admin.RegionId.ToString(),
                 Regions = regions,
                 AdminRegions = adminRegions,
             };
             return adminViewProfile;
         }
 
-        public async Task<bool> editEditAdministratorInformastion(String data,int aspNetUserId)
+        public async Task<bool> editEditAdministratorInformastion(String data1, int aspNetUserId)
         {
-            AdminViewProfile _data = JsonSerializer.Deserialize<AdminViewProfile>(data);
+            AdminViewProfile _data = JsonSerializer.Deserialize<AdminViewProfile>(data1);
             Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserId);
             admin.FirstName = _data.FirstName; 
             admin.LastName = _data.LastName;
             admin.Email = _data.Email; 
             admin.Mobile = _data.Mobile;
-            return await _userRepository.updateAdmin(admin);
+            if(await _userRepository.updateAdmin(admin))
+            {
+                List<AdminRegion> adminRegions = _userRepository.getAdminRegionByAdminId(admin.AdminId);
+                foreach(AdminRegion adminRegion in adminRegions)
+                {
+                    if (!_data.SelectedRegions.Contains(adminRegion.RegionId.ToString()))
+                    {
+                        await _userRepository.deleteAdminRgion(adminRegion);
+                    }
+                }
+                foreach (String regionId in _data.SelectedRegions)
+                {
+                    if (!adminRegions.Any(a => a.RegionId == int.Parse(regionId)))
+                    {
+                        AdminRegion _adminRegion = new AdminRegion()
+                        {
+                            AdminId = admin.AdminId,
+                            RegionId = int.Parse(regionId),
+                        };
+                        await _userRepository.addAdminRgion(_adminRegion);
+                    }
+                }
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> editMailingAndBillingInformation(String data, int aspNetUserId)
         {
-           
             AdminViewProfile _data = JsonSerializer.Deserialize<AdminViewProfile>(data);
             Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserId);
             admin.Address1 = _data.Address1;

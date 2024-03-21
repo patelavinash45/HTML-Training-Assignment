@@ -97,6 +97,14 @@
       "PackagePath": "staticwebassets\\Files\\49\\Fig40. Profession menu Vendors.jpg"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\50\\Patient site_forget password_mobile.png",
+      "PackagePath": "staticwebassets\\Files\\50\\Patient site_forget password_mobile.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\50\\Patient site_mobile.png",
+      "PackagePath": "staticwebassets\\Files\\50\\Patient site_mobile.png"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\80\\Fig42.Edit business page.png",
       "PackagePath": "staticwebassets\\Files\\80\\Fig42.Edit business page.png"
     },
@@ -241,6 +249,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\loginPage.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\providers.css",
+      "PackagePath": "staticwebassets\\css\\admin\\providers.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\sendOrder.css",
       "PackagePath": "staticwebassets\\css\\admin\\sendOrder.css"
     },
@@ -345,12 +357,20 @@
       "PackagePath": "staticwebassets\\js\\Admin\\SendOrder.js"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\_DashboardHeader.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\_DashboardHeader.js"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\dashboard.js",
       "PackagePath": "staticwebassets\\js\\Admin\\dashboard.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\loginPage.js",
       "PackagePath": "staticwebassets\\js\\Admin\\loginPage.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\provider.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\provider.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\requestPopUp.js",

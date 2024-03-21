@@ -3,15 +3,6 @@ var statusTableStrings = ["", "_NewTable", "_PendingTable", "_ActiveTable", "_Co
 var currentStatus = 1;         /// for which state is current
 var currentDataType = 1;       /// 1 - all data , 2 - patient search , 3 - region search , 4 - requester type search
 
-function sidebar() {  /// for mobile view silebar
-    var temp = document.getElementById("side-bar").style.display;
-    if (temp == "none") {
-        document.getElementById("side-bar").style.display = "block";
-    } else {
-        document.getElementById("side-bar").style.display = "none";
-    }
-}
-
 function changeTable(temp) {      /// change view according to status
     $(".tables").css("display", "none");
     $(".optionButton").css('box-shadow', 'none');
@@ -226,7 +217,7 @@ $(document).on("click", "#exportData", function () {
         success: function (response) {
             const a = document.createElement('a');
             var unit8array = new Uint8Array(response);
-            a.href = window.URL.createObjectURL(new Blob([unit8array], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+            a.href = window.URL.createObjectURL(new Blob([unit8array], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
             a.download = 'Data.xlsx';
             a.click();
         }

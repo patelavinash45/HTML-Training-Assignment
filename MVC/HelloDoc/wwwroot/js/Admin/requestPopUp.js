@@ -24,6 +24,7 @@ function displayPopUp(id) {
     var idName = "#name-" + id;
     $(".patientRequestId").val(id);
     $(".patientName").text($(idName).text());
+    $('.validation').css("display", "none");
 }
 
 function displaySendAgreementPopUp(id) {
@@ -130,6 +131,7 @@ $("#sendAgreementForm").submit(function (e) {
     }
 })
 
+
 ////
 
 function navigatToViewCase(requestId) {
@@ -171,3 +173,69 @@ function navigation(actionName, requestId) {
         }
     })
 }
+
+
+//// provider popup - contect provider
+
+var email = false, sms = false;
+
+$(document).on("change", "#email", function () {
+    if ($(this).is(":checked")) {
+        email = true;
+    }
+    else {
+        email = false;
+    }
+    isBothRadionbuttonslected();
+})
+
+$(document).on("change", "#sms", function () {
+    if ($(this).is(":checked")) {
+        sms = true;
+    }
+    else {
+        sms = false;
+    }
+    isBothRadionbuttonslected();
+})
+
+function isBothRadionbuttonslected() {
+    if (email && sms) {
+        $("#both").prop("checked", true);
+    }
+    else {
+        $("#both").prop("checked", false);
+    }
+}
+
+$(document).on("change", "#both", function () {
+    if ($(this).is(":checked")) {
+        sms = true;
+        email = true;
+        $("#email").prop("checked", true);
+        $("#sms").prop("checked", true);
+    }
+    else {
+        sms = false;
+        email = false;
+        $("#email").prop("checked", false);
+        $("#sms").prop("checked", false);
+    }
+})
+
+$(document).on("submit", "#contactForm", function (e) {
+    if (!email && !sms) {
+        e.preventDefault();
+        $("#medium").css("display", "block");
+    }
+    else {
+        $("#medium").css("display", "none");
+    }
+    if ($("#message").val().length == 0) {
+        e.preventDefault();
+        $("#messageValidation").css("display", "block");
+    }
+    else {
+        $("#messageValidation").css("display", "none");
+    }
+})

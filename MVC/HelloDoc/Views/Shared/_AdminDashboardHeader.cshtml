@@ -1,6 +1,8 @@
 ﻿@model int
 @inject IHttpContextAccessor HttpContextAccessor
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Admin/_DashboardHeader.js"></script>
 <link href="~/css/admin/_dashboardHeader.css" rel="stylesheet" />
 <header>
     <div class="d-flex justify-content-between align-items-center">
@@ -60,7 +62,7 @@
                 <hr class="border-bottom border-3 border-dark h1" />
             }
         </a>
-        <a asp-controller="" asp-action=""  class="mx-2">
+        <a asp-controller="Admin" asp-action="Providers"  class="mx-2">
             <div class="mx-2 h6">
                 Providers
             </div>
@@ -126,7 +128,7 @@
             <hr class="h1" />
         }
     </a>
-    <a asp-controller="" asp-action=""  class="d-flex justify-content-center border m-2 rounded-start">
+    <a asp-controller="Admin" asp-action="Providers"  class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6">
             Providers
         </div>
@@ -163,3 +165,4 @@
         }
     </a>
 </div>
+

@@ -49,6 +49,7 @@ builder.Services.AddScoped<IHealthProfessionalRepository, HealthProfessionalRepo
 builder.Services.AddScoped<IEncounterService, EncounterService>();
 builder.Services.AddScoped<IEncounterRepository, EncounterRepository>();
 builder.Services.AddScoped<ICloseCaseService, CloseCaseService>();
+builder.Services.AddScoped<IProvidersService, ProvidersService>();
 
 
 var app = builder.Build();

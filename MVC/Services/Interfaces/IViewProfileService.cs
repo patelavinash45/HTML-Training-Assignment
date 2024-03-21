@@ -13,6 +13,6 @@ namespace Services.Interfaces
 
         Task<bool> editEditAdministratorInformastion(String data, int aspNetUserId);
 
-        Task<bool> editMailingAndBillingInformation(String data, int aspNetUserId);
+        Task<bool> editMailingAndBillingInformation(String data1, int aspNetUserId);
     }
 }

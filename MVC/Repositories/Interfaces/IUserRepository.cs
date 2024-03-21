@@ -14,13 +14,23 @@ namespace Repositories.Interfaces
 
         Admin getAdmionByAspNetUserId(int aspNetUserId);
 
+        List<Physician> getAllPhysicians();
+
         List<Physician> getAllPhysiciansByRegionId(int regionId);
+
+        PhysicianNotification GetPhysicianNotification(int physicianId);
+
+        Task<bool> updatePhysicianNotification(PhysicianNotification physicianNotification);
 
         Physician getPhysicianNameByPhysicianId(int physicianId);
 
         List<AdminRegion> getAdminRegionByAdminId(int adminId);
 
         Task<bool> updateAdmin(Admin admin);
+
+        Task<bool> addAdminRgion(AdminRegion adminRegion);
+
+        Task<bool> deleteAdminRgion(AdminRegion adminRegion);
 
     }
 }

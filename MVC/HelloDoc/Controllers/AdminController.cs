@@ -25,11 +25,13 @@ namespace HelloDoc.Controllers
         private readonly IEncounterService _encounterService;
         private readonly ICloseCaseService _closeCaseService;
         private readonly IViewProfileService _viewProfileService;
+        private readonly IProvidersService _providersService;
 
         public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
                                 IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
                                 IJwtService jwtService, ISendOrderService sendOrderService, IEncounterService encounterService, 
-                                ICloseCaseService closeCaseService, IViewProfileService viewProfileService)
+                                ICloseCaseService closeCaseService, IViewProfileService viewProfileService,
+                                IProvidersService providersService)
         {
             _notyfService = notyfService;
             _loginService = loginService;
@@ -42,6 +44,7 @@ namespace HelloDoc.Controllers
             _encounterService = encounterService;
             _closeCaseService = closeCaseService;
             _viewProfileService = viewProfileService;   
+            _providersService = providersService;
         }
 
         public IActionResult LoginPage()
@@ -87,6 +90,12 @@ namespace HelloDoc.Controllers
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_viewNotesService.GetNotes(requestId));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult Providers()
+        {
+            return View(_providersService.getProviders(regionId: 0));
         }
 
         [Authorization("Admin")]
@@ -289,22 +298,28 @@ namespace HelloDoc.Controllers
             return Json(new { redirect = Url.Action(actionName, "Admin") });
         }
 
-        [HttpGet]  // SendAgreementPopUp
+        [HttpGet]  ////  SendAgreementPopUp
         public JsonResult GetEmailAndMobileNumber(int requestId)
         {
             return Json(_adminDashboardService.getRequestClientEmailAndMobile(requestId));
         }
 
-        [HttpGet] // Assigncase and TransfercasePopUp
+        [HttpGet] //// Assigncase and TransfercasePopUp
         public JsonResult GetPhysicians(int regionId)
         {
             return Json(_adminDashboardService.getPhysiciansByRegion(regionId));
         }
 
-        [HttpGet] // Send Order
+        [HttpGet] //// Send Order
         public JsonResult GetBussinesses(int professionId)
         {
             return Json(_sendOrderService.getBussinessByProfession(professionId));
+        }
+
+        [HttpGet] //// Region Filter on Provider page
+        public IActionResult RegionFilter(int regionId)
+        {
+            return PartialView("_ProviderTable", _providersService.getProviders(regionId: regionId).providers);
         }
 
         [HttpPost]
@@ -418,6 +433,23 @@ namespace HelloDoc.Controllers
         }
 
         [HttpPost]
+        public IActionResult ContactProvider(ContactProvider model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_providersService.contactProvider(model))
+                {
+                    _notyfService.Success("Successfully Message Send");
+                }
+                else
+                {
+                    _notyfService.Error("Message Send Faild");
+                }
+            }
+            return RedirectToAction("Providers", "Admin");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> CloseCase(CloseCase model)
         {
             if (ModelState.IsValid)
@@ -450,21 +482,6 @@ namespace HelloDoc.Controllers
             return RedirectToAction("Dashboard", "Admin");
         }
 
-        [HttpGet]   // Export All Data 
-        public IActionResult ExportAllData()
-        {
-            DataTable dataTable = _adminDashboardService.exportAllData();
-            using (XLWorkbook wb = new XLWorkbook())
-            { 
-                wb.Worksheets.Add(dataTable);
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    wb.SaveAs(stream); 
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AllData.xlsx");
-                }
-            }
-        }
-
         [HttpGet]   // reset password through view profile
         public async Task<IActionResult> ViewProfileEditPassword(String newPassword)
         {
@@ -481,10 +498,10 @@ namespace HelloDoc.Controllers
         }
 
         [HttpGet]   //  Edit Administrator Information view profile
-        public async Task<IActionResult> EditAdministratorInformation(String data)
+        public async Task<IActionResult> EditAdministratorInformation(String data1)
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-            if (await _viewProfileService.editEditAdministratorInformastion(data,aspNetUserId))
+            if (await _viewProfileService.editEditAdministratorInformastion(data1,aspNetUserId))
             {
                 _notyfService.Success("Successfully Updated");
             }
@@ -510,6 +527,27 @@ namespace HelloDoc.Controllers
             return Json(new { redirect = Url.Action("ViewProfile", "Admin") });
         }
 
+        [HttpGet]   //  Edit Mailing And Billing Information view profile
+        public async Task<IActionResult> EditProviderNotification(int physicanId,bool isNotification)
+        {
+            return Json(new { result =await _providersService.editProviderNotification(physicanId, isNotification)});    
+        }
+
+        [HttpGet]   // Export All Data 
+        public IActionResult ExportAllData()
+        {
+            DataTable dataTable = _adminDashboardService.exportAllData();
+            using (XLWorkbook wb = new XLWorkbook())
+            { 
+                wb.Worksheets.Add(dataTable);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream); 
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AllData.xlsx");
+                }
+            }
+        }
+
         [HttpGet]      // Export selected Data 
         public IActionResult ExportData(int pageNo, String status, int type, String searchElement)
         {
@@ -519,7 +557,7 @@ namespace HelloDoc.Controllers
                 wb.Worksheets.Add(dataTable);
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    wb.SaveAs(stream);
+                    wb.SaveAs(stream);  
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Data.xlsx");
                 }
             }

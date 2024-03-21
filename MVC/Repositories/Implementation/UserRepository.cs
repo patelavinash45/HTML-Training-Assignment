@@ -43,9 +43,25 @@ namespace Repositories.Implementation
             return _dbContext.Admins.FirstOrDefault(a => a.AspNetUserId == aspNetUserId);
         }
 
+        public List<Physician> getAllPhysicians()
+        {
+            return _dbContext.Physicians.Include(a => a.PhysicianNotifications).ToList();
+        }
+
         public List<Physician> getAllPhysiciansByRegionId(int regionId)
         {
-            return _dbContext.Physicians.Where(a => a.RegionId==regionId).ToList();
+            return _dbContext.Physicians.Include(a => a.PhysicianNotifications).Where(a => a.RegionId==regionId).ToList();
+        }
+
+        public PhysicianNotification GetPhysicianNotification(int physicianId)
+        {
+            return _dbContext.PhysicianNotifications.FirstOrDefault(a => a.PhysicianId ==  physicianId);
+        }
+
+        public async Task<bool> updatePhysicianNotification(PhysicianNotification physicianNotification)
+        {
+            _dbContext.PhysicianNotifications.Update(physicianNotification);
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public Physician getPhysicianNameByPhysicianId(int physicianId)
@@ -61,6 +77,18 @@ namespace Repositories.Implementation
         public async Task<bool> updateAdmin(Admin admin)
         {
             _dbContext.Admins.Update(admin);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> addAdminRgion(AdminRegion adminRegion)
+        {
+            _dbContext.AdminRegions.Add(adminRegion);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> deleteAdminRgion(AdminRegion adminRegion)
+        {
+            _dbContext.AdminRegions.Remove(adminRegion);
             return await _dbContext.SaveChangesAsync() > 0;
         }
     }

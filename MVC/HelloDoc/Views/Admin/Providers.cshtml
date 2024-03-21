@@ -1,0 +1,42 @@
+﻿@model Services.ViewModels.Admin.Provider
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provider</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/Admin/provider.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/admin/providers.css" rel="stylesheet" />
+</head>
+<body>
+    @await Component.InvokeAsync("Notyf")
+    <partial name="_AdminDashboardHeader" model="4">
+    <partial name="_ContactProvider" model="@Model.ContactProvider">
+    <div class="container">
+        <h3 class="mt-3 mb-3">
+            Provider Information
+        </h3>
+        <div class="providerList">
+            <div class="d-flex justify-content-between align-items-center mt-2 mb-3 topElements">
+                <select class="form-select select" id="regionFilter">
+                    <option selected value="0">All</option>
+                    @foreach(var item in Model.Regions)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                </select>
+                <button class="bg-white px-3 fw-bold">
+                    Create Provider Account
+                </button>
+            </div>
+            <div class="tableData">
+                <partial name="_ProviderTable" model="@Model.providers">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

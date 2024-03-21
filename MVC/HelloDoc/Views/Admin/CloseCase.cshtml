@@ -99,12 +99,12 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                             <button class="accordion-button px-0 collapsed bg-white text-black" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#panelsStayOpen-collapseOne" aria-controls="panelsStayOpen-collapseOne">
+                                    data-bs-target="#panelsStayOpen-@item.RequestWiseFileId" aria-controls="panelsStayOpen-collapseOne">
                                 <i class="bi bi-file-earmark-pdf-fill"></i>
                                 @item.FileName
                             </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
+                        <div id="panelsStayOpen-@item.RequestWiseFileId" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
                             <div class="accordion-body d-flex justify-content-between align-items-center px-0">
                                 <div>
                                     <div>

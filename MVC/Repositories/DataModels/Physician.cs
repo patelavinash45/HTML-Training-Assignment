@@ -107,6 +107,8 @@ public partial class Physician
     [StringLength(50)]
     public string? SyncEmailAddress { get; set; }
 
+    public int? IsNotification { get; set; }
+
     [ForeignKey("AspNetUserId")]
     [InverseProperty("PhysicianAspNetUsers")]
     public virtual AspNetUser? AspNetUser { get; set; }
@@ -114,6 +116,10 @@ public partial class Physician
     [ForeignKey("CreatedBy")]
     [InverseProperty("PhysicianCreatedByNavigations")]
     public virtual AspNetUser? CreatedByNavigation { get; set; }
+
+    [ForeignKey("IsNotification")]
+    [InverseProperty("Physicians")]
+    public virtual PhysicianNotification? IsNotificationNavigation { get; set; }
 
     [ForeignKey("ModifiedBy")]
     [InverseProperty("PhysicianModifiedByNavigations")]
