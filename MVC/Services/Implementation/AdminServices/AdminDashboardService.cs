@@ -1,11 +1,12 @@
-﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
-using Repositories.DataModels;
+﻿using Repositories.DataModels;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.Interfaces.AuthServices;
 using Services.ViewModels.Admin;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
+using System.Net;
 using System.Reflection;
 
 namespace Services.Implementation.AdminServices
@@ -154,6 +155,36 @@ namespace Services.Implementation.AdminServices
             }
             catch (Exception ex) { }
             return null;
+        }
+
+        public bool SendRequestLink(SendLink model)
+        {
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
+                Subject = "Link For Patient Request",
+                IsBodyHtml = true,
+                Body = "Link For Patient Request: https://localhost:44392/Patient/PatientRequest",
+            };
+            //mailMessage.To.Add(model.Email);
+            mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
+            SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
+            {
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                EnableSsl = true,
+                Port = 587,
+                Credentials = new NetworkCredential(userName: "tatva.dotnet.avinashpatel@outlook.com", password: "Avinash@6351"),
+            };
+            try
+            {
+                smtpClient.SendMailAsync(mailMessage);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public DataTable exportData(int pageNo, String status, int type, String searchElement)

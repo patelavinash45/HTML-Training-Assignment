@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets\\Files\\105\\Providers_mobile_1.png"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\106\\Patient site_login_mobile.png",
+      "PackagePath": "staticwebassets\\Files\\106\\Patient site_login_mobile.png"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\108\\Schedulling_day view_mobile.png",
       "PackagePath": "staticwebassets\\Files\\108\\Schedulling_day view_mobile.png"
     },
@@ -241,6 +245,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\closeCase.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createRole.css",
+      "PackagePath": "staticwebassets\\css\\admin\\createRole.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\dashboard.css",
       "PackagePath": "staticwebassets\\css\\admin\\dashboard.css"
     },
@@ -349,16 +357,20 @@
       "PackagePath": "staticwebassets\\images\\loginImage.jpg"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\CloseCase.js",
-      "PackagePath": "staticwebassets\\js\\Admin\\CloseCase.js"
-    },
-    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\SendOrder.js",
       "PackagePath": "staticwebassets\\js\\Admin\\SendOrder.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\_DashboardHeader.js",
       "PackagePath": "staticwebassets\\js\\Admin\\_DashboardHeader.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\closeCase.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\closeCase.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\createRole.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\createRole.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\dashboard.js",

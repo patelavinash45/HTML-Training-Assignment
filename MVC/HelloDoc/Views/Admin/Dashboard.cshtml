@@ -17,6 +17,7 @@
 <body>
     @await Component.InvokeAsync("Notyf")
     <partial name="_AdminDashboardHeader" model="1">
+    <partial name="_SendLink" model="@Model.SendLink">
     <partial name="_RequestCancelPopUp" model="@Model.CancelPopup">
     <partial name="_RequestAssignPopUp" model="@Model.AssignAndTransferPopup">
     <partial name="_RequestBlockPopUp" model="@Model.BlockPopup">
@@ -95,14 +96,14 @@
                 </div>
             </div>
             <div class="d-flex justify-content-between mt-4 align-items-center">
-                                            <div id="headingText" class="h3 d-flex heading">
+                <div id="headingText" class="h3 d-flex heading">
                     Patients
                     <span id="statusText">
                         (New)
                     </span>
                 </div>
                 <div class="d-flex">
-                    <button class="mx-1 middleOptionButtons">
+                    <button class="mx-1 middleOptionButtons" data-bs-target="#sendLink" data-bs-toggle="modal">
                         <i class="bi bi-link-45deg"></i>
                         <span class="buttonText">
                             Send Link

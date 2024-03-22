@@ -239,3 +239,69 @@ $(document).on("submit", "#contactForm", function (e) {
         $("#messageValidation").css("display", "none");
     }
 })
+
+
+////  send link --- Dashboard
+
+
+function firstNameValidation() {
+    if ($("#firstName").val().length == 0) {
+        $("#firstNameValidation").text("this First Name Filed is required");
+    }
+    else {
+        $("#firstNameValidation").text("");
+    }
+}
+
+$(document).on("change", "#firstName", function () {
+    firstNameValidation();
+})
+
+function lastNameValidation() {
+    if ($("#lastName").val().length == 0) {
+        $("#lastNameValidation").text("this Last Name Filed is required");
+    }
+    else {
+        $("#lastNameValidation").text("");
+    }
+}
+
+$(document).on("change", "#lastName", function () {
+    lastNameValidation();
+})
+
+function emailValidationSendlink() {
+    if ($("#emailSendLink").val().length == 0) {
+        $("#emailSendlinkValidation").text("this Email Filed is required");
+    }
+    else {
+        $("#emailSendlinkValidation").text("");
+    }
+}
+
+$(document).on("change", "#emailSendLink", function () {
+    emailValidationSendlink();
+})
+
+function phoneValidationSendlink() {
+    if ($("#phoneSendlink").val().length == 0) {
+        $("#phoneSendlinkValidation").text("this Phone Filed is required");
+    }
+    else {
+        $("#phoneSendlinkValidation").text("");
+    }
+}
+
+$(document).on("change", "#phoneSendlink", function () {
+    phoneValidationSendlink();
+})
+
+$(document).on("submit", "#sendLinkForm", function (e) {
+    if ($("#firstName").val().length == 0 || $("#lastName").val().length == 0 || $("#emailSendLink").val().length == 0 || $("#phoneSendlink").val().length == 0) {
+        e.preventDefault();
+        firstNameValidation();
+        lastNameValidation();
+        phoneValidationSendlink();
+        emailValidationSendlink();
+    }
+})

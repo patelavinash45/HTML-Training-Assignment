@@ -16,10 +16,10 @@ public partial class Role
     [StringLength(50)]
     public string Name { get; set; } = null!;
 
-    public short AccountType { get; set; }
+    public int AccountType { get; set; }
 
     [StringLength(128)]
-    public string CreatedBy { get; set; } = null!;
+    public string? CreatedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedDate { get; set; }
@@ -31,11 +31,15 @@ public partial class Role
     public DateTime? ModifiedDate { get; set; }
 
     [Column(TypeName = "bit(1)")]
-    public BitArray IsDeleted { get; set; } = null!;
+    public BitArray? IsDeleted { get; set; }
 
     [Column("IP")]
     [StringLength(20)]
     public string? Ip { get; set; }
+
+    [ForeignKey("AccountType")]
+    [InverseProperty("Roles")]
+    public virtual AspNetRole AccountTypeNavigation { get; set; } = null!;
 
     [InverseProperty("Role")]
     public virtual ICollection<RoleMenu> RoleMenus { get; set; } = new List<RoleMenu>();

@@ -35,5 +35,7 @@
         public AssignAndTransferPopUp AssignAndTransferPopup { get; set; }
 
         public BlockPopUp BlockPopup { get; set; }
+
+        public SendLink SendLink { get; set; }
     }
 }

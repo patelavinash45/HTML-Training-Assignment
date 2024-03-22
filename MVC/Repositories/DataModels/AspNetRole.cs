@@ -16,4 +16,7 @@ public partial class AspNetRole
 
     [InverseProperty("Role")]
     public virtual ICollection<AspNetUserRole> AspNetUserRoles { get; set; } = new List<AspNetUserRole>();
+
+    [InverseProperty("AccountTypeNavigation")]
+    public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
 }

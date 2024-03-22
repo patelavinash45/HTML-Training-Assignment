@@ -50,6 +50,8 @@ builder.Services.AddScoped<IEncounterService, EncounterService>();
 builder.Services.AddScoped<IEncounterRepository, EncounterRepository>();
 builder.Services.AddScoped<ICloseCaseService, CloseCaseService>();
 builder.Services.AddScoped<IProvidersService, ProvidersService>();
+builder.Services.AddScoped<IAccessService, AccessService>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
 
 var app = builder.Build();

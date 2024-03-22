@@ -80,7 +80,7 @@
                 <hr class="border-bottom border-3 border-dark h1" />
             }
         </a>
-        <a asp-controller="" asp-action=""  class="mx-2">
+        <a asp-controller="Admin" asp-action="Access" class="mx-2">
             <div class="mx-2 h6">
                 Access
             </div>
@@ -105,64 +105,36 @@
         <div class="mt-1 h6">
             Dashboard
         </div>
-        @if (Model == 1)
-        {
-            <hr class="h1" />
-        }
     </a>
     <a asp-controller="" asp-action=""  class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6">
             Provider Location
         </div>
-        @if (Model == 2)
-        {
-            <hr class="h1" />
-        }
     </a>
     <a asp-controller="Admin" asp-action="ViewProfile"  class="d-flex justify-content-center border m-2 rounded-start">
-        <div class="mt-1 h6">
+        <div class="mt-1 h6 ">
             My Profile
         </div>
-        @if (Model == 3)
-        {
-            <hr class="h1" />
-        }
     </a>
     <a asp-controller="Admin" asp-action="Providers"  class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6">
             Providers
         </div>
-        @if (Model == 4)
-        {
-            <hr class="h1" />
-        }
     </a>
     <a asp-controller="" asp-action=""  class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6">
             Partners
         </div>
-        @if (Model == 5)
-        {
-            <hr class="h1" />
-        }
     </a>
-    <a asp-controller="" asp-action=""  class="d-flex justify-content-center border m-2 rounded-start">
+    <a asp-controller="Admin" asp-action="Access" class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6">
             Access
         </div>
-        @if (Model == 6)
-        {
-            <hr class="h1" />
-        }
     </a>
     <a asp-controller="" asp-action=""  class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6">
             Records
         </div>
-        @if (Model == 7)
-        {
-            <hr class="h1" />
-        }
     </a>
 </div>
 

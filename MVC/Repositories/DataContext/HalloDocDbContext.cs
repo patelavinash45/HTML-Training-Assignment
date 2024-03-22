@@ -362,6 +362,10 @@ public partial class HalloDocDbContext : DbContext
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.RoleId).HasName("Role_pkey");
+
+            entity.HasOne(d => d.AccountTypeNavigation).WithMany(p => p.Roles)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Role_AccountType_fkey");
         });
 
         modelBuilder.Entity<RoleMenu>(entity =>

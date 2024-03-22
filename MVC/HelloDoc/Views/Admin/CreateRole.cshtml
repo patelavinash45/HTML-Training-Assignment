@@ -1,0 +1,65 @@
+﻿@model Services.ViewModels.Admin.CreateRole
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Role</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/admin/createRole.css" rel="stylesheet" />
+    <script src="~/js/Admin/createRole.js"></script>
+</head>
+<body >
+    <partial name="_AdminDashboardHeader" model="6">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+            <h3>
+                Create Role
+            </h3>
+            <a asp-controller="Admin" asp-action="Access">
+                <button class="bg-white px-3 fw-bold">
+                    <i class="bi bi-chevron-left"> </i>
+                    Back
+                </button>
+            </a>
+        </div>
+        <div class="mainBody">
+            <h5 class="fw-bold">
+                Details
+            </h5>
+            <div class="row">
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <input asp-for="RoleName" class="form-control" id="roleName" placeholder="BusinessFirstName" />
+                    <label for="roleName">Role Name</label>
+                    <span class="text-danger" id="roleNameValidation"></span>
+                </div>
+                <div class="form-floating col-xl-6 col-md-6 col-lg-6">
+                    <select asp-for="SlectedAccountType" class="form-select" id="type">
+                        <option selected value="">All</option>
+                        <option value="1">Patient</option>
+                        <option value="2">Admin</option>
+                        <option value="3">Physician</option>
+                    </select>
+                    <label for="type">Account Type</label>
+                    <span class="text-danger" id="accountTypeValidation"></span>
+                </div>
+            </div>
+            <div class="checkBoxs">
+                 <partial name="_CreateRoleCheckBox" model="@Model.Menus">
+            </div>
+            <span class="text-danger mt-2 mb-1" id="menuValidation"></span>
+            <div class="d-flex justify-content-end mt-3 mb-2">
+                <button class="px-3 me-2 text-white fw-bold bottomButtons" id="saveButton" type="button">
+                    Save
+                </button>
+                <button class="px-3 bg-white cancleButton fw-bold" type="button">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

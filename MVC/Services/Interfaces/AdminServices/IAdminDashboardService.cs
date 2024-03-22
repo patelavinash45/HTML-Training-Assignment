@@ -20,5 +20,7 @@ namespace Services.Interfaces.AdminServices
         DataTable exportAllData();
 
         DataTable exportData(int pageNo, String status, int type, String searchElement);
+
+        bool SendRequestLink(SendLink model);
     }
 }
