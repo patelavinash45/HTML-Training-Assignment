@@ -6,7 +6,7 @@ function changeSelect() {
         data: {
             professionId: $('#selectedProfession').val(),
         },
-        success: function (response) {
+        success: function (response, xhr) {
             $("#selectedBusiness").children().remove();
             $("#selectedBusiness").append('<option disabled selected value="">Business</option>');
             $.each(response, function (index, item) {

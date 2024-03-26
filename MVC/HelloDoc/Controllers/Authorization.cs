@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Services.Interfaces.AuthServices;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 
 namespace HelloDoc.Authentication
@@ -62,8 +65,7 @@ namespace HelloDoc.Authentication
                 }
                 else
                 {
-                    String role = context.HttpContext.Session.GetString("role");
-                    string jwtRole = jwtToken.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Role).Value;
+                    String jwtRole = jwtToken.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Role).Value;
                     if (jwtRole != _role)
                     {
                         context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
@@ -71,6 +73,19 @@ namespace HelloDoc.Authentication
                             Controller = _role,
                             action = "AccessDenied",
                         }));
+                    }
+                    else 
+                    {
+                        if (context.HttpContext.Session.GetInt32("aspNetUserId") == null)
+                        {
+                            int jwtId = int.Parse(jwtToken.Claims.FirstOrDefault(a => a.Type == "aspNetUserId").Value);
+                            String jwtFirstName = jwtToken.Claims.FirstOrDefault(a => a.Type == "firstName").Value;
+                            String jwtLastName = jwtToken.Claims.FirstOrDefault(a => a.Type == "lastName").Value;
+                            context.HttpContext.Session.SetString("role", jwtRole);
+                            context.HttpContext.Session.SetString("firstName", jwtFirstName);
+                            context.HttpContext.Session.SetString("lastName", jwtLastName);
+                            context.HttpContext.Session.SetInt32("aspNetUserId", jwtId);
+                        }
                     }
                 }
             }

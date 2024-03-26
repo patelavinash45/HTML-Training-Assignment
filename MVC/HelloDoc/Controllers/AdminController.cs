@@ -1,5 +1,4 @@
-﻿using AspNetCore;
-using AspNetCoreHero.ToastNotification.Abstractions;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using ClosedXML.Excel;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,7 @@ using Services.Interfaces.AuthServices;
 using Services.ViewModels;
 using Services.ViewModels.Admin;
 using System.Data;
+
 
 namespace HelloDoc.Controllers
 {
@@ -93,6 +93,12 @@ namespace HelloDoc.Controllers
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_viewNotesService.GetNotes(requestId));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult CreateRequest()
+        {
+            return View(null);
         }
 
         [Authorization("Admin")]
@@ -277,17 +283,34 @@ namespace HelloDoc.Controllers
             return Json(new { redirect = Url.Action("Dashboard", "Admin") });
         }
 
-        public IActionResult SendAgreementPopUp(Agreement model)
+        public IActionResult SendAgreementPopUp(Agreement model)    
         {
             if (ModelState.IsValid)
             {
-                if (_viewNotesService.sendAgreement(model))
+                if (_viewNotesService.sendAgreement(model, HttpContext))
                 {
                     _notyfService.Success("Successfully Send");
                 }
                 else
                 {
                     _notyfService.Error("Agreement Send Faild!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            return View(model);
+        }
+
+        public IActionResult RequestSupport(RequestSupport model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_adminDashboardService.RequestSupport(model))
+                {
+                    _notyfService.Success("Successfully Send");
+                }
+                else
+                {
+                    _notyfService.Error("Faild!");
                 }
                 return RedirectToAction("Dashboard", "Admin");
             }
@@ -376,7 +399,7 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_adminDashboardService.SendRequestLink(model))
+                if (_adminDashboardService.SendRequestLink(model,HttpContext))
                 {
                     _notyfService.Success("Successfully Link Send");
                 }
@@ -386,6 +409,27 @@ namespace HelloDoc.Controllers
                 }
             }
             return RedirectToAction("Dashboard", "Admin");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]  /////  create request ---  Dashboard
+        public async Task<IActionResult> CreateRequest(CreateRequest model)
+        {
+            if (ModelState.IsValid)
+            {
+                int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+                if (await _adminDashboardService.createRequest(model, aspNetUserId))
+                {
+                    _notyfService.Success("Successfully Request Added");
+                }
+                else
+                {
+                    _notyfService.Error("Faild!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            _notyfService.Warning("Add Required Field.");
+            return View(null);
         }
 
         [HttpPost]

@@ -2,6 +2,7 @@
 using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
+using System.Collections;
 using System.Data;
 
 namespace Repositories.Implementation
@@ -17,7 +18,7 @@ namespace Repositories.Implementation
 
         public List<Role> getAllRoles()
         {
-            return _dbContext.Roles.Include(a => a.AccountTypeNavigation).ToList();
+            return _dbContext.Roles.Include(a => a.AccountTypeNavigation).Where(a => a.IsDeleted != new BitArray(1, true)).ToList();
         }
 
         public Role getRoleByRoleId(int roleId)
@@ -53,9 +54,9 @@ namespace Repositories.Implementation
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> deleteRole(Role role)
+        public async Task<bool> updateRole(Role role)
         {
-            _dbContext.Roles.Remove(role);
+            _dbContext.Roles.Update(role);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 

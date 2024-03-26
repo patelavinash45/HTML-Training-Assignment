@@ -305,3 +305,27 @@ $(document).on("submit", "#sendLinkForm", function (e) {
         emailValidationSendlink();
     }
 })
+
+
+
+////   Request Support
+
+function messageValidation() {
+    if ($("#message").val().length == 0) {
+        $("#messageValidation").text("this Message Filed is required");
+    }
+    else {
+        $("#messageValidation").text("");
+    }
+}
+
+$(document).on("change", "#message", function () {
+    messageValidation();
+})
+
+$("#requestSupportForm").submit(function (e) {
+    if ($("#message").val().length == 0) {
+        e.preventDefault();
+        messageValidation();
+    }
+})

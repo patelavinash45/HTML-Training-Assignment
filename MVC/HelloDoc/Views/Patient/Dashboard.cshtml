@@ -1,10 +1,10 @@
 ﻿@model List<Services.ViewModels.Dashboard>
 
 @{
-    List<String> status = new List<string>() {"Unassigned", "Accepted", "Cancelled", "Reserving", "MDEnRoute", "MDOnSite", "FollowUp", "Closed", "Locked", "Declined", "Consult", "Clear",
+    List<String> status = new List<string>() {"Blocked", "Unassigned", "Accepted", "Cancelled", "Reserving", "MDEnRoute", "MDOnSite", "FollowUp", "Closed", "Locked", "Declined", "Consult", "Clear",
                             "CancelledByProvider", "CCUploadedByClient", "CCApprovedByAdmin" };
 
-    List<String> months = new List<String>() { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
+    List<String> months = new List<String>() { "", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
 }
 
 <!DOCTYPE html>
@@ -84,10 +84,10 @@
                         {
                             <tr>
                                 <td>
-                                    @months[int.Parse(@item.StrMonth.ToString())-1] @item.IntDate, @item.IntYear
+                                    @months[int.Parse(@item.StrMonth.ToString())] @item.IntDate, @item.IntYear
                                 </td>
                                 <td>
-                                    @status[int.Parse(@item.Status.ToString())-1]
+                                    @status[int.Parse(@item.Status.ToString())]
                                 </td>
                                 <td>
                                     @{
@@ -118,7 +118,7 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.RequestId" 
                                       aria-controls="panelsStayOpen-collapseOne">
                                 <i class="bi bi-clock me-2"></i>
-                                <b class="me-2">Created Date: </b> @months[int.Parse(@item.StrMonth.ToString())-1] @item.IntDate, @item.IntYear
+                                <b class="me-2">Created Date: </b> @months[int.Parse(@item.StrMonth.ToString())] @item.IntDate, @item.IntYear
                             </button>
                         </h2>
                         <div id="collapse-@item.RequestId" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
@@ -129,7 +129,7 @@
                                 </div>
                                 <div>
                                     <i class="bi bi-check-circle me-2"></i>
-                                    <b class="me-2">Current Status: - </b> @status[int.Parse(@item.Status.ToString())-1]
+                                    <b class="me-2">Current Status: - </b> @status[int.Parse(@item.Status.ToString())]
                                     @{
                                         if (@item.Document > 0)
                                         {

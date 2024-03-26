@@ -25,17 +25,6 @@ namespace Services.Implementation.PatientServices
         {
             int userId = _userRepository.getUserID(aspNetUserId);
             List<RequestClient> requestClients = _requestClientRepository.getAllRequestClientForUser(userId);
-            //
-            //var usrRequests = (from req in requests
-            //                join reqClient in requestClients
-            //                on req.RequestId equals reqClient.RequestId
-            //                where req.UserId == userId
-            //                select new
-            //                {
-            //                    req,
-            //                    reqClient
-            //                }).ToList();
-            //
             List<Dashboard> dashboards = new List<Dashboard>() { };
             foreach (RequestClient requestClient in requestClients)
             {

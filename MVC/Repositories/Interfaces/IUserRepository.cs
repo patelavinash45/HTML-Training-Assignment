@@ -18,6 +18,8 @@ namespace Repositories.Interfaces
 
         List<Physician> getAllPhysiciansByRegionId(int regionId);
 
+        List<Physician> getAllUnAssignedPhysician();
+
         PhysicianNotification GetPhysicianNotification(int physicianId);
 
         Task<bool> updatePhysicianNotification(PhysicianNotification physicianNotification);

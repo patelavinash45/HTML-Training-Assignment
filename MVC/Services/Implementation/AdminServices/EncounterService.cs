@@ -1,11 +1,7 @@
-﻿using DocumentFormat.OpenXml.Drawing.Charts;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
-using Repositories.DataModels;
+﻿using Repositories.DataModels;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.ViewModels.Admin;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Services.Implementation.AdminServices
 {

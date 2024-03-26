@@ -4,7 +4,7 @@ namespace Services.ViewModels.Admin
 {
     public class EncounterForm
     {
-        public bool IsAdmin { get; set; } = false;
+        public bool IsAdmin { get; set; } = true;
         
         public string FirstName { get; set; }
                         

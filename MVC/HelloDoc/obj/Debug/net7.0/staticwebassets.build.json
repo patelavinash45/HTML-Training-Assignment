@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lw+r9Vxu4ibqz0tkTULxAkUSGhUcV55Y7C9QmxzOTbg=",
+  "Hash": "ORlNuQQOix7FSda4efR9FNuJxGJSEKeYar1g87pRPi4=",
   "Source": "HelloDoc",
   "BasePath": "_content/HelloDoc",
   "Mode": "Default",
@@ -185,6 +185,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\admin\\closeCase.css"
+    },
+    {
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createRequest.css",
+      "SourceId": "HelloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
+      "BasePath": "_content/HelloDoc",
+      "RelativePath": "css/admin/createRequest.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\admin\\createRequest.css"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createRole.css",
@@ -1853,12 +1870,12 @@
       "OriginalItemSpec": "wwwroot\\js\\Patient\\dashboard.js"
     },
     {
-      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\Request.js",
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Request.js",
       "SourceId": "HelloDoc",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
       "BasePath": "_content/HelloDoc",
-      "RelativePath": "js/Patient/Request.js",
+      "RelativePath": "js/Request.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1867,7 +1884,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\Patient\\Request.js"
+      "OriginalItemSpec": "wwwroot\\js\\Request.js"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\viewDocument.js",

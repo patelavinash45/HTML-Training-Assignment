@@ -5,7 +5,7 @@ namespace Services.ViewModels
 {
     public class AddRequestByPatient
     {
-        public int AspNetUserId { get; set; }
+        //public int AspNetUserId { get; set; }
 
         [StringLength(100)]
         [Required]

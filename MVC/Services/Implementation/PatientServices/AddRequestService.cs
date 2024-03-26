@@ -130,7 +130,6 @@ namespace Services.Implementation.PatientServices
             DateTime birthDay = DateTime.Parse(user.IntYear + "-" + user.StrMonth + "-" + user.IntDate);
             AddRequestByPatient addRequestForMe = new()
             {
-                AspNetUserId = aspNetUserId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 BirthDate = birthDay,
@@ -218,6 +217,7 @@ namespace Services.Implementation.PatientServices
                 PhoneNumber = userMe.Mobile,
                 UserId = userId,
                 RelationName = model.Relation,
+                CreatedDate = DateTime.Now,
             };
             int requestId = await _requestRepository.addRequest(request);
             if (model.File != null)

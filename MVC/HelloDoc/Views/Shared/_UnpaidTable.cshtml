@@ -1,11 +1,10 @@
 ﻿@model Services.ViewModels.Admin.TableModel
 
 @{
-    List<String> requesterBgColor = new List<String>() { "", "bg-danger", "bg-success", "bg-warning", "bg-primary" };
-    List<String> requesterTextColor = new List<String>() { "", "text-danger", "text-success", "text-warning", "text-primary" };
-    List<String> requester = new List<String>() { "", "Business", "Patient", "Family", "Concierge" };
+    List<String> requesterBgColor = new List<String>() { "", "bg-danger", "bg-success", "bg-warning", "bg-primary", "bg-info" };
+    List<String> requesterTextColor = new List<String>() { "", "text-danger", "text-success", "text-warning", "text-primary", "text-info" };
+    List<String> requester = new List<String>() { "", "Business", "Patient", "Family", "Concierge", "VIP" };
 }
-
 
 <div class="table-responsive row">
     <table class="table">

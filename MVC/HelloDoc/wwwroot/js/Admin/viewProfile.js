@@ -46,6 +46,7 @@ function radioClick(doc) {
             radioList.splice(index , 1);
         }
     }
+    validateRadioButton();
 }
 
 function enableEditForMailingAndBilling(temp) {
@@ -110,6 +111,15 @@ $(document).on("click", "#resetpassword", function () {
 
 ////  Administrator Informaction
 
+function validateRadioButton() {
+    if (radioList.length == 0) {
+        $("#radioButtonValidation").text("this Region Filed is required");
+    }
+    else {
+        $("#radioButtonValidation").text("");
+    }
+}
+
 $(document).on("change", "#firstName", function () {
     if ($(this).val().length == 0) {
         $("#firstNameValidation").text("this First Name Filed is required");
@@ -167,7 +177,7 @@ $(document).on("change", "#phone1", function () {
 var validRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 $(document).on("click", "#administratorForm", function () {
     if ($("#lastName").val().length != 0 && $("#phone1").val().length != 0 && $("#confirmEmail").val().length != 0 && $("#email").val().length != 0
-        && $("#firstName").val().length != 0 && $("#confirmEmail").val() == $("#email").val() && !$("#email").val().match(validRegex)) {
+        && $("#firstName").val().length != 0 && $("#confirmEmail").val() == $("#email").val() && $("#email").val().match(validRegex) && radioList.length != 0) {
         var data1 = JSON.stringify({
             FirstName: $("#firstName").val(),
             LastName: $("#lastName").val(),
@@ -188,11 +198,14 @@ $(document).on("click", "#administratorForm", function () {
             }
         })
     }
-    else if ($("#confirmEmail").val() != $("#email").val()) {
+    if ($("#confirmEmail").val() != $("#email").val()) {
         $("#confirmEmailValidation").text("this Confirm Email and Email is not Same");
     }
     if (!$("#email").val().match(validRegex)) {
         $("#emailValidation").text("this Email is Not Valid");
+    }
+    if (radioList.length == 0) {
+        validateRadioButton();
     }
 })
 

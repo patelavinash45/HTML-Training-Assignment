@@ -5,8 +5,8 @@ using Repositories.Interfaces;
 using Services.Interfaces.AuthServices;
 using Services.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -88,10 +88,11 @@ namespace Services.Implementation.AuthServices
             return false;
         }
 
-        public async Task<bool> resetPasswordLinkSend(string email)
+        public async Task<bool> resetPasswordLinkSend(string email,HttpContext httpContext)
         {
             try
             {
+                var request = httpContext.Request;
                 int aspNetUserId = _aspRepository.checkUser(email);
                 List<Claim> claims = new List<Claim>()
                 {
@@ -99,7 +100,7 @@ namespace Services.Implementation.AuthServices
                 };
                 String token = _jwtService.genrateJwtTokenForSendMail(claims, DateTime.Now.AddDays(1));
                 await _aspRepository.setToken(token: token, aspNetUserId: aspNetUserId);
-                string link = "token=" + token;
+                string link = request.Scheme+"://"+request.Host+"/Patient/Newpassword?token=" + token;
                 MailMessage mailMessage = new MailMessage
                 {
                     From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),

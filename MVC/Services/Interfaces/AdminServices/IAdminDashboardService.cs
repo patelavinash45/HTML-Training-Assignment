@@ -1,4 +1,5 @@
-﻿using Services.ViewModels.Admin;
+﻿using Microsoft.AspNetCore.Http;
+using Services.ViewModels.Admin;
 using System.Data;
 
 namespace Services.Interfaces.AdminServices
@@ -21,6 +22,10 @@ namespace Services.Interfaces.AdminServices
 
         DataTable exportData(int pageNo, String status, int type, String searchElement);
 
-        bool SendRequestLink(SendLink model);
+        bool SendRequestLink(SendLink model,HttpContext httpContext);
+
+        Task<bool> createRequest(CreateRequest model, int aspNetUserId);
+
+        bool RequestSupport(RequestSupport model);
     }
 }

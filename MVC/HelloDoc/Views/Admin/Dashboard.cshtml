@@ -23,6 +23,7 @@
     <partial name="_RequestBlockPopUp" model="@Model.BlockPopup">
     <partial name="_RequestTransferPopUp" model="@Model.AssignAndTransferPopup">
     <partial name="_SendAgreementPopUp" model="@Model.SendAgreement">
+    <partial name="_DTYRequestSupport" model="null">
     <partial name="_RequestClearPopUp">
     <div class="cancelPopUp"></div>
     <div id="mainbody">
@@ -109,12 +110,14 @@
                             Send Link
                         </span>
                     </button>
-                    <button class="mx-1 middleOptionButtons">
-                        <i class="bi bi-file-plus"></i>
-                        <span class="buttonText">
-                            Create Requests
-                        </span>
-                    </button>
+                    <a asp-controller="Admin" asp-action="CreateRequest">
+                        <button class="mx-1 middleOptionButtons">
+                            <i class="bi bi-file-plus"></i>
+                            <span class="buttonText">
+                                Create Requests
+                            </span>
+                        </button>
+                    </a>
                     <button class="mx-1 middleOptionButtons" id="exportData">
                         <i class="bi bi-folder-symlink"></i>
                         <span class="buttonText">
@@ -122,14 +125,14 @@
                         </span>
                     </button>
                     <a asp-controller="Admin" asp-action="ExportAllData">
-                        <button class="mx-1 middleOptionButtons" asp-controller="Admin" asp-action="ExportAllData">
+                        <button class="mx-1 middleOptionButtons">
                             <i class="bi bi-folder-symlink-fill"></i>
                             <span class="buttonText">
                                 Export All
                             </span>
                         </button>
                     </a>
-                    <button class="mx-1 middleOptionButtons">
+                    <button class="mx-1 middleOptionButtons" data-bs-target="#requestSupport" data-bs-toggle="modal">
                         <i class="bi bi-person"></i>
                         <span class="buttonText">
                             Request DTY Support

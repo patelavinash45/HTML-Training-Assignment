@@ -11,7 +11,7 @@ button {
 
 /*.form-floating > .form-select ~ label,*/
 .form-floating > label {
-    top: 13px;
+    top: 20px;
     left: 12px;
     background-color: transparent;
 }

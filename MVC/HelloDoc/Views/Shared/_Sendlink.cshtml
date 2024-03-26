@@ -16,19 +16,19 @@
             <form asp-controller="Admin" asp-action="SendLink" id="sendLinkForm">
                 <div class="modal-body">
                     <div class="form-floating ">
-                        <input asp-for="FirstName" class="form-control" id="firstName" placeholder="BusinessFirstName" />
+                        <input asp-for="FirstName" class="form-control" id="firstName" placeholder="FirstName" />
                         <label for="firstName">First Name</label>
                         <span class="text-danger" id="firstNameValidation"></span>
                     </div>
                     <div class="form-floating ">
-                        <input asp-for="LastName" class="form-control" id="lastName" placeholder="BusinessFirstName" />
+                        <input asp-for="LastName" class="form-control" id="lastName" placeholder="LastName" />
                         <label for="lastName">Last Name</label>
                         <span class="text-danger" id="lastNameValidation"></span>
                     </div>
-                    <input asp-for="Mobile" class="form-control" id="phoneSendlink" type="tel" placeholder="BusinessMobile" />
+                    <input asp-for="Mobile" class="form-control" id="phoneSendlink" type="tel" placeholder="Phone Number" />
                     <span class="text-danger" id="phoneSendlinkValidation"></span>
                     <div class="form-floating ">
-                        <input asp-for="Email" class="form-control" id="emailSendLink" placeholder="BusinessFirstName" />
+                        <input asp-for="Email" class="form-control" id="emailSendLink" placeholder="Email" />
                         <label for="emailSendLink">Email</label>
                         <span class="text-danger" id="emailSendlinkValidation"></span>
                     </div>

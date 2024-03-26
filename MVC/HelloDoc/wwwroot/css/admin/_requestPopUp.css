@@ -54,10 +54,6 @@ input[type=tel]{
     height: 58px;
 }
 
-.iti{
-    margin-top: 5px;
-}
-
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label,
 .form-floating > .form-select ~ label {

@@ -1,27 +1,36 @@
-﻿using Repositories.DataModels;
+﻿using Microsoft.AspNetCore.Http;
+using Repositories.DataModels;
+using Repositories.Interface;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.Interfaces.AuthServices;
 using Services.ViewModels.Admin;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Services.Implementation.AdminServices
 {
     public class AdminDashboardService : IAdminDashboardService
     {
         private readonly IRequestClientRepository _requestClientRepository;
+        private readonly IRequestRepository _requestRepository;
         private readonly IUserRepository _userRepository;
         private readonly IJwtService _jwtService;
+        private readonly IAspRepository _aspRepository;
 
-        public AdminDashboardService(IRequestClientRepository requestClientRepository, IUserRepository userRepository, IJwtService jwtService)
+        public AdminDashboardService(IRequestClientRepository requestClientRepository, IUserRepository userRepository, IJwtService jwtService,
+                                          IAspRepository aspRepository, IRequestRepository requestRepository)
         {
             _requestClientRepository = requestClientRepository;
             _userRepository = userRepository;
             _jwtService = jwtService;
+            _aspRepository = aspRepository;
+            _requestRepository = requestRepository;
         }
 
         public AdminDashboard getallRequests(int aspNetUserId)
@@ -105,17 +114,6 @@ namespace Services.Implementation.AdminServices
                 requestClients = _requestClientRepository.getRequestClientByStatus(status: 9, skip: skip);
             }
             return getTableModal(requestClients, totalRequests, pageNo);
-            //
-            //var allnewRequests = (from req in requests
-            //                      join reqClient in requestClients
-            //                      on req.RequestId equals reqClient.RequestId
-            //                      where reqClient.Status == 1 
-            //                      select new
-            //                      {
-            //                          req,
-            //                          reqClient
-            //                      }).ToList();
-            //
         }
 
         public Dictionary<int, String> getPhysiciansByRegion(int regionId)
@@ -157,14 +155,15 @@ namespace Services.Implementation.AdminServices
             return null;
         }
 
-        public bool SendRequestLink(SendLink model)
+        public bool SendRequestLink(SendLink model,HttpContext httpContext)
         {
+            var request = httpContext.Request;
             MailMessage mailMessage = new MailMessage
             {
                 From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
                 Subject = "Link For Patient Request",
                 IsBodyHtml = true,
-                Body = "Link For Patient Request: https://localhost:44392/Patient/PatientRequest",
+                Body = "Link For Patient Request: "+request.Scheme+"://"+request.Host+"/Patient/PatientRequest",
             };
             //mailMessage.To.Add(model.Email);
             mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
@@ -176,6 +175,112 @@ namespace Services.Implementation.AdminServices
                 Port = 587,
                 Credentials = new NetworkCredential(userName: "tatva.dotnet.avinashpatel@outlook.com", password: "Avinash@6351"),
             };
+            try
+            {
+                smtpClient.SendMailAsync(mailMessage);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> createRequest(CreateRequest model, int aspNetUserIdAdmin)
+        {
+            int aspNetUserId = _aspRepository.checkUser(email: model.Email);
+            int userId = _userRepository.getUserID(aspNetUserId);
+            if (aspNetUserId == 0)
+            {
+                AspNetUser aspNetUser = new()
+                {
+                    UserName = model.FirstName,
+                    Email = model.Email,
+                    PhoneNumber = model.Mobile,
+                    PasswordHash = genrateHash(model.Password),
+                    CreatedDate = DateTime.Now,
+                };
+                aspNetUserId = await _aspRepository.addUser(aspNetUser);
+                User user = new()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Mobile = model.Mobile,
+                    Street = model.Street,
+                    City = model.City,
+                    State = model.State,
+                    ZipCode = model.ZipCode,
+                    AspNetUserId = aspNetUserId,
+                    CreatedBy = aspNetUserId,
+                    CreatedDate = DateTime.Now,
+                    IntYear = model.BirthDate.Value.Year,
+                    IntDate = model.BirthDate.Value.Day,
+                    StrMonth = model.BirthDate.Value.Month.ToString(),
+                };
+                userId = await _userRepository.addUser(user);
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = aspNetUserId,
+                    RoleId = _aspRepository.checkUserRole(role: "Patient"),
+                };
+                await _aspRepository.addAspNetUserRole(aspNetUserRole);
+            }
+            Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserIdAdmin);
+            Request request = new()
+            {
+                RequestTypeId = 5,
+                FirstName = admin.FirstName,
+                LastName = admin.LastName,
+                Email = admin.Email,
+                PhoneNumber = admin.Mobile,
+                UserId = userId,
+                CreatedDate = DateTime.Now,
+            };
+            int requestId = await _requestRepository.addRequest(request);
+            RequestClient requestClient = new()
+            {
+                RequestId = requestId,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.Mobile,
+                Email = model.Email,
+                State = model.State,
+                Street = model.Street,
+                City = model.City,
+                ZipCode = model.ZipCode,
+                Status = 1,
+                Symptoms = model.Symptoms,
+                IntYear = DateTime.Now.Year,
+                IntDate = DateTime.Now.Day,
+                StrMonth = DateTime.Now.Month.ToString(),
+            };
+            return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
+        }
+
+        public bool RequestSupport(RequestSupport model)
+        {
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
+                Subject = "Request DTY Support",
+                IsBodyHtml = true,
+                Body = "We are short on coverage and needs additional support On Call to respond to Requests. And Admin Message :: " + model.Message
+            };
+            SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
+            {
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                EnableSsl = true,
+                Port = 587,
+                Credentials = new NetworkCredential(userName: "tatva.dotnet.avinashpatel@outlook.com", password: "Avinash@6351"),
+            };
+            //List<Physician> physicians = _userRepository.getAllUnAssignedPhysician();
+            //foreach (Physician physician in physicians)
+            //{
+            //    mailMessage.Bcc.Add(physician.Email);
+            //}
+            mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
             try
             {
                 smtpClient.SendMailAsync(mailMessage);
@@ -459,6 +564,15 @@ namespace Services.Implementation.AdminServices
                 currentRow++;
             }
             return dataTable;
+        }
+
+        private String genrateHash(String password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] hashPassword = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashPassword).Replace("-", "").ToLower();
+            }
         }
     }
 }

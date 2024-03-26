@@ -2,6 +2,7 @@
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.ViewModels.Admin;
+using System.Collections;
 using System.Text.Json;
 
 namespace Services.Implementation.AdminServices
@@ -95,7 +96,9 @@ namespace Services.Implementation.AdminServices
             {
                 await _roleRepository.deleteRoleMenu(roleMenu);
             }
-            return await _roleRepository.deleteRole(_roleRepository.getRoleByRoleId(roleId));
+            Role role = _roleRepository.getRoleByRoleId(roleId);
+            role.IsDeleted = new BitArray(1, true);
+            return await _roleRepository.updateRole(role);
         }
     }
 }

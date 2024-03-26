@@ -53,6 +53,11 @@ namespace Repositories.Implementation
             return _dbContext.Physicians.Include(a => a.PhysicianNotifications).Where(a => a.RegionId==regionId).ToList();
         }
 
+        public List<Physician> getAllUnAssignedPhysician()
+        {
+            return _dbContext.Physicians.Where(a => a.Status==0).ToList();
+        }
+
         public PhysicianNotification GetPhysicianNotification(int physicianId)
         {
             return _dbContext.PhysicianNotifications.FirstOrDefault(a => a.PhysicianId ==  physicianId);

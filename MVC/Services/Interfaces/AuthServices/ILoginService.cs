@@ -9,7 +9,7 @@ namespace Services.Interfaces.AuthServices
 
         bool isTokenValid(HttpContext httpContext,String userType);
 
-        Task<bool> resetPasswordLinkSend(string email);
+        Task<bool> resetPasswordLinkSend(string email,HttpContext httpContext);
 
         SetNewPassword validatePasswordLink(string token);
 

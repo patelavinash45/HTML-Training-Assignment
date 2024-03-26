@@ -22,13 +22,10 @@ function ProfileEdit(temp) {
     }
 }
 
-function sidebar() {
-    var temp = document.getElementById("side-bar").style.display;
-    if (temp == "none") {
-        document.getElementById("side-bar").style.display = "block";
-    } else {
-        document.getElementById("side-bar").style.display = "none";
-    }
+function checkLocation() {
+    var link = "http://maps.google.com/?q=" + $("#street").val() + "+" + $("#city").val() + "+" + $("#state").val() + "+" + $("#zip-code").val();
+    link = link.replace(/\s+/g, "");
+    window.open(link, "_blank");
 }
 
 function cancelPopUp(id) {

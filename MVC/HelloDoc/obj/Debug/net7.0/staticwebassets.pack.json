@@ -245,6 +245,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\closeCase.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createRequest.css",
+      "PackagePath": "staticwebassets\\css\\admin\\createRequest.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createRole.css",
       "PackagePath": "staticwebassets\\css\\admin\\createRole.css"
     },
@@ -401,12 +405,12 @@
       "PackagePath": "staticwebassets\\js\\Admin\\viewProfile.js"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\Request.js",
-      "PackagePath": "staticwebassets\\js\\Patient\\Request.js"
-    },
-    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\dashboard.js",
       "PackagePath": "staticwebassets\\js\\Patient\\dashboard.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Request.js",
+      "PackagePath": "staticwebassets\\js\\Request.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\international-telephone-input.js",

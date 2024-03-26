@@ -18,7 +18,7 @@ namespace Repositories.Interfaces
 
         Task<bool> addRoleMenu(RoleMenu roleMenu);
 
-        Task<bool> deleteRole(Role role);
+        Task<bool> updateRole(Role role);
 
         Task<bool> deleteRoleMenu(RoleMenu roleMenu);
     }

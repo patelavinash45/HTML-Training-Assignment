@@ -1,4 +1,5 @@
-﻿using Services.ViewModels.Admin;
+﻿using Microsoft.AspNetCore.Http;
+using Services.ViewModels.Admin;
 
 namespace Services.Interfaces.AdminServices
 {
@@ -16,7 +17,7 @@ namespace Services.Interfaces.AdminServices
 
         Task<bool> clearRequest(int requestId);
 
-        bool sendAgreement(Agreement model);
+        bool sendAgreement(Agreement model,HttpContext httpContext);
 
         Task<bool> agreementDeclined(Agreement model);
 

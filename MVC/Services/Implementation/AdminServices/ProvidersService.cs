@@ -2,8 +2,8 @@
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.ViewModels.Admin;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 
 namespace Services.Implementation.AdminServices
 {

@@ -1,4 +1,5 @@
-﻿using Repositories.DataModels;
+﻿using Microsoft.AspNetCore.Http;
+using Repositories.DataModels;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.Interfaces.AuthServices;
@@ -151,14 +152,15 @@ namespace Services.Implementation.AdminServices
             return await _requestClientRepository.updateRequestClient(requestClient);
         }
 
-        public bool sendAgreement(Agreement model)
+        public bool sendAgreement(Agreement model,HttpContext httpContext)
         {
+            var request = httpContext.Request;
             List<Claim> claims = new List<Claim>()
             {
                 new Claim("requestId", model.RequestId.ToString()),
             };
             String token = _jwtService.genrateJwtTokenForSendMail(claims, DateTime.Now.AddDays(2));
-            String link = "https://localhost:44392/Admin/Agreement?token=" + token;
+            String link = request.Scheme+"://"+request.Host+"/Admin/Agreement?token=" + token;
             MailMessage mailMessage = new MailMessage
             {
                 From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
