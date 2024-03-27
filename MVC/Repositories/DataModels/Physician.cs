@@ -117,10 +117,6 @@ public partial class Physician
     [InverseProperty("PhysicianCreatedByNavigations")]
     public virtual AspNetUser? CreatedByNavigation { get; set; }
 
-    [ForeignKey("IsNotification")]
-    [InverseProperty("Physicians")]
-    public virtual PhysicianNotification? IsNotificationNavigation { get; set; }
-
     [ForeignKey("ModifiedBy")]
     [InverseProperty("PhysicianModifiedByNavigations")]
     public virtual AspNetUser? ModifiedByNavigation { get; set; }

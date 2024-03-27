@@ -8,9 +8,7 @@ namespace Services.Interfaces.AdminServices
     {
         AdminDashboard getallRequests(int aspNetUserId);
 
-        TableModel GetNewRequest(String status, int pageNo);
-
-        TableModel patientSearch(String searchElement, String status, int pageNo, int type);
+        TableModel GetNewRequest(String status, int pageNo, String patientName, int regionId, int requesterTypeId);
 
         Dictionary<int, String> getPhysiciansByRegion(int regionId);
 
@@ -20,7 +18,7 @@ namespace Services.Interfaces.AdminServices
 
         DataTable exportAllData();
 
-        DataTable exportData(int pageNo, String status, int type, String searchElement);
+        DataTable exportData(String status, int pageNo, String patientName, int regionId, int requesterTypeId);
 
         bool SendRequestLink(SendLink model,HttpContext httpContext);
 

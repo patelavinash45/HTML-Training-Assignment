@@ -109,7 +109,8 @@ button:disabled{
  }
 
 .middleOptionButtons {
-    background-color: cadetblue;
+    border-color: #1db5d0;
+    background-color: #1db5d0;
     padding: 10px 15px;
     color: white;
 }

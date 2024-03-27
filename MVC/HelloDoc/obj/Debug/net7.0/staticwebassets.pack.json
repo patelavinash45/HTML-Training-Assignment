@@ -237,12 +237,12 @@
       "PackagePath": "staticwebassets\\css\\admin\\_requestPopUp.css"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ancounterForm.css",
-      "PackagePath": "staticwebassets\\css\\admin\\ancounterForm.css"
-    },
-    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\closeCase.css",
       "PackagePath": "staticwebassets\\css\\admin\\closeCase.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createProvider.css",
+      "PackagePath": "staticwebassets\\css\\admin\\createProvider.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createRequest.css",
@@ -255,6 +255,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\dashboard.css",
       "PackagePath": "staticwebassets\\css\\admin\\dashboard.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\encounterForm.css",
+      "PackagePath": "staticwebassets\\css\\admin\\encounterForm.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\loginPage.css",

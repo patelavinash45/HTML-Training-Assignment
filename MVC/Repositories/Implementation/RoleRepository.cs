@@ -21,6 +21,11 @@ namespace Repositories.Implementation
             return _dbContext.Roles.Include(a => a.AccountTypeNavigation).Where(a => a.IsDeleted != new BitArray(1, true)).ToList();
         }
 
+        public List<Role> getRolesByUserType(int type)
+        {
+            return _dbContext.Roles.Include(a => a.AccountTypeNavigation).Where(a => a.IsDeleted != new BitArray(1, true) && a.AccountType == type).ToList();
+        }
+
         public Role getRoleByRoleId(int roleId)
         {
             return _dbContext.Roles.FirstOrDefault(a => a.RoleId == roleId);

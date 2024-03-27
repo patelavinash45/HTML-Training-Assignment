@@ -29,9 +29,11 @@
                         <option value="@item.Key">@item.Value</option>
                     }
                 </select>
-                <button class="bg-white px-3 fw-bold">
-                    Create Provider Account
-                </button>
+                <a asp-controller="Admin" asp-action="CreateProvider">
+                    <button class="bg-white px-3 fw-bold">
+                        Create Provider Account
+                    </button>
+                </a>
             </div>
             <div class="tableData">
                 <partial name="_ProviderTable" model="@Model.providers">

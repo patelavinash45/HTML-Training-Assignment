@@ -6,6 +6,8 @@ namespace Repositories.Interfaces
     {
         List<Role> getAllRoles();
 
+        List<Role> getRolesByUserType(int type);
+
         Role getRoleByRoleId(int roleId);
 
         List<Menu> getAllMenus();

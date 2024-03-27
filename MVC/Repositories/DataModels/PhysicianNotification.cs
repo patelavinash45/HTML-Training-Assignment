@@ -22,7 +22,4 @@ public partial class PhysicianNotification
     [ForeignKey("PhysicianId")]
     [InverseProperty("PhysicianNotifications")]
     public virtual Physician Physician { get; set; } = null!;
-
-    [InverseProperty("IsNotificationNavigation")]
-    public virtual ICollection<Physician> Physicians { get; set; } = new List<Physician>();
 }

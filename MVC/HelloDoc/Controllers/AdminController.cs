@@ -102,6 +102,12 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
+        public IActionResult CreateProvider()
+        {
+            return View(_providersService.GetCreateProvider());
+        }
+
+        [Authorization("Admin")]
         public IActionResult Providers()
         {
             return View(_providersService.getProviders(regionId: 0));
@@ -300,7 +306,7 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
-        public IActionResult RequestSupport(RequestSupport model)
+        public IActionResult RequestSupport(RequestSupport model)  //// request support on dashboard
         {
             if (ModelState.IsValid)
             {
@@ -430,6 +436,29 @@ namespace HelloDoc.Controllers
             }
             _notyfService.Warning("Add Required Field.");
             return View(null);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]  /////  create request ---  Dashboard
+        public async Task<IActionResult> CreateProvider(CreateProvider model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (await _providersService.createProvider(model))
+                {
+                    _notyfService.Success("Successfully Provider Added");
+                }
+                else
+                {
+                    _notyfService.Error("Faild!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            CreateProvider createProvider = _providersService.GetCreateProvider();
+            model.Roles = createProvider.Roles;
+            model.Regions = createProvider.Regions;
+            _notyfService.Warning("Add Required Field.");
+            return View(model);
         }
 
         [HttpPost]
@@ -659,9 +688,9 @@ namespace HelloDoc.Controllers
         }
 
         [HttpGet]   // Export selected Data 
-        public IActionResult ExportData(int pageNo, String status, int type, String searchElement)
+        public IActionResult ExportData(String status, int pageNo, String partialViewName, String patinetName, int regionId, int requesterTypeId)
         {
-            DataTable dataTable = _adminDashboardService.exportData(pageNo, status, type, searchElement);
+            DataTable dataTable = _adminDashboardService.exportData(status, pageNo, patinetName, regionId, requesterTypeId);
             using (XLWorkbook wb = new XLWorkbook())
             {
                 wb.Worksheets.Add(dataTable);
@@ -674,17 +703,10 @@ namespace HelloDoc.Controllers
         }
 
         [HttpGet]   // Dashboard 
-        public IActionResult GetTablesData(String status,int pageNo,String partialViewName)
+        public IActionResult GetTablesData(String status,int pageNo,String partialViewName,String patinetName, int regionId, int requesterTypeId)
         {
-           TableModel tableModel= _adminDashboardService.GetNewRequest(status, pageNo);
-           return PartialView(partialViewName, tableModel);
-        }
-
-        [HttpGet]    // search on Dashboard 
-        public IActionResult Search(String searchElement,String status, String partialViewName, int pageNo, int type)
-        {
-            TableModel tableModel = _adminDashboardService.patientSearch(searchElement, status,pageNo,type);
-            return tableModel.TableDatas.Count != 0 ? PartialView(partialViewName, tableModel) : PartialView("_NoTableDataFound");
+           TableModel tableModel= _adminDashboardService.GetNewRequest(status, pageNo, patinetName, regionId, requesterTypeId);
+           return tableModel.TableDatas.Count != 0 ? PartialView(partialViewName, tableModel) : PartialView("_NoTableDataFound");
         }
 
         [HttpPost]

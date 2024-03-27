@@ -24,10 +24,32 @@ namespace Repositories.Implementation
             return _dbContext.RequestClients.Include(a => a.Request) .ToList();
         }
 
-        public List<RequestClient> getRequestClientByStatus(int status, int skip)
+        public List<RequestClient> getRequestClientByStatus(int status, int skip, string patientName ,int regionId, int requesterTypeId)
         {
-            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Where(a => a.Status == status)
-                                  .Skip(skip).OrderByDescending(a => a.RequestClientId).Take(10).ToList();
+            if (patientName != null)
+            {
+                patientName = patientName.ToLower();
+            }
+            Func<RequestClient, bool> predicate = a =>
+            (requesterTypeId == 0 || a.Request.RequestTypeId == requesterTypeId) 
+            && (regionId == 0 || a.RegionId == regionId)
+            && (patientName == null || a.FirstName.ToLower().Contains(patientName) || a.LastName.ToLower().Contains(patientName))
+            && a.Status == status;
+            return _dbContext.RequestClients.Where(predicate).OrderByDescending(a => a.RequestClientId).Skip(skip).Take(10).ToList();
+        }
+
+        public int countRequestClientByStatusAndFilter(int status, string patientName, int regionId, int requesterTypeId)
+        {
+            if (patientName != null)
+            {
+                patientName = patientName.ToLower();
+            }
+            Func<RequestClient, bool> predicate = a =>
+            (requesterTypeId == 0 || a.Request.RequestTypeId == requesterTypeId)
+            && (regionId == 0 || a.RegionId == regionId)
+            && (patientName == null || a.FirstName.ToLower().Contains(patientName) || a.LastName.ToLower().Contains(patientName))
+            && a.Status == status;
+            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Where(predicate).ToList().Count;
         }
 
         public int countRequestClientByStatus(int status)
@@ -61,44 +83,6 @@ namespace Repositories.Implementation
         {
             _dbContext.RequestClients.Update(requestClient);
             return await _dbContext.SaveChangesAsync() > 0;
-        }
-
-        public List<RequestClient> getRequestClientByName(string firstName, string lastName, int status, int skip)
-        {
-            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician)
-                .Where(a => a.Status == status).Where(a => (a.FirstName.ToLower().Contains(firstName) && a.LastName.ToLower().Contains(lastName))
-                || (a.FirstName.ToLower().Contains(lastName) && a.LastName.ToLower().Contains(firstName))).
-                         Skip(skip).OrderByDescending(a => a.RequestClientId).Take(10).ToList();
-        }
-
-        public int countRequestClientByName(string firstName, string lastName, int status)
-        {
-            return _dbContext.RequestClients
-              .Where(a => a.Status == status).Where(a => (a.FirstName.ToLower().Contains(firstName) && a.LastName.ToLower().Contains(lastName))
-                || (a.FirstName.ToLower().Contains(lastName) && a.LastName.ToLower().Contains(firstName))).ToList().Count;
-        }
-
-        public List<RequestClient> getRequestClientByRegion(int regionId, int status, int skip)
-        {
-            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Where(a => a.Status == status)
-                .Where(a => a.RegionId == regionId).Skip(skip).OrderByDescending(a => a.RequestClientId).Take(10).ToList();
-        }
-
-        public int countRequestClientByRegion(int regionId, int status)
-        {
-            return _dbContext.RequestClients.Where(a => a.Status == status).Where(a => a.RegionId == regionId).ToList().Count;
-        }
-
-        public List<RequestClient> getRequestClientByRequesterType(int requestTypeId, int status, int skip)
-        {
-            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician)
-                .Where(a => a.Status == status).Where(a => a.Request.RequestTypeId == requestTypeId).
-                        Skip(skip).OrderByDescending(a => a.RequestClientId).Take(10).ToList();
-        }
-
-        public int countRequestClientByRequesterType(int requestTypeId, int status)
-        {
-            return _dbContext.RequestClients.Where(a => a.Status == status).Where(a => a.Request.RequestTypeId == requestTypeId).ToList().Count;
         }
 
         public List<CaseTag> getAllReason()

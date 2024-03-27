@@ -215,8 +215,6 @@ public partial class HalloDocDbContext : DbContext
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.PhysicianCreatedByNavigations).HasConstraintName("Physician_CreatedBy_fkey");
 
-            entity.HasOne(d => d.IsNotificationNavigation).WithMany(p => p.Physicians).HasConstraintName("Physician_IsNotification_fkey");
-
             entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.PhysicianModifiedByNavigations).HasConstraintName("Physician_ModifiedBy_fkey");
         });
 

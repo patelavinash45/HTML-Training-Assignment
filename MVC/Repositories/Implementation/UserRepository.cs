@@ -96,5 +96,24 @@ namespace Repositories.Implementation
             _dbContext.AdminRegions.Remove(adminRegion);
             return await _dbContext.SaveChangesAsync() > 0;
         }
+
+        public async Task<bool> addPhysicianRegion(PhysicianRegion physicianRegion)
+        {
+            _dbContext.PhysicianRegions.Add(physicianRegion);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> addPhysician(Physician physician)
+        {
+            _dbContext.Physicians.Add(physician);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> addPhysicianNotification(PhysicianNotification physicianNotification)
+        {
+            _dbContext.PhysicianNotifications.Add(physicianNotification);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
     }
 }
+

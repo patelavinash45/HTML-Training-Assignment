@@ -9,5 +9,9 @@ namespace Services.Interfaces.AdminServices
         Task<bool> editProviderNotification(int providerId, bool isNotification);
 
         bool contactProvider(ContactProvider model);
+
+        CreateProvider GetCreateProvider();
+
+        Task<bool> createProvider(CreateProvider model);
     }
 }

@@ -1,28 +1,37 @@
 ﻿using Repositories.DataModels;
+using Repositories.Interface;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.ViewModels.Admin;
+using System.Collections;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Services.Implementation.AdminServices
 {
     public class ProvidersService : IProvidersService
     {
         private readonly IUserRepository _userRepository;
-        private IRequestClientRepository _requestClientRepository;
+        private readonly IRequestClientRepository _requestClientRepository;
+        private readonly IRoleRepository _roleRepository;
+        private readonly IAspRepository _aspRepository;
 
-        public ProvidersService(IUserRepository userRepository, IRequestClientRepository requestClientRepository)
+        public ProvidersService(IUserRepository userRepository, IRequestClientRepository requestClientRepository, IRoleRepository roleRepository,
+                                 IAspRepository aspRepository)
         {
             _userRepository = userRepository;
             _requestClientRepository = requestClientRepository;
+            _roleRepository = roleRepository;
+            _aspRepository = aspRepository;
         }
 
         public Provider getProviders(int regionId)
         {
             Dictionary<int, string> regions = new Dictionary<int, string>();
             List<Physician> physicians = new List<Physician> { };
-            if(regionId == 0)
+            if(regionId == 0)  /// by default it is 0 
             {
                 physicians = _userRepository.getAllPhysicians();
                 List<Region> allRegion = _requestClientRepository.getAllRegions();
@@ -31,7 +40,7 @@ namespace Services.Implementation.AdminServices
                     regions.Add(region.RegionId, region.Name);
                 }
             }
-            else
+            else  /// filter
             {
                 physicians = _userRepository.getAllPhysiciansByRegionId(regionId);
             }
@@ -94,6 +103,106 @@ namespace Services.Implementation.AdminServices
                 }
             }
             return true;
+        }
+
+        public CreateProvider GetCreateProvider()
+        {
+            Dictionary<int, string> regions = new Dictionary<int, string>();
+            List<Region> allRegion = _requestClientRepository.getAllRegions();
+            foreach (Region region in allRegion)
+            {
+                regions.Add(region.RegionId, region.Name);
+            } 
+            Dictionary<int, string> roles = new Dictionary<int, string>();
+            List<Role> allRoles = _roleRepository.getRolesByUserType(3);
+            foreach (Role role in allRoles)
+            {
+                roles.Add(role.RoleId, role.Name);
+            }
+            CreateProvider createProvider = new CreateProvider()
+            {
+                Regions = regions,
+                Roles = roles,
+            };
+            return createProvider;
+        }
+
+        public async Task<bool> createProvider(CreateProvider model)
+        {
+            int aspNetRoleId = _aspRepository.checkUserRole(role: "Physician");
+            if (aspNetRoleId == 0)
+            {
+                AspNetRole aspNetRole = new()
+                {
+                    Name = "Physician",
+                };
+                aspNetRoleId = await _aspRepository.addUserRole(aspNetRole);
+            }
+            AspNetUser aspNetUser = new()
+            {
+                UserName = model.FirstName,
+                Email = model.Email,
+                PhoneNumber = model.Phone,
+                PasswordHash = genrateHash(model.Password),
+                CreatedDate = DateTime.Now,
+            };
+            int aspNetUserId = await _aspRepository.addUser(aspNetUser);
+            AspNetUserRole aspNetUserRole = new()
+            {
+                UserId = aspNetUserId,
+                RoleId = aspNetRoleId,
+            };
+            await _aspRepository.addAspNetUserRole(aspNetUserRole);
+            Physician physician = new Physician()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Mobile = model.Phone,
+                MedicalLicense = model.MedicalLicance,
+                Address1 = model.Add1,
+                Address2 = model.Add2,
+                City = model.City,
+                Zip = model.Zip,
+                RegionId = int.Parse(model.SelecterRegion),
+                AltPhone = model.Phone2,
+                CreatedDate = DateTime.Now,
+                Status = 0,
+                BusinessName = model.BusinessName,
+                BusinessWebsite = model.BusinessWebsite,
+                Npinumber = model.NpiNumber,
+            };
+            if (await _userRepository.addPhysician(physician))
+            {
+                PhysicianNotification physicianNotification = new PhysicianNotification()
+                {
+                    PhysicianId = physician.PhysicianId,
+                    IsNotificationStopped = new BitArray(1, false)
+                };
+                if(await _userRepository.addPhysicianNotification(physicianNotification))
+                {
+                    foreach (String regionId in model.SelecterRegions)
+                    {
+                        PhysicianRegion physicianRegion = new PhysicianRegion()
+                        {
+                            PhysicianId = physician.PhysicianId,
+                            RegionId = int.Parse(regionId),
+                        };
+                        await _userRepository.addPhysicianRegion(physicianRegion);
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private String genrateHash(String password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] hashPassword = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashPassword).Replace("-", "").ToLower();
+            }
         }
     }
 }

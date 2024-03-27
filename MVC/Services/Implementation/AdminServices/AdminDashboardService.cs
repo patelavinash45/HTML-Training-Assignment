@@ -57,7 +57,7 @@ namespace Services.Implementation.AdminServices
             };
             AdminDashboard adminDashboard = new()
             {
-                NewRequests = GetNewRequest(status: "New", pageNo: 1),
+                NewRequests = GetNewRequest(status: "New", pageNo: 1, patientName: null , regionId: 0, requesterTypeId: 0),
                 NewRequestCount = _requestClientRepository.countRequestClientByStatus(1),
                 PendingRequestCount = _requestClientRepository.countRequestClientByStatus(2),
                 ActiveRequestCount = _requestClientRepository.countRequestClientByStatus(4) +
@@ -74,44 +74,50 @@ namespace Services.Implementation.AdminServices
             return adminDashboard;
         }
 
-        public TableModel GetNewRequest(String status, int pageNo)
+        //public TableModel GetNewRequest(String status, int pageNo)
+        //{
+        //    Dictionary<string, List<int>> statusList = new Dictionary<string, List<int>>()
+        //    {
+        //        {"New", new List<int> { 1 } },
+        //        {"Pending", new List<int> { 2 } },
+        //        {"Active", new List<int> { 4, 5 } },
+        //        {"Conclude", new List<int> { 6 } },
+        //        {"Close", new List<int> { 3, 7, 8 } },
+        //        {"Unpaid", new List<int> { 9 } },
+        //    };
+        //    int skip = (pageNo - 1) * 10;
+        //    int totalRequests = 0;
+        //    List<RequestClient> requestClients = new List<RequestClient>();
+        //    List<int> statusLists = statusList[status];
+        //    foreach(int i in statusLists)
+        //    {
+        //        totalRequests += _requestClientRepository.countRequestClientByStatus(i);
+        //        requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(status: i, skip: skip));
+        //    }
+        //    return getTableModal(requestClients, totalRequests, pageNo);
+        //}
+
+        public TableModel GetNewRequest(String status, int pageNo, String patientName,int regionId, int requesterTypeId)
         {
+            Dictionary<string, List<int>> statusList = new Dictionary<string, List<int>>()
+            {
+                {"New", new List<int> { 1 } },
+                {"Pending", new List<int> { 2 } },
+                {"Active", new List<int> { 4, 5 } },
+                {"Conclude", new List<int> { 6 } },
+                {"Close", new List<int> { 3, 7, 8 } },
+                {"Unpaid", new List<int> { 9 } },
+            };
             int skip = (pageNo - 1) * 10;
             int totalRequests = 0;
             List<RequestClient> requestClients = new List<RequestClient>();
-            if (status == "New")
+            List<int> statusLists = statusList[status];
+            foreach (int i in statusLists)
             {
-                totalRequests = _requestClientRepository.countRequestClientByStatus(1);
-                requestClients = _requestClientRepository.getRequestClientByStatus(status: 1, skip: skip);
-            }
-            else if (status == "Pending")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByStatus(2);
-                requestClients = _requestClientRepository.getRequestClientByStatus(status: 2, skip: skip);
-            }
-            else if (status == "Active")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByStatus(4) + _requestClientRepository.countRequestClientByStatus(5);
-                requestClients = _requestClientRepository.getRequestClientByStatus(status: 4, skip: skip);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(status: 5, skip: skip));
-            }
-            else if (status == "Conclude")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByStatus(6);
-                requestClients = _requestClientRepository.getRequestClientByStatus(status: 6, skip: skip);
-            }
-            else if (status == "Close")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByStatus(3) + _requestClientRepository.countRequestClientByStatus(7)
-                                               + _requestClientRepository.countRequestClientByStatus(8);
-                requestClients = _requestClientRepository.getRequestClientByStatus(status: 3, skip: skip);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(status: 7, skip: skip));
-                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(status: 8, skip: skip));
-            }
-            else if (status == "Unpaid")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByStatus(9);
-                requestClients = _requestClientRepository.getRequestClientByStatus(status: 9, skip: skip);
+                totalRequests += _requestClientRepository.countRequestClientByStatusAndFilter
+                                    (status: i, patientName: patientName, regionId: regionId, requesterTypeId: requesterTypeId);
+                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus
+                                  (status: i, skip: skip, patientName: patientName, regionId: regionId,requesterTypeId: requesterTypeId));
             }
             return getTableModal(requestClients, totalRequests, pageNo);
         }
@@ -292,170 +298,14 @@ namespace Services.Implementation.AdminServices
             }
         }
 
-        public DataTable exportData(int pageNo, String status, int type, String searchElement)
+        public DataTable exportData(String status, int pageNo, String patientName, int regionId, int requesterTypeId)
         {
-            switch(type)
-            {
-                case 1: return convertRequestClientToDataTable(GetNewRequest(status, pageNo).TableDatas);
-                case 2: case 3: case 4: return convertRequestClientToDataTable(patientSearch(searchElement ,status, pageNo, type).TableDatas);
-                default: return null;
-            }
+            return convertRequestClientToDataTable(GetNewRequest(status, pageNo, patientName, regionId, requesterTypeId).TableDatas);
         }
 
         public DataTable exportAllData()
         {
-            List<RequestClient> requestClients = _requestClientRepository.getAllRequestClients();
-            return convertRequestClientToDataTable(requestClients);
-        }
-
-        public TableModel patientSearch(String searchElement, String status, int pageNo, int type)
-        {
-            switch (type)
-            {
-                case 2: return searchOnPatientName(searchElement, status, pageNo);
-                case 3: return searchOnRegion(searchElement, status, pageNo);
-                case 4: return searchOnRequesttype(searchElement, status, pageNo); 
-                default: return null;
-            }
-        }
-        private TableModel searchOnPatientName(String searchElement, String status, int pageNo)
-        {
-            int totalRequests = 0;
-            int skip = (pageNo - 1) * 10;
-            List<RequestClient> requestClients = new List<RequestClient>();
-            searchElement = searchElement.ToLower();
-            if (!searchElement.Contains(" "))
-            {
-                searchElement += " ";
-            }
-            String[] names = searchElement.Split(" ");
-            if (status == "New")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByName(firstName: names[0], lastName: names[1], status: 1);
-                requestClients = _requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1], skip: skip, status: 1);
-            }
-            else if (status == "Pending")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByName(firstName: names[0], lastName: names[1], status: 2);
-                requestClients = _requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1], skip: skip, status: 2);
-            }
-            else if (status == "Active")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByName(firstName: names[0], lastName: names[1], status: 4) +
-                                    _requestClientRepository.countRequestClientByName(firstName: names[0], lastName: names[1], status: 5);
-                requestClients = _requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1], skip: skip, status: 4);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1], skip: skip, status: 5));
-            }
-            else if (status == "Conclude")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByName(firstName: names[0], lastName: names[1], status: 6);
-                requestClients = _requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1], skip: skip, status: 6);
-            }
-            else if (status == "Close")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByName(firstName: names[0], lastName: names[1], status: 3) +
-                                   _requestClientRepository.countRequestClientByName(firstName: names[0], lastName: names[1], status: 7)
-                                     + _requestClientRepository.countRequestClientByName(firstName: names[0], lastName: names[1], status: 8);
-                requestClients = _requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1], skip: skip, status: 3);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1], skip: skip, status: 7));
-                requestClients.AddRange(_requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1], skip: skip, status: 8));
-            }
-            else if (status == "Unpaid")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByName(firstName: names[0], lastName: names[1], status: 9);
-                requestClients = _requestClientRepository.getRequestClientByName(firstName: names[0], lastName: names[1], skip: skip, status: 9);
-            }
-            return getTableModal(requestClients, totalRequests, pageNo);
-        }
-
-        private TableModel searchOnRegion(String searchElement, String status, int pageNo)
-        {
-            int regionId = int.Parse(searchElement);
-            int totalRequests = 0;
-            int skip = (pageNo - 1) * 10;
-            List<RequestClient> requestClients = new List<RequestClient>();
-            if (status == "New")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRegion(regionId, status: 1);
-                requestClients = _requestClientRepository.getRequestClientByRegion(regionId, skip: skip, status: 1);
-            }
-            else if (status == "Pending")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRegion(regionId, status: 2);
-                requestClients = _requestClientRepository.getRequestClientByRegion(regionId, skip: skip, status: 2);
-            }
-            else if (status == "Active")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRegion(regionId, status: 4) +
-                                    _requestClientRepository.countRequestClientByRegion(regionId, status: 5);
-                requestClients = _requestClientRepository.getRequestClientByRegion(regionId, skip: skip, status: 4);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByRegion(regionId, skip: skip, status: 5));
-            }
-            else if (status == "Conclude")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRegion(regionId, status: 6);
-                requestClients = _requestClientRepository.getRequestClientByRegion(regionId, skip: skip, status: 6);
-            }
-            else if (status == "Close")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRegion(regionId, status: 3) +
-                                   _requestClientRepository.countRequestClientByRegion(regionId, status: 7)
-                                     + _requestClientRepository.countRequestClientByRegion(regionId, status: 8);
-                requestClients = _requestClientRepository.getRequestClientByRegion(regionId, skip: skip, status: 3);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByRegion(regionId, skip: skip, status: 7));
-                requestClients.AddRange(_requestClientRepository.getRequestClientByRegion(regionId, skip: skip, status: 8));
-            }
-            else if (status == "Unpaid")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRegion(regionId, status: 9);
-                requestClients = _requestClientRepository.getRequestClientByRegion(regionId, skip: skip, status: 9);
-            }
-            return getTableModal(requestClients, totalRequests, pageNo);
-        }
-
-        private TableModel searchOnRequesttype(String searchElement, String status, int pageNo)
-        {
-            int requestTypeId = int.Parse(searchElement);
-            int totalRequests = 0;
-            int skip = (pageNo - 1) * 10;
-            List<RequestClient> requestClients = new List<RequestClient>();
-            if (status == "New")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRequesterType(requestTypeId, status: 1);
-                requestClients = _requestClientRepository.getRequestClientByRequesterType(requestTypeId, skip: skip, status: 1);
-            }
-            else if (status == "Pending")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRequesterType(requestTypeId, status: 2);
-                requestClients = _requestClientRepository.getRequestClientByRequesterType(requestTypeId, skip: skip, status: 2);
-            }
-            else if (status == "Active")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRequesterType(requestTypeId, status: 4) +
-                                    _requestClientRepository.countRequestClientByRequesterType(requestTypeId, status: 5);
-                requestClients = _requestClientRepository.getRequestClientByRequesterType(requestTypeId, skip: skip, status: 4);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByRequesterType(requestTypeId, skip: skip, status: 5));
-            }
-            else if (status == "Conclude")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRequesterType(requestTypeId, status: 6);
-                requestClients = _requestClientRepository.getRequestClientByRequesterType(requestTypeId, skip: skip, status: 6);
-            }
-            else if (status == "Close")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRequesterType(requestTypeId, status: 3) +
-                                   _requestClientRepository.countRequestClientByRequesterType(requestTypeId, status: 7)
-                                     + _requestClientRepository.countRequestClientByRequesterType(requestTypeId, status: 8);
-                requestClients = _requestClientRepository.getRequestClientByRequesterType(requestTypeId, skip: skip, status: 3);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByRequesterType(requestTypeId, skip: skip, status: 7));
-                requestClients.AddRange(_requestClientRepository.getRequestClientByRequesterType(requestTypeId, skip: skip, status: 8));
-            }
-            else if (status == "Unpaid")
-            {
-                totalRequests = _requestClientRepository.countRequestClientByRequesterType(requestTypeId, status: 9);
-                requestClients = _requestClientRepository.getRequestClientByRequesterType(requestTypeId, skip: skip, status: 9);
-            }
-            return getTableModal(requestClients, totalRequests, pageNo);
+            return convertRequestClientToDataTable(_requestClientRepository.getAllRequestClients());
         }
 
         private TableModel getTableModal(List<RequestClient> requestClients, int totalRequests, int pageNo)

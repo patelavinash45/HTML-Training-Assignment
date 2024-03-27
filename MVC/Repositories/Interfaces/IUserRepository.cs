@@ -34,5 +34,11 @@ namespace Repositories.Interfaces
 
         Task<bool> deleteAdminRgion(AdminRegion adminRegion);
 
+        Task<bool> addPhysicianRegion(PhysicianRegion physicianRegion);
+
+        Task<bool> addPhysician(Physician physician);
+
+        Task<bool> addPhysicianNotification(PhysicianNotification physicianNotification);
+
     }
 }

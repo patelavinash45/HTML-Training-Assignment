@@ -64,7 +64,7 @@ namespace Repositories.Implementation
 
         public int checkUserRole(string role)
         {
-            AspNetRole aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == "Patient");
+            AspNetRole aspNetRole = _dbContext.AspNetRoles.FirstOrDefault(a => a.Name.Trim() == role);
             return aspNetRole?.Id ?? 0;
         }
 

@@ -10,21 +10,11 @@ namespace Repositories.Interfaces
 
         List<RequestClient> getAllRequestClients();
 
-        List<RequestClient> getRequestClientByStatus(int status, int skip);
+        List<RequestClient> getRequestClientByStatus(int status, int skip, string patientName, int regionId, int requesterTypeId);
 
         int countRequestClientByStatus(int status);
 
-        List<RequestClient> getRequestClientByName(string firstName, string lastName, int status, int skip);
-
-        int countRequestClientByName(string firstName, string lastName, int status);
-
-        List<RequestClient> getRequestClientByRegion(int regionId, int status, int skip);
-
-        int countRequestClientByRegion(int regionId, int status);
-
-        List<RequestClient> getRequestClientByRequesterType(int requestTypeId, int status, int skip);
-
-        int countRequestClientByRequesterType(int requestTypeId, int status);
+        int countRequestClientByStatusAndFilter(int status, string patientName, int regionId, int requesterTypeId);
 
         List<RequestClient> getAllRequestClientForUser(int userId);
 
