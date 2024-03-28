@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Mail;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -22,6 +23,15 @@ namespace Services.Implementation.AdminServices
         private readonly IUserRepository _userRepository;
         private readonly IJwtService _jwtService;
         private readonly IAspRepository _aspRepository;
+        private Dictionary<string, List<int>> statusList { get; set; } = new Dictionary<string, List<int>>()
+            {
+                {"New", new List<int> { 1 , -1 , -1 } },
+                {"Pending", new List<int> { 2, -1, -1 } },
+                {"Active", new List<int> { 4, 5, -1 } },
+                {"Conclude", new List<int> { 6, -1, -1 } },
+                {"Close", new List<int> { 3, 7, 8 } },
+                {"Unpaid", new List<int> { 9, -1, -1 } },
+            };
 
         public AdminDashboardService(IRequestClientRepository requestClientRepository, IUserRepository userRepository, IJwtService jwtService,
                                           IAspRepository aspRepository, IRequestRepository requestRepository)
@@ -57,16 +67,13 @@ namespace Services.Implementation.AdminServices
             };
             AdminDashboard adminDashboard = new()
             {
-                NewRequests = GetNewRequest(status: "New", pageNo: 1, patientName: null , regionId: 0, requesterTypeId: 0),
-                NewRequestCount = _requestClientRepository.countRequestClientByStatus(1),
-                PendingRequestCount = _requestClientRepository.countRequestClientByStatus(2),
-                ActiveRequestCount = _requestClientRepository.countRequestClientByStatus(4) +
-                                     _requestClientRepository.countRequestClientByStatus(5),
-                ConcludeRequestCount = _requestClientRepository.countRequestClientByStatus(6),
-                TocloseRequestCount = _requestClientRepository.countRequestClientByStatus(3) +
-                                      _requestClientRepository.countRequestClientByStatus(7) +
-                                      _requestClientRepository.countRequestClientByStatus(8),
-                UnpaidRequestCount = _requestClientRepository.countRequestClientByStatus(9),
+                NewRequests = GetNewRequest(status: "New", pageNo: 1, patientName: "" , regionId: 0, requesterTypeId: 0),
+                NewRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["New"]),
+                PendingRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Pending"]),
+                ActiveRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Active"]),
+                ConcludeRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Conclude"]),
+                TocloseRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Close"]),
+                UnpaidRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Unpaid"]),
                 Regions = regions,
                 CancelPopup = cancelPopUp,
                 AssignAndTransferPopup = assignAndTransferPopUp,
@@ -74,51 +81,15 @@ namespace Services.Implementation.AdminServices
             return adminDashboard;
         }
 
-        //public TableModel GetNewRequest(String status, int pageNo)
-        //{
-        //    Dictionary<string, List<int>> statusList = new Dictionary<string, List<int>>()
-        //    {
-        //        {"New", new List<int> { 1 } },
-        //        {"Pending", new List<int> { 2 } },
-        //        {"Active", new List<int> { 4, 5 } },
-        //        {"Conclude", new List<int> { 6 } },
-        //        {"Close", new List<int> { 3, 7, 8 } },
-        //        {"Unpaid", new List<int> { 9 } },
-        //    };
-        //    int skip = (pageNo - 1) * 10;
-        //    int totalRequests = 0;
-        //    List<RequestClient> requestClients = new List<RequestClient>();
-        //    List<int> statusLists = statusList[status];
-        //    foreach(int i in statusLists)
-        //    {
-        //        totalRequests += _requestClientRepository.countRequestClientByStatus(i);
-        //        requestClients.AddRange(_requestClientRepository.getRequestClientByStatus(status: i, skip: skip));
-        //    }
-        //    return getTableModal(requestClients, totalRequests, pageNo);
-        //}
-
         public TableModel GetNewRequest(String status, int pageNo, String patientName,int regionId, int requesterTypeId)
         {
-            Dictionary<string, List<int>> statusList = new Dictionary<string, List<int>>()
-            {
-                {"New", new List<int> { 1 } },
-                {"Pending", new List<int> { 2 } },
-                {"Active", new List<int> { 4, 5 } },
-                {"Conclude", new List<int> { 6 } },
-                {"Close", new List<int> { 3, 7, 8 } },
-                {"Unpaid", new List<int> { 9 } },
-            };
             int skip = (pageNo - 1) * 10;
             int totalRequests = 0;
             List<RequestClient> requestClients = new List<RequestClient>();
-            List<int> statusLists = statusList[status];
-            foreach (int i in statusLists)
-            {
-                totalRequests += _requestClientRepository.countRequestClientByStatusAndFilter
-                                    (status: i, patientName: patientName, regionId: regionId, requesterTypeId: requesterTypeId);
-                requestClients.AddRange(_requestClientRepository.getRequestClientByStatus
-                                  (status: i, skip: skip, patientName: patientName, regionId: regionId,requesterTypeId: requesterTypeId));
-            }
+            totalRequests += _requestClientRepository.countRequestClientByStatusAndFilter
+                                    (status: statusList[status], patientName: patientName, regionId: regionId, requesterTypeId: requesterTypeId);
+            requestClients.AddRange(_requestClientRepository.getRequestClientByStatus
+                              (status: statusList[status], skip: skip, patientName: patientName, regionId: regionId, requesterTypeId: requesterTypeId));
             return getTableModal(requestClients, totalRequests, pageNo);
         }
 

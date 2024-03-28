@@ -43,6 +43,12 @@ namespace Repositories.Implementation
             return _dbContext.Admins.FirstOrDefault(a => a.AspNetUserId == aspNetUserId);
         }
 
+        public async Task<bool> addAdmin(Admin admin)
+        {
+            _dbContext.Admins.Add(admin);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
         public List<Physician> getAllPhysicians()
         {
             return _dbContext.Physicians.Include(a => a.PhysicianNotifications).ToList();
@@ -106,6 +112,12 @@ namespace Repositories.Implementation
         public async Task<bool> addPhysician(Physician physician)
         {
             _dbContext.Physicians.Add(physician);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> updatePhysician(Physician physician)
+        {
+            _dbContext.Physicians.Update(physician);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 

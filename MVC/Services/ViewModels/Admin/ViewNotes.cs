@@ -6,11 +6,13 @@ namespace Services.ViewModels.Admin
     {
         public int RequestId { get; set; }
 
+        [StringLength(500)]
         public string? PhysicianNotes { get; set; }
 
         public string? AdminNotes { get; set; }
 
         [Required]
+        [StringLength(500)]
         public string NewAdminNotes { get; set; }
 
         public List<String>? TransferNotes { get; set; }

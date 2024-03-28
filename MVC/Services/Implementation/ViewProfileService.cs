@@ -56,7 +56,7 @@ namespace Services.Implementation
             return await _userRepository.updateProfile(user);
         }
 
-        public AdminViewProfile GetAdminViewProfile(int aspNetUserId)
+        public AdminCreaateAndProfile GetAdminViewProfile(int aspNetUserId)
         {
             Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserId);
             List<Region> allRegion = _requestClientRepository.getAllRegions();
@@ -72,7 +72,7 @@ namespace Services.Implementation
             {
                 adminRegions[adminRegion.RegionId] = true;
             }
-            AdminViewProfile adminViewProfile = new AdminViewProfile()
+            AdminCreaateAndProfile adminViewProfile = new AdminCreaateAndProfile()
             {
                 FirstName = admin.FirstName,
                 LastName = admin.LastName,
@@ -82,7 +82,6 @@ namespace Services.Implementation
                 Status = admin.Status,
                 Address1 = admin.Address1,
                 Address2 = admin.Address2,
-                Role = admin.Role,
                 City = admin.City,
                 ZipCode = admin.Zip,
                 SelectedRegion = admin.RegionId.ToString(),
@@ -94,7 +93,7 @@ namespace Services.Implementation
 
         public async Task<bool> editEditAdministratorInformastion(String data1, int aspNetUserId)
         {
-            AdminViewProfile _data = JsonSerializer.Deserialize<AdminViewProfile>(data1);
+            AdminCreaateAndProfile _data = JsonSerializer.Deserialize<AdminCreaateAndProfile>(data1);
             Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserId);
             admin.FirstName = _data.FirstName; 
             admin.LastName = _data.LastName;
@@ -129,7 +128,7 @@ namespace Services.Implementation
 
         public async Task<bool> editMailingAndBillingInformation(String data, int aspNetUserId)
         {
-            AdminViewProfile _data = JsonSerializer.Deserialize<AdminViewProfile>(data);
+            AdminCreaateAndProfile _data = JsonSerializer.Deserialize<AdminCreaateAndProfile>(data);
             Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserId);
             admin.Address1 = _data.Address1;
             admin.Address2 = _data.Address2;

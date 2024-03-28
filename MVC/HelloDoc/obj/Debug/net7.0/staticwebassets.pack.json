@@ -221,6 +221,26 @@
       "PackagePath": "staticwebassets\\Files\\98\\Fig52. Encounter Finalize popup.png"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\AgreementDoc135\\135\\CreateProvider.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\AgreementDoc135\\135\\CreateProvider.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\BackgroundDoc135\\135\\CreateProvider.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\BackgroundDoc135\\135\\CreateProvider.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\HIPAACompliance135\\135\\CreateProvider.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\HIPAACompliance135\\135\\CreateProvider.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\NonDisclosureDoc135\\135\\CreateProvider.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\NonDisclosureDoc135\\135\\CreateProvider.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\135\\CreateProvider.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\135\\CreateProvider.png"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ViewCase.css",
       "PackagePath": "staticwebassets\\css\\admin\\ViewCase.css"
     },
@@ -263,6 +283,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\loginPage.css",
       "PackagePath": "staticwebassets\\css\\admin\\loginPage.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\providerScheduling.css",
+      "PackagePath": "staticwebassets\\css\\admin\\providerScheduling.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\providers.css",

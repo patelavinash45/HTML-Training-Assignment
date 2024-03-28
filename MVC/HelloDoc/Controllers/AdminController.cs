@@ -108,6 +108,12 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
+        public IActionResult CreateAdmin()
+        {
+            return View(_accessService.GetAdminCreaateAndProfile());
+        }
+
+        [Authorization("Admin")]
         public IActionResult Providers()
         {
             return View(_providersService.getProviders(regionId: 0));
@@ -127,6 +133,13 @@ namespace HelloDoc.Controllers
 
         [Authorization("Admin")]
         public IActionResult ViewProfile()
+        {
+            int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            return View(_viewProfileService.GetAdminViewProfile(aspNetUseId));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult ProviderScheduling()
         {
             int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
             return View(_viewProfileService.GetAdminViewProfile(aspNetUseId));
@@ -439,14 +452,37 @@ namespace HelloDoc.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]  /////  create request ---  Dashboard
+        [ValidateAntiForgeryToken]  /////  create provider ---  provider page
         public async Task<IActionResult> CreateProvider(CreateProvider model)
         {
             if (ModelState.IsValid)
             {
                 if (await _providersService.createProvider(model))
                 {
-                    _notyfService.Success("Successfully Provider Added");
+                    _notyfService.Success("Successfully Provider Created");
+                }
+                else
+                {
+                    _notyfService.Error("Faild!");
+                }
+                return RedirectToAction("Providers", "Admin");
+            }
+            CreateProvider createProvider = _providersService.GetCreateProvider();
+            model.Roles = createProvider.Roles;
+            model.Regions = createProvider.Regions;
+            _notyfService.Warning("Add Required Field.");
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]  /////  create Admin ---  dashboard 
+        public async Task<IActionResult> CreateAdmin(AdminCreaateAndProfile model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (await _accessService.createAdmin(model))
+                {
+                    _notyfService.Success("Successfully Admin Created");
                 }
                 else
                 {
@@ -454,9 +490,9 @@ namespace HelloDoc.Controllers
                 }
                 return RedirectToAction("Dashboard", "Admin");
             }
-            CreateProvider createProvider = _providersService.GetCreateProvider();
-            model.Roles = createProvider.Roles;
-            model.Regions = createProvider.Regions;
+            AdminCreaateAndProfile adminCreaateAndProfile = _accessService.GetAdminCreaateAndProfile();
+            model.Roles = adminCreaateAndProfile.Roles;
+            model.Regions = adminCreaateAndProfile.Regions;
             _notyfService.Warning("Add Required Field.");
             return View(model);
         }
@@ -476,7 +512,7 @@ namespace HelloDoc.Controllers
                     return RedirectToAction("ViewDocument", "Admin");
                 }
             }
-            _notyfService.Warning("Add Required Field");
+            _notyfService.Warning("Please, Select File");
             return RedirectToAction("ViewDocument", "Admin");
         }
 
@@ -486,7 +522,8 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await _sendOrderService.addOrderDetails(model))
+                int requestId = HttpContext.Session.GetInt32("requestId").Value;
+                if (await _sendOrderService.addOrderDetails(model,requestId))
                 {
                     _notyfService.Success("Successfully Order Added");
                 }

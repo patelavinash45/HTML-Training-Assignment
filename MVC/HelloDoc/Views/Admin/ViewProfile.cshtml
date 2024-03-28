@@ -1,4 +1,4 @@
-﻿@model Services.ViewModels.Admin.AdminViewProfile
+﻿@model Services.ViewModels.Admin.AdminCreaateAndProfile
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +53,7 @@
                     <label for="status">Status</label>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <select asp-for="Role" class="form-select" id="role" disabled readonly>
+                    <select class="form-select" id="role" disabled readonly>
                         <option selected value="Admin">Admin</option>
                         <option value="Master Admin">Master Admin</option>
                     </select>

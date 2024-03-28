@@ -234,7 +234,7 @@ namespace HelloDoc.Controllers
                     return RedirectToAction("ViewDocument", "Patient", new { id = requestId });
                 }
             }
-            _notyfService.Warning("Add Required Field");
+            _notyfService.Warning("Please, Select File");
             return RedirectToAction("viewDocument", "Patient");
         }
 

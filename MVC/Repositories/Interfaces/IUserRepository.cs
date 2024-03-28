@@ -14,6 +14,8 @@ namespace Repositories.Interfaces
 
         Admin getAdmionByAspNetUserId(int aspNetUserId);
 
+        Task<bool> addAdmin(Admin admin);
+
         List<Physician> getAllPhysicians();
 
         List<Physician> getAllPhysiciansByRegionId(int regionId);
@@ -37,6 +39,8 @@ namespace Repositories.Interfaces
         Task<bool> addPhysicianRegion(PhysicianRegion physicianRegion);
 
         Task<bool> addPhysician(Physician physician);
+
+        Task<bool> updatePhysician(Physician physician);
 
         Task<bool> addPhysicianNotification(PhysicianNotification physicianNotification);
 

@@ -53,7 +53,7 @@ function getTableData(pageNo) { ///get table data
             pageNo: pageNo,
             status: statusStrings[currentStatus],
             partialViewName: statusTableStrings[currentStatus],
-            patinetName: $(".searchPatient").val(),
+            patinetName: $(".searchPatient").val().trim().toLowerCase(),
             regionId: $(".searchRegion").val(),
             requesterTypeId: requesterType,
         },

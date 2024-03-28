@@ -24,37 +24,30 @@ namespace Repositories.Implementation
             return _dbContext.RequestClients.Include(a => a.Request) .ToList();
         }
 
-        public List<RequestClient> getRequestClientByStatus(int status, int skip, string patientName ,int regionId, int requesterTypeId)
+        public List<RequestClient> getRequestClientByStatus(List<int> status, int skip, string patientName ,int regionId, int requesterTypeId)
         {
-            if (patientName != null)
-            {
-                patientName = patientName.ToLower();
-            }
             Func<RequestClient, bool> predicate = a =>
             (requesterTypeId == 0 || a.Request.RequestTypeId == requesterTypeId) 
             && (regionId == 0 || a.RegionId == regionId)
             && (patientName == null || a.FirstName.ToLower().Contains(patientName) || a.LastName.ToLower().Contains(patientName))
-            && a.Status == status;
-            return _dbContext.RequestClients.Where(predicate).OrderByDescending(a => a.RequestClientId).Skip(skip).Take(10).ToList();
+            && (a.Status == status[0] || a.Status == status[1] || a.Status == status[2]) ;
+            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Where(predicate)
+                                          .OrderByDescending(a => a.RequestClientId).Skip(skip).Take(10).ToList();
         }
 
-        public int countRequestClientByStatusAndFilter(int status, string patientName, int regionId, int requesterTypeId)
+        public int countRequestClientByStatusAndFilter(List<int> status, string patientName, int regionId, int requesterTypeId)
         {
-            if (patientName != null)
-            {
-                patientName = patientName.ToLower();
-            }
             Func<RequestClient, bool> predicate = a =>
             (requesterTypeId == 0 || a.Request.RequestTypeId == requesterTypeId)
             && (regionId == 0 || a.RegionId == regionId)
             && (patientName == null || a.FirstName.ToLower().Contains(patientName) || a.LastName.ToLower().Contains(patientName))
-            && a.Status == status;
-            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Where(predicate).ToList().Count;
+            && (a.Status == status[0] || a.Status == status[1] || a.Status == status[2]);
+            return _dbContext.RequestClients.Include(a => a.Request).Where(predicate).ToList().Count;
         }
 
-        public int countRequestClientByStatus(int status)
+        public int countRequestClientByStatus(List<int> status)
         {
-            return _dbContext.RequestClients.Where(a => a.Status == status).ToList().Count;
+            return _dbContext.RequestClients.Where(a => (a.Status == status[0] || a.Status == status[1] || a.Status == status[2])).ToList().Count;
         }
 
         public List<RequestClient> getAllRequestClientForUser(int userId)

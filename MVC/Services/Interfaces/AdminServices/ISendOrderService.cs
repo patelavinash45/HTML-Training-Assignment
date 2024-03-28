@@ -9,7 +9,7 @@ namespace Services.Interfaces.AdminServices
 
         HealthProfessional getBussinessData(int venderId);
 
-        Task<bool> addOrderDetails(SendOrder model); 
+        Task<bool> addOrderDetails(SendOrder model, int requestId); 
 
         Dictionary<int, string> getBussinessByProfession(int professionId);
     }

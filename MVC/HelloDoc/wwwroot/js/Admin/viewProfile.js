@@ -80,7 +80,7 @@ function enableEditForMailingAndBilling(temp) {
 
 function validatePassword() {
     if ($("#password").val().length == 0) {
-        $("#passwordValidation").text("this Password Filed is required");
+        $("#passwordValidation").text("Password is required");
     }
     else {
         $("#passwordValidation").text("");
@@ -113,7 +113,7 @@ $(document).on("click", "#resetpassword", function () {
 
 function validateRadioButton() {
     if (radioList.length == 0) {
-        $("#radioButtonValidation").text("this Region Filed is required");
+        $("#radioButtonValidation").text("Region is required");
     }
     else {
         $("#radioButtonValidation").text("");
@@ -122,7 +122,7 @@ function validateRadioButton() {
 
 $(document).on("change", "#firstName", function () {
     if ($(this).val().length == 0) {
-        $("#firstNameValidation").text("this First Name Filed is required");
+        $("#firstNameValidation").text("First Name is required");
     }
     else {
         $("#firstNameValidation").text("");
@@ -131,7 +131,7 @@ $(document).on("change", "#firstName", function () {
 
 $(document).on("change", "#lastName", function () {
     if ($(this).val().length == 0) {
-        $("#lastNameValidation").text("this Last Name Filed is required");
+        $("#lastNameValidation").text("Last Name is required");
     }
     else {
         $("#lastNameValidation").text("");
@@ -140,7 +140,7 @@ $(document).on("change", "#lastName", function () {
 
 $(document).on("change", "#lastName", function () {
     if ($(this).val().length == 0) {
-        $("#lastNameValidation").text("this Last Name Filed is required");
+        $("#lastNameValidation").text("Last Name is required");
     }
     else {
         $("#lastNameValidation").text("");
@@ -149,7 +149,7 @@ $(document).on("change", "#lastName", function () {
 
 $(document).on("change", "#email", function () {
     if ($(this).val().length == 0) {
-        $("#emailValidation").text("this Email Filed is required");
+        $("#emailValidation").text("Email is required");
     }
     else {
         $("#emailValidation").text("");
@@ -158,7 +158,7 @@ $(document).on("change", "#email", function () {
 
 $(document).on("change", "#confirmEmail", function () {
     if ($(this).val().length == 0) {
-        $("#confirmEmailValidation").text("this Confirm Email Filed is required");
+        $("#confirmEmailValidation").text("Confirm Email is required");
     }
     else {
         $("#confirmEmailValidation").text("");
@@ -167,7 +167,7 @@ $(document).on("change", "#confirmEmail", function () {
 
 $(document).on("change", "#phone1", function () {
     if ($(this).val().length == 0) {
-        $("#phone1Validation").text("this Mobile Filed is required");
+        $("#phone1Validation").text("Mobile is required");
     }
     else {
         $("#phone1Validation").text("");
@@ -199,10 +199,10 @@ $(document).on("click", "#administratorForm", function () {
         })
     }
     if ($("#confirmEmail").val() != $("#email").val()) {
-        $("#confirmEmailValidation").text("this Confirm Email and Email is not Same");
+        $("#confirmEmailValidation").text("Confirm Email and Email is not Same");
     }
     if (!$("#email").val().match(validRegex)) {
-        $("#emailValidation").text("this Email is Not Valid");
+        $("#emailValidation").text("Emai is Not Valid");
     }
     if (radioList.length == 0) {
         validateRadioButton();
@@ -213,7 +213,7 @@ $(document).on("click", "#administratorForm", function () {
 
 $(document).on("change", "#address1", function () {
     if ($(this).val().length == 0) {
-        $("#address1Validation").text("this Address1 Filed is required");
+        $("#address1Validation").text("Address1 is required");
     }
     else {
         $("#address1Validation").text("");
@@ -222,7 +222,7 @@ $(document).on("change", "#address1", function () {
 
 $(document).on("change", "#address2", function () {
     if ($(this).val().length == 0) {
-        $("#address2Validation").text("this Address2 Filed is required");
+        $("#address2Validation").text("Address2 is required");
     }
     else {
         $("#address2Validation").text("");
@@ -231,7 +231,7 @@ $(document).on("change", "#address2", function () {
 
 $(document).on("change", "#city", function () {
     if ($(this).val().length == 0) {
-        $("#cityValidation").text("this City Filed is required");
+        $("#cityValidation").text("City is required");
     }
     else {
         $("#cityValidation").text("");
@@ -240,7 +240,7 @@ $(document).on("change", "#city", function () {
 
 $(document).on("change", "#zip", function () {
     if ($(this).val().length == 0) {
-        $("#zipValidation").text("this Zip Filed is required");
+        $("#zipValidation").text("Zip is required");
     }
     else {
         $("#zipValidation").text("");
@@ -249,7 +249,7 @@ $(document).on("change", "#zip", function () {
 
 $(document).on("change", "#phone2", function () {
     if ($(this).val().length == 0) {
-        $("#phone2Validation").text("this Addtional-Mobile Filed is required");
+        $("#phone2Validation").text("Addtional-Mobile is required");
     }
     else {
         $("#phone2Validation").text("");

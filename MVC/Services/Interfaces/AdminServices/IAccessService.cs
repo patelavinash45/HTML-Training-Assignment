@@ -13,5 +13,9 @@ namespace Services.Interfaces.AdminServices
         Task<bool> createRole(string data);
 
         Task<bool> delete(int roleId);
+
+        AdminCreaateAndProfile GetAdminCreaateAndProfile();
+
+        Task<bool> createAdmin(AdminCreaateAndProfile model);
     }
 }

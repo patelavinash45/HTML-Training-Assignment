@@ -27,7 +27,6 @@
             </a>
         </div>
         <form class="w-100" id="form" asp-controller="Admin" asp-action="SendOrder">
-            <input readonly class="d-none" asp-for="RequestId" />
             <div class="row">
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                     <select class="form-select" id="selectedProfession" asp-for="SelectedProfession" onchange="changeSelect()">

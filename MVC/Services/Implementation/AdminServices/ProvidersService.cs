@@ -1,4 +1,5 @@
-﻿using Repositories.DataModels;
+﻿using Microsoft.AspNetCore.Http;
+using Repositories.DataModels;
 using Repositories.Interface;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
@@ -153,8 +154,26 @@ namespace Services.Implementation.AdminServices
                 RoleId = aspNetRoleId,
             };
             await _aspRepository.addAspNetUserRole(aspNetUserRole);
+            filePickUp("Photo", aspNetUserId, model.Photo);
+            if (model.IsAgreementDoc)
+            {
+                filePickUp("AgreementDoc", aspNetUserId, model.AgreementDoc);
+            }
+            if (model.IsBackgroundDoc)
+            {
+                filePickUp("BackgroundDoc", aspNetUserId, model.BackgroundDoc);
+            }
+            if (model.IsHIPAACompliance)
+            {
+                filePickUp("HIPAACompliance", aspNetUserId, model.HIPAACompliance);
+            }
+            if (model.IsNonDisclosureDoc)
+            {
+                filePickUp("NonDisclosureDoc", aspNetUserId, model.NonDisclosureDoc);
+            }
             Physician physician = new Physician()
             {
+                AspNetUserId = aspNetUserId,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
@@ -164,13 +183,18 @@ namespace Services.Implementation.AdminServices
                 Address2 = model.Add2,
                 City = model.City,
                 Zip = model.Zip,
-                RegionId = int.Parse(model.SelecterRegion),
+                RegionId = int.Parse(model.SelectedRegion),
                 AltPhone = model.Phone2,
                 CreatedDate = DateTime.Now,
                 Status = 0,
                 BusinessName = model.BusinessName,
                 BusinessWebsite = model.BusinessWebsite,
                 Npinumber = model.NpiNumber,
+                IsAgreementDoc = new BitArray(1, model.IsAgreementDoc),
+                IsBackgroundDoc = new BitArray(1, model.IsBackgroundDoc),
+                IsNonDisclosureDoc = new BitArray(1, model.IsNonDisclosureDoc),
+                IsTrainingDoc = new BitArray(1, model.IsHIPAACompliance),
+                Photo = model.Photo.FileName
             };
             if (await _userRepository.addPhysician(physician))
             {
@@ -181,7 +205,7 @@ namespace Services.Implementation.AdminServices
                 };
                 if(await _userRepository.addPhysicianNotification(physicianNotification))
                 {
-                    foreach (String regionId in model.SelecterRegions)
+                    foreach (String regionId in model.SelectedRegions)
                     {
                         PhysicianRegion physicianRegion = new PhysicianRegion()
                         {
@@ -190,7 +214,8 @@ namespace Services.Implementation.AdminServices
                         };
                         await _userRepository.addPhysicianRegion(physicianRegion);
                     }
-                    return true;
+                    physician.IsNotification = physicianNotification.Id;
+                    return await _userRepository.updatePhysician(physician);
                 }
             }
             return false;
@@ -202,6 +227,22 @@ namespace Services.Implementation.AdminServices
             {
                 byte[] hashPassword = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
                 return BitConverter.ToString(hashPassword).Replace("-", "").ToLower();
+            }
+        }
+
+        private void filePickUp(String folderName,int aspNetUserId,IFormFile file)
+        {
+            String path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files/Providers/"+ folderName +"/" + aspNetUserId.ToString());
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            };
+            FileInfo fileInfo = new FileInfo(file.FileName);
+            string fileName = fileInfo.Name;
+            string fileNameWithPath = Path.Combine(path, fileName);
+            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            {
+                file.CopyTo(stream);
             }
         }
     }

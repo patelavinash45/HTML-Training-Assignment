@@ -1,4 +1,6 @@
-﻿namespace Services.ViewModels.Admin
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Services.ViewModels.Admin
 {
     public class SendOrder
     {
@@ -12,10 +14,13 @@
 
         public int SelectedBusiness { get; set; }
 
+        [StringLength(100)]
         public String Contact { get; set; }
 
+        [StringLength(50)]
         public string Email { get; set; }
 
+        [StringLength(50)]
         public string FaxNumber { get; set; }
 
         public string OrderDetails { get; set; }

@@ -1,6 +1,6 @@
 function roleValidation() {
     if ($("#roleName").val().length == 0) {
-        $("#roleNameValidation").text("this Role Name Filed is required");
+        $("#roleNameValidation").text("Role Name is required");
     }
     else {
         $("#roleNameValidation").text("");
@@ -13,7 +13,7 @@ $(document).on("change", "#roleName", function () {
 
 function typeValidation() {
     if ($("#type").val().length == 0) {
-        $("#accountTypeValidation").text("this Account Type Filed is required");
+        $("#accountTypeValidation").text("Account Type is required");
     }
     else {
         $("#accountTypeValidation").text("");

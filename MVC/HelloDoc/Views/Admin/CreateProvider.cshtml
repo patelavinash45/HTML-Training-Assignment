@@ -20,7 +20,7 @@
             <h3>
                 Create Provider Account
             </h3>
-            <a asp-controller="Admin" asp-action="Dashboard">
+            <a asp-controller="Admin" asp-action="Providers">
                 <button class="bg-white px-3 fw-bold">
                     <i class="bi bi-chevron-left"> </i>
                     Back
@@ -97,14 +97,14 @@
                         @foreach (var item in Model.Regions)
                         {
                             <div class="form-check form-check-inline">
-                                <input name="SelecterRegions" class="form-check-input" type="checkbox" value="@item.Key" onclick="changeCheckBox(this)">
+                                <input name="SelectedRegions" class="form-check-input" type="checkbox" value="@item.Key">
                                 <label class="form-check-label" for="r-1">
                                     @item.Value
                                 </label>
                             </div>
                         }
                 </div>
-                <span asp-validation-for="SelecterRegions" class="text-danger"></span>
+                <span asp-validation-for="SelectedRegions" class="text-danger"></span>
             </div>
             <h5 class="mt-4">
                 Mailing & Billing Information
@@ -128,7 +128,7 @@
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
                 <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                    <select asp-for="SelecterRegion" class="form-select" id="state">
+                    <select asp-for="SelectedRegion" class="form-select" id="state">
                         <option selected value="" >State</option>
                         @foreach(var item in Model.Regions)
                         {
@@ -136,7 +136,7 @@
                         }
                     </select>
                     <label for="state">State</label>
-                    <span asp-validation-for="SelecterRegion" class="text-danger"></span>
+                    <span asp-validation-for="SelectedRegion" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
@@ -189,57 +189,74 @@
             </h5>
             <div class="row d-flex align-items-center">
                 <div class="col-7 d-flex align-items-center">
+                    <input asp-for="IsAgreementDoc" type="checkbox" class="me-2" />
                     <span class="h5">
                         Independent Contractor Agreement
                     </span>
                 </div>
-                <div class="col-5 d-flex justify-content-end">
-                    <button class="uploadButtons fs-5 text-white" type="button">
-                        <i class="bi bi-cloud-arrow-up-fill "></i>
-                        Upload
-                    </button>
-                </div>
+                    <div class="col-5 d-flex align-items-end flex-column">
+                        <div class="input-group">
+                            <input asp-for="AgreementDoc" type="file" class="form-control d-none" id="inputGroupFile01">
+                            <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile01">
+                                <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
+                                Upload
+                            </label>
+                        </div>
+                        <span asp-validation-for="AgreementDoc" class="text-danger"></span>
+                    </div>
             </div>
             <div class="row d-flex align-items-center">
                 <div class="col-7 d-flex align-items-center">
-                    <input type="checkbox" class="me-2" />
+                    <input asp-for="IsBackgroundDoc" type="checkbox" class="me-2" />
                     <span class="h5">
                         Background Check
                     </span>
                 </div>
-                <div class="col-5 d-flex justify-content-end">
-                    <button class="uploadButtons fs-5 text-white" type="button">
-                        <i class="bi bi-cloud-arrow-up-fill "></i>
-                        Upload
-                    </button>
+                    <div class="col-5 d-flex align-items-end flex-column">
+                        <div class="input-group">
+                            <input asp-for="BackgroundDoc" type="file" class="form-control d-none" id="inputGroupFile02">
+                            <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile02">
+                                <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
+                                Upload
+                            </label>
+                        </div>
+                        <span asp-validation-for="BackgroundDoc" class="text-danger"></span>
                 </div>
             </div>
             <div class="row d-flex align-items-center">
                 <div class="col-7 d-flex align-items-center">
-                    <input type="checkbox" class="me-2" />
+                    <input asp-for="IsHIPAACompliance" type="checkbox" class="me-2" />
                     <span class="h5">
                         HIPAA Compliance
                     </span>
                 </div>
-                <div class="col-5 d-flex justify-content-end">
-                    <button class="uploadButtons fs-5 text-white" type="button">
-                        <i class="bi bi-cloud-arrow-up-fill "></i>
-                        Upload
-                    </button>
+                    <div class="col-5 d-flex align-items-end flex-column">
+                        <div class="input-group">
+                            <input asp-for="HIPAACompliance" type="file" class="form-control d-none" id="inputGroupFile03">
+                            <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile03">
+                                <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
+                                Upload
+                            </label>
+                        </div>
+                        <span asp-validation-for="HIPAACompliance" class="text-danger"></span>
                 </div>
             </div>
             <div class="row d-flex align-items-center">
                 <div class="col-7 d-flex align-items-center">
-                    <input type="checkbox" class="me-2" />
+                    <input asp-for="IsNonDisclosureDoc" type="checkbox" class="me-2" />
                     <span class="h5">
                         Non-disclosure Agreement
                     </span>
                 </div>
-                <div class="col-5 d-flex justify-content-end">
-                    <button class="uploadButtons fs-5 text-white" type="button">
-                        <i class="bi bi-cloud-arrow-up-fill "></i>
-                        Upload
-                    </button>
+                    <div class="col-5 d-flex align-items-end flex-column">
+                        <div class="input-group">
+                            <input asp-for="NonDisclosureDoc" type="file" class="form-control d-none" id="inputGroupFile04">
+                            <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile04">
+                                <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
+                                Upload
+                            </label>
+                        </div>
+                        <span asp-validation-for="NonDisclosureDoc" class="text-danger"></span>
                 </div>
             </div>
             <hr>

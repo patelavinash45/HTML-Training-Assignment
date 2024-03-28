@@ -246,7 +246,7 @@ $(document).on("submit", "#contactForm", function (e) {
 
 function firstNameValidation() {
     if ($("#firstName").val().length == 0) {
-        $("#firstNameValidation").text("this First Name Filed is required");
+        $("#firstNameValidation").text("First Name is required");
     }
     else {
         $("#firstNameValidation").text("");
@@ -259,7 +259,7 @@ $(document).on("change", "#firstName", function () {
 
 function lastNameValidation() {
     if ($("#lastName").val().length == 0) {
-        $("#lastNameValidation").text("this Last Name Filed is required");
+        $("#lastNameValidation").text("Last Name is required");
     }
     else {
         $("#lastNameValidation").text("");
@@ -272,7 +272,7 @@ $(document).on("change", "#lastName", function () {
 
 function emailValidationSendlink() {
     if ($("#emailSendLink").val().length == 0) {
-        $("#emailSendlinkValidation").text("this Email Filed is required");
+        $("#emailSendlinkValidation").text("Email is required");
     }
     else {
         $("#emailSendlinkValidation").text("");
@@ -285,7 +285,7 @@ $(document).on("change", "#emailSendLink", function () {
 
 function phoneValidationSendlink() {
     if ($("#phoneSendlink").val().length == 0) {
-        $("#phoneSendlinkValidation").text("this Phone Filed is required");
+        $("#phoneSendlinkValidation").text("Phone is required");
     }
     else {
         $("#phoneSendlinkValidation").text("");
@@ -312,7 +312,7 @@ $(document).on("submit", "#sendLinkForm", function (e) {
 
 function messageValidation() {
     if ($("#message").val().length == 0) {
-        $("#messageValidation").text("this Message Filed is required");
+        $("#messageValidation").text("Message is required");
     }
     else {
         $("#messageValidation").text("");

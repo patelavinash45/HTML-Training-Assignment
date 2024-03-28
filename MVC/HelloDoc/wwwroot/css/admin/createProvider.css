@@ -48,6 +48,21 @@ input[type=file]::-webkit-file-upload-button {
     display: none;
 }
 
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px; 
+}
+
+.input-group-text {
+    background-color: cadetblue;
+    color: white;
+    border-radius: 10px;
+}
+
+.input-group {
+    width: fit-content;
+}
+
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label,
 .form-floating > .form-select ~ label {

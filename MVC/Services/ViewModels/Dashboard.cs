@@ -4,7 +4,6 @@ namespace Services.ViewModels
 {
     public class Dashboard
     {
-
         public int? RequestId { get; set; }
 
         [StringLength(20)]

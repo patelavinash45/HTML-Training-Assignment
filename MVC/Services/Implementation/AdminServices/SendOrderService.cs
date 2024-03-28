@@ -24,7 +24,6 @@ namespace Services.Implementation.AdminServices
             }
             SendOrder sendOrder = new SendOrder()
             {
-                RequestId = requestId,
                 Professions = professions,
             };
             return sendOrder;
@@ -35,12 +34,12 @@ namespace Services.Implementation.AdminServices
             return _healthProfessionalRepository.getHealthProfessional(venderId);
         }
 
-        public async Task<bool> addOrderDetails(SendOrder model)
+        public async Task<bool> addOrderDetails(SendOrder model,int requestId)
         {
             OrderDetail orderDetail = new OrderDetail()
             {
                 VendorId = model.SelectedBusiness,
-                RequestId = model.RequestId,
+                RequestId = requestId,
                 FaxNumber = model.FaxNumber,
                 Email = model.Email,
                 BusinessContact = model.Contact,
