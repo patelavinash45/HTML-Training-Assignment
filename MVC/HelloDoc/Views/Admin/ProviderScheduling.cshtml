@@ -1,12 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@model Services.ViewModels.Admin.ProviderScheduling
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="widtd=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scheduling</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/admin/providerScheduling.css" rel="stylesheet" />
+    <script src="~/js/Admin/providerScheduling.js"></script>
 </head>
 <body>
     <partial name="_AdminDashboardHeader" model="0">
@@ -23,10 +27,13 @@
             </a>
         </div>
         <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
-            <select class="form-select select" id="state">
-                <option>1</option>
-                <option>2</option>
-            </select>
+            <select class="form-select select" id="regionsList">
+                <option selected>All Region</option>
+                @foreach(var item in Model.Regions)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                </select>
             <div>
                 <button class="fw-bold coloredButtons">
                     Providers On Call
@@ -40,7 +47,12 @@
             </div>
         </div>
         <div class="h5">
-            Monday, Sep 4000, 2099
+            <span id="display">
+
+            </span>
+            <span id="displayWeek">
+
+            </span>
         </div>
         <div class="d-flex justify-content-end align-items-center mt-2 mb-3">
             <div>
@@ -54,30 +66,28 @@
         </div>
         <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
             <div>
-                <i class="bi bi-caret-left-square fs-2"></i>
+                <button class="border-0 bg-transparent" id="previous">
+                    <i class="bi bi-caret-left-square fs-2"></i>
+                </button>
                 <i class="bi bi-calendar3 fs-4 mx-2"></i>
-                <i class="bi bi-caret-right-square fs-2"></i>
+                <button class="border-0 bg-transparent" id="next">
+                    <i class="bi bi-caret-right-square fs-2"></i>
+                </button>
             </div>
             <div>
-                <button class="coloredButtons px-3 fw-bold">
+                <button class="coloredButtons px-3 fw-bold tabButtons" id="dayButton" onclick="chnagetab(1)">
                     Day
                 </button>
-                <button class="px-3 fw-bold">
+                <button class="px-3 fw-bold tabButtons" id="weekButton" onclick="chnagetab(2)">
                     Week
                 </button>
-                <button class="px-3 fw-bold">
+                    <button class="px-3 fw-bold tabButtons" id="monthButton" onclick="chnagetab(3)">
                     Month
                 </button>
             </div>
         </div>
-        <div class="day">
-            <partial name="_DayWiseScheduling">
-        </div>
-        <div class="month">
-            <partial name="_MonthWiseScheduling">
-        </div>
-        <div class="week">
-            <partial name="_WeekWiseScheduling">
+        <div class="tab">
+            <partial name="_DayWiseScheduling" model="@Model.TableData">
         </div>
     </div>
 </body>

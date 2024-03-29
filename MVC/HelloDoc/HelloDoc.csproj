@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="Views\Shared\_NoTableDataFound.cshtml" />
     <None Include="wwwroot\js\patient\LoginPage.js" />
     <None Include="wwwroot\js\viewDocument.js" />

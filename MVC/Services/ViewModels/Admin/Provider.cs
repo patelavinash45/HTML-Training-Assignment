@@ -156,4 +156,22 @@ namespace Services.ViewModels.Admin
             return ValidationResult.Success;
         }
     }
+
+    public class ProviderScheduling
+    {
+        public Dictionary<int, string> Regions { get; set; }
+
+        public List<SchedulingTable> TableData { get; set; }
+
+    }
+
+    public class SchedulingTable
+    {
+        public string Photo { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+    }
+
 }

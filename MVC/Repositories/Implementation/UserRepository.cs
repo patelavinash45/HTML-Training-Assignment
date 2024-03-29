@@ -56,7 +56,7 @@ namespace Repositories.Implementation
 
         public List<Physician> getAllPhysiciansByRegionId(int regionId)
         {
-            return _dbContext.Physicians.Include(a => a.PhysicianNotifications).Where(a => a.RegionId==regionId).ToList();
+            return _dbContext.Physicians.Include(a => a.PhysicianNotifications).Where(a =>(regionId == 0 || a.RegionId == regionId)).ToList();
         }
 
         public List<Physician> getAllUnAssignedPhysician()
@@ -75,7 +75,7 @@ namespace Repositories.Implementation
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public Physician getPhysicianNameByPhysicianId(int physicianId)
+        public Physician getPhysicianByPhysicianId(int physicianId)
         {
             return _dbContext.Physicians.FirstOrDefault(a => a.PhysicianId == physicianId);
         }

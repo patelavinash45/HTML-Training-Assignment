@@ -1,5 +1,4 @@
 ﻿using Repositories.DataModels;
-using Repositories.Implementation;
 using Repositories.Interface;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
@@ -29,18 +28,12 @@ namespace Services.Implementation.AdminServices
 
         public Access getAccessData()
         {
-            List<Role> roles = _roleRepository.getAllRoles();
-            List<AccessTable> accessTables = new List<AccessTable>();
-            foreach (Role role in roles)
+            List<AccessTable> accessTables = _roleRepository.getAllRoles().Select(role => new AccessTable()
             {
-                AccessTable accessTable = new AccessTable()
-                {
-                    Name = role.Name,
-                    AccountType = role.AccountTypeNavigation.Name,
-                    RoleId = role.RoleId,
-                };
-                accessTables.Add(accessTable);
-            }
+                Name = role.Name,
+                AccountType = role.AccountTypeNavigation.Name,
+                RoleId = role.RoleId,
+            }).ToList();
             Access access = new Access()
             {
                 RolesData = accessTables,
@@ -50,28 +43,16 @@ namespace Services.Implementation.AdminServices
 
         public CreateRole getCreateRole()
         {
-            List<Menu> allMenus = _roleRepository.getAllMenus();
-            Dictionary<int,String> menus = new Dictionary<int,String>();
-            foreach (Menu menu in allMenus)
-            {
-                menus.Add(menu.MenuId, menu.Name);
-            }
             CreateRole createRole = new CreateRole()
             {
-                Menus = menus,
+                Menus = _roleRepository.getAllMenus().ToDictionary(menu => menu.MenuId, menu => menu.Name),
             };
             return createRole;
         }
 
         public Dictionary<int, String> getMenusByRole(int roleId)
         {
-            List<Menu> allMenus = _roleRepository.getAllMenusByRole(roleId);
-            Dictionary<int, String> menus = new Dictionary<int, String>();
-            foreach (Menu menu in allMenus)
-            {
-                menus.Add(menu.MenuId, menu.Name);
-            }
-            return menus;
+            return _roleRepository.getAllMenusByRole(roleId).ToDictionary(menu => menu.MenuId, menu => menu.Name);
         }
 
         public async Task<bool> createRole(string data)
@@ -114,22 +95,10 @@ namespace Services.Implementation.AdminServices
 
         public AdminCreaateAndProfile GetAdminCreaateAndProfile()
         {
-            Dictionary<int, string> regions = new Dictionary<int, string>();
-            List<Region> allRegion = _requestClientRepository.getAllRegions();
-            foreach (Region region in allRegion)
-            {
-                regions.Add(region.RegionId, region.Name);
-            }
-            List<String> roles = new List<String>();
-            List<Role> allRoles = _roleRepository.getRolesByUserType(3);
-            foreach (Role role in allRoles)
-            {
-                roles.Add(role.Name);
-            }
             AdminCreaateAndProfile adminCreaateAndProfile = new AdminCreaateAndProfile()
             {
-                Regions = regions,
-                Roles = roles,
+                Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
+                Roles = _roleRepository.getRolesByUserType(3).Select(role => role.Name).ToList(),
             };
             return adminCreaateAndProfile;
         }

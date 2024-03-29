@@ -10,7 +10,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Mail;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -45,25 +44,13 @@ namespace Services.Implementation.AdminServices
 
         public AdminDashboard getallRequests(int aspNetUserId)
         {
-            List<Region> allRegion = _requestClientRepository.getAllRegions();
-            Dictionary<int, string> regions = new Dictionary<int, string>();
-            foreach (Region region in allRegion)
-            {
-                regions.Add(region.RegionId, region.Name);
-            }
-            List<CaseTag> caseTags = _requestClientRepository.getAllReason();
-            Dictionary<int, string> reasons = new Dictionary<int, string>();
-            foreach (CaseTag caseTag in caseTags)
-            {
-                reasons.Add(caseTag.CaseTagId, caseTag.Reason);
-            }
             CancelPopUp cancelPopUp = new()
             {
-                Reasons = reasons,
+                Reasons = _requestClientRepository.getAllReason().ToDictionary(caseTag => caseTag.CaseTagId, caseTag => caseTag.Reason),
             };
             AssignAndTransferPopUp assignAndTransferPopUp = new()
             {
-                Regions = regions,
+                Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
             };
             AdminDashboard adminDashboard = new()
             {
@@ -74,7 +61,6 @@ namespace Services.Implementation.AdminServices
                 ConcludeRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Conclude"]),
                 TocloseRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Close"]),
                 UnpaidRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Unpaid"]),
-                Regions = regions,
                 CancelPopup = cancelPopUp,
                 AssignAndTransferPopup = assignAndTransferPopUp,
             };
@@ -95,13 +81,8 @@ namespace Services.Implementation.AdminServices
 
         public Dictionary<int, String> getPhysiciansByRegion(int regionId)
         {
-            List<Physician> allPhysicians = _userRepository.getAllPhysiciansByRegionId(regionId);
-            Dictionary<int, String> physicians = new Dictionary<int, String>();
-            foreach (Physician physician in allPhysicians)
-            {
-                physicians.Add(physician.PhysicianId, physician.FirstName + " " + physician.LastName);
-            }
-            return physicians;
+            return _userRepository.getAllPhysiciansByRegionId(regionId)
+                       .ToDictionary(physician => physician.PhysicianId,physician => physician.FirstName + " " + physician.LastName);
         }
 
         public Tuple<String, String, int> getRequestClientEmailAndMobile(int requestId)
@@ -282,35 +263,30 @@ namespace Services.Implementation.AdminServices
         private TableModel getTableModal(List<RequestClient> requestClients, int totalRequests, int pageNo)
         {
             int skip = (pageNo - 1) * 10;
-            List<TablesData> tablesDatas = new List<TablesData>();
-            foreach (RequestClient requestClient in requestClients)
+            List<TablesData> tablesDatas = requestClients.Select(requestClient => new TablesData()
             {
-                TablesData tablesData = new()
-                {
-                    RequestId = requestClient.RequestId,
-                    FirstName = requestClient.FirstName,
-                    LastName = requestClient.LastName,
-                    Requester = requestClient.Request.RequestTypeId,
-                    RequesterFirstName = requestClient.Request.FirstName,
-                    RequesterLastName = requestClient.Request.LastName,
-                    Mobile = requestClient.PhoneNumber,
-                    RequesterMobile = requestClient.Request.PhoneNumber,
-                    State = requestClient.State,
-                    Street = requestClient.Street,
-                    ZipCode = requestClient.ZipCode,
-                    City = requestClient.City,
-                    Notes = requestClient.Symptoms,
-                    RegionId = requestClient.RegionId,
-                    PhysicianName = requestClient.Physician != null? requestClient.Physician.FirstName+" "+requestClient.Physician.LastName : "",
-                    RequesterType = requestClient.Request.RequestTypeId,
-                    BirthDate = requestClient.IntYear != null ? DateTime.Parse(requestClient.IntYear + "-" + requestClient.StrMonth
+                RequestId = requestClient.RequestId,
+                FirstName = requestClient.FirstName,
+                LastName = requestClient.LastName,
+                Requester = requestClient.Request.RequestTypeId,
+                RequesterFirstName = requestClient.Request.FirstName,
+                RequesterLastName = requestClient.Request.LastName,
+                Mobile = requestClient.PhoneNumber,
+                RequesterMobile = requestClient.Request.PhoneNumber,
+                State = requestClient.State,
+                Street = requestClient.Street,
+                ZipCode = requestClient.ZipCode,
+                City = requestClient.City,
+                Notes = requestClient.Symptoms,
+                RegionId = requestClient.RegionId,
+                PhysicianName = requestClient.Physician != null ? requestClient.Physician.FirstName + " " + requestClient.Physician.LastName : "",
+                RequesterType = requestClient.Request.RequestTypeId,
+                BirthDate = requestClient.IntYear != null ? DateTime.Parse(requestClient.IntYear + "-" + requestClient.StrMonth
                                                                + "-" + requestClient.IntDate) : null,
-                    RequestdDate = requestClient.Request.CreatedDate,
-                    Email = requestClient.Email,
-                    DateOfService = null,
-                };
-                tablesDatas.Add(tablesData);
-            }
+                RequestdDate = requestClient.Request.CreatedDate,
+                Email = requestClient.Email,
+                DateOfService = null,
+            }).ToList();
             int totalPages = totalRequests % 10 != 0 ? (totalRequests / 10) + 1 : totalRequests / 10;
             TableModel tableModel = new()
             {

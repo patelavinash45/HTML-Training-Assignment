@@ -26,7 +26,7 @@ namespace Repositories.Interfaces
 
         Task<bool> updatePhysicianNotification(PhysicianNotification physicianNotification);
 
-        Physician getPhysicianNameByPhysicianId(int physicianId);
+        Physician getPhysicianByPhysicianId(int physicianId);
 
         List<AdminRegion> getAdminRegionByAdminId(int adminId);
 

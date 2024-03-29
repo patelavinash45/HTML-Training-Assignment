@@ -1,4 +1,6 @@
-﻿<div class="table-responsive">
+﻿@model List<Services.ViewModels.Admin.SchedulingTable>
+
+<div class="table-responsive">
     <table class="table table-bordered bg-white text-center">
         <thead>
             <tr>
@@ -15,44 +17,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="bg-pink">
-                <td class="w-25 bg-white">
-                    Coverage
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="w-25 bg-white">
-                    <img src="/images/helloDocLogo.png" class="w-25">
-                    Test test
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="w-25 bg-white">
-                    <img src="/images/helloDocLogo.png" class="w-25">
-                    Test test
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="w-25 bg-white">
+                        <img src="@item.Photo" class="image">
+                        @item.FirstName @item.LastName
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

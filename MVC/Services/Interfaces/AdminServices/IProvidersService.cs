@@ -13,5 +13,7 @@ namespace Services.Interfaces.AdminServices
         CreateProvider GetCreateProvider();
 
         Task<bool> createProvider(CreateProvider model);
+
+        ProviderScheduling GetProviderSchedulingData(int regionId);
     }
 }

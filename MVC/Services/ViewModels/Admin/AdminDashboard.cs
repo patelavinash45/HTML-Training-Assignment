@@ -26,8 +26,6 @@
 
         public int UnpaidRequestCount { get; set; }
 
-        public Dictionary<int,String> Regions { get; set; }
-
         public CancelPopUp CancelPopup { get; set; }
 
         public Agreement SendAgreement { get; set; }

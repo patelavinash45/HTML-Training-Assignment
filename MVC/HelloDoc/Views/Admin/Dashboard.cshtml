@@ -146,7 +146,7 @@
                         <input placeholder="Search Patient" class="p-2 searchPatient" oninput="patientSearch(1)" type="search">
                         <select aria-placeholder="Region" class="p-2 searchRegion" onchange="regionSearch(1)">
                             <option value="">All Region</option>
-                            @foreach(var item in Model.Regions)
+                            @foreach(var item in Model.AssignAndTransferPopup.Regions)
                             {
                                 <option value="@item.Key">@item.Value</option>
                             }

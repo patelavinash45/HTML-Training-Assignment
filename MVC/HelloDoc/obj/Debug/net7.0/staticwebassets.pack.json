@@ -221,24 +221,56 @@
       "PackagePath": "staticwebassets\\Files\\98\\Fig52. Encounter Finalize popup.png"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\AgreementDoc135\\135\\CreateProvider.png",
-      "PackagePath": "staticwebassets\\Files\\Providers\\AgreementDoc135\\135\\CreateProvider.png"
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\AgreementDoc\\135\\CreateProvider.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\AgreementDoc\\135\\CreateProvider.png"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\BackgroundDoc135\\135\\CreateProvider.png",
-      "PackagePath": "staticwebassets\\Files\\Providers\\BackgroundDoc135\\135\\CreateProvider.png"
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\BackgroundDoc\\135\\CreateProvider.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\BackgroundDoc\\135\\CreateProvider.png"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\HIPAACompliance135\\135\\CreateProvider.png",
-      "PackagePath": "staticwebassets\\Files\\Providers\\HIPAACompliance135\\135\\CreateProvider.png"
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\HIPAACompliance\\135\\CreateProvider.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\HIPAACompliance\\135\\CreateProvider.png"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\NonDisclosureDoc135\\135\\CreateProvider.png",
-      "PackagePath": "staticwebassets\\Files\\Providers\\NonDisclosureDoc135\\135\\CreateProvider.png"
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\NonDisclosureDoc\\135\\CreateProvider.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\NonDisclosureDoc\\135\\CreateProvider.png"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\135\\CreateProvider.png",
-      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\135\\CreateProvider.png"
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\131\\avatar.jfif",
+      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\131\\avatar.jfif"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\134\\avatar.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\134\\avatar.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\135\\avatar.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\135\\avatar.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\77\\avatar1.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\77\\avatar1.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\78\\avatar.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\78\\avatar.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\79\\avatar1.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\79\\avatar1.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\80\\avatar.jfif",
+      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\80\\avatar.jfif"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\81\\avatar.jfif",
+      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\81\\avatar.jfif"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\Photo\\82\\avatar.png",
+      "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\82\\avatar.png"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ViewCase.css",
@@ -415,6 +447,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\provider.js",
       "PackagePath": "staticwebassets\\js\\Admin\\provider.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\providerScheduling.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\providerScheduling.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\requestPopUp.js",

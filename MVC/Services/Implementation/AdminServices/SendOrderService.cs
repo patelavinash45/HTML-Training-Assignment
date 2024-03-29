@@ -16,12 +16,9 @@ namespace Services.Implementation.AdminServices
 
         public SendOrder getSendOrderDetails(int requestId)
         { 
-            List<HealthProfessionalType> healthProfessionalTypes = _healthProfessionalRepository.getHealthProfessionalTypes();
-            Dictionary<int,String> professions = new Dictionary<int,String>();
-            foreach(var item in healthProfessionalTypes)
-            {
-                professions.Add(item.HealthProfessionalId, item.ProfessionName);
-            }
+            Dictionary<int, String> professions = _healthProfessionalRepository.getHealthProfessionalTypes()
+                                                    .ToDictionary(healthProfessionalType => healthProfessionalType.HealthProfessionalId,
+                                                                  healthProfessionalType => healthProfessionalType.ProfessionName);
             SendOrder sendOrder = new SendOrder()
             {
                 Professions = professions,
@@ -52,13 +49,9 @@ namespace Services.Implementation.AdminServices
 
         public Dictionary<int, string> getBussinessByProfession(int professionId)
         {
-            List<HealthProfessional> healthProfessionals = _healthProfessionalRepository.getHealthProfessionalByProfession(professionId);
-            Dictionary<int, String> businesses = new Dictionary<int, String>();
-            foreach (var item in healthProfessionals)
-            {
-                businesses.Add(item.VendorId, item.VendorName);
-            }
-            return businesses;
+            return _healthProfessionalRepository.getHealthProfessionalByProfession(professionId)
+                                           .ToDictionary(healthProfessional => healthProfessional.VendorId,
+                                                         healthProfessional => healthProfessional.VendorName);
         }
     }
 }

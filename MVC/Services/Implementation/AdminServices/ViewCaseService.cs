@@ -16,12 +16,7 @@ namespace Services.Implementation.AdminServices
 
         public ViewCase getRequestDetails(int requestId)
         {
-            List<CaseTag> caseTags = _requestClientRepository.getAllReason();
-            Dictionary<int, string> reasons = new Dictionary<int, string>();
-            foreach (CaseTag caseTag in caseTags)
-            {
-                reasons.Add(caseTag.CaseTagId, caseTag.Reason);
-            }
+            Dictionary<int, string> reasons = _requestClientRepository.getAllReason().ToDictionary(caseTag => caseTag.CaseTagId,caseTag => caseTag.Reason);
             CancelPopUp cancelPopUp = new()
             {
                 Reasons = reasons,

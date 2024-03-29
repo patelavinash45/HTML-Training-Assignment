@@ -31,12 +31,8 @@ namespace Services.Implementation.AdminServices
         public ViewNotes GetNotes(int RequestId)
         {
             RequestNote requestNote = _requestNotesRepository.GetRequestNoteByRequestId(RequestId);
-            List<RequestStatusLog> requestStatusLogs = _requestSatatusLogRepository.GetRequestStatusLogByRequestId(RequestId);
-            List<string> transferNotes = new List<string>();
-            foreach(var requestStatusLog in requestStatusLogs)
-            {
-                transferNotes.Add(requestStatusLog.Notes);
-            };
+            List<string> transferNotes = _requestSatatusLogRepository.GetRequestStatusLogByRequestId(RequestId)
+                                                                     .Select(requestStatusLog => requestStatusLog.Notes).ToList();
             ViewNotes notes = new()
             {
                 RequestId = RequestId,

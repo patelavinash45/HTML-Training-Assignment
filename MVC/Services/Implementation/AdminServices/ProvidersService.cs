@@ -31,33 +31,19 @@ namespace Services.Implementation.AdminServices
         public Provider getProviders(int regionId)
         {
             Dictionary<int, string> regions = new Dictionary<int, string>();
-            List<Physician> physicians = new List<Physician> { };
-            if(regionId == 0)  /// by default it is 0 
+            if(regionId == 0)  // for first time page load - on filter this part not execute
             {
-                physicians = _userRepository.getAllPhysicians();
-                List<Region> allRegion = _requestClientRepository.getAllRegions();
-                foreach (Region region in allRegion)
-                {
-                    regions.Add(region.RegionId, region.Name);
-                }
+                regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name);
             }
-            else  /// filter
+            List<ProviderTable> providerTables = _userRepository.getAllPhysiciansByRegionId(regionId).Select(
+            physician => new ProviderTable()
             {
-                physicians = _userRepository.getAllPhysiciansByRegionId(regionId);
-            }
-            List<ProviderTable> providerTables = new List<ProviderTable>();
-            foreach (Physician physician in physicians)
-            {
-                ProviderTable providerTable = new ProviderTable()
-                {
-                    FirstName = physician.FirstName,
-                    LastName = physician.LastName,
-                    Notification = physician.PhysicianNotifications.FirstOrDefault().IsNotificationStopped[0],
-                    providerId = physician.PhysicianId,
-                    Status = physician.Status == 1 ? "Active" : "Pending",
-                };
-                providerTables.Add(providerTable);
-            }
+                FirstName = physician.FirstName,
+                LastName = physician.LastName,
+                Notification = physician.PhysicianNotifications.FirstOrDefault().IsNotificationStopped[0],
+                providerId = physician.PhysicianId,
+                Status = physician.Status == 1 ? "Active" : "Pending",
+            }).ToList();
             Provider provider = new Provider()
             {
                 providers = providerTables,
@@ -84,7 +70,8 @@ namespace Services.Implementation.AdminServices
                     IsBodyHtml = true,
                     Body = model.Message,
                 };
-                //mailMessage.To.Add(model.Email);
+                //Physician physician = _userRepository.getPhysicianByPhysicianId(model.providerId);
+                //mailMessage.To.Add(physician.Email);
                 mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
                 SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
                 {
@@ -108,22 +95,10 @@ namespace Services.Implementation.AdminServices
 
         public CreateProvider GetCreateProvider()
         {
-            Dictionary<int, string> regions = new Dictionary<int, string>();
-            List<Region> allRegion = _requestClientRepository.getAllRegions();
-            foreach (Region region in allRegion)
-            {
-                regions.Add(region.RegionId, region.Name);
-            } 
-            Dictionary<int, string> roles = new Dictionary<int, string>();
-            List<Role> allRoles = _roleRepository.getRolesByUserType(3);
-            foreach (Role role in allRoles)
-            {
-                roles.Add(role.RoleId, role.Name);
-            }
             CreateProvider createProvider = new CreateProvider()
             {
-                Regions = regions,
-                Roles = roles,
+                Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
+                Roles = _roleRepository.getRolesByUserType(3).ToDictionary(role => role.RoleId, role => role.Name),
             };
             return createProvider;
         }
@@ -219,6 +194,29 @@ namespace Services.Implementation.AdminServices
                 }
             }
             return false;
+        }
+
+        public ProviderScheduling GetProviderSchedulingData(int regionId)
+        {
+            string path = "/Files//Providers/Photo/";
+            List<SchedulingTable> schedulingTables = _userRepository.getAllPhysiciansByRegionId(regionId).Select(
+            physician => new SchedulingTable()
+            {
+                Photo = path + physician.AspNetUserId + "/" + physician.Photo,
+                FirstName = physician.FirstName,
+                LastName = physician.LastName,
+            }).ToList();
+            Dictionary<int,String> regions = new Dictionary<int,String>();
+            if(regionId == 0)  // for first time page load - on filter this part not execute
+            {
+                regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name);
+            }
+            ProviderScheduling providerScheduling = new ProviderScheduling()
+            {
+                Regions = regions,
+                TableData = schedulingTables,
+            };
+            return providerScheduling;
         }
 
         private String genrateHash(String password)

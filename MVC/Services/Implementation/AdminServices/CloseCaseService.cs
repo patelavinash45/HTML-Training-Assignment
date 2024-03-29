@@ -19,20 +19,14 @@ namespace Services.Implementation.AdminServices
 
         public CloseCase getDaetails(int requestId)
         {
-            List<RequestWiseFile> requestWiseFiles = _requestWiseFileRepository.getFilesByrequestId(requestId);
-            List<FileModel> fileList = new List<FileModel>();
-            foreach (var file in requestWiseFiles)
+            List<FileModel> fileList = _requestWiseFileRepository.getFilesByrequestId(requestId).Select(requestWiseFile => new FileModel()
             {
-                FileModel fileModel = new FileModel()
-                {
-                    RequestId = requestId,
-                    RequestWiseFileId = file.RequestWiseFileId,
-                    FileName = file.FileName,
-                    Uploder = file.Uploder,
-                    CreatedDate = file.CreatedDate,
-                };
-                fileList.Add(fileModel);
-            };
+                RequestId = requestId,
+                RequestWiseFileId = requestWiseFile.RequestWiseFileId,
+                FileName = requestWiseFile.FileName,
+                Uploder = requestWiseFile.Uploder,
+                CreatedDate = requestWiseFile.CreatedDate,
+            }).ToList();
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(requestId);
             CloseCase closeCase = new CloseCase()
             {

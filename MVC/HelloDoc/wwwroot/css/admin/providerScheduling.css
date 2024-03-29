@@ -31,9 +31,12 @@ tr {
     width: 350px;
 }
 
-.week,
-.month{
-    display: none;
+.icons{
+    color: cadetblue;
+}
+
+.image{
+    height: 40px;
 }
 
 .coloredButtons{

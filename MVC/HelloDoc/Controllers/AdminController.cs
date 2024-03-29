@@ -141,8 +141,7 @@ namespace HelloDoc.Controllers
         [Authorization("Admin")]
         public IActionResult ProviderScheduling()
         {
-            int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-            return View(_viewProfileService.GetAdminViewProfile(aspNetUseId));
+            return View(_providersService.GetProviderSchedulingData(regionId: 0));
         }
 
         [Authorization("Admin")]
@@ -768,6 +767,12 @@ namespace HelloDoc.Controllers
         public HealthProfessional GetBussinessData(int venderId)
         {
             return _sendOrderService.getBussinessData(venderId);
+        }
+
+        [HttpGet] // provider scheduling page 
+        public IActionResult ChangeTab(string name,int regionId)
+        {
+            return PartialView(name, _providersService.GetProviderSchedulingData(regionId).TableData);
         }
     }
 }
