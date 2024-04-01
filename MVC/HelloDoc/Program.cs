@@ -52,6 +52,7 @@ builder.Services.AddScoped<ICloseCaseService, CloseCaseService>();
 builder.Services.AddScoped<IProvidersService, ProvidersService>();
 builder.Services.AddScoped<IAccessService, AccessService>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IShiftRepository , ShiftRepository>();
 
 
 var app = builder.Build();

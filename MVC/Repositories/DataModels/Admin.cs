@@ -21,8 +21,6 @@ public partial class Admin
     public string? LastName { get; set; }
 
     [StringLength(50)]
-    [RegularExpression("^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\\-+)|([A-Za-z0-9]+\\.+)|([A-Za-z0-9]+\\++))*[A-Za-z0-9]+@((\\w+\\-+)|(\\w+\\.))*" +
-            "\\w{1,63}\\.[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
     public string Email { get; set; } = null!;
 
     [StringLength(20)]

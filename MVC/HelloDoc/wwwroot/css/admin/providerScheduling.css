@@ -3,7 +3,6 @@
 }
 
 button {
-    height: 50px;
     border-radius: 10px;
     border: 0.5px solid;
     margin-top: 5px;
@@ -39,9 +38,10 @@ tr {
     height: 40px;
 }
 
-.coloredButtons{
+.active {
     background-color: cadetblue;
     color: white;
 }
+
 
 

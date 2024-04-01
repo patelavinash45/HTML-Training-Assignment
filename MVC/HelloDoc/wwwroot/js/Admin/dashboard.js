@@ -1,47 +1,15 @@
-var statusStrings = ["", "New", "Pending", "Active", "Conclude", "Close", "Unpaid"];
+var statusStrings = ["", "new", "pending", "active", "conclude", "close", "unpaid"];
 var statusTableStrings = ["", "_NewTable", "_PendingTable", "_ActiveTable", "_ConcludeTable", "_CloseTable", "_UnpaidTable"];
 var currentStatus = 1;         /// for which state is current
 
 function changeTable(temp) {      /// change view according to status
     $(".tables").css("display", "none");
     $(".optionButton").css('box-shadow', 'none');
-    switch (temp) {
-        case 1: $("#new").css("display", "block");
-            $("#newOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#statusText").text("(New)");
-            currentStatus = 1;
-            getTableData(1);
-            break;
-        case 2: $("#pending").css("display", "block");
-            $("#pendingOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#statusText").text("(Pending)");
-            currentStatus = 2;
-            getTableData(1);
-            break;
-        case 3: $("#active").css("display", "block");
-            $("#activeOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#statusText").text("(Active)");
-            currentStatus = 3;
-            getTableData(1);
-            break;
-        case 4: $("#conclude").css("display", "block");
-            $("#concludeOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#statusText").text("(Conclude)");
-            currentStatus = 4;
-            getTableData(1);
-            break;
-        case 5: $("#close").css("display", "block");
-            $("#tocloseOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#statusText").text("(Close)");
-            currentStatus = 5;
-            getTableData(1);
-            break;
-        case 6: $("#unpaid").css("display", "block");
-            $("#unpaidOption").css('box-shadow', '10px 10px 5px #AAA');
-            $("#statusText").text("(UnPaid)");
-            currentStatus = 6;
-            getTableData(1);
-    }
+    currentStatus = temp;
+    $(`#${statusStrings[currentStatus]}`).css("display", "block");
+    $(`#${statusStrings[currentStatus]}Option`).css('box-shadow', '10px 10px 5px #AAA');
+    $("#statusText").text(`(${statusStrings[currentStatus]})`);
+    getTableData(1);
 }
 
 function getTableData(pageNo) { ///get table data 
@@ -63,29 +31,15 @@ function getTableData(pageNo) { ///get table data
     })
 }
 
-function setTableData(response) {     /// set table date in par
-    switch (statusStrings[currentStatus]) {
-        case "New": $("#new").html(response); break;
-        case "Pending": $("#pending").html(response); break;
-        case "Active": $("#active").html(response); break;
-        case "Conclude": $("#conclude").html(response); break;
-        case "Close": $("#close").html(response); break;
-        case "Unpaid": $("#unpaid").html(response); break;
-    }
+function setTableData(response) {       /// set table date in tableview
+    $(`#${statusStrings[currentStatus]}`).html(response);
 }
 
 requesterType = 0;
 function requesterTypeSearch(_requesterType, pageNo) {     /// search based on requester type
     requesterType = _requesterType;
     $('.buttonHr').css("display", "none");
-    switch (_requesterType) {
-        case 1: $('#hr-1').css("display", "block"); break;
-        case 2: $('#hr-2').css("display", "block"); break;
-        case 3: $('#hr-3').css("display", "block"); break;
-        case 4: $('#hr-4').css("display", "block"); break;
-        case 5: $('#hr-5').css("display", "block"); break;
-        default: changeTable(currentStatus);
-    }
+    $(`#hr-${_requesterType}`).css("display", "block");
     getTableData(pageNo);
 }
 
@@ -131,9 +85,7 @@ function regionSearch(pageNo) {
 
 
 $(document).on("click", "#exportData", function () {
-    var status = ["", "new", "pending", "active", "conclude", "close", "unpaid"];
-    var id = "#" + status[currentStatus];
-    var temp = $(id).children()[2];
+    var temp = $(`#${statusStrings[currentStatus]}`).children()[2];
     var pageNo = $(temp).find(".currentPage").text();
     $.ajax({
         url: '/Admin/ExportData',

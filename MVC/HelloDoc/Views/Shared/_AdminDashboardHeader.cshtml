@@ -62,15 +62,32 @@
                 <hr class="border-bottom border-3 border-dark h1" />
             }
         </a>
-        <a asp-controller="Admin" asp-action="Providers"  class="mx-2">
-            <div class="mx-2 h6">
+        <div class="mx-2">
+            <button class="h6 bg-transparent border-0 h-auto" data-bs-toggle="dropdown" aria-expanded="false">
                 Providers
-            </div>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" asp-controller="Admin" asp-action="Providers">
+                        Providers
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-controller="Admin" asp-action="ProviderScheduling">
+                        Scheduling
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item">
+                        Invoiceing
+                    </a>
+                </li>
+            </ul>
             @if (Model == 4)
             {
                 <hr class="border-bottom border-3 border-dark h1" />
             }
-        </a>
+        </div>
         <a asp-controller="" asp-action=""  class="mx-2">
             <div class="mx-2 h6">
                 Partners

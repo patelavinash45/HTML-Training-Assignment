@@ -10,8 +10,7 @@ function changeSelect(document) {
             regionId: $(document).val(),
         },
         success: function (response) {
-            $(".physician").children().remove();
-            $(".physician").append('<option disabled selected value="">Physicians</option>');
+            $(".physician").html('<option disabled selected value="">Physicians</option>');
             $.each(response, function (index, item) {
                 var option = "<option value=" + index + ">"+item+"</option>";
                 $(".physician").append(option);

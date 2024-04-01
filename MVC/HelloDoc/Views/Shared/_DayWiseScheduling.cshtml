@@ -70,30 +70,16 @@
                         <img src="@item.Photo" class="image">
                         @item.FirstName @item.LastName
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    @for (int i = 0; i < 24; i++)
+                    {
+                        if (@item.ShiftTimes.Any(a => a.StartTime == i))
+                        {
+                            <td>a</td>
+                        }else
+                        {
+                            <td></td>
+                        }
+                    }
                 </tr>
             }
         </tbody>

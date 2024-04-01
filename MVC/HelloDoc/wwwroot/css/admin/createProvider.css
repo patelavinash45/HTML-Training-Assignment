@@ -18,11 +18,11 @@ form {
 }
 
 .form-floating > label {
-    top: 20px;
     left: 12px;
     background-color: transparent;
 }
 
+label,
 .uploadButtonFilepicker,
 .form-check,
 .form-select,
@@ -61,6 +61,10 @@ input[type=file]::-webkit-file-upload-button {
 
 .input-group {
     width: fit-content;
+}
+
+.form-check-label{
+    margin-top: 0px;
 }
 
 .form-floating > .form-control:focus ~ label,

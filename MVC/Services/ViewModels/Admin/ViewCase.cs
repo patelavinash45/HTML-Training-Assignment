@@ -4,7 +4,7 @@ namespace Services.ViewModels.Admin
 {
     public class ViewCase
     {
-        public short? Status { get; set; }
+        public int? Status { get; set; }
 
         public int RequestId { get; set; }
 

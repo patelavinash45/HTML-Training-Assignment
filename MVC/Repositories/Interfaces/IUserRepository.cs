@@ -20,6 +20,8 @@ namespace Repositories.Interfaces
 
         List<Physician> getAllPhysiciansByRegionId(int regionId);
 
+        List<PhysicianRegion> getAllPhysicianRegionsByRegionId(int regionId);
+
         List<Physician> getAllUnAssignedPhysician();
 
         PhysicianNotification GetPhysicianNotification(int physicianId);

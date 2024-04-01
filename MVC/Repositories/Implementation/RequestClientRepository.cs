@@ -30,7 +30,7 @@ namespace Repositories.Implementation
             (requesterTypeId == 0 || a.Request.RequestTypeId == requesterTypeId) 
             && (regionId == 0 || a.RegionId == regionId)
             && (patientName == null || a.FirstName.ToLower().Contains(patientName) || a.LastName.ToLower().Contains(patientName))
-            && (a.Status == status[0] || a.Status == status[1] || a.Status == status[2]) ;
+            && (status.Contains(a.Status));
             return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Where(predicate)
                                           .OrderByDescending(a => a.RequestClientId).Skip(skip).Take(10).ToList();
         }
@@ -41,13 +41,13 @@ namespace Repositories.Implementation
             (requesterTypeId == 0 || a.Request.RequestTypeId == requesterTypeId)
             && (regionId == 0 || a.RegionId == regionId)
             && (patientName == null || a.FirstName.ToLower().Contains(patientName) || a.LastName.ToLower().Contains(patientName))
-            && (a.Status == status[0] || a.Status == status[1] || a.Status == status[2]);
-            return _dbContext.RequestClients.Include(a => a.Request).Where(predicate).ToList().Count;
+            && (status.Contains(a.Status));
+            return _dbContext.RequestClients.Include(a => a.Request).Count(predicate);
         }
 
         public int countRequestClientByStatus(List<int> status)
         {
-            return _dbContext.RequestClients.Where(a => (a.Status == status[0] || a.Status == status[1] || a.Status == status[2])).ToList().Count;
+            return _dbContext.RequestClients.Count(a => status.Contains(a.Status));
         }
 
         public List<RequestClient> getAllRequestClientForUser(int userId)
@@ -58,8 +58,7 @@ namespace Repositories.Implementation
         public async Task<int> addRequestClient(RequestClient requestClient)
         {
             _dbContext.RequestClients.Add(requestClient);
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0 ? requestClient.RequestClientId : 0;
+            return await _dbContext.SaveChangesAsync() > 0 ? requestClient.RequestClientId : 0;
         }
 
         public RequestClient getRequestClientByRequestId(int requestId)

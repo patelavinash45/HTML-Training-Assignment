@@ -13,7 +13,7 @@ namespace Services.ViewModels
 
         public int? IntDate { get; set; }
 
-        public short? Status { get; set; }
+        public int? Status { get; set; }
 
         public int Document { get; set; }
     }

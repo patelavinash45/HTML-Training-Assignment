@@ -18,11 +18,11 @@ button {
 }
 
 .form-floating > label {
-    top: 20px;
     left: 12px;
     background-color: transparent;
 }
 
+label,
 .checkBoxs,
 .form-select,
 .form-control {
@@ -35,6 +35,10 @@ button {
 
 .bottomButtons {
     background-color: cadetblue;
+}
+
+.form-check-label {
+    margin-top: 0px;
 }
 
 .form-floating > .form-control:focus ~ label,

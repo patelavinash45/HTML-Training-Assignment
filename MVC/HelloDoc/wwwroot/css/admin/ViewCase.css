@@ -10,7 +10,6 @@ button {
 }
 
 .form-floating > label {
-    top: 20px;
     left: 12px;
     background-color: transparent;
 }
@@ -19,6 +18,7 @@ input {
     height: 58px;
 }
 
+label,
 .editButton,
 .form-control {
     margin-top: 2vh;

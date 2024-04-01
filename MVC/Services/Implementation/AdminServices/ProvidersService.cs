@@ -18,14 +18,16 @@ namespace Services.Implementation.AdminServices
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IAspRepository _aspRepository;
+        private readonly IShiftRepository _shiftRepository;
 
         public ProvidersService(IUserRepository userRepository, IRequestClientRepository requestClientRepository, IRoleRepository roleRepository,
-                                 IAspRepository aspRepository)
+                                 IAspRepository aspRepository, IShiftRepository shiftRepository)
         {
             _userRepository = userRepository;
             _requestClientRepository = requestClientRepository;
             _roleRepository = roleRepository;
             _aspRepository = aspRepository;
+            _shiftRepository = shiftRepository;
         }
 
         public Provider getProviders(int regionId)
@@ -169,7 +171,8 @@ namespace Services.Implementation.AdminServices
                 IsBackgroundDoc = new BitArray(1, model.IsBackgroundDoc),
                 IsNonDisclosureDoc = new BitArray(1, model.IsNonDisclosureDoc),
                 IsTrainingDoc = new BitArray(1, model.IsHIPAACompliance),
-                Photo = model.Photo.FileName
+                Photo = model.Photo.FileName,
+                AdminNotes = model.AdminNotes,
             };
             if (await _userRepository.addPhysician(physician))
             {
@@ -198,13 +201,23 @@ namespace Services.Implementation.AdminServices
 
         public ProviderScheduling GetProviderSchedulingData(int regionId)
         {
-            string path = "/Files//Providers/Photo/";
+            string path = "/Files//Providers/Photo/"; 
             List<SchedulingTable> schedulingTables = _userRepository.getAllPhysiciansByRegionId(regionId).Select(
-            physician => new SchedulingTable()
-            {
-                Photo = path + physician.AspNetUserId + "/" + physician.Photo,
-                FirstName = physician.FirstName,
-                LastName = physician.LastName,
+            physician => {
+                List<ShiftTime> shiftTimes = _shiftRepository.getShiftDetailByPhysicianId(physician.PhysicianId).SelectMany
+                (shiftDetail => Enumerable.Range(shiftDetail.StartTime.Hour, shiftDetail.EndTime.Hour - shiftDetail.StartTime.Hour)
+                .Select(time => new ShiftTime()
+                {
+                    Status = shiftDetail.Status,
+                    StartTime = time,
+                })).ToList();
+                return new SchedulingTable()
+                {
+                    Photo = path + physician.AspNetUserId + "/" + physician.Photo,
+                    FirstName = physician.FirstName,
+                    LastName = physician.LastName,
+                    ShiftTimes = shiftTimes,
+                };
             }).ToList();
             Dictionary<int,String> regions = new Dictionary<int,String>();
             if(regionId == 0)  // for first time page load - on filter this part not execute

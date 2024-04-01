@@ -172,6 +172,16 @@ namespace Services.ViewModels.Admin
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public List<ShiftTime> ShiftTimes { get; set; }
+    }
+
+    public class ShiftTime
+    {
+        public short Status { get; set; }
+
+        public int StartTime { get; set; }
+
     }
 
 }

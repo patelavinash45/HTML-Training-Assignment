@@ -16,8 +16,8 @@ namespace Repositories.Implementation
 
         public int countFile(int requestId)
         {
-            return _dbContext.RequestWiseFiles.Where(a => a.RequestId == requestId && a.IsDeleted 
-                                                                                   == new BitArray(1, false)).ToList().Count;
+            return _dbContext.RequestWiseFiles.Count(a => a.RequestId == requestId && a.IsDeleted 
+                                                                                   == new BitArray(1, false));
         }
 
         public async Task<bool> addFile(RequestWiseFile requestWiseFile)

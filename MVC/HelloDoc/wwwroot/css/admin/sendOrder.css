@@ -11,11 +11,11 @@ button {
 
 /*.form-floating > .form-select ~ label,*/
 .form-floating > label {
-    top: 20px;
     left: 12px;
     background-color: transparent;
 }
 
+label,
 .form-select,
 .form-control {
     margin-top: 2vh;

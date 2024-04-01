@@ -21,7 +21,7 @@
             <div class="providerList">
                 <div class="d-flex justify-content-end align-items-end mt-2 mb-3 topElements">
                     <a asp-controller="Admin" asp-action="CreateRole">
-                        <button class="bg-white px-3 fw-bold" type="button">
+                        <button class="bg-white px-3 fw-bold py-2" type="button">
                             Create Access
                         </button>
                     </a>
@@ -52,11 +52,11 @@
                                         @item.AccountType
                                     </td>
                                     <td>
-                                        <button class="bg-white px-3 fw-bold">
+                                        <button class="bg-white px-3 fw-bold py-2">
                                             Edit
                                         </button>
                                         <a asp-controller="Admin" asp-action="DeteteRole" asp-route-roleId="@item.RoleId">
-                                            <button class="bg-white px-3 fw-bold">
+                                            <button class="bg-white px-3 fw-bold py-2">
                                                 Delete
                                             </button>
                                        </a>
@@ -80,11 +80,11 @@
                                 <div class="accordion-body row mx-0">
                                     Acount Type: @item.AccountType
                                     <div class="d-flex justify-content-end align-items-center mb-2">
-                                        <button class="bg-white px-3 me-2 fw-bold">
+                                        <button class="bg-white px-3 me-2 fw-bold py-2">
                                             Edit
                                         </button>
                                         <a asp-controller="Admin" asp-action="DeteteRole" asp-route-roleId="@item.RoleId">
-                                            <button class="bg-white px-3 fw-bold">
+                                            <button class="bg-white px-3 fw-bold py-2">
                                                 Delete
                                             </button>
                                         </a>

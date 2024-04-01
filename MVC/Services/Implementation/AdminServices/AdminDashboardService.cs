@@ -24,12 +24,12 @@ namespace Services.Implementation.AdminServices
         private readonly IAspRepository _aspRepository;
         private Dictionary<string, List<int>> statusList { get; set; } = new Dictionary<string, List<int>>()
             {
-                {"New", new List<int> { 1 , -1 , -1 } },
-                {"Pending", new List<int> { 2, -1, -1 } },
-                {"Active", new List<int> { 4, 5, -1 } },
-                {"Conclude", new List<int> { 6, -1, -1 } },
-                {"Close", new List<int> { 3, 7, 8 } },
-                {"Unpaid", new List<int> { 9, -1, -1 } },
+                {"new", new List<int> { 1 } },
+                {"pending", new List<int> { 2 } },
+                {"active", new List<int> { 4, 5 } },
+                {"conclude", new List<int> { 6 } },
+                {"close", new List<int> { 3, 7, 8 } },
+                {"unpaid", new List<int> { 9 } },
             };
 
         public AdminDashboardService(IRequestClientRepository requestClientRepository, IUserRepository userRepository, IJwtService jwtService,
@@ -54,13 +54,13 @@ namespace Services.Implementation.AdminServices
             };
             AdminDashboard adminDashboard = new()
             {
-                NewRequests = GetNewRequest(status: "New", pageNo: 1, patientName: "" , regionId: 0, requesterTypeId: 0),
-                NewRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["New"]),
-                PendingRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Pending"]),
-                ActiveRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Active"]),
-                ConcludeRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Conclude"]),
-                TocloseRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Close"]),
-                UnpaidRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["Unpaid"]),
+                NewRequests = GetNewRequest(status: "new", pageNo: 1, patientName: "" , regionId: 0, requesterTypeId: 0),
+                NewRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["new"]),
+                PendingRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["pending"]),
+                ActiveRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["active"]),
+                ConcludeRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["conclude"]),
+                TocloseRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["close"]),
+                UnpaidRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["unpaid"]),
                 CancelPopup = cancelPopUp,
                 AssignAndTransferPopup = assignAndTransferPopUp,
             };
@@ -73,16 +73,17 @@ namespace Services.Implementation.AdminServices
             int totalRequests = 0;
             List<RequestClient> requestClients = new List<RequestClient>();
             totalRequests += _requestClientRepository.countRequestClientByStatusAndFilter
-                                    (status: statusList[status], patientName: patientName, regionId: regionId, requesterTypeId: requesterTypeId);
+                              (status: statusList[status], patientName: patientName, regionId: regionId, requesterTypeId: requesterTypeId);
             requestClients.AddRange(_requestClientRepository.getRequestClientByStatus
-                              (status: statusList[status], skip: skip, patientName: patientName, regionId: regionId, requesterTypeId: requesterTypeId));
+                  (status: statusList[status], skip: skip, patientName: patientName, regionId: regionId, requesterTypeId: requesterTypeId));
             return getTableModal(requestClients, totalRequests, pageNo);
         }
 
         public Dictionary<int, String> getPhysiciansByRegion(int regionId)
         {
-            return _userRepository.getAllPhysiciansByRegionId(regionId)
-                       .ToDictionary(physician => physician.PhysicianId,physician => physician.FirstName + " " + physician.LastName);
+            return _userRepository.getAllPhysicianRegionsByRegionId(regionId)
+                                  .ToDictionary(phyRegion => phyRegion.PhysicianId, 
+                                                phyRegion => phyRegion.Physician.FirstName + " " + phyRegion.Physician.LastName);
         }
 
         public Tuple<String, String, int> getRequestClientEmailAndMobile(int requestId)
