@@ -104,7 +104,7 @@ namespace HelloDoc.Controllers
         [Authorization("Admin")]
         public IActionResult CreateProvider()
         {
-            return View(_providersService.GetCreateProvider());
+            return View(_providersService.getCreateProvider());
         }
 
         [Authorization("Admin")]
@@ -141,7 +141,7 @@ namespace HelloDoc.Controllers
         [Authorization("Admin")]
         public IActionResult ProviderScheduling()
         {
-            return View(_providersService.GetProviderSchedulingData(regionId: 0));
+            return View(_providersService.getProviderSchedulingData());
         }
 
         [Authorization("Admin")]
@@ -335,6 +335,25 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateShift(CreateShift model)  //// request support on dashboard
+        {
+            if (ModelState.IsValid)
+            {
+                int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+                if (await _providersService.createShift(model,aspNetUseId))
+                {
+                    _notyfService.Success("Successfully Send");
+                }
+                else
+                {
+                    _notyfService.Error("Faild!");
+                }
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            return View(model);
+        }
+
         public async Task<IActionResult> AgreementAgree(Agreement model)
         {
             await _viewNotesService.agreementAgree(model);
@@ -466,7 +485,7 @@ namespace HelloDoc.Controllers
                 }
                 return RedirectToAction("Providers", "Admin");
             }
-            CreateProvider createProvider = _providersService.GetCreateProvider();
+            CreateProvider createProvider = _providersService.getCreateProvider();
             model.Roles = createProvider.Roles;
             model.Regions = createProvider.Regions;
             _notyfService.Warning("Add Required Field.");
@@ -763,16 +782,16 @@ namespace HelloDoc.Controllers
             return RedirectToAction("ViewNotes", "Admin");
         }
 
-        [HttpGet] // Send Order
+        [HttpGet]    // Send Order
         public HealthProfessional GetBussinessData(int venderId)
         {
             return _sendOrderService.getBussinessData(venderId);
         }
-
-        [HttpGet] // provider scheduling page 
-        public IActionResult ChangeTab(string name,int regionId)
+            
+        [HttpGet]    // provider scheduling page 
+        public IActionResult ChangeTab(string name,int regionId,int type,String time)
         {
-            return PartialView(name, _providersService.GetProviderSchedulingData(regionId).TableData);
+            return PartialView(name, _providersService.getSchedulingTableDate(regionId,type,time));
         }
     }
 }

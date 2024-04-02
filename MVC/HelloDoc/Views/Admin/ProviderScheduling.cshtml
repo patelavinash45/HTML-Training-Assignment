@@ -14,6 +14,7 @@
 </head>
 <body>
     <partial name="_AdminDashboardHeader" model="0">
+    <partial name="_CreateShift" model="Model.CreateShift">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
             <h3>
@@ -29,7 +30,7 @@
         <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
             <select class="form-select select" id="regionsList">
                 <option selected>All Region</option>
-                @foreach(var item in Model.Regions)
+                @foreach(var item in Model.CreateShift.Regions)
                     {
                         <option value="@item.Key">@item.Value</option>
                     }
@@ -41,7 +42,7 @@
                 <button class="coloredButtons fw-bold py-2 px-2">
                     Shifts For Review
                 </button>
-                <button class="coloredButtons fw-bold py-2 px-2">
+                <button class="coloredButtons fw-bold py-2 px-2" data-bs-target="#createShift" data-bs-toggle="modal">
                     Add New Shift
                 </button>
             </div>

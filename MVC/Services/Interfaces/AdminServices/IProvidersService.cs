@@ -10,10 +10,14 @@ namespace Services.Interfaces.AdminServices
 
         bool contactProvider(ContactProvider model);
 
-        CreateProvider GetCreateProvider();
+        CreateProvider getCreateProvider();
 
         Task<bool> createProvider(CreateProvider model);
 
-        ProviderScheduling GetProviderSchedulingData(int regionId);
+        ProviderScheduling getProviderSchedulingData();
+
+        List<SchedulingTable> getSchedulingTableDate(int regionId, int type, string time);
+
+        Task<bool> createShift(CreateShift model,int aspNetUserId);
     }
 }

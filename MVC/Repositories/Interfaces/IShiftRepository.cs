@@ -4,6 +4,10 @@ namespace Repositories.Interfaces
 {
     public interface IShiftRepository
     {
-        List<ShiftDetail> getShiftDetailByPhysicianId(int physicianId);
+        List<ShiftDetail> getShiftDetailByPhysicianId(int physicianId,DateTime startTime,DateTime endTime);
+
+        Task<bool> addShift(Shift shift);
+
+        Task<bool> addShiftDetails(ShiftDetail shiftDetail);
     }
 }

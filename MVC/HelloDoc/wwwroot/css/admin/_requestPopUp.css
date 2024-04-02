@@ -54,6 +54,22 @@ input[type=tel]{
     height: 58px;
 }
 
+label,
+.form-select,
+.form-switch,
+.form-control {
+    margin-top: 2vh;
+}
+
+.form-floating > label {
+    left: 12px;
+    background-color: transparent;
+}
+
+.form-check-label{
+    margin-top: 0px;
+}
+
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label,
 .form-floating > .form-select ~ label {

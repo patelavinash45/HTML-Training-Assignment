@@ -38,30 +38,10 @@
                 <td class="bg-white w-25">
                     Coverage
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                @for (int i = 0; i < 24; i++)
+                {
+                    <td></td>
+                }
             </tr>
             @foreach(var item in Model)
             {
@@ -72,9 +52,21 @@
                     </td>
                     @for (int i = 0; i < 24; i++)
                     {
-                        if (@item.ShiftTimes.Any(a => a.StartTime == i))
+                        var data = @item.DayWise.FirstOrDefault(a => a.Time == i);
+                        if (data != null)
                         {
-                            <td>a</td>
+                            if(data.FirstHalf)
+                            {
+                                <td><span class="@data.Status w-50">.f</span><span></span></td>
+                            }
+                            else if (data.SecoundHalf)
+                            {
+                                <td><span></span><span class="@data.Status w-50">.s</span></td>
+                            }
+                            else
+                            {
+                                <td class="@data.Status">.</td>
+                            }
                         }else
                         {
                             <td></td>

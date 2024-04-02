@@ -159,9 +159,9 @@ namespace Services.ViewModels.Admin
 
     public class ProviderScheduling
     {
-        public Dictionary<int, string> Regions { get; set; }
-
         public List<SchedulingTable> TableData { get; set; }
+
+        public CreateShift CreateShift { get; set; }
 
     }
 
@@ -173,15 +173,43 @@ namespace Services.ViewModels.Admin
 
         public string LastName { get; set; }
 
-        public List<ShiftTime> ShiftTimes { get; set; }
+        public List<ShiftDetailsDayWise> DayWise { get; set; }
+
+        public Dictionary<int, double> WeekWise { get; set; }
+
     }
 
-    public class ShiftTime
+    public class ShiftDetailsDayWise
     {
-        public short Status { get; set; }
+        public bool FirstHalf { get; set; } = false;
 
-        public int StartTime { get; set; }
+        public bool SecoundHalf { get; set; } = false;
 
+        public String Status { get; set; }
+
+        public int Time { get; set; }
+
+    }
+
+    public class CreateShift
+    {
+        public int SelectedRegion { get; set; }
+
+        public Dictionary<int, string>? Regions { get; set; }
+
+        public int SelectedPhysician { get; set; }
+
+        public DateTime ShiftDate { get; set; }
+
+        public TimeOnly StartTime { get; set; }
+
+        public TimeOnly EndTime { get; set; }
+
+        public bool IsRepeat { get; set; }
+
+        public List<int> SelectedDays { get; set; }
+
+        public int RepeatEnd { get; set; } = 0;
     }
 
 }

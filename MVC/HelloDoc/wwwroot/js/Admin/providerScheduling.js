@@ -7,25 +7,41 @@ async function chnagetab(type) {
     $(".tabButtons").removeClass("active");
     $("#displayWeek").text("");
     currentType = type;
-    await getData();
     switch (type) {
         case 1: $("#dayButton").addClass("active");
                 dayWise = new Date();
+                await getData();
                 setDate();
                 break;
         case 2: $("#weekButton").addClass("active");
                 weekWise = new Date();
+                weekWise.setDate(weekWise.getDate() - weekWise.getDay())
+                await getData();
                 setWeek();
                 break;
         case 3: $("#monthButton").addClass("active");
                 monthWise = new Date();
                 monthWise.setDate(1);
+                await getData();
                 setMonth();
                 break;
     }
 }
 
 async function getData() {
+    const formatter = new Intl.DateTimeFormat('en-US', {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    });
+    var time;
+    switch (currentType) {
+        case 1: time = dayWise; break;
+        case 2: time = weekWise; break;
+        case 3: time = monthWise;
+    }
+    time = formatter.format(time);
     await $.ajax({
             url: "/Admin/ChangeTab",
             type: "Get",
@@ -34,6 +50,8 @@ async function getData() {
             data: {
                 name: partialViewNames[currentType],
                 regionId: $("#regionsList").val(),
+                type: currentType,
+                time: time,
             },
             success: function (response) {
                 $(".tab").html(response);
@@ -51,29 +69,33 @@ $(document).ready(function () {
 })
 
 $(document).on("click", "#previous", async function () {
-    await getData();
     switch (currentType) {
         case 1: dayWise.setDate(dayWise.getDate() - 1);
+                await getData();
                 setDate();
                 break;
         case 2: weekWise.setDate(weekWise.getDate() - 7);
+                await getData();
                 setWeek();
                 break;
         case 3: monthWise.setMonth(monthWise.getMonth() - 1);
+                await getData();
                 setMonth();
     }
 })
 
 $(document).on("click", "#next", async function () {
-    await getData();
     switch (currentType) {
         case 1: dayWise.setDate(dayWise.getDate() + 1);
+                await getData();
                 setDate();
                 break;
         case 2: weekWise.setDate(weekWise.getDate() + 7);
+                await getData();
                 setWeek();
                 break;
         case 3: monthWise.setMonth(monthWise.getMonth() + 1);
+                await getData();
                 setMonth();
     }
 })
@@ -95,7 +117,7 @@ function setWeek() {
         day: 'numeric',
         year: 'numeric'
     });
-    $("#display").text(formatter.format(date.setDate(date.getDate() - date.getDay())));
+    $("#display").text(formatter.format(date));
     $("#displayWeek").text(" - " + formatter.format(date.setDate((6 - date.getDay()) + date.getDate())));
     for (i = 6; i >= 0; i--) {
         $(`#${weekDays[i]}`).text(date.getDate());
@@ -127,3 +149,101 @@ function setMonth() {
         $(`.row-5`).css("display", "none");
     }
 }
+
+
+/////   popup - create shift
+
+$(document).on("change", "#isRepeat", function () {
+    if ($(this).is(":checked")) {
+        $("#repeatFields").prop("disabled", false);
+    }
+    else {
+        $("#repeatEnd").val("");
+        $(".weekDay").prop("checked",false);
+        $("#repeatFields").prop("disabled", true);
+    }
+});
+
+function validation(doc1, doc2, fieldName) {
+    if ($(doc1).val().length == 0) {
+        $(doc2).text(fieldName+" is required");
+    }
+    else {
+        $(doc2).text("");
+    }
+}
+
+$(document).on("change", "#regions", function () {
+    validation(this, "#regionValidation", "Region");
+    if ($(this).val().length != 0) {
+        $.ajax({
+            url: "/Admin/GetPhysicians",
+            type: "Get",
+            contentType: "application/json",
+            data: {
+                regionId: $(this).val(),
+            },
+            success: function (response) {
+                $("#physician").html('<option disabled selected value="">Physicians</option>');
+                $.each(response, function (index, item) {
+                    var option = "<option value=" + index + ">" + item + "</option>";
+                    $("#physician").append(option);
+                });
+            }
+        });
+    }
+})
+
+$(document).on("change", "#physician", function () {
+    validation(this, "#physicianValidation", "Physician");
+})
+
+$(document).on("change", "#shiftDate", function () {
+    validation(this, "#shiftDateValidation", "ShiftDate");
+})
+
+$(document).on("change", "#startTime", function () {
+    validation(this, "#startTimeValidation", "Start Time");
+})
+
+$(document).on("change", "#endTime", function () {
+    validation(this, "#endTimeValidation", "End Time");
+})
+
+$(document).on("change", "#repeatEnd", function () {
+    validation(this, "#repeatEndValidation", "Repeat End");
+})
+
+$(document).on("change", ".weekDay", function () {
+    if (!$(this).is(":checked")) {
+        $("#repeatValidation").text("Week Day is required");
+    }
+    else {
+        $("#repeatValidation").text("");
+    }
+})
+
+$(document).on("submit", "#createShiftForm", function (e)
+{
+    if ($("#regions").val().length == 0 || $("#endTime").val().length == 0 || $("#startTime").val().length == 0 || $("#shiftDate").val().length == 0
+        || $("#physician").val().length == 0 ) {
+        e.preventDefault();
+        validation("#regions", "#regionValidation", "Region");
+        validation("#physician", "#physicianValidation", "Physician");
+        validation("#shiftDate", "#shiftDateValidation", "ShiftDate");
+        validation("#startTime", "#startTimeValidation", "Start Time");
+        validation("#endTime", "#endTimeValidation", "End Time");
+    }
+    if ($("#isRepeat").is(":checked")) {
+        if (!$(".weekDay").is(":checked") || $("#repeatEnd").val().length == 0) {
+            e.preventDefault();
+            validation("#repeatEnd", "#repeatEndValidation", "Repeat End");
+            if (!$(".weekDay").is(":checked")) {
+                $("#repeatValidation").text("Week Day is required");
+            }
+            else {
+                $("#repeatValidation").text("");
+            }
+        }
+    }
+})

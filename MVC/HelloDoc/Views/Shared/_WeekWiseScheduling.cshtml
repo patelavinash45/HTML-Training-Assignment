@@ -57,13 +57,17 @@
                         <img src="@item.Photo" class="image">
                         @item.FirstName @item.LastName
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    @for(int i=0;i<6;i++)
+                    {
+                        if (item.WeekWise.ContainsKey(i))
+                        {
+                            <td>@item.WeekWise[i]/24</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                    }
                 </tr>
             }
         </tbody>

@@ -95,7 +95,7 @@ namespace Services.Implementation.AdminServices
             return true;
         }
 
-        public CreateProvider GetCreateProvider()
+        public CreateProvider getCreateProvider()
         {
             CreateProvider createProvider = new CreateProvider()
             {
@@ -199,37 +199,148 @@ namespace Services.Implementation.AdminServices
             return false;
         }
 
-        public ProviderScheduling GetProviderSchedulingData(int regionId)
+        public ProviderScheduling getProviderSchedulingData()
         {
-            string path = "/Files//Providers/Photo/"; 
-            List<SchedulingTable> schedulingTables = _userRepository.getAllPhysiciansByRegionId(regionId).Select(
-            physician => {
-                List<ShiftTime> shiftTimes = _shiftRepository.getShiftDetailByPhysicianId(physician.PhysicianId).SelectMany
-                (shiftDetail => Enumerable.Range(shiftDetail.StartTime.Hour, shiftDetail.EndTime.Hour - shiftDetail.StartTime.Hour)
-                .Select(time => new ShiftTime()
-                {
-                    Status = shiftDetail.Status,
-                    StartTime = time,
-                })).ToList();
-                return new SchedulingTable()
-                {
-                    Photo = path + physician.AspNetUserId + "/" + physician.Photo,
-                    FirstName = physician.FirstName,
-                    LastName = physician.LastName,
-                    ShiftTimes = shiftTimes,
-                };
-            }).ToList();
-            Dictionary<int,String> regions = new Dictionary<int,String>();
-            if(regionId == 0)  // for first time page load - on filter this part not execute
+            List<SchedulingTable> schedulingTables = _userRepository.getAllPhysiciansByRegionId(0).Select(
+                                                                   physician => _dayWiseScheduling(physician, DateTime.Now)).ToList();
+            CreateShift createShift = new CreateShift()
             {
-                regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name);
-            }
+                Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
+            };
             ProviderScheduling providerScheduling = new ProviderScheduling()
             {
-                Regions = regions,
                 TableData = schedulingTables,
+                CreateShift = createShift,
             };
             return providerScheduling;
+        }
+
+        public async Task<bool> createShift(CreateShift model,int aspNetUserId)
+        {
+            Shift shift = new Shift()
+            {
+                PhysicianId = model.SelectedPhysician,
+                StartDate = new DateOnly(model.ShiftDate.Year,model.ShiftDate.Month,model.ShiftDate.Day),
+                IsRepeat = new BitArray(1, model.IsRepeat),
+                WeekDays = model.SelectedDays.ToString(),
+                RepeatUpto = model.RepeatEnd,
+                CreatedBy = aspNetUserId,
+                CreatedDate = DateTime.UtcNow,
+            };
+            if(await _shiftRepository.addShift(shift))
+            {
+                if(model.IsRepeat)
+                {
+                    model.SelectedDays.ForEach(async day =>
+                    {
+                        for(int i=0;i<model.RepeatEnd;i++)
+                        {
+                            ShiftDetail shiftDetail = new ShiftDetail()
+                            {
+                                ShiftId = shift.ShiftId,
+                                ShiftDate = model.ShiftDate.AddDays(day - (int)model.ShiftDate.DayOfWeek),
+                                RegionId = model.SelectedRegion,
+                                StartTime = model.StartTime,
+                                EndTime = model.EndTime,
+                                Status = 0,
+                                IsDeleted = new BitArray(1, false)
+                            };
+                            await _shiftRepository.addShiftDetails(shiftDetail);
+                        }
+                    });
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<SchedulingTable> getSchedulingTableDate(int regionId, int type, string time)
+        {
+            switch (type)
+            {
+                default:
+                case 3:
+                case 1: return _userRepository.getAllPhysiciansByRegionId(regionId).Select(
+                                                        physician => _dayWiseScheduling(physician, DateTime.Parse(time))).ToList();
+                case 2: return _userRepository.getAllPhysiciansByRegionId(regionId).Select(
+                                                        physician => _weekWiseScheduling(physician, DateTime.Parse(time))).ToList();
+            }
+        }
+
+        private SchedulingTable _dayWiseScheduling(Physician physician,DateTime time)
+        {
+            string path = "/Files//Providers/Photo/";
+            List<ShiftDetailsDayWise> dayWise = new List<ShiftDetailsDayWise>();
+            List<ShiftDetail> shiftDetails = _shiftRepository.getShiftDetailByPhysicianId(physician.PhysicianId,time,time);
+            foreach (ShiftDetail shiftDetail in shiftDetails)
+            {
+                int totalHalfHour = (int)(shiftDetail.EndTime - shiftDetail.StartTime).TotalMinutes / 30;
+                dayWise.AddRange(
+                    Enumerable.Range(shiftDetail.StartTime.Hour, totalHalfHour % 2 == 0 ? totalHalfHour / 2 : (totalHalfHour / 2) + 1)
+                    .Select(time => new ShiftDetailsDayWise()
+                    {
+                        Status = shiftDetail.Status == 0 ? "bg-pink" : "bg-success",
+                        Time = time,
+                    }).ToList()
+                );
+                if (totalHalfHour % 2 == 0)
+                {
+                    if (shiftDetail.StartTime.Minute == 30)
+                    {
+                        dayWise.FirstOrDefault(shiftDetailsDayWise => shiftDetailsDayWise.Time == shiftDetail.StartTime.Hour).SecoundHalf = true;
+                        dayWise.Add(new ShiftDetailsDayWise()
+                        {
+                            Status = shiftDetail.Status == 0 ? "bg-pink" : "bg-success",
+                            Time = shiftDetail.EndTime.Hour,
+                            FirstHalf = true,
+                        });
+                    }
+                }
+                else
+                {
+                    if (shiftDetail.StartTime.Minute == 30)
+                    {
+                        dayWise.FirstOrDefault(shiftDetailsDayWise => shiftDetailsDayWise.Time == shiftDetail.StartTime.Hour).SecoundHalf = true;
+                    }
+                    else
+                    {
+                        dayWise.FirstOrDefault(shiftDetailsDayWise => shiftDetailsDayWise.Time == shiftDetail.EndTime.Hour).FirstHalf = true;
+                    }
+                }
+            }
+            return new SchedulingTable()
+            {
+                Photo = path + physician.AspNetUserId + "/" + physician.Photo,
+                FirstName = physician.FirstName,
+                LastName = physician.LastName,
+                DayWise = dayWise,
+            };
+        }
+
+        private SchedulingTable _weekWiseScheduling(Physician physician, DateTime time)
+        {
+            string path = "/Files//Providers/Photo/";
+            Dictionary<int, double> weekWise = new Dictionary<int, double>();
+            List <ShiftDetail> shiftDetails = _shiftRepository.getShiftDetailByPhysicianId(physician.PhysicianId, time, time.AddDays(6));
+            foreach(ShiftDetail shiftDetail in shiftDetails)
+            {
+                double shiftHours = (shiftDetail.EndTime - shiftDetail.StartTime).TotalHours;
+                if (weekWise.ContainsKey((int)shiftDetail.ShiftDate.DayOfWeek))
+                {
+                    weekWise[(int)shiftDetail.ShiftDate.DayOfWeek] +=  shiftHours;
+                }
+                else
+                {
+                    weekWise.Add((int)shiftDetail.ShiftDate.DayOfWeek, shiftHours);
+                }
+            }
+            return new SchedulingTable()
+            {
+                Photo = path + physician.AspNetUserId + "/" + physician.Photo,
+                FirstName = physician.FirstName,
+                LastName = physician.LastName,
+                WeekWise = weekWise,
+            };
         }
 
         private String genrateHash(String password)
