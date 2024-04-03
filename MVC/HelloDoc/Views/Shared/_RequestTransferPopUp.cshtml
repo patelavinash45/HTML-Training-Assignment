@@ -11,27 +11,26 @@
                     <i class="bi bi-x-circle-fill h3 modal-title"></i>
                 </button>
             </div>
-            <form asp-controller="Admin" asp-action="TransferPopUp" id="transferForm">
+            <form asp-controller="Admin" asp-action="TransferPopUp">
                 <div class="modal-body">
                     To transfer this request search and select another Physician.
                     <input readonly class="d-none patientRequestId" asp-for="RequestId" type="text" />
-                    <select class="p-2 w-100 mb-2 mt-2 selectRegion form-select" id="transferRequestRegion" asp-for="SelectedRegion" onchange="changeSelect(this)">
+                    <select class="p-2 w-100 mt-2 selectRegion" asp-for="SelectedRegion" onchange="changeSelect(this)">
                         <option disabled selected value="">Regions</option>
                         @foreach (var item in Model.Regions)
                         {
                             <option value="@item.Key">@item.Value</option>
                         }
                     </select>
-                    <span class="text-danger validation mb-3" id="transferValidationforRegions">Region is Required</span>
-                    <select class="p-2 w-100 mb-2 physician" id="transferRequestPhysician" asp-for="SelectedPhysician">
+                    <span asp-validation-for="SelectedRegion" class="text-danger"></span>
+                    <select class="p-2 w-100 mt-2 physician" asp-for="SelectedPhysician">
                         <option disabled selected value="">Physicians</option>
                     </select>
-                    <span class="text-danger validation mb-3" id="transferValidationPhysician">Physician is Required</span>
-                    <span class="text-danger"></span>
+                    <span asp-validation-for="SelectedPhysician" class="text-danger"></span>
                     <div class="form-floating">
-                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-5 mt-2" placeholder="AdditionalNotes" id="Notes" rows="5">
-                        </textarea>
-                        <label for="Notes">Additional Notes</label>
+                        <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-3 mt-2" placeholder="AdditionalNotes"
+                                  id="assignReuqestNotes" rows="5">  </textarea>
+                        <label for="assignReuqestNotes">Additional Notes</label>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn mx-2" id="conformButton">

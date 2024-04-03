@@ -11,21 +11,21 @@
                     <i class="bi bi-x-circle-fill h3 modal-title"></i>
                 </button>
             </div>
-            <form asp-controller="Admin" asp-action="CancelPopUp" id="cacelForm">
+            <form asp-controller="Admin" asp-action="CancelPopUp">
                 <div class="modal-body">
                     <div class="h5">
                         Patient Name : <span class="patientName">  </span>
                     </div>
                     <input readonly class="d-none patientRequestId" asp-for="RequestId" type="text" />
-                    <select class="p-2 w-100 mb-2" asp-for="Reason" id="cancelRequestRegions">
+                    <select class="p-2 w-100" asp-for="Reason">
                         <option disabled selected value="">Reasons For Cancellation</option>
                         @foreach (var item in Model.Reasons)
                         {
                             <option value="@item.Key">@item.Value</option>
                         }
                     </select>
-                    <span class="text-danger validation mb-3" id="cancelValidation">Reason is Required</span>
-                    <div class="form-floating">
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                    <div class="form-floating mt-2">
                         <textarea asp-for="AdminTransferNotes" class="form-control h-100 border-2 mb-5 mt-3" placeholder="AdditionalNotes" id="Notes" rows="5">
                         </textarea>
                         <label for="Notes">Additional Notes</label>

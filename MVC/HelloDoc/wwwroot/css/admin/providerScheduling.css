@@ -3,6 +3,7 @@
 }
 
 button {
+    height: 50px;
     border-radius: 10px;
     border: 0.5px solid;
     margin-top: 5px;
@@ -43,5 +44,35 @@ tr {
     color: white;
 }
 
+label,
+.form-select,
+.form-switch,
+.form-control {
+    margin-top: 2vh;
+}
+
+.form-floating > label {
+    left: 12px;
+    background-color: transparent;
+}
+
+.form-check-label {
+    margin-top: 0px;
+}
+
+#regionsList{
+    margin-top: 0px;
+}
+
+@media screen and (max-width:992px) {
+    .topElements {
+        flex-direction: column;
+    }
+
+    .topButtons,
+    .select {
+        width: 100%;
+    }
+}
 
 

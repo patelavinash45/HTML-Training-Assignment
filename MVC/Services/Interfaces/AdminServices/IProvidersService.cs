@@ -19,5 +19,11 @@ namespace Services.Interfaces.AdminServices
         List<SchedulingTable> getSchedulingTableDate(int regionId, int type, string time);
 
         Task<bool> createShift(CreateShift model,int aspNetUserId);
+
+        RequestedShift getRequestedShift();
+
+        RequestShiftModel getRequestShiftTableDate(int regionId, bool isMonth, int pageNo);
+
+        Task<bool> chnageShiftDetails(string dataList,bool isApprove);
     }
 }

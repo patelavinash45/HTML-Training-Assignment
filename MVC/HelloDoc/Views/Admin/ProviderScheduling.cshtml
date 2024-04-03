@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scheduling</title>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/admin/providerScheduling.css" rel="stylesheet" />
@@ -27,7 +29,7 @@
                 </button>
             </a>
         </div>
-        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+        <div class="d-flex justify-content-between align-items-center mt-2 mb-3 topElements">
             <select class="form-select select" id="regionsList">
                 <option selected>All Region</option>
                 @foreach(var item in Model.CreateShift.Regions)
@@ -35,14 +37,16 @@
                         <option value="@item.Key">@item.Value</option>
                     }
                 </select>
-            <div>
-                <button class="fw-bold coloredButtons py-2 px-2">
+            <div class="topButtons">
+                <button class="fw-bold coloredButtons py-2 px-2 topButtons">
                     Providers On Call
                 </button>
-                <button class="coloredButtons fw-bold py-2 px-2">
-                    Shifts For Review
-                </button>
-                <button class="coloredButtons fw-bold py-2 px-2" data-bs-target="#createShift" data-bs-toggle="modal">
+                <a asp-controller="Admin" asp-action="RequestedShift">
+                    <button class="coloredButtons fw-bold py-2 px-2 topButtons">
+                        Shifts For Review
+                    </button>
+                </a>
+                <button class="coloredButtons fw-bold py-2 px-2 topButtons" data-bs-target="#createShift" data-bs-toggle="modal">
                     Add New Shift
                 </button>
             </div>

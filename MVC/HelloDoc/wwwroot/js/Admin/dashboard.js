@@ -46,7 +46,7 @@ function requesterTypeSearch(_requesterType, pageNo) {     /// search based on r
 
 //////
 
-function getLastPageNo(totalRequestCount) {      /// count total pages
+function getLastPageNo(totalRequestCount) {      /// get last page no
     return totalRequestCount % 10 != 0 ? parseInt(totalRequestCount / 10, 10) + 1 : parseInt(totalRequestCount / 10, 10);
 }
 

@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     if ($("#popup").length) {
         $("#popup").modal('show');
     }

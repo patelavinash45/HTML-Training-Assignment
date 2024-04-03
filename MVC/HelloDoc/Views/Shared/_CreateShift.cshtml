@@ -19,28 +19,28 @@
                             <option value="@item.Key">@item.Value</option>
                         }
                     </select>
-                    <span class="text-danger mb-3" id="regionValidation"></span>
+                    <span asp-validation-for="SelectedRegion" class="text-danger mb-3"></span>
                     <select asp-for="SelectedPhysician" class="p-2 w-100 mt-3" id="physician">
                         <option slected value="">Select Physician</option>
                     </select>
-                    <span class="text-danger mb-3" id="physicianValidation"></span>
+                    <span asp-validation-for="SelectedPhysician" class="text-danger mb-3"></span>
                     <div class="row">
                         <div class="form-floating">
                             <input asp-for="ShiftDate" class="form-control" id="shiftDate" type="date" placeholder="ShiftDate" />
                             <label id="date-picker" for="shiftDate">Shift Date</label>
-                            <span class="text-danger mb-3" id="shiftDateValidation"></span>
+                            <span asp-validation-for="ShiftDate" class="text-danger mb-3"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-floating col-6">
-                            <input asp-for="StartTime" class="form-control" id="startTime" type="time" placeholder="StartTime" step="1800" />
+                            <input asp-for="StartTime" class="form-control" id="startTime" type="time" placeholder="StartTime" />
                             <label id="date-picker" for="startTime">Start Time</label>
-                            <span class="text-danger mb-3" id="startTimeValidation"></span>
+                            <span asp-validation-for="StartTime" class="text-danger mb-3"></span>
                         </div>
                         <div class="form-floating col-6">
-                            <input asp-for="EndTime" class="form-control" id="endTime" type="time" placeholder="EndTime" step="1800"/>
+                            <input asp-for="EndTime" class="form-control" id="endTime" type="time" placeholder="EndTime"/>
                             <label id="date-picker" for="endTime">End Time</label>
-                            <span class="text-danger mb-3" id="endTimeValidation"></span>
+                            <span class="text-danger mb-3" asp-validation-for="EndTime"></span>
                         </div>
                     </div>
                     <div class="form-check form-switch">
@@ -93,7 +93,7 @@
                                 Every Saturday
                             </label>
                         </div>
-                        <div id="repeatValidation" class="text-danger"></div>
+                        <div asp-validation-for="SelectedDays" class="text-danger" id="repeatValidation"></div>
                         <select asp-for="RepeatEnd" class="form-select" id="repeatEnd">
                             <option selected value="">Repeat End</option>
                             <option value="1">1 - Time</option>
@@ -103,7 +103,7 @@
                             <option value="5">5 - Time</option>
                         </select>
                     </fieldset>
-                    <span id="repeatEndValidation" class="text-danger"></span>
+                    <span asp-validation-for="RepeatEnd" class="text-danger" id="repeatEndValidation"></span>
                     <div class="d-flex justify-content-end mt-2">
                         <button type="submit" class="btn mx-2" id="conformButton">
                             Save

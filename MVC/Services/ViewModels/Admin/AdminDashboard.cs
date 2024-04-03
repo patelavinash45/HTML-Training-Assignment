@@ -36,4 +36,70 @@
 
         public SendLink SendLink { get; set; }
     }
+
+    public class TableModel
+    {
+        public List<TablesData> TableDatas { get; set; }
+
+        public int TotalRequests { get; set; }
+
+        public int PageNo { get; set; }
+
+        public bool IsFirstPage { get; set; }
+
+        public bool IsLastPage { get; set; }
+
+        public bool IsNextPage { get; set; }
+
+        public bool IsPreviousPage { get; set; }
+
+        public int StartRange { get; set; }
+
+        public int EndRange { get; set; }
+    }
+
+    public class TablesData
+    {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Notes { get; set; }
+
+        public string PhysicianName { get; set; }
+
+        public int RequesterType { get; set; }
+
+        public int? AssignPhysician { get; set; }
+
+        public int Requester { get; set; }
+
+        public int RequestId { get; set; }
+
+        public int? RegionId { get; set; }
+
+        public string RequesterFirstName { get; set; }
+
+        public string? RequesterLastName { get; set; }
+
+        public string Email { get; set; }
+
+        public string? Mobile { get; set; }
+
+        public string? RequesterMobile { get; set; }
+
+        public DateTime? BirthDate { get; set; }
+
+        public DateTime? DateOfService { get; set; }
+
+        public DateTime? RequestdDate { get; set; }
+
+        public string? Street { get; set; }
+
+        public string? City { get; set; }
+
+        public string? State { get; set; }
+
+        public string? ZipCode { get; set; }
+    }
 }

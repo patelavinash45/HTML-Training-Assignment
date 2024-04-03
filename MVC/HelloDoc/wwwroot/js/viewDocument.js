@@ -4,16 +4,14 @@ $('#mainCheckBox').click(function () {
     if ($(this).is(':checked')) {
         $('.checkBox').prop('checked', true);
         var temp = $('.checkBox');
-        var List = [];
+        var IdList = [];
         for (let i = 0; i < temp.length; i++) {
-            List.push($(temp[i]).attr("id"));
+            IdList.push($(temp[i]).attr("id"));
         }
-        IdList = List;
     }
     else {
         $('.checkBox').prop('checked', false);
-        var List = [];
-        IdList = List;
+        IdList = [];
     }
 });
 
@@ -61,11 +59,10 @@ function onCheckboxChnage(fileId,totalcount) {
         $('#mainCheckBox').prop('checked', true);
         $('.checkBox').prop('checked', true);
         var temp = $('.checkBox');
-        var List = [];
+        var IdList = [];
         for (let i = 0; i < temp.length; i++) {
-            List.push($(temp[i]).attr("id"));
+            IdList.push($(temp[i]).attr("id"));
         }
-        IdList = List;
     }
     else {
         $('#mainCheckBox').prop('checked', false);

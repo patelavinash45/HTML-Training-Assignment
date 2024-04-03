@@ -161,20 +161,12 @@ $(document).on("change", "#isRepeat", function () {
         $("#repeatEnd").val("");
         $(".weekDay").prop("checked",false);
         $("#repeatFields").prop("disabled", true);
+        $("#repeatEndValidation").text("");
     }
 });
 
-function validation(doc1, doc2, fieldName) {
-    if ($(doc1).val().length == 0) {
-        $(doc2).text(fieldName+" is required");
-    }
-    else {
-        $(doc2).text("");
-    }
-}
 
 $(document).on("change", "#regions", function () {
-    validation(this, "#regionValidation", "Region");
     if ($(this).val().length != 0) {
         $.ajax({
             url: "/Admin/GetPhysicians",
@@ -194,25 +186,6 @@ $(document).on("change", "#regions", function () {
     }
 })
 
-$(document).on("change", "#physician", function () {
-    validation(this, "#physicianValidation", "Physician");
-})
-
-$(document).on("change", "#shiftDate", function () {
-    validation(this, "#shiftDateValidation", "ShiftDate");
-})
-
-$(document).on("change", "#startTime", function () {
-    validation(this, "#startTimeValidation", "Start Time");
-})
-
-$(document).on("change", "#endTime", function () {
-    validation(this, "#endTimeValidation", "End Time");
-})
-
-$(document).on("change", "#repeatEnd", function () {
-    validation(this, "#repeatEndValidation", "Repeat End");
-})
 
 $(document).on("change", ".weekDay", function () {
     if (!$(this).is(":checked")) {
@@ -228,16 +201,10 @@ $(document).on("submit", "#createShiftForm", function (e)
     if ($("#regions").val().length == 0 || $("#endTime").val().length == 0 || $("#startTime").val().length == 0 || $("#shiftDate").val().length == 0
         || $("#physician").val().length == 0 ) {
         e.preventDefault();
-        validation("#regions", "#regionValidation", "Region");
-        validation("#physician", "#physicianValidation", "Physician");
-        validation("#shiftDate", "#shiftDateValidation", "ShiftDate");
-        validation("#startTime", "#startTimeValidation", "Start Time");
-        validation("#endTime", "#endTimeValidation", "End Time");
     }
     if ($("#isRepeat").is(":checked")) {
         if (!$(".weekDay").is(":checked") || $("#repeatEnd").val().length == 0) {
             e.preventDefault();
-            validation("#repeatEnd", "#repeatEndValidation", "Repeat End");
             if (!$(".weekDay").is(":checked")) {
                 $("#repeatValidation").text("Week Day is required");
             }

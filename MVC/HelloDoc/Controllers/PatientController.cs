@@ -1,4 +1,4 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
+﻿    using AspNetCoreHero.ToastNotification.Abstractions;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
@@ -148,32 +148,29 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult LoginPage(Login model)
         {
-            if (ModelState.IsValid)
+            UserDataModel user = _loginService.auth(model, 1);
+            if (user == null)
             {
-                UserDataModel user = _loginService.auth(model,1);
-                if (user == null)
-                {
-                    _notyfService.Error("Invalid credentials");
-                }
-                else
-                {
-                    HttpContext.Session.SetInt32("aspNetUserId", user.AspNetUserId);
-                    HttpContext.Session.SetString("role", user.UserType);
-                    HttpContext.Session.SetString("firstName", user.FirstName);
-                    HttpContext.Session.SetString("lastName", user.LastName);
-                    string token = _jwtService.genrateJwtToken(user);
-                    CookieOptions cookieOptions = new CookieOptions()
-                    {
-                        Secure = true,
-                        Expires = DateTime.Now.AddMinutes(20),
-                    };
-                    Response.Cookies.Append("jwtToken", token, cookieOptions);
-                    //HttpContext.Session.SetString("jwtToken", token);
-                    _notyfService.Success("Successfully Login");
-                    return RedirectToAction("Dashboard", "Patient");
-                }
+                _notyfService.Error("Invalid credentials");
+                return RedirectToAction("Dashboard", "Patient");
             }
-            return View(null);
+            else
+            {
+                HttpContext.Session.SetInt32("aspNetUserId", user.AspNetUserId);
+                HttpContext.Session.SetString("role", user.UserType);
+                HttpContext.Session.SetString("firstName", user.FirstName);
+                HttpContext.Session.SetString("lastName", user.LastName);
+                string token = _jwtService.genrateJwtToken(user);
+                CookieOptions cookieOptions = new CookieOptions()
+                {
+                    Secure = true,
+                    Expires = DateTime.Now.AddMinutes(20),
+                };
+                Response.Cookies.Append("jwtToken", token, cookieOptions);
+                //HttpContext.Session.SetString("jwtToken", token);
+                _notyfService.Success("Successfully Login");
+                return RedirectToAction("Dashboard", "Patient");
+            }
         }
 
         [HttpPost]
@@ -195,21 +192,16 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewProfile(ViewProfile model)
         {
-            if(ModelState.IsValid)
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _viewProfileService.updatePatientProfile(model, aspNetUserId))
             {
-                int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-                if (await _viewProfileService.updatePatientProfile(model,aspNetUserId))
-                {
-                    _notyfService.Success("Successfully Updated");
-                }
-                else
-                {
-                    _notyfService.Error("Faild!");
-                }
-                return RedirectToAction("ViewProfile", "Patient");
+                _notyfService.Success("Successfully Updated");
             }
-            _notyfService.Warning("Add Required Field.");
-            return View(null);
+            else
+            {
+                _notyfService.Error("Faild!");
+            }
+            return RedirectToAction("ViewProfile", "Patient");
         }
 
         [HttpPost]
@@ -242,121 +234,97 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RequestForMe(AddRequestByPatient model)
         {
-            if (ModelState.IsValid)
+            if (await _addRequestService.addRequestForMe(model))
             {
-                if (await _addRequestService.addRequestForMe(model))
-                {
-                    _notyfService.Success("Successfully Request Added");
-                    return RedirectToAction("Dashboard", "Patient");
-                }
-                else
-                {
-                    _notyfService.Error("Add Request Faild");
-                }
-            }   
-            _notyfService.Warning("Add Required Field.");
-            return View(model);
+                _notyfService.Success("Successfully Request Added");
+                return RedirectToAction("Dashboard", "Patient");
+            }
+            else
+            {
+                _notyfService.Error("Add Request Faild");
+                return RedirectToAction("RequestForMe", "Patient");
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RequestForSomeOne(AddRequestByPatient model)
         {
-            if (ModelState.IsValid)
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _addRequestService.addRequestForSomeOneelse(model: model, aspNetUserIdMe: aspNetUserId))
             {
-                int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-                if (await _addRequestService.addRequestForSomeOneelse(model : model , aspNetUserIdMe: aspNetUserId))
-                {
-                    _notyfService.Success("Successfully Request Added");
-                    return RedirectToAction("Dashboard", "Patient");
-                }
-                else
-                {
-                    _notyfService.Error("Add Request Faild");
-                }
+                _notyfService.Success("Successfully Request Added");
+                return RedirectToAction("Dashboard", "Patient");
             }
-            _notyfService.Warning("Please, Add Required Field.");
-            return View(null);
+            else
+            {
+                _notyfService.Error("Add Request Faild");
+                return RedirectToAction("RequestForSomeOne", "Patient");
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PatientRequest(AddPatientRequest model)
         {
-            if (ModelState.IsValid)
+            if (await _addRequestService.addPatientRequest(model))
             {
-                if (await _addRequestService.addPatientRequest(model))
-                {
-                    _notyfService.Success("Successfully Request Added");
-                    return RedirectToAction("LoginPage", "Patient");
-                }
-                else
-                {
-                    _notyfService.Error("Add Request Faild");
-                }
-            };
-            _notyfService.Warning("Add Required Field.");
-            return View(null);
+                _notyfService.Success("Successfully Request Added");
+                return RedirectToAction("LoginPage", "Patient");
+            }
+            else
+            {
+                _notyfService.Error("Add Request Faild");
+                return RedirectToAction("PatientRequest", "Patient");
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConciergeRequest(AddConciergeRequest model)
         {
-            if (ModelState.IsValid)
+            if (await _addRequestService.addConciergeRequest(model))
             {
-                if (await _addRequestService.addConciergeRequest(model))
-                {
-                    _notyfService.Success("Successfully Request Added");
-                    return RedirectToAction("LoginPage", "Patient");
-                }
-                else
-                {
-                    _notyfService.Error("Add Request Faild");
-                }
+                _notyfService.Success("Successfully Request Added");
+                return RedirectToAction("LoginPage", "Patient");
             }
-            _notyfService.Warning("Add Required Field.");
-            return View(null);
+            else
+            {
+                _notyfService.Error("Add Request Faild");
+                return RedirectToAction("ConciergeRequest", "Patient");
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> FamilyFriendRequest(AddFamilyRequest model)
         {
-            if (ModelState.IsValid)
+            if (await _addRequestService.addFamilyFriendRequest(model))
             {
-                if (await _addRequestService.addFamilyFriendRequest(model))
-                {
-                    _notyfService.Success("Successfully Request Added");
-                    return RedirectToAction("LoginPage", "Patient");
-                }
-                else
-                {
-                    _notyfService.Error("Add Request Faild");
-                }
+                _notyfService.Success("Successfully Request Added");
+                return RedirectToAction("LoginPage", "Patient");
             }
-            _notyfService.Warning("Add Required Field.");
-            return View(null);
+            else
+            {
+                _notyfService.Error("Add Request Faild");
+                return RedirectToAction("FamilyFriendRequest", "Patient");
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> BusinessRequest(AddBusinessRequest model)
         {
-            if (ModelState.IsValid)
+            if (await _addRequestService.addBusinessRequest(model))
             {
-                if (await _addRequestService.addBusinessRequest(model))
-                {
-                    _notyfService.Success("Successfully Request Added");
-                    return RedirectToAction("LoginPage", "Patient");
-                }
-                else
-                {
-                    _notyfService.Error("Add Request Faild");
-                }
+                _notyfService.Success("Successfully Request Added");
+                return RedirectToAction("LoginPage", "Patient");
             }
-            _notyfService.Warning("Add Required Field.");
-            return View(null);
+            else
+            {
+                _notyfService.Error("Add Request Faild");
+                return RedirectToAction("BusinessRequest", "Patient");
+            }
         }
     }
 }

@@ -47,6 +47,10 @@ public partial class ShiftDetail
     [InverseProperty("ShiftDetails")]
     public virtual AspNetUser? ModifiedByNavigation { get; set; }
 
+    [ForeignKey("RegionId")]
+    [InverseProperty("ShiftDetails")]
+    public virtual Region? Region { get; set; }
+
     [ForeignKey("ShiftId")]
     [InverseProperty("ShiftDetails")]
     public virtual Shift Shift { get; set; } = null!;

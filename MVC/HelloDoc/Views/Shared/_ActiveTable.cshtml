@@ -297,7 +297,7 @@
                 @Model.PageNo
             </button>
             <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="getNextPageData(@Model.PageNo,@Model.TotalRequests)"
-            disabled=@(!Model.IsNextPage)>
+                                                                        disabled=@(!Model.IsNextPage)>
                 ›
             </button>
             <button class="border-0 rounded-0 fs-4 mx-2 bg-transparent" onclick="navigateToLastPage(@Model.TotalRequests)" disabled=@(!Model.IsLastPage)>

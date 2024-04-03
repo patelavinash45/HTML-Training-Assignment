@@ -64,6 +64,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUHJvdmlkZXJTY2hlZHVsaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/RequestedShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUmVxdWVzdGVkU2hpZnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/SendOrder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU2VuZE9yZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -222,6 +226,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_RequestClearPopUp.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZXF1ZXN0Q2xlYXJQb3BVcC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_RequestedShiftTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZXF1ZXN0ZWRTaGlmdFRhYmxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_RequestFooter.cshtml]

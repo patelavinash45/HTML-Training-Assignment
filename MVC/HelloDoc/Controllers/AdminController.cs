@@ -145,6 +145,12 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
+        public IActionResult RequestedShift()
+        {
+            return View(_providersService.getRequestedShift());
+        }
+
+        [Authorization("Admin")]
         public IActionResult CloseCase()
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
@@ -221,36 +227,28 @@ namespace HelloDoc.Controllers
 
         public async Task<IActionResult> CancelPopUp(CancelPopUp model)
         {
-            if(ModelState.IsValid)
+            if (await _viewNotesService.cancleRequest(model))
             {
-                if (await _viewNotesService.cancleRequest(model))
-                {
-                    _notyfService.Success("Successfully Reuqest Cancel");
-                }
-                else
-                {
-                    _notyfService.Error("Request Cancel Faild!");
-                }
-                return RedirectToAction("Dashboard", "Admin");
+                _notyfService.Success("Successfully Reuqest Cancel");
             }
-            return View(model);
+            else
+            {
+                _notyfService.Error("Request Cancel Faild!");
+            }
+            return RedirectToAction("Dashboard", "Admin");
         }
 
         public async Task<IActionResult> AssignPopUp(AssignAndTransferPopUp model)
         {
-            if (ModelState.IsValid)
+            if (await _viewNotesService.assignRequest(model))
             {
-                if (await _viewNotesService.assignRequest(model))
-                {
-                    _notyfService.Success("Successfully Reuqest Assign");
-                }
-                else
-                {
-                    _notyfService.Error("Request Assign Faild!");
-                }
-                return RedirectToAction("Dashboard", "Admin");
+                _notyfService.Success("Successfully Reuqest Assign");
             }
-            return View(model);
+            else
+            {
+                _notyfService.Error("Request Assign Faild!");
+            }
+            return RedirectToAction("Dashboard", "Admin");
         }
 
         public async Task<IActionResult> TransferPopUp(AssignAndTransferPopUp model)
@@ -343,13 +341,13 @@ namespace HelloDoc.Controllers
                 int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
                 if (await _providersService.createShift(model,aspNetUseId))
                 {
-                    _notyfService.Success("Successfully Send");
+                    _notyfService.Success("Successfully Created");
                 }
                 else
                 {
                     _notyfService.Error("Faild!");
                 }
-                return RedirectToAction("Dashboard", "Admin");
+                return RedirectToAction("ProviderScheduling", "Admin");
             }
             return View(model);
         }
@@ -646,20 +644,16 @@ namespace HelloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> CloseCase(CloseCase model)
         {
-            if (ModelState.IsValid)
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
+            if (await _closeCaseService.updateDetails(model, requestId))
             {
-                int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _closeCaseService.updateDetails(model,requestId))
-                {
-                    _notyfService.Success("Successfully Updated");
-                }
-                else
-                {
-                    _notyfService.Error("Update Faild");
-                }
-                return RedirectToAction("CloseCase", "Admin");
+                _notyfService.Success("Successfully Updated");
             }
-            return View(model);
+            else
+            {
+                _notyfService.Error("Update Faild");
+            }
+            return RedirectToAction("CloseCase", "Admin");
         }
 
         public async Task<IActionResult> RequestAddToCloseCase()    ///  from close case page button click
@@ -792,6 +786,18 @@ namespace HelloDoc.Controllers
         public IActionResult ChangeTab(string name,int regionId,int type,String time)
         {
             return PartialView(name, _providersService.getSchedulingTableDate(regionId,type,time));
+        }
+
+        [HttpGet]    // RequestShift page  
+        public IActionResult GetRequestShifTableData(int regionId, bool isMonth, int pageNo)
+        {
+            return PartialView("_RequestedShiftTable", _providersService.getRequestShiftTableDate(regionId,isMonth,pageNo));
+        }
+
+        [HttpGet]    // RequestShift page  
+        public async Task<JsonResult> UpdateShiftDetails(string data,bool isApprove)
+        {
+            return Json(await _providersService.chnageShiftDetails(data, isApprove));
         }
     }
 }

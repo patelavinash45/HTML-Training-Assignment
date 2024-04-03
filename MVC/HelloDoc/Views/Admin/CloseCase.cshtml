@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Close Case</title>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/Admin/closeCase.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -133,23 +135,23 @@
                         <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                             <input asp-for="FirstName" class="form-control" id="firstName" placeholder="FirstName" />
                             <label for="firstName">First Name</label>
-                            <span id="firstNameValidation" class="text-danger validation">The FirstName field is required.</span>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                         <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                             <input asp-for="LastName" class="form-control" id="lastName" placeholder="LastName" />
                             <label for="lastName">Last Name</label>
-                            <span id="lastNameValidation" class="text-danger validation">The LastName field is required.</span>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                             <input asp-for="BirthDate" class="form-control" id="birthDate" placeholder="BirthDate" type="date" />
                             <label for="birthdate">Date of Birth</label>
-                            <span id="birthDateValidation" class="text-danger validation">The BirthDate field is required.</span>
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
                         </div>
                         <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                             <input asp-for="Phone" class="form-control" id="phone" placeholder="Mobile Number" />
-                            <span id="phoneValidation" class="text-danger validation">The PhoneNumber field is required.</span>
+                            <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
                         </div>
                     <div class="row">

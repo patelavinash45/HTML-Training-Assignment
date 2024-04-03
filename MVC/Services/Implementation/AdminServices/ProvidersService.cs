@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Http;
 using Repositories.DataModels;
 using Repositories.Interface;
 using Repositories.Interfaces;
@@ -9,6 +10,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace Services.Implementation.AdminServices
 {
@@ -222,23 +224,36 @@ namespace Services.Implementation.AdminServices
                 PhysicianId = model.SelectedPhysician,
                 StartDate = new DateOnly(model.ShiftDate.Year,model.ShiftDate.Month,model.ShiftDate.Day),
                 IsRepeat = new BitArray(1, model.IsRepeat),
-                WeekDays = model.SelectedDays.ToString(),
+                WeekDays = model.IsRepeat ? String.Join("",model.SelectedDays):  "",
                 RepeatUpto = model.RepeatEnd,
                 CreatedBy = aspNetUserId,
-                CreatedDate = DateTime.UtcNow,
+                CreatedDate = DateTime.Now,
             };
             if(await _shiftRepository.addShift(shift))
             {
-                if(model.IsRepeat)
+                ShiftDetail shiftDetail = new ShiftDetail()
                 {
-                    model.SelectedDays.ForEach(async day =>
+                    ShiftId = shift.ShiftId,
+                    ShiftDate = model.ShiftDate,
+                    RegionId = model.SelectedRegion,
+                    StartTime = model.StartTime,
+                    EndTime = model.EndTime,
+                    Status = 0,
+                    IsDeleted = new BitArray(1, false)
+                };
+                await _shiftRepository.addShiftDetails(shiftDetail);
+                if (model.IsRepeat)
+                {
+                    foreach(int day in model.SelectedDays)
                     {
+                        DateTime date = model.ShiftDate;
                         for(int i=0;i<model.RepeatEnd;i++)
                         {
-                            ShiftDetail shiftDetail = new ShiftDetail()
+                            date = date.AddDays(day - (int)date.DayOfWeek + 7);
+                            shiftDetail = new ShiftDetail()
                             {
                                 ShiftId = shift.ShiftId,
-                                ShiftDate = model.ShiftDate.AddDays(day - (int)model.ShiftDate.DayOfWeek),
+                                ShiftDate = date,
                                 RegionId = model.SelectedRegion,
                                 StartTime = model.StartTime,
                                 EndTime = model.EndTime,
@@ -247,11 +262,80 @@ namespace Services.Implementation.AdminServices
                             };
                             await _shiftRepository.addShiftDetails(shiftDetail);
                         }
-                    });
+                    };
                     return true;
                 }
             }
             return false;
+        }
+
+        public RequestedShift getRequestedShift()
+        {
+            RequestedShift requestedShift = new RequestedShift()
+            {
+                Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
+                RequestedShiftModel = getRequestShiftTableDate(0, false, 1),
+            };
+            return requestedShift;
+        }
+
+        public RequestShiftModel getRequestShiftTableDate(int regionId, bool isMonth, int pageNo)
+        {
+            int skip = (pageNo - 1) * 10;
+            DateTime date = new DateTime();
+            if (isMonth)
+            {
+                date = DateTime.Now;
+                date = new DateTime(date.Year, date.Month, 1);
+            }
+            int totalShifts = _shiftRepository.countAllShiftDetails(regionId, isMonth, date);
+            List<RequestedShiftTable> requestedShiftTables = _shiftRepository.getAllShiftDetails(regionId, isMonth, date, skip).Select(
+                shiftDetails => new RequestedShiftTable
+                {
+                    Name = shiftDetails.Shift.Physician.FirstName + " " + shiftDetails.Shift.Physician.LastName,
+                    Date = shiftDetails.ShiftDate,
+                    StartTime = shiftDetails.StartTime,
+                    EndTime = shiftDetails.EndTime,
+                    Region = shiftDetails.Region.Name,
+                }).ToList();
+            int totalPages = totalShifts % 10 != 0 ? (totalShifts / 10) + 1 : totalShifts / 10;
+            RequestShiftModel requestShiftModel = new RequestShiftModel()
+            {
+                TotalShifts = totalShifts,
+                IsFirstPage = pageNo != 1,
+                IsLastPage = pageNo != totalPages,
+                IsNextPage = pageNo < totalPages,
+                IsPreviousPage = pageNo > 1,
+                PageNo = pageNo,
+                StartRange = skip + 1,
+                EndRange = skip + 10 < totalShifts ? skip + 10 : totalShifts,
+                RequestedShiftTables = requestedShiftTables,
+            };
+            return requestShiftModel;
+        }
+
+        public async Task<bool> chnageShiftDetails(string dataList,bool isApprove)
+        {
+            if(isApprove)
+            {
+                JsonSerializer.Deserialize<List<String>>(dataList).Select(async id =>
+                {
+                    ShiftDetail shiftDetail = _shiftRepository.getShiftDetails(int.Parse(id));
+                    shiftDetail.Status = 1;
+                    await _shiftRepository.updateShiftDetails(shiftDetail);
+                });
+                return true;
+            }
+            else
+            {
+                JsonSerializer.Deserialize<List<String>>(dataList).Select(async id =>
+                {
+                    ShiftDetail shiftDetail = _shiftRepository.getShiftDetails(int.Parse(id));
+                    shiftDetail.IsDeleted = new BitArray(1, true);
+                    await _shiftRepository.updateShiftDetails(shiftDetail);
+                });
+                return true;
+            }
         }
 
         public List<SchedulingTable> getSchedulingTableDate(int regionId, int type, string time)

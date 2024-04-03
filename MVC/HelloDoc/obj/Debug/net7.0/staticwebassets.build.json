@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "tkz+ssFvPDDiiUqHPd85wjUtBtFEdqwzSIrIkkT99pA=",
+  "Hash": "+qGqd4+BG5GaEcR4EHGjqLWgwMhGL3bevOR7cqEjXr4=",
   "Source": "HelloDoc",
   "BasePath": "_content/HelloDoc",
   "Mode": "Default",
@@ -304,6 +304,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\admin\\providerScheduling.css"
+    },
+    {
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\requestedShift.css",
+      "SourceId": "HelloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
+      "BasePath": "_content/HelloDoc",
+      "RelativePath": "css/admin/requestedShift.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\admin\\requestedShift.css"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\sendOrder.css",
@@ -797,6 +814,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\108\\Schedulling_day view_mobile.png"
+    },
+    {
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\110\\.viminfo",
+      "SourceId": "HelloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
+      "BasePath": "_content/HelloDoc",
+      "RelativePath": "Files/110/.viminfo",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\110\\.viminfo"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\26\\Patient site_forget password_mobile.png",
@@ -2040,12 +2074,12 @@
       "OriginalItemSpec": "wwwroot\\js\\Admin\\requestPopUp.js"
     },
     {
-      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\SendOrder.js",
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\requestShift.js",
       "SourceId": "HelloDoc",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
       "BasePath": "_content/HelloDoc",
-      "RelativePath": "js/Admin/SendOrder.js",
+      "RelativePath": "js/Admin/requestShift.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -2054,7 +2088,24 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\Admin\\SendOrder.js"
+      "OriginalItemSpec": "wwwroot\\js\\Admin\\requestShift.js"
+    },
+    {
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\sendOrder.js",
+      "SourceId": "HelloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
+      "BasePath": "_content/HelloDoc",
+      "RelativePath": "js/Admin/sendOrder.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Admin\\sendOrder.js"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\viewCase.js",
@@ -2142,12 +2193,12 @@
       "OriginalItemSpec": "wwwroot\\js\\Patient\\dashboard.js"
     },
     {
-      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Request.js",
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\request.js",
       "SourceId": "HelloDoc",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
       "BasePath": "_content/HelloDoc",
-      "RelativePath": "js/Request.js",
+      "RelativePath": "js/request.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -2156,7 +2207,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\Request.js"
+      "OriginalItemSpec": "wwwroot\\js\\request.js"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\viewDocument.js",

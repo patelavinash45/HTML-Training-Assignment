@@ -4,8 +4,10 @@ namespace Services.ViewModels.Admin
 {
     public class AssignAndTransferPopUp
     {
+        [Display(Name = "Region")]
         public int SelectedRegion { get; set; }
 
+        [Display(Name = "Physician")]
         public int SelectedPhysician { get; set; }
 
         public Dictionary<int, String>? Regions { get; set; }

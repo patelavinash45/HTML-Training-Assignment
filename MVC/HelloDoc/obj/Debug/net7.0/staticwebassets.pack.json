@@ -37,6 +37,10 @@
       "PackagePath": "staticwebassets\\Files\\108\\Schedulling_day view_mobile.png"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\110\\.viminfo",
+      "PackagePath": "staticwebassets\\Files\\110\\.viminfo"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\26\\Patient site_forget password_mobile.png",
       "PackagePath": "staticwebassets\\Files\\26\\Patient site_forget password_mobile.png"
     },
@@ -325,6 +329,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\providers.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\requestedShift.css",
+      "PackagePath": "staticwebassets\\css\\admin\\requestedShift.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\sendOrder.css",
       "PackagePath": "staticwebassets\\css\\admin\\sendOrder.css"
     },
@@ -421,10 +429,6 @@
       "PackagePath": "staticwebassets\\images\\loginImage.jpg"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\SendOrder.js",
-      "PackagePath": "staticwebassets\\js\\Admin\\SendOrder.js"
-    },
-    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\_DashboardHeader.js",
       "PackagePath": "staticwebassets\\js\\Admin\\_DashboardHeader.js"
     },
@@ -457,6 +461,14 @@
       "PackagePath": "staticwebassets\\js\\Admin\\requestPopUp.js"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\requestShift.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\requestShift.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\sendOrder.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\sendOrder.js"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\viewCase.js",
       "PackagePath": "staticwebassets\\js\\Admin\\viewCase.js"
     },
@@ -473,12 +485,12 @@
       "PackagePath": "staticwebassets\\js\\Patient\\dashboard.js"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Request.js",
-      "PackagePath": "staticwebassets\\js\\Request.js"
-    },
-    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\international-telephone-input.js",
       "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\request.js",
+      "PackagePath": "staticwebassets\\js\\request.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\viewDocument.js",

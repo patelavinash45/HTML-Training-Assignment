@@ -105,31 +105,31 @@ namespace Services.ViewModels.Admin
 
         public bool IsAgreementDoc { get; set; }
 
-        [FileRequiredIfBoolIsTrue(nameof(IsAgreementDoc))]
+        [RequiredIfBoolIsTrue(nameof(IsAgreementDoc))]
         public IFormFile? AgreementDoc { get; set; }
 
         public bool IsBackgroundDoc { get; set; }
 
-        [FileRequiredIfBoolIsTrue(nameof(IsBackgroundDoc))]
+        [RequiredIfBoolIsTrue(nameof(IsBackgroundDoc))]
         public IFormFile? BackgroundDoc { get; set; }
 
         public bool IsHIPAACompliance { get; set; }
 
-        [FileRequiredIfBoolIsTrue(nameof(IsHIPAACompliance))]
+        [RequiredIfBoolIsTrue(nameof(IsHIPAACompliance))]
         public IFormFile? HIPAACompliance { get; set; }
 
         public bool IsNonDisclosureDoc { get; set; }
 
-        [FileRequiredIfBoolIsTrue(nameof(IsNonDisclosureDoc))]
+        [RequiredIfBoolIsTrue(nameof(IsNonDisclosureDoc))]
         public IFormFile? NonDisclosureDoc { get; set; }
 
     }
 
-    public class FileRequiredIfBoolIsTrueAttribute : ValidationAttribute
+    public class RequiredIfBoolIsTrueAttribute : ValidationAttribute
     {
         private readonly string[] _boolProperties;
 
-        public FileRequiredIfBoolIsTrueAttribute(params string[] boolProperties)
+        public RequiredIfBoolIsTrueAttribute(params string[] boolProperties)
         {
             _boolProperties = boolProperties;
         }
@@ -188,15 +188,16 @@ namespace Services.ViewModels.Admin
         public String Status { get; set; }
 
         public int Time { get; set; }
-
     }
 
     public class CreateShift
     {
+        [Display(Name = "Region")]
         public int SelectedRegion { get; set; }
 
         public Dictionary<int, string>? Regions { get; set; }
 
+        [Display(Name = "Physician")]
         public int SelectedPhysician { get; set; }
 
         public DateTime ShiftDate { get; set; }
@@ -207,9 +208,52 @@ namespace Services.ViewModels.Admin
 
         public bool IsRepeat { get; set; }
 
-        public List<int> SelectedDays { get; set; }
+        public List<int>? SelectedDays { get; set; }
 
         public int RepeatEnd { get; set; } = 0;
+    }
+
+    public class RequestedShift
+    {
+        public Dictionary<int, string>? Regions { get; set; }
+
+        public RequestShiftModel RequestedShiftModel { get; set; }
+    }
+
+    public class RequestShiftModel
+    {
+        public List<RequestedShiftTable> RequestedShiftTables { get; set; }
+
+        public int TotalShifts { get; set; }
+
+        public int PageNo { get; set; }
+
+        public bool IsFirstPage { get; set; }
+
+        public bool IsLastPage { get; set; }
+
+        public bool IsNextPage { get; set; }
+
+        public bool IsPreviousPage { get; set; }
+
+        public int StartRange { get; set; }
+
+        public int EndRange { get; set; }
+    }
+
+    public class RequestedShiftTable
+    {
+        public string Name { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public TimeOnly StartTime { get; set; }
+
+        public TimeOnly EndTime { get; set;}
+
+        public string Region { get; set; }
+
+        public int ShiftDetailsId { get; set; }
     }
 
 }
