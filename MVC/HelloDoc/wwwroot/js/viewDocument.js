@@ -1,10 +1,9 @@
 var IdList = [];
-
 $('#mainCheckBox').click(function () {
     if ($(this).is(':checked')) {
         $('.checkBox').prop('checked', true);
         var temp = $('.checkBox');
-        var IdList = [];
+        IdList = [];
         for (let i = 0; i < temp.length; i++) {
             IdList.push($(temp[i]).attr("id"));
         }
@@ -23,27 +22,35 @@ $('#downloadAll').click(function () {
 });
 
 $('#deleteAll').click(function () {
-    $.ajax({
-        url: "/Admin/DeleteAllFiles",
-        type: 'post',
-        contentType: 'application/json',
-        data: JSON.stringify(IdList),
-        success: function (response) {
-            window.location.href = response.redirect;
-        }
-    })
+    if (IdList.length > 0) {
+        $.ajax({
+            url: "/Admin/DeleteAllFiles",
+            type: 'GET',
+            contentType: 'application/json',
+            data: {
+                requestWiseFileIdsList: JSON.stringify(IdList),
+            },
+            success: function (response) {
+                window.location.href = response.redirect;
+            }
+        })
+    }
 })
 
 $("#sendMail").click(function () {
-    $.ajax({
-        url: "/Admin/SendMail",
-        type: "post",
-        contentType: "application/json",
-        data: JSON.stringify(IdList),
-        success: function (response) {
-            window.location.href = response.redirect;
-        } 
-    })
+    if (IdList.length > 0) {
+        $.ajax({
+            url: "/Admin/SendMail",
+            type: "GET",
+            contentType: "application/json",
+            data: {
+                requestWiseFileIdsList: JSON.stringify(IdList),
+            },
+            success: function (response) {
+                window.location.href = response.redirect;
+            }
+        })
+    }
 })
 
 function onCheckboxChnage(fileId,totalcount) {
@@ -51,7 +58,7 @@ function onCheckboxChnage(fileId,totalcount) {
     if ($(fileId).is(":checked")) {
         IdList.push(id);
     }
-    else{
+    else {
         var index = IdList.indexOf(id);
         IdList.splice(index, 1);
     }
@@ -59,7 +66,7 @@ function onCheckboxChnage(fileId,totalcount) {
         $('#mainCheckBox').prop('checked', true);
         $('.checkBox').prop('checked', true);
         var temp = $('.checkBox');
-        var IdList = [];
+        IdList = [];
         for (let i = 0; i < temp.length; i++) {
             IdList.push($(temp[i]).attr("id"));
         }

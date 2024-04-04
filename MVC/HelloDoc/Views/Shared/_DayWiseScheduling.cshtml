@@ -57,19 +57,19 @@
                         {
                             if(data.FirstHalf)
                             {
-                                <td><span class="@data.Status w-50">.f</span><span></span></td>
+                                <td class="dayWiseColumnWidth"><img class="w-50 float-lg-start" src="@data.Status" /></td>
                             }
                             else if (data.SecoundHalf)
                             {
-                                <td><span></span><span class="@data.Status w-50">.s</span></td>
+                                <td class="dayWiseColumnWidth"><img class="float-end w-50" src="@data.Status" /></td>
                             }
                             else
                             {
-                                <td class="@data.Status">.</td>
+                                <td class="dayWiseColumnWidth"><img class="w-100" src="@data.Status" /></td>
                             }
                         }else
                         {
-                            <td></td>
+                            <td class="dayWiseColumnWidth"></td>
                         }
                     }
                 </tr>

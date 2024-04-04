@@ -13,6 +13,7 @@
     <script src="~/js/Admin/requestShift.js"></script>
 </head>
 <body>
+    @await Component.InvokeAsync("Notyf")
     <partial name="_AdminDashboardHeader" model="0">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
@@ -28,7 +29,7 @@
         </div>
         <div class="mainBody">
             <div class="d-flex justify-content-between align-items-center mt-2 mb-3 topElements">
-                <select class="form-select select" id="regionFilter">
+                <select class="form-select select shadow-none" id="regionFilter">
                     <option selected>All Region</option>
                     @foreach(var item in Model.Regions)
                     {
@@ -39,10 +40,10 @@
                     <button class="fw-bold topButtons py-2 px-2 bg-white" id="isMonthButton">
                         View Current Month Shift
                     </button>
-                    <button class="topButtons fw-bold py-2 px-2 bg-white" id="approved">
+                    <button class="topButtons fw-bold py-2 px-2" id="approved">
                         Approved Selected
                     </button>
-                    <button class="topButtons fw-bold py-2 px-2 bg-white" id="delete">
+                    <button class="topButtons fw-bold py-2 px-2 bg-danger text-white border-danger" id="delete">
                         Delete Selected
                     </button>
                 </div>

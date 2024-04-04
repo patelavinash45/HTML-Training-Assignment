@@ -4,6 +4,8 @@ namespace Services.Interfaces.AdminServices
 {
     public interface IProvidersService
     {
+        List<ProviderLocation> getProviderLocation();
+
         Provider getProviders(int regionId);
 
         Task<bool> editProviderNotification(int providerId, bool isNotification);
@@ -16,7 +18,9 @@ namespace Services.Interfaces.AdminServices
 
         ProviderScheduling getProviderSchedulingData();
 
-        List<SchedulingTable> getSchedulingTableDate(int regionId, int type, string time);
+        List<SchedulingTable> getSchedulingTableDate(int regionId, int type, string date);
+
+        SchedulingTableMonthWise monthWiseScheduling(String dateString);
 
         Task<bool> createShift(CreateShift model,int aspNetUserId);
 

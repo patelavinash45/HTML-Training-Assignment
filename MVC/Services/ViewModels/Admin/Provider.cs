@@ -40,6 +40,15 @@ namespace Services.ViewModels.Admin
         public bool sms { get; set; } = false;
     }
 
+    public class ProviderLocation
+    {
+        public decimal? latitude { get; set; }
+
+        public decimal? longitude { get; set; }
+
+        public string ProviderName { get; set; }
+    }
+
     public class CreateProvider
     {
         [StringLength(100)]
@@ -188,6 +197,26 @@ namespace Services.ViewModels.Admin
         public String Status { get; set; }
 
         public int Time { get; set; }
+    }
+
+    public class SchedulingTableMonthWise
+    {
+        public Dictionary<int, List<ShiftDetailsMonthWise>> MonthWise { get; set; }
+
+        public int StartDate { get; set; }
+
+        public int TotalDays { get; set; }
+
+    }
+
+    public class ShiftDetailsMonthWise
+    {
+        public int PhysicianId { get; set; }
+
+        public string ProviderName { get; set; }
+
+        public double Time { get; set; }
+
     }
 
     public class CreateShift

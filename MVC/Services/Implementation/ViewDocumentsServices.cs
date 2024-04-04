@@ -5,6 +5,7 @@ using Services.ViewModels;
 using System.Collections;
 using System.Net;
 using System.Net.Mail;
+using System.Text.Json;
 
 namespace Services.Implementation
 {
@@ -56,25 +57,26 @@ namespace Services.Implementation
             return await _fileService.addFile(requestId: requestId, firstName: firstName, lastName: lastName,file: model.File);
         }
 
-        public async Task<int> deleteFile(int requestWiseFileId)
+        public async Task<bool> deleteFile(int requestWiseFileId)
         {
             RequestWiseFile requestWiseFile = _requestWiseFileRepository.getFilesByrequestWiseFileId(requestWiseFileId);
             requestWiseFile.IsDeleted = new BitArray(1, true);
-            return await _requestWiseFileRepository.updateRequestWiseFile(requestWiseFile) ? requestWiseFile.RequestId : 0;
+            return await _requestWiseFileRepository.updateRequestWiseFile(requestWiseFile);
         }
 
-        public async Task<int> deleteAllFile(List<int> requestWiseFileIds)
+        public async Task<bool> deleteAllFile(String requestWiseFileIds)
         {
-            int requestId = 0;
-            foreach(var item in requestWiseFileIds)
+            List<int> ids = JsonSerializer.Deserialize<List<String>>(requestWiseFileIds).Select(id => int.Parse(id)).ToList();
+            foreach(var id in ids)
             {
-                requestId = await deleteFile(item);
+                await deleteFile(id);
             }
-            return requestId;
+            return true;
         }
 
-        public bool sendFileMail(List<int> requestWiseFileIds ,int requestId)
+        public bool sendFileMail(String requestWiseFileIds ,int requestId)
         {
+            List<int> ids = JsonSerializer.Deserialize<List<String>>(requestWiseFileIds).Select(id => int.Parse(id)).ToList();
             MailMessage mailMessage = new MailMessage
             {
                 From = new MailAddress("tatva.dotnet.avinashpatel@outlook.com"),
@@ -82,9 +84,9 @@ namespace Services.Implementation
                 IsBodyHtml = true,
                 Body = "All The Documents For RequestId : " + requestId.ToString(),
             };
-            foreach (var item in requestWiseFileIds)
+            foreach (var id in ids)
             {
-                RequestWiseFile requestWiseFile = _requestWiseFileRepository.getFilesByrequestWiseFileId(item);
+                RequestWiseFile requestWiseFile = _requestWiseFileRepository.getFilesByrequestWiseFileId(id);
                 string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files/"+requestWiseFile.RequestId.ToString());
                 path = Path.Combine(path, requestWiseFile.FileName);
                 mailMessage.Attachments.Add(new Attachment(path));

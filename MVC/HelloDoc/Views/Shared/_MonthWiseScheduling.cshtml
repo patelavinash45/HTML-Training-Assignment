@@ -1,25 +1,29 @@
-﻿@model List<Services.ViewModels.Admin.SchedulingTable>
+﻿@model Services.ViewModels.Admin.SchedulingTableMonthWise
+
+@{
+    int date = 1;
+}
 
 <div class="table-responsive">
     <table class="table table-bordered bg-white text-center">
         <thead>
-            <tr>
-                <th>
+            <tr class="bg-black text-white align-middle">
+                <th class="columnWidth">
                     SUN
                 </th>
-                <th>
+                <th class="columnWidth">
                     MON
                 </th>
-                <th>
+                <th class="columnWidth">
                     TUE
                 </th>
-                <th>
+                <th class="columnWidth">
                     WED
                 </th>
-                <th>
+                <th class="columnWidth">
                     THU
                 </th>
-                <th>
+                <th class="columnWidth">
                     FIR
                 </th>
                 <th>
@@ -28,7 +32,196 @@
             </tr>
         </thead>
         <tbody>
-            @for(int i= 0;i < 6;i++)
+            <tr>
+                @for (int i = 0; i < 7; i++,date++)
+                {
+                    if (i < Model.StartDate)
+                    {
+                        date--;
+                        <td class="columnHeight">
+                            <div class="divHeight"></div>
+                            <div class="divHeight"></div>
+                            <div class="divHeight"></div>
+                            <div class="divHeight"></div>
+                            <div class="divHeight"></div>
+                            <div class="divHeight"></div>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="columnHeight">
+                            <div class="divHeight d-flex align-items-center justify-content-center bg-pink">
+                                @date
+                            </div>
+                            @if(@Model.MonthWise.ContainsKey(date))
+                            {
+                                int totalshift = @Model.MonthWise[date].Count;
+                                if(totalshift<=5)
+                                {
+                                    foreach (var item in @Model.MonthWise[date])
+                                    {
+                                        <div class="divHeight">
+                                             <div>@item.Time/24</div>
+                                            <div>@item.ProviderName</div>
+                                        </div>
+                                    }
+                                    for(int z = totalshift +1;z <= 5;z++)
+                                    {
+                                        <div class="divHeight">
+                                            
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (var item in @Model.MonthWise[date].Take(4))
+                                    {
+                                        <div class="divHeight">
+                                             <div>@item.Time/24</div>
+                                            <div>@item.ProviderName</div>
+                                        </div>
+                                    }
+                                    <div class="divHeight">
+                                        View More
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                for (int z = 1; z <= 5; z++)
+                                {
+                                    <div class="divHeight">
+                                        
+                                    </div>
+                                }
+                            }
+                        </td>
+                    }
+                }
+            </tr>
+            @for(int j=2;j <= (@Model.TotalDays + Model.StartDate) / 7 ; j++)
+            {
+                <tr>
+                    @for (int i = 0; i < 7; i++,date++)
+                    {
+                        <td class="columnHeight">
+                            <div class="divHeight d-flex align-items-center justify-content-center bg-pink">
+                                @date
+                            </div>
+                            @if (@Model.MonthWise.ContainsKey(date))
+                            {
+                                int totalshift = @Model.MonthWise[date].Count;
+                                if (totalshift <= 5)
+                                {
+                                    foreach (var item in @Model.MonthWise[date])
+                                    {
+                                        <div class="divHeight">
+                                            <div>@item.Time/24</div>
+                                            <div>@item.ProviderName</div>
+                                        </div>
+                                    }
+                                    for (int z = totalshift + 1; z <= 5; z++)
+                                    {
+                                        <div class="divHeight">
+                                            
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (var item in @Model.MonthWise[date].Take(4))
+                                    {
+                                        <div class="divHeight">
+                                             <div>@item.Time/24</div>
+                                             <div>@item.ProviderName</div>
+                                        </div>
+                                    }
+                                    <div class="divHeight">
+                                        View More
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                for (int z = 1; z <= 5; z++)
+                                {
+                                    <div class="divHeight">
+                                        
+                                    </div>
+                                }
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+            @if( date <= Model.TotalDays)
+            {
+                <tr>
+                    @for (int i = 0; i < 7; i++, date++)
+                    {
+                        if (date > Model.TotalDays)
+                        {
+                            <td class="columnHeight">
+                                <div class="divHeight"></div>
+                                <div class="divHeight"></div>
+                                <div class="divHeight"></div>
+                                <div class="divHeight"></div>
+                                <div class="divHeight"></div>
+                                <div class="divHeight"></div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="columnHeight">
+                                <div class="divHeight d-flex align-items-center justify-content-center bg-pink">
+                                    @date
+                                </div>
+                                @if (@Model.MonthWise.ContainsKey(date))
+                                {
+                                    int totalshift = @Model.MonthWise[date].Count;
+                                    if (totalshift <= 5)
+                                    {
+                                        foreach (var item in @Model.MonthWise[date])
+                                        {
+                                            <div class="divHeight">
+                                                <div>@item.Time/24</div>
+                                                <div>@item.ProviderName</div>
+                                            </div>
+                                        }
+                                        for (int z = totalshift + 1; z <= 5; z++)
+                                        {
+                                            <div class="divHeight">
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in @Model.MonthWise[date].Take(4))
+                                        {
+                                            <div class="divHeight">
+                                                <div>@item.Time/24</div>
+                                                <div>@item.ProviderName</div>
+                                            </div>
+                                        }
+                                        <div class="divHeight">
+                                            View More
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    for (int z = 1; z <= 5; z++)
+                                    {
+                                        <div class="divHeight">
+                                        </div>
+                                    }
+                                }
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+            @*@for(int i= 0;i < 6;i++)
                 {
                 <tr class="bg-pink row-@i">
                     <td id="sun-@i" class="bg-white"></td>
@@ -84,7 +277,7 @@
                     <td></td>
                     <td></td>
                 </tr>
-                }
+                }*@
         </tbody>
     </table>
 </div>

@@ -41,6 +41,22 @@
       "PackagePath": "staticwebassets\\Files\\110\\.viminfo"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\110\\Fig21. Admin My profile..jpg",
+      "PackagePath": "staticwebassets\\Files\\110\\Fig21. Admin My profile..jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\110\\Fig23.Request Support.png",
+      "PackagePath": "staticwebassets\\Files\\110\\Fig23.Request Support.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\110\\Fig3. Admin Dashboard.jpg",
+      "PackagePath": "staticwebassets\\Files\\110\\Fig3. Admin Dashboard.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\110\\Fig41.Add business page.png",
+      "PackagePath": "staticwebassets\\Files\\110\\Fig41.Add business page.png"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\26\\Patient site_forget password_mobile.png",
       "PackagePath": "staticwebassets\\Files\\26\\Patient site_forget password_mobile.png"
     },
@@ -321,6 +337,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\loginPage.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\providerLocation.css",
+      "PackagePath": "staticwebassets\\css\\admin\\providerLocation.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\providerScheduling.css",
       "PackagePath": "staticwebassets\\css\\admin\\providerScheduling.css"
     },
@@ -407,6 +427,14 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\LoginImage-removeBG.png",
       "PackagePath": "staticwebassets\\images\\LoginImage-removeBG.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\PinkColorImage.jpg",
+      "PackagePath": "staticwebassets\\images\\PinkColorImage.jpg"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\SuccessColorImage.jpg",
+      "PackagePath": "staticwebassets\\images\\SuccessColorImage.jpg"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\flags.png",

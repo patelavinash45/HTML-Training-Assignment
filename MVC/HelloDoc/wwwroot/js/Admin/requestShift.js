@@ -56,9 +56,12 @@ $(document).on("click", "#isMonthButton", function () {     ///  for month butto
     }
 })
 
+
+///  Approve and Delete Shift 
+
 var IdList = [];
 
-$('#mainCheckBox').click(function () {
+$(document).on("click","#mainCheckBox",function(){
     if ($(this).is(':checked')) {
         $('.checkBox').prop('checked', true);
         var temp = $('.checkBox');
@@ -105,17 +108,18 @@ $(document).on("click", "#approved", function () {     ///  for slected shift ap
 });
 
 function chnageShiftDetails(isApprove) {
-    var data = JSON.stringify({IdList})
-    $.ajax({
-        url: '/Admin/UpdateShiftDetails',
-        type: 'GET',
-        contentType: 'application/json',
-        data: {
-            data: data,
-            isApprove: isApprove,
-        },
-        success: function (response) {
-            $("#tableData").html(response);
-        }
-    })
+    if (IdList.length > 0) {
+        $.ajax({
+            url: '/Admin/UpdateShiftDetails',
+            type: 'GET',
+            contentType: 'application/json',
+            data: {
+                data: JSON.stringify(IdList),
+                isApprove: isApprove,
+            },
+            success: function (response) {
+                window.location.href = response.redirect;
+            }
+        })
+    }
 }

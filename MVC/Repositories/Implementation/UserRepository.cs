@@ -131,6 +131,11 @@ namespace Repositories.Implementation
             _dbContext.PhysicianNotifications.Add(physicianNotification);
             return await _dbContext.SaveChangesAsync() > 0;
         }
+
+        public List<PhysicianLocation> getAllProviderLocation()
+        {
+            return _dbContext.PhysicianLocations.ToList();
+        }
     }
 }
 

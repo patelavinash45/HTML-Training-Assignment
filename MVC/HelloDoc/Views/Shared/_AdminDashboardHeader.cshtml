@@ -44,7 +44,7 @@
                 <hr class="border-bottom border-3 border-dark h1" />
             }
         </a>
-        <a asp-controller="" asp-action=""  class="mx-2">
+        <a asp-controller="Admin" asp-action="ProviderLocation" class="mx-2">
             <div class="mx-2 h6">
                 Provider Location
             </div>
@@ -118,27 +118,44 @@
     </div>
 </header>
 <div id="side-bar">
-    <a asp-controller="Admin" asp-action="Dashboard"  class="d-flex justify-content-center border m-2 rounded-start">
+    <a asp-controller="Admin" asp-action="Dashboard" class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6">
             Dashboard
         </div>
     </a>
-    <a asp-controller="" asp-action=""  class="d-flex justify-content-center border m-2 rounded-start">
+    <a asp-controller="Admin" asp-action="ProviderLocation" class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6">
             Provider Location
         </div>
     </a>
-    <a asp-controller="Admin" asp-action="ViewProfile"  class="d-flex justify-content-center border m-2 rounded-start">
+    <a asp-controller="Admin" asp-action="ViewProfile" class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6 ">
             My Profile
         </div>
     </a>
-    <a asp-controller="Admin" asp-action="Providers"  class="d-flex justify-content-center border m-2 rounded-start">
-        <div class="mt-1 h6">
+    <div class="mt-1 h6 d-flex justify-content-center border m-2 rounded-start">
+        <button class="h6 bg-transparent border-0 h-auto" data-bs-toggle="dropdown" aria-expanded="false">
             Providers
-        </div>
-    </a>
-    <a asp-controller="" asp-action=""  class="d-flex justify-content-center border m-2 rounded-start">
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item" asp-controller="Admin" asp-action="Providers">
+                    Providers
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-controller="Admin" asp-action="ProviderScheduling">
+                    Scheduling
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item">
+                    Invoiceing
+                </a>
+            </li>
+        </ul>
+    </div>
+    <a asp-controller="" asp-action="" class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6">
             Partners
         </div>
@@ -148,7 +165,7 @@
             Access
         </div>
     </a>
-    <a asp-controller="" asp-action=""  class="d-flex justify-content-center border m-2 rounded-start">
+    <a asp-controller="" asp-action="" class="d-flex justify-content-center border m-2 rounded-start">
         <div class="mt-1 h6">
             Records
         </div>

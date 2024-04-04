@@ -46,5 +46,7 @@ namespace Repositories.Interfaces
 
         Task<bool> addPhysicianNotification(PhysicianNotification physicianNotification);
 
+        List<PhysicianLocation> getAllProviderLocation();
+
     }
 }

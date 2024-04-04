@@ -28,7 +28,9 @@ tr {
 }
 
 .select {
-    width: 350px;
+    border-radius: 10px;
+    height: 50px;
+    width: 325px;
 }
 
 .icons{
@@ -62,6 +64,28 @@ label,
 
 #regionsList{
     margin-top: 0px;
+}
+
+.columnWidth{
+    width: 14.2%;
+}
+
+.divHeight {
+    height: 16.66%;
+    border-bottom : 1px solid black;
+    vertical-align: middle!important;
+}
+
+.columnHeight{
+    height: 300px;
+}
+
+.table > :not(caption) > * > *{
+    padding: 0px;
+}
+
+.dayWiseColumnWidth{
+    width: 3.125%;
 }
 
 @media screen and (max-width:992px) {

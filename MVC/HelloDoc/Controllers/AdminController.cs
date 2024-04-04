@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Azure.Core;
 using ClosedXML.Excel;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -29,11 +30,11 @@ namespace HelloDoc.Controllers
         private readonly IProvidersService _providersService;
         private readonly IAccessService _accessService;
 
-        public AdminController(INotyfService notyfService,IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
+        public AdminController(INotyfService notyfService, IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
                                 IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
-                                IJwtService jwtService, ISendOrderService sendOrderService, IEncounterService encounterService, 
+                                IJwtService jwtService, ISendOrderService sendOrderService, IEncounterService encounterService,
                                 ICloseCaseService closeCaseService, IViewProfileService viewProfileService,
-                                IProvidersService providersService,IAccessService accessService)
+                                IProvidersService providersService, IAccessService accessService)
         {
             _notyfService = notyfService;
             _loginService = loginService;
@@ -45,14 +46,14 @@ namespace HelloDoc.Controllers
             _sendOrderService = sendOrderService;
             _encounterService = encounterService;
             _closeCaseService = closeCaseService;
-            _viewProfileService = viewProfileService;   
+            _viewProfileService = viewProfileService;
             _providersService = providersService;
-            _accessService = accessService; 
+            _accessService = accessService;
         }
 
         public IActionResult LoginPage()
         {
-            if (_loginService.isTokenValid(HttpContext,"Admin"))
+            if (_loginService.isTokenValid(HttpContext, "Admin"))
             {
                 return RedirectToAction("Dashboard", "Admin");
             }
@@ -78,7 +79,7 @@ namespace HelloDoc.Controllers
         public IActionResult EncounterForm()
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
-            return View(_encounterService.getEncounterDetails(requestId,true));
+            return View(_encounterService.getEncounterDetails(requestId, true));
         }
 
         [Authorization("Admin")]
@@ -158,6 +159,12 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
+        public IActionResult ProviderLocation()
+        {
+            return View();
+        }
+
+        [Authorization("Admin")]
         public IActionResult ViewDocument()
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
@@ -175,18 +182,17 @@ namespace HelloDoc.Controllers
         public IActionResult Agreement(String token)
         {
             Agreement agreement = _adminDashboardService.getUserDetails(token);
-            if(agreement != null)
+            if (agreement != null)
             {
                 return View(agreement);
             }
             _notyfService.Error("Link is Invalid");
-            return RedirectToAction("PatientSite","Patient");
+            return RedirectToAction("PatientSite", "Patient");
         }
 
-        public async Task<JsonResult> DeleteAllFiles([FromBody]List<int> requestWiseFileIdsList)   // delete all seleted file - view documents
+        public async Task<JsonResult> DeleteAllFiles(String requestWiseFileIdsList)   // delete all seleted file - view documents
         {
-            int requestId = await _viewDocumentsServices.deleteAllFile(requestWiseFileIdsList);
-            if (requestId > 0)
+            if (await _viewDocumentsServices.deleteAllFile(requestWiseFileIdsList))
             {
                 _notyfService.Success("Successfully File Deleted");
             }
@@ -199,8 +205,7 @@ namespace HelloDoc.Controllers
 
         public async Task<IActionResult> DeleteFile(int requestWiseFileId)   /// delete perticuler one file - view documents
         {
-            int requestId = await _viewDocumentsServices.deleteFile(requestWiseFileId);
-            if (requestId > 0)
+            if (await _viewDocumentsServices.deleteFile(requestWiseFileId))
             {
                 _notyfService.Success("Successfully File Deleted");
             }
@@ -211,10 +216,10 @@ namespace HelloDoc.Controllers
             return RedirectToAction("ViewDocument", "Admin");
         }
 
-        public IActionResult SendMail([FromBody] List<int> requestWiseFileIdsList)  /// send mail from view document
+        public IActionResult SendMail(String requestWiseFileIdsList)  /// send mail from view document
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
-            if (_viewDocumentsServices.sendFileMail(requestWiseFileIdsList,requestId))
+            if (_viewDocumentsServices.sendFileMail(requestWiseFileIdsList, requestId))
             {
                 _notyfService.Success("Successfully Send Mail");
             }
@@ -285,7 +290,7 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
-        [HttpGet] 
+        [HttpGet]
         public async Task<JsonResult> ClearPopUp(int requestId)
         {
             if (await _viewNotesService.clearRequest(requestId))
@@ -299,7 +304,7 @@ namespace HelloDoc.Controllers
             return Json(new { redirect = Url.Action("Dashboard", "Admin") });
         }
 
-        public IActionResult SendAgreementPopUp(Agreement model)    
+        public IActionResult SendAgreementPopUp(Agreement model)
         {
             if (ModelState.IsValid)
             {
@@ -339,7 +344,7 @@ namespace HelloDoc.Controllers
             if (ModelState.IsValid)
             {
                 int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-                if (await _providersService.createShift(model,aspNetUseId))
+                if (await _providersService.createShift(model, aspNetUseId))
                 {
                     _notyfService.Success("Successfully Created");
                 }
@@ -358,7 +363,7 @@ namespace HelloDoc.Controllers
             return RedirectToAction("Dashboard", "Patient");
         }
 
-        public async Task<IActionResult> AgreementDeclined(Agreement model)  
+        public async Task<IActionResult> AgreementDeclined(Agreement model)
         {
             await _viewNotesService.agreementDeclined(model);
             return RedirectToAction("Dashboard", "Patient");
@@ -430,11 +435,11 @@ namespace HelloDoc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]  /////  sendlink ---  Dashboard
-        public IActionResult SendLink(SendLink model) 
+        public IActionResult SendLink(SendLink model)
         {
             if (ModelState.IsValid)
             {
-                if (_adminDashboardService.SendRequestLink(model,HttpContext))
+                if (_adminDashboardService.SendRequestLink(model, HttpContext))
                 {
                     _notyfService.Success("Successfully Link Send");
                 }
@@ -522,7 +527,7 @@ namespace HelloDoc.Controllers
                 String firstname = HttpContext.Session.GetString("firstName");
                 String lastName = HttpContext.Session.GetString("lastName");
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _viewDocumentsServices.uploadFile(model,firstName:firstname,lastName: lastName,requestId))
+                if (await _viewDocumentsServices.uploadFile(model, firstName: firstname, lastName: lastName, requestId))
                 {
                     _notyfService.Success("Successfully File Added.");
                     return RedirectToAction("ViewDocument", "Admin");
@@ -539,7 +544,7 @@ namespace HelloDoc.Controllers
             if (ModelState.IsValid)
             {
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _sendOrderService.addOrderDetails(model,requestId))
+                if (await _sendOrderService.addOrderDetails(model, requestId))
                 {
                     _notyfService.Success("Successfully Order Added");
                 }
@@ -559,7 +564,7 @@ namespace HelloDoc.Controllers
             if (ModelState.IsValid)
             {
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _encounterService.updateEncounter(model,requestId))
+                if (await _encounterService.updateEncounter(model, requestId))
                 {
                     _notyfService.Success("Successfully Updated");
                 }
@@ -607,9 +612,9 @@ namespace HelloDoc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ViewCase(ViewCase model) 
+        public async Task<IActionResult> ViewCase(ViewCase model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (await _viewCaseService.updateRequest(model))
                 {
@@ -689,7 +694,7 @@ namespace HelloDoc.Controllers
         public async Task<IActionResult> EditAdministratorInformation(String data1)
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-            if (await _viewProfileService.editEditAdministratorInformastion(data1,aspNetUserId))
+            if (await _viewProfileService.editEditAdministratorInformastion(data1, aspNetUserId))
             {
                 _notyfService.Success("Successfully Updated");
             }
@@ -716,9 +721,9 @@ namespace HelloDoc.Controllers
         }
 
         [HttpGet]   //  Edit Mailing And Billing Information view profile
-        public async Task<IActionResult> EditProviderNotification(int physicanId,bool isNotification)
+        public async Task<IActionResult> EditProviderNotification(int physicanId, bool isNotification)
         {
-            return Json(new { result =await _providersService.editProviderNotification(physicanId, isNotification)});    
+            return Json(new { result = await _providersService.editProviderNotification(physicanId, isNotification) });
         }
 
         [HttpGet]   // Export All Data 
@@ -726,11 +731,11 @@ namespace HelloDoc.Controllers
         {
             DataTable dataTable = _adminDashboardService.exportAllData();
             using (XLWorkbook wb = new XLWorkbook())
-            { 
+            {
                 wb.Worksheets.Add(dataTable);
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    wb.SaveAs(stream); 
+                    wb.SaveAs(stream);
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AllData.xlsx");
                 }
             }
@@ -745,26 +750,26 @@ namespace HelloDoc.Controllers
                 wb.Worksheets.Add(dataTable);
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    wb.SaveAs(stream);  
+                    wb.SaveAs(stream);
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Data.xlsx");
                 }
             }
         }
 
         [HttpGet]   // Dashboard 
-        public IActionResult GetTablesData(String status,int pageNo,String partialViewName,String patinetName, int regionId, int requesterTypeId)
+        public IActionResult GetTablesData(String status, int pageNo, String partialViewName, String patinetName, int regionId, int requesterTypeId)
         {
-           TableModel tableModel= _adminDashboardService.GetNewRequest(status, pageNo, patinetName, regionId, requesterTypeId);
-           return tableModel.TableDatas.Count != 0 ? PartialView(partialViewName, tableModel) : PartialView("_NoTableDataFound");
+            TableModel tableModel = _adminDashboardService.GetNewRequest(status, pageNo, patinetName, regionId, requesterTypeId);
+            return tableModel.TableDatas.Count != 0 ? PartialView(partialViewName, tableModel) : PartialView("_NoTableDataFound");
         }
 
         [HttpPost]
         public async Task<IActionResult> ViewNotes(ViewNotes model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _viewNotesService.addAdminNotes(model.NewAdminNotes,requestId))
+                if (await _viewNotesService.addAdminNotes(model.NewAdminNotes, requestId))
                 {
                     _notyfService.Success("Successfully Notes Added");
                 }
@@ -781,23 +786,50 @@ namespace HelloDoc.Controllers
         {
             return _sendOrderService.getBussinessData(venderId);
         }
-            
+
         [HttpGet]    // provider scheduling page 
-        public IActionResult ChangeTab(string name,int regionId,int type,String time)
+        public IActionResult ChangeTab(string name, int regionId, int type, String time)
         {
-            return PartialView(name, _providersService.getSchedulingTableDate(regionId,type,time));
+            switch(type)
+            {
+                default:
+                case 1:     ///  for case 1 and 2 function is same
+                case 2: return PartialView(name, _providersService.getSchedulingTableDate(regionId, type, time));
+                case 3: return PartialView(name, _providersService.monthWiseScheduling(time));
+            }
         }
 
         [HttpGet]    // RequestShift page  
         public IActionResult GetRequestShifTableData(int regionId, bool isMonth, int pageNo)
         {
-            return PartialView("_RequestedShiftTable", _providersService.getRequestShiftTableDate(regionId,isMonth,pageNo));
+            return PartialView("_RequestedShiftTable", _providersService.getRequestShiftTableDate(regionId, isMonth, pageNo));
         }
 
         [HttpGet]    // RequestShift page  
-        public async Task<JsonResult> UpdateShiftDetails(string data,bool isApprove)
+        public async Task<IActionResult> UpdateShiftDetails(string data, bool isApprove)
         {
-            return Json(await _providersService.chnageShiftDetails(data, isApprove));
+            if (await _providersService.chnageShiftDetails(data, isApprove))
+            {
+                if (isApprove)
+                {
+                    _notyfService.Success("Successfully Approved");
+                }
+                else
+                {
+                    _notyfService.Success("Successfully Deleted");
+                }
+            }
+            else
+            {
+                _notyfService.Error("Faild!");
+            }
+            return Json(new { redirect = Url.Action("RequestedShift", "Admin") });
+        }
+
+        [HttpGet]
+        public IActionResult GetProviderLocation()
+        {
+            return Json(_providersService.getProviderLocation());
         }
     }
 }
