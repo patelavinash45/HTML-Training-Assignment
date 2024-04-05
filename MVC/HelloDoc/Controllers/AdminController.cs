@@ -795,7 +795,7 @@ namespace HelloDoc.Controllers
                 default:
                 case 1:     ///  for case 1 and 2 function is same
                 case 2: return PartialView(name, _providersService.getSchedulingTableDate(regionId, type, time));
-                case 3: return PartialView(name, _providersService.monthWiseScheduling(time));
+                case 3: return PartialView(name, _providersService.monthWiseScheduling(regionId,time));
             }
         }
 
@@ -808,7 +808,7 @@ namespace HelloDoc.Controllers
         [HttpGet]    // RequestShift page  
         public async Task<IActionResult> UpdateShiftDetails(string data, bool isApprove)
         {
-            if (await _providersService.chnageShiftDetails(data, isApprove))
+            if (await _providersService.changeShiftDetails(data, isApprove))
             {
                 if (isApprove)
                 {
@@ -827,9 +827,29 @@ namespace HelloDoc.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetProviderLocation()
+        public IActionResult GetProviderLocation()  ///  provider Location page 
         {
             return Json(_providersService.getProviderLocation());
+        }
+
+        [HttpGet]        ///   Provider Scheduling page
+        public IActionResult GetShiftDetails(int shiftDetailsId)
+        {
+            return Json(_providersService.getShiftDetails(shiftDetailsId));
+        }
+
+        [HttpGet]     // Edit Shift - provider Scheduling page
+        public async Task<JsonResult> EditShiftDetails(string data)
+        {
+            await _providersService.EditShiftDetails(data);
+            return Json(new { redirect = Url.Action("ProviderScheduling", "Admin") });
+        }
+
+        [HttpGet]     // Delete Shift - provider Scheduling page
+        public async Task<JsonResult> DeleteShiftDetails(string data)
+        {
+            await _providersService.changeShiftDetails(data, false);    ///  use same services from requested shift page for delete shift
+            return Json(new { redirect = Url.Action("ProviderScheduling", "Admin") });
         }
     }
 }

@@ -2,6 +2,7 @@
 using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
+using System.Collections;
 
 namespace Repositories.Implementation
 {
@@ -14,17 +15,35 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
-        public List<ShiftDetail> getShiftDetailByPhysicianId(int physicianId, DateTime startDate, DateTime endDate)
+        public List<Physician> getPhysicianWithShiftDetailByRegionIdAndDAte(int regionId, DateTime startDate, DateTime endDate)
         {
-            return _dbContext.ShiftDetails.Include(a => a.Shift).Where(a => a.Shift.PhysicianId == physicianId && 
-                                                                  a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date).ToList();
+            return _dbContext.Physicians.Include(a => a.Shifts).ThenInclude(a => a.ShiftDetails.Where(a => (regionId == 0 || a.RegionId == regionId)
+                             && a.IsDeleted == new BitArray(1,false)
+                             && a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date)).ToList();
         }
 
-        public List<ShiftDetail> getAllShiftDetailsForSecificMonths(DateTime startDate, DateTime endDate)
+        public List<ShiftDetail> getShiftDetailByRegionIdAndDAte(int regionId, DateTime startDate, DateTime endDate)
         {
-            return _dbContext.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician)
-                                                  .Where(a => a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date).ToList();
+            Func<ShiftDetail, bool> predicate = a =>
+            (regionId == 0 || a.RegionId == regionId)
+            && !a.IsDeleted[0]
+            && a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date;
+            return _dbContext.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Where(predicate).ToList();
         }
+
+        //public List<ShiftDetail> getShiftDetailByPhysicianId(int physicianId, DateTime startDate, DateTime endDate)
+        //{
+        //    return _dbContext.ShiftDetails.Include(a => a.Shift).Where(a => a.RegionId == physicianId && a.IsDeleted == new BitArray(1, false) &&
+        //                                 a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date).ToList();
+        //    //return _dbContext.ShiftDetails.Include(a => a.Shift).Where(a => a.Shift.PhysicianId == physicianId && a.IsDeleted == new BitArray(1, false) &&
+        //    //                             a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date).ToList();
+        //}
+
+        //public List<ShiftDetail> getAllShiftDetailsForSecificMonths(DateTime startDate, DateTime endDate)
+        //{
+        //    return _dbContext.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician)
+        //            .Where(a => a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date && a.IsDeleted == new BitArray(1, false)).ToList();
+        //}
 
         public async Task<bool> addShift(Shift shift)
         {
@@ -49,20 +68,30 @@ namespace Repositories.Implementation
             return _dbContext.ShiftDetails.FirstOrDefault(a => a.ShiftDetailId == shiftDetailsId);
         }
 
+        public ShiftDetail getShiftDetailsWithPhysician(int shiftDetailsId)
+        {
+            return _dbContext.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Include(a => a.Region)
+                                                                        .FirstOrDefault(a => a.ShiftDetailId == shiftDetailsId);
+        }
+
         public List<ShiftDetail> getAllShiftDetails(int regionId, bool isThisMonth, DateTime date, int skip)
         {
             Func<ShiftDetail,bool>  predicate = a => 
             (!isThisMonth || (a.ShiftDate.Date >= date.Date && a.ShiftDate.Date <= date.AddMonths(1).Date)) 
-            && (regionId == 0 || a.RegionId == regionId);
+            && (regionId == 0 || a.RegionId == regionId)
+            && !a.IsDeleted[0]
+            && a.Status == 0;
             return _dbContext.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Include(a => a.Region)
-                    .Where(predicate).OrderByDescending(a => a.ShiftDate).Skip(skip).Take(10).ToList();
+                   .Where(predicate).OrderByDescending(a => a.ShiftDate).Skip(skip).Take(10).ToList();
         }
 
         public int countAllShiftDetails(int regionId, bool isThisMonth, DateTime date)
         {
             Func<ShiftDetail, bool> predicate = a =>
             (!isThisMonth || (a.ShiftDate.Date >= date.Date && a.ShiftDate.Date <= date.AddMonths(1).Date))
-            && (regionId == 0 || a.RegionId == regionId);
+            && (regionId == 0 || a.RegionId == regionId)
+            && !a.IsDeleted[0]
+            && a.Status == 0;
             return _dbContext.ShiftDetails.Include(a => a.Region).Where(predicate).Count();
         }
     }

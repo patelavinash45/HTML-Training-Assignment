@@ -12,7 +12,7 @@
             </div>
             <form asp-controller="Admin" asp-action="CreateShift" id="createShiftForm">
                 <div class="modal-body">
-                    <select asp-for="SelectedRegion" class="p-2 w-100 mt-2" id="regions">
+                    <select asp-for="SelectedRegion" class="p-2 w-100" id="regionCreateShift">
                         <option slected value="">Select Region</option>
                         @foreach (var item in Model.Regions)
                         {
@@ -20,7 +20,7 @@
                         }
                     </select>
                     <span asp-validation-for="SelectedRegion" class="text-danger mb-3"></span>
-                    <select asp-for="SelectedPhysician" class="p-2 w-100 mt-3" id="physician">
+                    <select asp-for="SelectedPhysician" class="p-2 w-100 mt-2" id="physician">
                         <option slected value="">Select Physician</option>
                     </select>
                     <span asp-validation-for="SelectedPhysician" class="text-danger mb-3"></span>

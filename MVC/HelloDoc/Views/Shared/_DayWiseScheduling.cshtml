@@ -3,7 +3,7 @@
 <div class="table-responsive">
     <table class="table table-bordered bg-white text-center">
         <thead>
-            <tr>
+            <tr class="align-middle">
                 <th class="w-25">
                     Staff
                 </th>
@@ -57,15 +57,15 @@
                         {
                             if(data.FirstHalf)
                             {
-                                <td class="dayWiseColumnWidth"><img class="w-50 float-lg-start" src="@data.Status" /></td>
+                                <td class="dayWiseColumnWidth"><img class="w-50 float-lg-start" src="@data.Status" data-bs-target="#viewShiftDetails" data-bs-toggle="modal" onclick="openViewShiftModal(@data.ShiftDetailsId)" onclick="openViewShiftModal(@data.ShiftDetailsId)" /></td>
                             }
                             else if (data.SecoundHalf)
                             {
-                                <td class="dayWiseColumnWidth"><img class="float-end w-50" src="@data.Status" /></td>
+                                <td class="dayWiseColumnWidth"><img class="float-end w-50" src="@data.Status" data-bs-target="#viewShiftDetails" data-bs-toggle="modal" onclick="openViewShiftModal(@data.ShiftDetailsId)" /></td>
                             }
                             else
                             {
-                                <td class="dayWiseColumnWidth"><img class="w-100" src="@data.Status" /></td>
+                                <td class="dayWiseColumnWidth"><img class="w-100" src="@data.Status" data-bs-target="#viewShiftDetails" data-bs-toggle="modal" onclick="openViewShiftModal(@data.ShiftDetailsId)" /></td>
                             }
                         }else
                         {

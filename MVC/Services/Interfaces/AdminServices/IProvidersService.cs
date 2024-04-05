@@ -20,7 +20,7 @@ namespace Services.Interfaces.AdminServices
 
         List<SchedulingTable> getSchedulingTableDate(int regionId, int type, string date);
 
-        SchedulingTableMonthWise monthWiseScheduling(String dateString);
+        SchedulingTableMonthWise monthWiseScheduling(int regionId, String dateString);
 
         Task<bool> createShift(CreateShift model,int aspNetUserId);
 
@@ -28,6 +28,10 @@ namespace Services.Interfaces.AdminServices
 
         RequestShiftModel getRequestShiftTableDate(int regionId, bool isMonth, int pageNo);
 
-        Task<bool> chnageShiftDetails(string dataList,bool isApprove);
+        Task<bool> changeShiftDetails(string dataList,bool isApprove);
+
+        ViewShift getShiftDetails(int shiftDetailsId);
+
+        Task<bool> EditShiftDetails(string data);
     }
 }

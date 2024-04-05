@@ -4,9 +4,9 @@ namespace Repositories.Interfaces
 {
     public interface IShiftRepository
     {
-        List<ShiftDetail> getShiftDetailByPhysicianId(int physicianId,DateTime startDate,DateTime endDate);
+        List<Physician> getPhysicianWithShiftDetailByRegionIdAndDAte(int regionId, DateTime startDate, DateTime endDate);
 
-        List<ShiftDetail> getAllShiftDetailsForSecificMonths(DateTime startDate, DateTime endDate);
+        List<ShiftDetail> getShiftDetailByRegionIdAndDAte(int regionId, DateTime startDate,DateTime endDate);
 
         Task<bool> addShift(Shift shift);
 
@@ -15,6 +15,8 @@ namespace Repositories.Interfaces
         Task<bool> updateShiftDetails(ShiftDetail shiftDetail);
 
         ShiftDetail getShiftDetails(int shiftDetailsId);
+
+        ShiftDetail getShiftDetailsWithPhysician(int shiftDetailsId);
 
         List<ShiftDetail> getAllShiftDetails(int regionId, bool isThisMonth, DateTime date, int skip);
 

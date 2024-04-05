@@ -31,7 +31,7 @@ namespace Services.ViewModels.Admin
 
     public class ContactProvider
     {
-        public int providerId { get; set;}
+        public int providerId { get; set; }
 
         public string Message { get; set; }
 
@@ -99,7 +99,7 @@ namespace Services.ViewModels.Admin
         [Required(ErrorMessage = "The Region field is required.")]
         public List<string> SelectedRegions { get; set; }
 
-        public Dictionary<int,string>? Regions { get; set; }
+        public Dictionary<int, string>? Regions { get; set; }
 
         [StringLength(100)]
         public string BusinessName { get; set; }
@@ -176,6 +176,8 @@ namespace Services.ViewModels.Admin
 
     public class SchedulingTable
     {
+        public int PhysicianId { get; set; }
+
         public string Photo { get; set; }
 
         public string FirstName { get; set; }
@@ -190,6 +192,8 @@ namespace Services.ViewModels.Admin
 
     public class ShiftDetailsDayWise
     {
+        public int ShiftDetailsId { get; set; }
+
         public bool FirstHalf { get; set; } = false;
 
         public bool SecoundHalf { get; set; } = false;
@@ -201,6 +205,8 @@ namespace Services.ViewModels.Admin
 
     public class SchedulingTableMonthWise
     {
+        public int ShiftDetailsId { get; set; }
+
         public Dictionary<int, List<ShiftDetailsMonthWise>> MonthWise { get; set; }
 
         public int StartDate { get; set; }
@@ -211,11 +217,15 @@ namespace Services.ViewModels.Admin
 
     public class ShiftDetailsMonthWise
     {
-        public int PhysicianId { get; set; }
+        public int ShiftDetailsId { get; set; }
 
         public string ProviderName { get; set; }
 
-        public double Time { get; set; }
+        public TimeOnly StartTime { get; set; }
+
+        public TimeOnly EndTime { get; set; }
+
+        public String Status { get; set; }
 
     }
 
@@ -278,11 +288,26 @@ namespace Services.ViewModels.Admin
 
         public TimeOnly StartTime { get; set; }
 
-        public TimeOnly EndTime { get; set;}
+        public TimeOnly EndTime { get; set; }
 
         public string Region { get; set; }
 
         public int ShiftDetailsId { get; set; }
     }
 
+    public class ViewShift
+    {
+        public string ShiftDetailsId { get; set; }
+
+        public string Region { get; set; }
+
+        public string PhysicianName { get; set; }
+
+        public DateOnly ShiftDate { get; set; }
+
+        public TimeOnly StartTime { get; set; }
+
+        public TimeOnly EndTime { get; set; }
+
+    }
 }

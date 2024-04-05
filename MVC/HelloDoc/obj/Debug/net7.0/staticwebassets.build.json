@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "HL/l5+65SqSwc5YyxXnCVBWLub80aTW3j/4ud03a7F0=",
+  "Hash": "JWETA7pin6V9dPvGfj48zTNnm239ciXN7NRt2z4XGso=",
   "Source": "HelloDoc",
   "BasePath": "_content/HelloDoc",
   "Mode": "Default",
@@ -1955,6 +1955,23 @@
       "OriginalItemSpec": "wwwroot\\images\\flags@2x.png"
     },
     {
+      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\GreenColorImage.jpg",
+      "SourceId": "HelloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
+      "BasePath": "_content/HelloDoc",
+      "RelativePath": "images/GreenColorImage.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\GreenColorImage.jpg"
+    },
+    {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\helloDocLogo.png",
       "SourceId": "HelloDoc",
       "SourceType": "Discovered",
@@ -2038,23 +2055,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\PinkColorImage.jpg"
-    },
-    {
-      "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\SuccessColorImage.jpg",
-      "SourceId": "HelloDoc",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\",
-      "BasePath": "_content/HelloDoc",
-      "RelativePath": "images/SuccessColorImage.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\SuccessColorImage.jpg"
     },
     {
       "Identity": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\_DashboardHeader.js",

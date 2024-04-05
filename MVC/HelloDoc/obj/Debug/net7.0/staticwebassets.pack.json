@@ -425,16 +425,16 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\GreenColorImage.jpg",
+      "PackagePath": "staticwebassets\\images\\GreenColorImage.jpg"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\LoginImage-removeBG.png",
       "PackagePath": "staticwebassets\\images\\LoginImage-removeBG.png"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\PinkColorImage.jpg",
       "PackagePath": "staticwebassets\\images\\PinkColorImage.jpg"
-    },
-    {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\SuccessColorImage.jpg",
-      "PackagePath": "staticwebassets\\images\\SuccessColorImage.jpg"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\images\\flags.png",

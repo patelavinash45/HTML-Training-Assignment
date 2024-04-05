@@ -100,7 +100,7 @@ $(document).on("click", "#next", async function () {
     }
 })
 
-function setDate() {
+function setDate() {        ///   display Date 
     const formatter = new Intl.DateTimeFormat('en-US', {
         weekday: 'long',
         month: 'short',
@@ -110,7 +110,7 @@ function setDate() {
     $("#display").text(formatter.format(dayWise));
 }
 
-function setWeek() {
+function setWeek() {      ///   display Week duration
     var date = new Date(weekWise);
     var formatter = new Intl.DateTimeFormat('en-US', {
         month: 'short',
@@ -125,29 +125,23 @@ function setWeek() {
     }
 }
 
-function setMonth() {
-    var date = new Date(monthWise);
+function setMonth() {       ///   display Month 
     var formatter = new Intl.DateTimeFormat('en-US', {
         month: 'short',
         year: 'numeric'
     });
-    $("#display").text(formatter.format(date));
-    var totalDays = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    var temp = 0;
-    for (i = 0; i < totalDays; i++)
-    {
-        var x = date.getDay();
-        if (x == 0 && i!=0) {
-            temp++;
-        }
-        var y = weekDays[x] + "-" + temp;
-        $(`#${y}`).text(i + 1);
-        $(`#${y}`).removeClass("bg-white");
-        date.setDate(date.getDate() + 1);
-    }
-    if (temp != 5) {
-        $(`.row-5`).css("display", "none");
-    }
+    $("#display").text(formatter.format(monthWise));
+}
+
+async function viewMore(date) {   ///  on click of view more on monthwise Scheduling
+    var tempDate = new Date(monthWise);
+    dayWise = new Date(tempDate.setDate(date));
+    currentType = 1;
+    $(".tabButtons").removeClass("active");
+    $("#displayWeek").text("");
+    $("#dayButton").addClass("active");
+    setDate();
+    await getData();
 }
 
 
@@ -166,7 +160,7 @@ $(document).on("change", "#isRepeat", function () {
 });
 
 
-$(document).on("change", "#regions", function () {
+$(document).on("change", "#regionCreateShift", function () {
     if ($(this).val().length != 0) {
         $.ajax({
             url: "/Admin/GetPhysicians",
@@ -198,7 +192,7 @@ $(document).on("change", ".weekDay", function () {
 
 $(document).on("submit", "#createShiftForm", function (e)
 {
-    if ($("#regions").val().length == 0 || $("#endTime").val().length == 0 || $("#startTime").val().length == 0 || $("#shiftDate").val().length == 0
+    if ($("#regionCreateShift").val().length == 0 || $("#endTime").val().length == 0 || $("#startTime").val().length == 0 || $("#shiftDate").val().length == 0
         || $("#physician").val().length == 0 ) {
         e.preventDefault();
     }
@@ -213,4 +207,91 @@ $(document).on("submit", "#createShiftForm", function (e)
             }
         }
     }
+})
+
+
+
+
+/////   popup - create shift
+
+var date, startTime, endTime, Id;
+
+$(document).on("click", ".editbutton", function () {
+    editShift(true);
+})
+
+$(document).on("click", ".cancleEdit", function () {
+    editShift(false);
+})
+
+function editShift(isEdit) {
+    if (isEdit) {
+        $(".editbutton").css("display", "none");
+        $(".edit").css("display", "block");
+        $("#editShiftDetils").prop("disabled", false);
+    }
+    else {
+        $("#shiftDateViewShift").val(date);
+        $("#startTimeViewShift").val(startTime);
+        $("#endTimeViewShift").val(endTime);
+        $(".edit").css("display", "none");
+        $(".editbutton").css("display", "block");
+        $("#editShiftDetils").prop("disabled", true);
+    }
+}
+
+function openViewShiftModal(shiftDetailsId) {
+    $.ajax({
+        url: "/Admin/GetShiftDetails",
+        type: "Get",
+        contentType: "application/json",
+        data: {
+            shiftDetailsId,
+        },
+        success: function (response) {
+            Id = shiftDetailsId
+            $("#region").val(response.region);
+            $("#Name").val(response.physicianName);
+            date = response.shiftDate;
+            startTime = response.startTime;
+            endTime = response.endTime;
+            $("#shiftDateViewShift").val(date);
+            $("#startTimeViewShift").val(startTime);
+            $("#endTimeViewShift").val(endTime);
+        }
+    });
+}
+
+$(document).on("click", ".conformButton", function () {    ////   for save changes from viewshift popup
+    var data = JSON.stringify({
+        ShiftDate: $("#shiftDateViewShift").val(),
+        EndTime: $("#endTimeViewShift").val(),
+        StartTime: $("#startTimeViewShift").val(),
+        ShiftDetailsId: Id.toString(),
+    });
+    $.ajax({
+        url: "/Admin/EditShiftDetails",
+        type: "Get",
+        contentType: "application/json",
+        data: {
+            data,
+        },
+        success: function (response) {
+            window.location.href = response.redirect;
+        }
+    });
+})
+
+$(document).on("click", "#deletebutton", function () {     ///   for delete shift from viewshift opo up
+    $.ajax({
+        url: '/Admin/DeleteShiftDetails',
+        type: 'GET',
+        contentType: 'application/json',
+        data: {
+            data: JSON.stringify([Id.toString()]),
+        },
+        success: function (response) {
+            window.location.href = response.redirect;
+        }
+    })
 })
