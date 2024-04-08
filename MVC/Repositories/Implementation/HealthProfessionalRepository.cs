@@ -1,6 +1,8 @@
-﻿using Repositories.DataContext;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
+using System.Collections;
 
 namespace Repositories.Implementation
 {
@@ -13,14 +15,47 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
+        public async Task<bool> addHealthProfessional(HealthProfessional healthProfessional)
+        {
+            try
+            {
+                _dbContext.HealthProfessionals.Add(healthProfessional);
+                return await _dbContext.SaveChangesAsync() > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> updateHealthProfessional(HealthProfessional healthProfessional)
+        {
+            try
+            {
+                _dbContext.HealthProfessionals.Update(healthProfessional);
+                return await _dbContext.SaveChangesAsync() > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public List<HealthProfessionalType> getHealthProfessionalTypes()
         {
             return _dbContext.HealthProfessionalTypes.ToList();
         }
 
+        public List<HealthProfessional> getHealthProfessionalByProfessionWithType(int professionId,String searchElement)
+        {
+            return _dbContext.HealthProfessionals.Include(a => a.ProfessionNavigation)
+                               .Where(a => (professionId == 0 || a.Profession == professionId) && a.IsDeleted == new BitArray(1, false) &&
+            (searchElement == null || a.VendorName.ToLower().Contains(searchElement.ToLower()))).ToList();
+        }
+
         public List<HealthProfessional> getHealthProfessionalByProfession(int professionId)
         {
-            return _dbContext.HealthProfessionals.Where(a => a.Profession ==  professionId).ToList();
+            return _dbContext.HealthProfessionals.Where(a => a.Profession == professionId).ToList();
         }
 
         public HealthProfessional getHealthProfessional(int VenderId)

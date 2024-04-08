@@ -24,6 +24,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWdyZWVtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/BusinessProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQnVzaW5lc3NQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/CloseCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ2xvc2VDYXNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -54,6 +58,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/LoginPage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTG9naW5QYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/Partners.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUGFydG5lcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Admin/ProviderLocation.cshtml]
@@ -202,6 +210,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_NoTableDataFound.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Ob1RhYmxlRGF0YUZvdW5kLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_PartnersTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QYXJ0bmVyc1RhYmxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/project/HTML Training Assignment/MVC/HelloDoc/Views/Shared/_PatientDashboardHeader.cshtml]

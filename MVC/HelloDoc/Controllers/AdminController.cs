@@ -1,6 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using Azure.Core;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.DataModels;
@@ -24,16 +24,16 @@ namespace HelloDoc.Controllers
         private readonly IViewDocumentsServices _viewDocumentsServices;
         private readonly IJwtService _jwtService;
         private readonly ISendOrderService _sendOrderService;
-        private readonly IEncounterService _encounterService;
         private readonly ICloseCaseService _closeCaseService;
         private readonly IViewProfileService _viewProfileService;
         private readonly IProvidersService _providersService;
         private readonly IAccessService _accessService;
+        private readonly IPartnersService _partnersService;
 
         public AdminController(INotyfService notyfService, IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
                                 IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
-                                IJwtService jwtService, ISendOrderService sendOrderService, IEncounterService encounterService,
-                                ICloseCaseService closeCaseService, IViewProfileService viewProfileService,
+                                IJwtService jwtService, ISendOrderService sendOrderService, ICloseCaseService closeCaseService, 
+                                IViewProfileService viewProfileService, IPartnersService partnersService,
                                 IProvidersService providersService, IAccessService accessService)
         {
             _notyfService = notyfService;
@@ -43,8 +43,8 @@ namespace HelloDoc.Controllers
             _viewNotesService = viewNotesService;
             _viewDocumentsServices = viewDocumentsServices;
             _jwtService = jwtService;
+            _partnersService = partnersService;
             _sendOrderService = sendOrderService;
-            _encounterService = encounterService;
             _closeCaseService = closeCaseService;
             _viewProfileService = viewProfileService;
             _providersService = providersService;
@@ -79,7 +79,7 @@ namespace HelloDoc.Controllers
         public IActionResult EncounterForm()
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
-            return View(_encounterService.getEncounterDetails(requestId, true));
+            return View(_adminDashboardService.getEncounterDetails(requestId, true));
         }
 
         [Authorization("Admin")]
@@ -118,6 +118,18 @@ namespace HelloDoc.Controllers
         public IActionResult Providers()
         {
             return View(_providersService.getProviders(regionId: 0));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult Partners()
+        {
+            return View(_partnersService.getPartnersData());
+        }
+
+        [Authorization("Admin")]
+        public IActionResult BusinessProfile()
+        {
+            return View(_partnersService.addBusiness(isUpdate: false,venderId: 0));
         }
 
         [Authorization("Admin")]
@@ -177,6 +189,13 @@ namespace HelloDoc.Controllers
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_sendOrderService.getSendOrderDetails(requestId));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult UpdateBusiness(int venderId)
+        {
+            HttpContext.Session.SetInt32("venderId",venderId);
+            return View("BusinessProfile", _partnersService.addBusiness(isUpdate: true, venderId: venderId));
         }
 
         public IActionResult Agreement(String token)
@@ -564,7 +583,7 @@ namespace HelloDoc.Controllers
             if (ModelState.IsValid)
             {
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _encounterService.updateEncounter(model, requestId))
+                if (await _adminDashboardService.updateEncounter(model, requestId))
                 {
                     _notyfService.Success("Successfully Updated");
                 }
@@ -763,6 +782,49 @@ namespace HelloDoc.Controllers
             return tableModel.TableDatas.Count != 0 ? PartialView(partialViewName, tableModel) : PartialView("_NoTableDataFound");
         }
 
+        [HttpPost]    // Add Business - BusinessProfile page
+        public async Task<IActionResult> CreateBusiness(BusinessProfile model)
+        {
+            if (await _partnersService.createBusiness(model))
+            {
+                _notyfService.Success("Successfully Business Added");
+            }
+            else
+            {
+                _notyfService.Error("Add Business Faild");
+            }
+            return RedirectToAction("Partners", "Admin");
+        }
+
+        [HttpPost]    // update Business - BusinessProfile page
+        public async Task<IActionResult> UpdateBusiness(BusinessProfile model)
+        {
+            int venderId = HttpContext.Session.GetInt32("venderId").Value;
+            if (await _partnersService.EditBusiness(model,venderId))
+            {
+                _notyfService.Success("Successfully Business Updated");
+            }
+            else
+            {
+                _notyfService.Error("Update Business Faild");
+            }
+            return RedirectToAction("Partners", "Admin");
+        }
+   
+        public async Task<IActionResult> DeleteBusiness()   // update Business - BusinessProfile page
+        {
+            int venderId = HttpContext.Session.GetInt32("venderId").Value;
+            if (await _partnersService.deleteBusiness(venderId))
+            {
+                _notyfService.Success("Successfully Business Updated");
+            }
+            else
+            {
+                _notyfService.Error("Update Business Faild");
+            }
+            return RedirectToAction("Partners", "Admin");
+        }
+
         [HttpPost]
         public async Task<IActionResult> ViewNotes(ViewNotes model)
         {
@@ -826,8 +888,8 @@ namespace HelloDoc.Controllers
             return Json(new { redirect = Url.Action("RequestedShift", "Admin") });
         }
 
-        [HttpGet]
-        public IActionResult GetProviderLocation()  ///  provider Location page 
+        [HttpGet]       ///  provider Location page 
+        public IActionResult GetProviderLocation()  
         {
             return Json(_providersService.getProviderLocation());
         }
@@ -850,6 +912,12 @@ namespace HelloDoc.Controllers
         {
             await _providersService.changeShiftDetails(data, false);    ///  use same services from requested shift page for delete shift
             return Json(new { redirect = Url.Action("ProviderScheduling", "Admin") });
+        }
+
+        [HttpGet]    // Partners page 
+        public IActionResult GetPatnersData(int regionId, string searchElement)
+        {
+            return PartialView("_PartnersTable", _partnersService.getPartnersTableDatas(regionId, searchElement));
         }
     }
 }

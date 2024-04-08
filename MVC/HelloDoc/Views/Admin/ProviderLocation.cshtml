@@ -42,8 +42,7 @@
             method: 'GET',
             success: function (response) {
                 response.map(function (res) {
-                    L.marker([res.latitude, res.longitude]).addTo(map)
-                        .bindPopup(res.physicianname)
+                        L.marker([res.latitude, res.longitude]).addTo(map).bindPopup(res.providerName)
                 })
             }
         })

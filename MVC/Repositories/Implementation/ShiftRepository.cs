@@ -17,8 +17,9 @@ namespace Repositories.Implementation
 
         public List<Physician> getPhysicianWithShiftDetailByRegionIdAndDAte(int regionId, DateTime startDate, DateTime endDate)
         {
-            return _dbContext.Physicians.Include(a => a.Shifts).ThenInclude(a => a.ShiftDetails.Where(a => (regionId == 0 || a.RegionId == regionId)
-                             && a.IsDeleted == new BitArray(1,false)
+            return _dbContext.Physicians.Include(a => a.Shifts).ThenInclude(a => a.ShiftDetails.Where(
+                        a => (regionId == 0 || a.RegionId == regionId)
+                             && a.IsDeleted == new BitArray(1, false)
                              && a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date)).ToList();
         }
 
@@ -57,9 +58,21 @@ namespace Repositories.Implementation
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
+        public async Task<bool> addShiftDetailsRegion(ShiftDetailRegion shiftDetailRegion)
+        {
+            _dbContext.ShiftDetailRegions.Add(shiftDetailRegion);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
         public async Task<bool> updateShiftDetails(ShiftDetail shiftDetail)
         {
             _dbContext.ShiftDetails.Update(shiftDetail);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> updateShiftDetailRegion(ShiftDetailRegion shiftDetailRegion)
+        {
+            _dbContext.ShiftDetailRegions.Update(shiftDetailRegion);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
@@ -68,9 +81,14 @@ namespace Repositories.Implementation
             return _dbContext.ShiftDetails.FirstOrDefault(a => a.ShiftDetailId == shiftDetailsId);
         }
 
+        public ShiftDetailRegion getShiftDetailRegion(int shiftDetailsId)
+        {
+            return _dbContext.ShiftDetailRegions.FirstOrDefault(a => a.ShiftDetailId == shiftDetailsId);
+        }
+
         public ShiftDetail getShiftDetailsWithPhysician(int shiftDetailsId)
         {
-            return _dbContext.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Include(a => a.Region)
+            return _dbContext.ShiftDetails.Include(a => a.Shift.Physician).Include(a => a.Region)
                                                                         .FirstOrDefault(a => a.ShiftDetailId == shiftDetailsId);
         }
 

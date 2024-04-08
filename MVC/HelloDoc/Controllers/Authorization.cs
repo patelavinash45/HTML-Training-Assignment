@@ -18,28 +18,6 @@ namespace HelloDoc.Authentication
             _role = role;
         }
 
-        //public void OnAuthorization(AuthorizationFilterContext context)
-        //{
-        //    String role = context.HttpContext.Session.GetString("role");
-        //    int? aspnetUserId = context.HttpContext.Session.GetInt32("aspNetUserId");
-        //    if (aspnetUserId == null)
-        //    {
-        //        context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
-        //        {
-        //              Controller = _role,
-        //              action = "WrongLogInPage",
-        //        }));
-        //    }
-        //    else if (aspnetUserId != null && _role != role)
-        //    {
-        //        context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
-        //        {
-        //            Controller = "Patient",
-        //            action = "AccessDenied",
-        //        }));
-        //    }
-        //}
-
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             IJwtService jwtService = context.HttpContext.RequestServices.GetService<IJwtService>();

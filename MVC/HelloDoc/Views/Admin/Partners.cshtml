@@ -1,0 +1,46 @@
+﻿@model Services.ViewModels.Admin.Partners
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partners</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/admin/partners.css" rel="stylesheet" />
+    <script src="~/js/Admin/pratners.js"></script>
+</head>
+<body>
+    @await Component.InvokeAsync("Notyf")
+    <partial name="_AdminDashboardHeader" model="5">
+    <div class="container-fluid">
+        <h4 class="mt-2 mb-2">
+            Vendor(s)
+        </h4>
+        <div class="partnersList">
+            <div class="d-flex justify-content-between align-items-center mt-2 mb-3 topElements">
+                <div class="d-flex" id="selects">
+                    <input placeholder="Search Venders" class="me-3" type="search" id="searchPartners"/>
+                    <select class="select" id="profession">
+                        <option value="0">All Profession</option>
+                        @foreach(var item in Model.ProfessionList)
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    </select>
+                </div>
+                <a asp-controller="Admin" asp-action="BusinessProfile">
+                    <button class="bg-white px-3 fw-medium">
+                        Add Business
+                    </button>
+                </a>
+            </div>
+            <div class="tableData">
+                <partial name="_PartnersTable" model="@Model.PartnersTableDatas"></partial>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

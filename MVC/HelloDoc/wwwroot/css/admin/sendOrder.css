@@ -9,7 +9,6 @@ button {
     background-color: white;
 }
 
-/*.form-floating > .form-select ~ label,*/
 .form-floating > label {
     left: 12px;
     background-color: transparent;

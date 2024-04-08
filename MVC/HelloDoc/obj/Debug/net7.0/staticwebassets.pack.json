@@ -337,6 +337,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\loginPage.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\partners.css",
+      "PackagePath": "staticwebassets\\css\\admin\\partners.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\providerLocation.css",
       "PackagePath": "staticwebassets\\css\\admin\\providerLocation.css"
     },
@@ -475,6 +479,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\loginPage.js",
       "PackagePath": "staticwebassets\\js\\Admin\\loginPage.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\pratners.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\pratners.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\provider.js",

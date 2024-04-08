@@ -1,12 +1,10 @@
-﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Repositories.DataModels;
 using Repositories.Interface;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.ViewModels.Admin;
 using System.Collections;
-using System.Globalization;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
@@ -273,6 +271,13 @@ namespace Services.Implementation.AdminServices
                     IsDeleted = new BitArray(1, false)
                 };
                 await _shiftRepository.addShiftDetails(shiftDetail);
+                ShiftDetailRegion shiftDetailRegion = new ShiftDetailRegion()
+                {
+                    ShiftDetailId = shiftDetail.ShiftDetailId,
+                    RegionId = model.SelectedRegion,
+                    IsDeleted = new BitArray(1, false)
+                };
+                await _shiftRepository.addShiftDetailsRegion(shiftDetailRegion);
                 if (model.IsRepeat)
                 {
                     foreach(int day in model.SelectedDays)
@@ -292,6 +297,13 @@ namespace Services.Implementation.AdminServices
                                 IsDeleted = new BitArray(1, false)
                             };
                             await _shiftRepository.addShiftDetails(shiftDetail);
+                            shiftDetailRegion = new ShiftDetailRegion()
+                            {
+                                ShiftDetailId = shiftDetail.ShiftDetailId,
+                                RegionId = model.SelectedRegion,
+                                IsDeleted = new BitArray(1,false),
+                            };
+                            await _shiftRepository.addShiftDetailsRegion(shiftDetailRegion);
                         }
                     };
                     return true;
@@ -364,6 +376,9 @@ namespace Services.Implementation.AdminServices
                     ShiftDetail shiftDetail = _shiftRepository.getShiftDetails(id);
                     shiftDetail.IsDeleted = new BitArray(1, true);
                     await _shiftRepository.updateShiftDetails(shiftDetail);
+                    ShiftDetailRegion shiftDetailRegion = _shiftRepository.getShiftDetailRegion(id);
+                    shiftDetailRegion.IsDeleted = new BitArray(1, true);
+                    await _shiftRepository.updateShiftDetailRegion(shiftDetailRegion);
                 };
                 return true;
             }
@@ -526,7 +541,7 @@ namespace Services.Implementation.AdminServices
         {
             List<SchedulingTable> schedulingTables = new List<SchedulingTable>();
             string path = "/Files//Providers/Photo/";
-            _shiftRepository.getPhysicianWithShiftDetailByRegionIdAndDAte(regionId, date, date)
+            _shiftRepository.getPhysicianWithShiftDetailByRegionIdAndDAte(regionId, date, date.AddDays(6))
             .ForEach(physician =>
             {
                 SchedulingTable schedulingTable = new SchedulingTable()

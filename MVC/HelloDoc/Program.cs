@@ -46,13 +46,13 @@ builder.Services.AddScoped<IRequestStatusLogRepository, RequestStatusLogReposito
 builder.Services.AddScoped<IBusinessConciergeRepository, BusinessConciergeRepository>();
 builder.Services.AddScoped<ISendOrderService, SendOrderService>();
 builder.Services.AddScoped<IHealthProfessionalRepository, HealthProfessionalRepository>();
-builder.Services.AddScoped<IEncounterService, EncounterService>();
 builder.Services.AddScoped<IEncounterRepository, EncounterRepository>();
 builder.Services.AddScoped<ICloseCaseService, CloseCaseService>();
 builder.Services.AddScoped<IProvidersService, ProvidersService>();
 builder.Services.AddScoped<IAccessService, AccessService>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IShiftRepository , ShiftRepository>();
+builder.Services.AddScoped<IPartnersService, PartnersService>();
 
 
 var app = builder.Build();

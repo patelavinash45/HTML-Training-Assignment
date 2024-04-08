@@ -25,5 +25,9 @@ namespace Services.Interfaces.AdminServices
         Task<bool> createRequest(CreateRequest model, int aspNetUserId);
 
         bool RequestSupport(RequestSupport model);
+
+        EncounterForm getEncounterDetails(int requestId, bool type);
+
+        Task<bool> updateEncounter(EncounterForm model, int requestId);
     }
 }
