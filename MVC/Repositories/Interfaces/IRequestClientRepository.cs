@@ -10,6 +10,8 @@ namespace Repositories.Interfaces
 
         List<RequestClient> getAllRequestClients();
 
+        List<RequestClient> getRequestClientsBasedOnFilter(Func<RequestClient,bool> predicate);
+
         List<RequestClient> getRequestClientByStatus(List<int> status, int skip, string patientName, int regionId, int requesterTypeId);
 
         int countRequestClientByStatus(List<int> status);

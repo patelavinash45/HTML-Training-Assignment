@@ -353,6 +353,10 @@
       "PackagePath": "staticwebassets\\css\\admin\\providers.css"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\records.css",
+      "PackagePath": "staticwebassets\\css\\admin\\records.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\requestedShift.css",
       "PackagePath": "staticwebassets\\css\\admin\\requestedShift.css"
     },
@@ -491,6 +495,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\providerScheduling.js",
       "PackagePath": "staticwebassets\\js\\Admin\\providerScheduling.js"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\record.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\record.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\requestPopUp.js",

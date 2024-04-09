@@ -16,7 +16,7 @@ public partial class Smslog
     public decimal SmslogId { get; set; }
 
     [Column("SMSTemplate")]
-    [StringLength(1)]
+    [StringLength(100)]
     public string Smstemplate { get; set; } = null!;
 
     [StringLength(50)]
@@ -37,7 +37,7 @@ public partial class Smslog
     public DateTime CreateDate { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
-    public DateTime? SentDate { get; set; }
+    public DateTime SentDate { get; set; }
 
     [Column("IsSMSSent", TypeName = "bit(1)")]
     public BitArray? IsSmssent { get; set; }
@@ -45,4 +45,11 @@ public partial class Smslog
     public int SentTries { get; set; }
 
     public int? Action { get; set; }
+
+    [StringLength(50)]
+    public string? Name { get; set; }
+
+    [ForeignKey("RoleId")]
+    [InverseProperty("Smslogs")]
+    public virtual Role? Role { get; set; }
 }

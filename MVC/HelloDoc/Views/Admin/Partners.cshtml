@@ -22,7 +22,7 @@
         <div class="partnersList">
             <div class="d-flex justify-content-between align-items-center mt-2 mb-3 topElements">
                 <div class="d-flex" id="selects">
-                    <input placeholder="Search Venders" class="me-3" type="search" id="searchPartners"/>
+                    <input placeholder="Search Venders" class="shadow-none" type="search" id="searchPartners"/>
                     <select class="select" id="profession">
                         <option value="0">All Profession</option>
                         @foreach(var item in Model.ProfessionList)
@@ -31,8 +31,8 @@
                         }
                     </select>
                 </div>
-                <a asp-controller="Admin" asp-action="BusinessProfile">
-                    <button class="bg-white px-3 fw-medium">
+                <a asp-controller="Admin" asp-action="BusinessProfile" id="addBusinessButton">
+                    <button class="bg-white px-3 fw-medium w-100">
                         Add Business
                     </button>
                 </a>

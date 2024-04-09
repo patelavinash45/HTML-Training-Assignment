@@ -97,7 +97,13 @@ namespace Services.Implementation.AdminServices
         {
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
             requestClient.Status = 4;
-            return await _requestClientRepository.updateRequestClient(requestClient);
+            if(await _requestClientRepository.updateRequestClient(requestClient))
+            {
+                Request request = _requestRepository.getRequestByRequestId(model.RequestId);
+                request.AcceptedDate = DateTime.Now;
+                return await _requestRepository.updateRequest(request);
+            }
+            return false;
         }
 
         public async Task<bool> assignRequest(AssignAndTransferPopUp model)

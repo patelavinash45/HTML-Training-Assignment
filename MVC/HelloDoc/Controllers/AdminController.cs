@@ -29,12 +29,13 @@ namespace HelloDoc.Controllers
         private readonly IProvidersService _providersService;
         private readonly IAccessService _accessService;
         private readonly IPartnersService _partnersService;
+        private readonly IRecordService _recordService;
 
         public AdminController(INotyfService notyfService, IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
                                 IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
                                 IJwtService jwtService, ISendOrderService sendOrderService, ICloseCaseService closeCaseService, 
                                 IViewProfileService viewProfileService, IPartnersService partnersService,
-                                IProvidersService providersService, IAccessService accessService)
+                                IProvidersService providersService, IAccessService accessService, IRecordService recordService)
         {
             _notyfService = notyfService;
             _loginService = loginService;
@@ -49,6 +50,7 @@ namespace HelloDoc.Controllers
             _viewProfileService = viewProfileService;
             _providersService = providersService;
             _accessService = accessService;
+            _recordService = recordService;
         }
 
         public IActionResult LoginPage()
@@ -145,6 +147,24 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
+        public IActionResult Records()
+        {
+            return View(_recordService.getRecords(new Records()));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult EmailLogs()
+        {
+            return View(_recordService.getEmailLog(new EmailSmsLogs()));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult SMSLogs()
+        {
+            return View(_recordService.getSMSlLog(new EmailSmsLogs()));
+        }
+
+        [Authorization("Admin")]
         public IActionResult ViewProfile()
         {
             int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
@@ -194,7 +214,6 @@ namespace HelloDoc.Controllers
         [Authorization("Admin")]
         public IActionResult UpdateBusiness(int venderId)
         {
-            HttpContext.Session.SetInt32("venderId",venderId);
             return View("BusinessProfile", _partnersService.addBusiness(isUpdate: true, venderId: venderId));
         }
 
@@ -649,11 +668,11 @@ namespace HelloDoc.Controllers
         }
 
         [HttpPost]
-        public IActionResult ContactProvider(ContactProvider model)
+        public async Task<IActionResult> ContactProvider(ContactProvider model)
         {
             if (ModelState.IsValid)
             {
-                if (_providersService.contactProvider(model))
+                if (await _providersService.contactProvider(model))
                 {
                     _notyfService.Success("Successfully Message Send");
                 }
@@ -811,16 +830,15 @@ namespace HelloDoc.Controllers
             return RedirectToAction("Partners", "Admin");
         }
    
-        public async Task<IActionResult> DeleteBusiness()   // update Business - BusinessProfile page
+        public async Task<IActionResult> DeleteBusiness(int venderId)   // Delete Business - BusinessProfile page
         {
-            int venderId = HttpContext.Session.GetInt32("venderId").Value;
             if (await _partnersService.deleteBusiness(venderId))
             {
-                _notyfService.Success("Successfully Business Updated");
+                _notyfService.Success("Successfully Business Deleted");
             }
             else
             {
-                _notyfService.Error("Update Business Faild");
+                _notyfService.Error("Delete Business Faild");
             }
             return RedirectToAction("Partners", "Admin");
         }
@@ -918,6 +936,39 @@ namespace HelloDoc.Controllers
         public IActionResult GetPatnersData(int regionId, string searchElement)
         {
             return PartialView("_PartnersTable", _partnersService.getPartnersTableDatas(regionId, searchElement));
+        }
+
+        [HttpPost]    // Record page filters
+        public IActionResult GetRecordsTableDate(Records model)
+        {
+            return PartialView("_RecordTable", _recordService.getRecords(model).RecordTableDatas);
+        }
+
+        [HttpGet]   // Export All Data  -- Record Page
+        public IActionResult ExportAllRecords()
+        {
+            DataTable dataTable = _recordService.ExportAllRecords();
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dataTable);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AllData.xlsx");
+                }
+            }
+        }
+
+        [HttpPost]    // Email Logs page filters
+        public IActionResult GetEmailLogsTableDate(EmailSmsLogs model)
+        {
+            return PartialView("_EmailLogTable", _recordService.getEmailLogTabledata(model));
+        }
+
+        [HttpPost]    // SMS Logs page filters
+        public IActionResult GetSMSLogsTableDate(EmailSmsLogs model)
+        {
+            return PartialView("_EmailLogTable", _recordService.getSMSLogTabledata(model));
         }
     }
 }

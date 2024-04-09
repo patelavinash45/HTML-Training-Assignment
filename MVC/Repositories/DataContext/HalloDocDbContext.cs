@@ -176,6 +176,8 @@ public partial class HalloDocDbContext : DbContext
         modelBuilder.Entity<EmailLog>(entity =>
         {
             entity.HasKey(e => e.EmailLogId).HasName("EmailLog_pkey");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.EmailLogs).HasConstraintName("Role");
         });
 
         modelBuilder.Entity<Encounter>(entity =>
@@ -423,6 +425,8 @@ public partial class HalloDocDbContext : DbContext
         modelBuilder.Entity<Smslog>(entity =>
         {
             entity.HasKey(e => e.SmslogId).HasName("SMSLog_pkey");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Smslogs).HasConstraintName("Role");
         });
 
         modelBuilder.Entity<User>(entity =>

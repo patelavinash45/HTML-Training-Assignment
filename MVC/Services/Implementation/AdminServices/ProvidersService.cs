@@ -20,15 +20,17 @@ namespace Services.Implementation.AdminServices
         private readonly IRoleRepository _roleRepository;
         private readonly IAspRepository _aspRepository;
         private readonly IShiftRepository _shiftRepository;
+        private readonly ILogsService _logsService;
 
         public ProvidersService(IUserRepository userRepository, IRequestClientRepository requestClientRepository, IRoleRepository roleRepository,
-                                 IAspRepository aspRepository, IShiftRepository shiftRepository)
+                                 IAspRepository aspRepository, IShiftRepository shiftRepository,ILogsService logsService)
         {
             _userRepository = userRepository;
             _requestClientRepository = requestClientRepository;
             _roleRepository = roleRepository;
             _aspRepository = aspRepository;
             _shiftRepository = shiftRepository;
+            _logsService = logsService;
         }
 
         public Task<bool> EditShiftDetails(string data)
@@ -95,7 +97,7 @@ namespace Services.Implementation.AdminServices
             return await _userRepository.updatePhysicianNotification(physicianNotification);
         }
 
-        public bool contactProvider(ContactProvider model)
+        public async Task<bool> contactProvider(ContactProvider model)
         {
             if(model.email)
             {
@@ -106,7 +108,7 @@ namespace Services.Implementation.AdminServices
                     IsBodyHtml = true,
                     Body = model.Message,
                 };
-                //Physician physician = _userRepository.getPhysicianByPhysicianId(model.providerId);
+                Physician physician = _userRepository.getPhysicianByPhysicianId(model.providerId);
                 //mailMessage.To.Add(physician.Email);
                 mailMessage.To.Add("tatva.dotnet.avinashpatel@outlook.com");
                 SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
@@ -119,7 +121,17 @@ namespace Services.Implementation.AdminServices
                 };
                 try
                 {
-                    smtpClient.SendMailAsync(mailMessage);
+                    await smtpClient.SendMailAsync(mailMessage);
+                    //EmailLog emailLog = new EmailLog()
+                    //{
+                    //    Name = $"{physician.FirstName} {physician.LastName}",
+                    //    SubjectName = "Message From Admin",
+                    //    EmailId = physician.Email,
+                    //    CreateDate = DateTime.Now,
+                    //    SentDate = DateTime.Now,
+                    //    IsEmailSent = new BitArray(1, true),
+                    //};
+                    //await _logsService.addEmailLog(emailLog);
                 }
                 catch (Exception ex)
                 {

@@ -55,7 +55,7 @@
                                 Edit
                             </button>
                         </a>
-                        <a asp-controller="Admin" asp-action="DeleteBusiness">
+                        <a asp-controller="Admin" asp-action="DeleteBusiness" asp-route-venderId="@item.VenderId">
                             <button class="bg-white px-3">
                                 Delete
                             </button>
@@ -71,11 +71,12 @@
     <div class="accordion accordion-flush w-100" id="accordionFlushExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                <button class="accordion-button collapsed h-100" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-controls="panelsStayOpen-collapseOne">
+                <button class="accordion-button collapsed h-100" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-@item.VenderId" aria-controls="panelsStayOpen-collapseOne">
                     @item.BusinessName
                 </button>
+                <hr class="h1">
             </h2>
-            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+            <div id="panelsStayOpen-@item.VenderId" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body row">
                     <div class="mt-3">
                         <div>
@@ -85,25 +86,25 @@
                             </span>
                         </div>
                         <div class="mt-4">
-                            <i class="bi bi-check2-circle rounded-circle border border-1 border-primary p-2"></i>
+                            <i class="bi bi-envelope rounded-circle border border-1 border-primary p-2"></i>
                             <span class="h6">
                                 Email : @item.Email
                             </span>
                         </div>
                         <div class="mt-4">
-                            <i class="bi bi-check2-circle rounded-circle border border-1 border-primary p-2"></i>
+                            <i class="bi bi-voicemail rounded-circle border border-1 border-primary p-2"></i>
                             <span class="h6">
                                 Fax : @item.FaxNumber
                             </span>
                         </div>
                         <div class="mt-4">
-                            <i class="bi bi-check2-circle rounded-circle border border-1 border-primary p-2"></i>
+                            <i class="bi bi-telephone rounded-circle border border-1 border-primary p-2"></i>
                             <span class="h6">
                                 Mobile : @item.PhoneNumber
                             </span>
                         </div>
                         <div class="mt-4">
-                            <i class="bi bi-check2-circle rounded-circle border border-1 border-primary p-2"></i>
+                            <i class="bi bi-person-rolodex rounded-circle border border-1 border-primary p-2"></i>
                             <span class="h6">
                                 Business Contact : @item.BusinessContact
                             </span>
@@ -115,12 +116,13 @@
                                 Edit
                             </button>
                         </a>
-                        <a asp-controller="Admin" asp-action="DeleteBusiness">
+                        <a asp-controller="Admin" asp-action="DeleteBusiness" asp-route-venderId="@item.VenderId">
                             <button class="bg-white px-3">
                                 Delete
                             </button>
                         </a>
                     </div>
+                    <hr class="h1">
                 </div>
             </div>
         </div>

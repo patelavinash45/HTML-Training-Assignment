@@ -24,6 +24,12 @@ namespace Repositories.Implementation
             return _dbContext.RequestClients.Include(a => a.Request) .ToList();
         }
 
+        public List<RequestClient> getRequestClientsBasedOnFilter(Func<RequestClient, bool> predicate)
+        {
+            return _dbContext.RequestClients.Include(a => a.Request).ThenInclude(a => a.RequestNotes).Include(a => a.Physician)
+                                            .Include(a => a.Request.RequestStatusLogs).Where(predicate).ToList();
+        }
+
         public List<RequestClient> getRequestClientByStatus(List<int> status, int skip, string patientName ,int regionId, int requesterTypeId)
         {
             Func<RequestClient, bool> predicate = a =>

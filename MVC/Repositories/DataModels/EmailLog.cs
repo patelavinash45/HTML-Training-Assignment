@@ -43,7 +43,7 @@ public partial class EmailLog
     public DateTime CreateDate { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
-    public DateTime? SentDate { get; set; }
+    public DateTime SentDate { get; set; }
 
     [Column(TypeName = "bit(1)")]
     public BitArray? IsEmailSent { get; set; }
@@ -51,4 +51,11 @@ public partial class EmailLog
     public int? SentTries { get; set; }
 
     public int? Action { get; set; }
+
+    [Column(TypeName = "character varying")]
+    public string? Name { get; set; }
+
+    [ForeignKey("RoleId")]
+    [InverseProperty("EmailLogs")]
+    public virtual Role? Role { get; set; }
 }
