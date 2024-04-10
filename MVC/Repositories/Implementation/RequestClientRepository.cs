@@ -2,6 +2,7 @@
 using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
+using System.Collections;
 
 namespace Repositories.Implementation
 {
@@ -58,13 +59,14 @@ namespace Repositories.Implementation
 
         public List<RequestClient> getAllRequestClientForUser(int userId)
         {
-            return _dbContext.RequestClients.Where(r => r.Request.UserId == userId).OrderByDescending(a => a.RequestClientId).ToList();
+            return _dbContext.RequestClients.Include(a => a.Request.RequestWiseFiles.Where(a => a.IsDeleted != new BitArray(1, true)))
+                                                           .Where(a => a.Request.UserId == userId).OrderByDescending(a => a.RequestClientId).ToList();
         }
 
-        public async Task<int> addRequestClient(RequestClient requestClient)
+        public async Task<bool> addRequestClient(RequestClient requestClient)
         {
             _dbContext.RequestClients.Add(requestClient);
-            return await _dbContext.SaveChangesAsync() > 0 ? requestClient.RequestClientId : 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public RequestClient getRequestClientByRequestId(int requestId)

@@ -9,18 +9,15 @@ namespace Services.ViewModels.Admin
         public int RequestId { get; set; }
 
         [StringLength(100)]
-        [Required]
-        public string FirstName { get; set; } = null!;
+        public string FirstName { get; set; } 
 
         [StringLength(100)]
-        [Required]
         public string LastName { get; set; }
 
         [StringLength(50)]
-        public string? Email { get; set; } = null!;
+        public string? Email { get; set; } 
 
         [StringLength(20)]
-        [Required]
         public string Mobile { get; set; }
 
         [StringLength(100)]
@@ -39,8 +36,6 @@ namespace Services.ViewModels.Admin
 
         [Required]
         public DateTime? BirthDate { get; set; }
-
-        public int? AspNetUserId { get; set; }
 
         public CancelPopUp? CancelPopup { get; set; }
 

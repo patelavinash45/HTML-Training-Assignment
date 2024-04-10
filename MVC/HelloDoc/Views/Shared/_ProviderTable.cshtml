@@ -48,9 +48,11 @@
                                 onclick="displayPopUp(@item.providerId)">
                             Contact
                         </button>
-                        <button class="bg-white px-3 fw-bold py-2">
-                            Edit
-                        </button>
+                        <a asp-controller="Admin" asp-action="UpdateProvider" asp-route-physicianId="@item.providerId">
+                            <button class="bg-white px-3 fw-bold py-2">
+                                Edit
+                            </button>
+                        </a>
                     </td>
                 </tr>
             }

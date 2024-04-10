@@ -20,7 +20,7 @@ namespace Repositories.Interfaces
 
         List<RequestClient> getAllRequestClientForUser(int userId);
 
-        Task<int> addRequestClient(RequestClient requestClient);
+        Task<bool> addRequestClient(RequestClient requestClient);
 
         RequestClient getRequestClientByRequestId(int requestId);
 

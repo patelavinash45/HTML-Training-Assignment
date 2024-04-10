@@ -8,11 +8,13 @@ namespace Repositories.Interfaces
 
         List<ShiftDetail> getShiftDetailByRegionIdAndDAte(int regionId, DateTime startDate,DateTime endDate);
 
+        List<ShiftDetail> getAllShiftDetailsFromShiftId(int shiftId);
+
         Task<bool> addShift(Shift shift);
 
-        Task<bool> addShiftDetails(ShiftDetail shiftDetail);
+        Task<bool> addShiftDetails(List<ShiftDetail> shiftDetails);
 
-        Task<bool> addShiftDetailsRegion(ShiftDetailRegion shiftDetailRegion);
+        Task<bool> addShiftDetailsRegion(List<ShiftDetailRegion> shiftDetailRegions);
 
         Task<bool> updateShiftDetails(ShiftDetail shiftDetail);
 

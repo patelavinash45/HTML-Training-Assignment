@@ -39,17 +39,23 @@ namespace Services.Implementation.PatientServices
             return aspNetUserId == 0 ? false : true;
         }
 
-        public async Task<bool> addPatientRequest(AddPatientRequest model)
+        private async Task<int> checkAspNetRole(String role)
         {
-            int aspNetRoleId = _aspRepository.checkUserRole(role: "Patient");
+            int aspNetRoleId = _aspRepository.checkUserRole(role);
             if (aspNetRoleId == 0)
             {
                 AspNetRole aspNetRole = new()
                 {
-                    Name = "Patient",
+                    Name = role,
                 };
                 aspNetRoleId = await _aspRepository.addUserRole(aspNetRole);
             }
+            return aspNetRoleId;
+        }
+
+        public async Task<bool> addPatientRequest(AddPatientRequest model)
+        {
+            int aspNetRoleId = await checkAspNetRole(role: "Patient");
             int aspNetUserId = _aspRepository.checkUser(email: model.Email);
             int userId = _userRepository.getUserID(aspNetUserId);
             if (aspNetUserId == 0)
@@ -121,7 +127,7 @@ namespace Services.Implementation.PatientServices
                 IntDate = DateTime.Now.Day,
                 StrMonth = DateTime.Now.Month.ToString(),
             };
-            return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
+            return await _requestClientRepository.addRequestClient(requestClient);
         }  
 
         public AddRequestByPatient getModelForRequestByMe(int aspNetUserId)
@@ -241,20 +247,12 @@ namespace Services.Implementation.PatientServices
                 IntDate = DateTime.Now.Day,
                 StrMonth = DateTime.Now.Month.ToString(),
             };
-            return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
+            return await _requestClientRepository.addRequestClient(requestClient);
         }
 
         public async Task<bool> addConciergeRequest(AddConciergeRequest model)
         {
-            int aspNetRoleId = _aspRepository.checkUserRole(role: "Patient");
-            if (aspNetRoleId == 0)
-            {
-                AspNetRole aspNetRole = new()
-                {
-                    Name = "Patient",
-                };
-                aspNetRoleId = await _aspRepository.addUserRole(aspNetRole);
-            }
+            int aspNetRoleId = await checkAspNetRole(role: "Patient");
             int aspNetUserId = _aspRepository.checkUser(email: model.Email);
             int userId = _userRepository.getUserID(aspNetUserId);
             if (aspNetUserId == 0)
@@ -342,20 +340,12 @@ namespace Services.Implementation.PatientServices
                 IntDate = DateTime.Now.Day,
                 StrMonth = DateTime.Now.Month.ToString(),
             };
-            return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
+            return await _requestClientRepository.addRequestClient(requestClient);
         }
 
         public async Task<bool> addFamilyFriendRequest(AddFamilyRequest model)
         {
-            int aspNetRoleId = _aspRepository.checkUserRole(role: "Patient");
-            if (aspNetRoleId == 0)
-            {
-                AspNetRole aspNetRole = new()
-                {
-                    Name = "Patient",
-                };
-                aspNetRoleId = await _aspRepository.addUserRole(aspNetRole);
-            }
+            int aspNetRoleId = await checkAspNetRole(role: "Patient");
             int aspNetUserId = _aspRepository.checkUser(email: model.Email);
             int userId = _userRepository.getUserID(aspNetUserId);
             if (aspNetUserId == 0)
@@ -409,7 +399,8 @@ namespace Services.Implementation.PatientServices
             int requestId = await _requestRepository.addRequest(request);
             if (model.File != null)
             {
-                await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FamilyFriendFirstName, lastName: model.FamilyFriendLastName);
+                await _fileService.addFile(requestId: requestId, file: model.File, firstName: model.FamilyFriendFirstName, 
+                                                                                                      lastName: model.FamilyFriendLastName);
             }
             RequestClient requestClient = new()
             {
@@ -428,20 +419,12 @@ namespace Services.Implementation.PatientServices
                 IntDate = DateTime.Now.Day,
                 StrMonth = DateTime.Now.Month.ToString(),
             };
-            return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
+            return await _requestClientRepository.addRequestClient(requestClient);
         }
 
         public async Task<bool> addBusinessRequest(AddBusinessRequest model)
         {
-            int aspNetRoleId = _aspRepository.checkUserRole(role: "Patient");
-            if (aspNetRoleId == 0)
-            {
-                AspNetRole aspNetRole = new()
-                {
-                    Name = "Patient",
-                };
-                aspNetRoleId = await _aspRepository.addUserRole(aspNetRole);
-            }
+            int aspNetRoleId = await checkAspNetRole(role: "Patient");
             int aspNetUserId = _aspRepository.checkUser(email: model.Email);
             int userId = _userRepository.getUserID(aspNetUserId);
             if (aspNetUserId == 0)
@@ -526,7 +509,7 @@ namespace Services.Implementation.PatientServices
                 IntDate = DateTime.Now.Day,
                 StrMonth = DateTime.Now.Month.ToString(),
             };
-            return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
+            return await _requestClientRepository.addRequestClient(requestClient);
         }
 
         private String genrateHash(String password)

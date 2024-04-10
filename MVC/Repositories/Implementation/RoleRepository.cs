@@ -53,9 +53,9 @@ namespace Repositories.Implementation
             return role?.RoleId ?? 0;
         }
 
-        public async Task<bool> addRoleMenu(RoleMenu roleMenu)
+        public async Task<bool> addRoleMenus(List<RoleMenu> roleMenus)
         {
-            _dbContext.RoleMenus.Add(roleMenu);
+            _dbContext.RoleMenus.AddRange(roleMenus);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
@@ -65,9 +65,9 @@ namespace Repositories.Implementation
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> deleteRoleMenu(RoleMenu roleMenu)
+        public async Task<bool> deleteRoleMenus(List<RoleMenu> roleMenus)
         {
-            _dbContext.RoleMenus.Remove(roleMenu);
+            _dbContext.RoleMenus.RemoveRange(roleMenus);
             return await _dbContext.SaveChangesAsync() > 0;
         }
     }

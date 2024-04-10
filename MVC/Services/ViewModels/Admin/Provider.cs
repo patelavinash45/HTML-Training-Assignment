@@ -49,8 +49,10 @@ namespace Services.ViewModels.Admin
         public string ProviderName { get; set; }
     }
 
-    public class CreateProvider
+    public class ProviderProfile
     {
+        public bool isUpdate { get; set; }
+
         [StringLength(100)]
         public string FirstName { get; set; }
 
@@ -309,5 +311,23 @@ namespace Services.ViewModels.Admin
 
         public TimeOnly EndTime { get; set; }
 
+    }
+
+    public class ProviderOnCall
+    {
+        public Dictionary<int, string>? Regions { get; set; }
+
+        public List<ProviderOnCallTable> providerOnCall { get; set; }
+
+        public List<ProviderOnCallTable> providerOffDuty { get; set; }
+    }
+
+    public class ProviderOnCallTable
+    {
+        public string Photo { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
     }
 }

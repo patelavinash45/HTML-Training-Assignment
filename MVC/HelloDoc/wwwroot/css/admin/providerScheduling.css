@@ -35,6 +35,12 @@ tr {
     height: 45px;
 }
 
+.providerList {
+    border-radius: 10px;
+    background-color: white;
+    padding: 20px;
+}
+
 .select {
     border-radius: 10px;
     height: 50px;

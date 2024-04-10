@@ -32,6 +32,11 @@ namespace Repositories.Implementation
             return _dbContext.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Where(predicate).ToList();
         }
 
+        public List<ShiftDetail> getAllShiftDetailsFromShiftId(int shiftId)
+        {
+            return _dbContext.ShiftDetails.Where(a => a.ShiftId == shiftId).ToList();
+        }
+
         //public List<ShiftDetail> getShiftDetailByPhysicianId(int physicianId, DateTime startDate, DateTime endDate)
         //{
         //    return _dbContext.ShiftDetails.Include(a => a.Shift).Where(a => a.RegionId == physicianId && a.IsDeleted == new BitArray(1, false) &&
@@ -52,15 +57,15 @@ namespace Repositories.Implementation
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> addShiftDetails(ShiftDetail shiftDetail)
+        public async Task<bool> addShiftDetails(List<ShiftDetail> shiftDetails)
         {
-            _dbContext.ShiftDetails.Add(shiftDetail);
+            _dbContext.ShiftDetails.AddRange(shiftDetails);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> addShiftDetailsRegion(ShiftDetailRegion shiftDetailRegion)
+        public async Task<bool> addShiftDetailsRegion(List<ShiftDetailRegion> shiftDetailRegions)
         {
-            _dbContext.ShiftDetailRegions.Add(shiftDetailRegion);
+            _dbContext.ShiftDetailRegions.AddRange(shiftDetailRegions);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 

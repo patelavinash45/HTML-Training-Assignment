@@ -37,6 +37,10 @@
       "PackagePath": "staticwebassets\\Files\\108\\Schedulling_day view_mobile.png"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\110\\.gitconfig",
+      "PackagePath": "staticwebassets\\Files\\110\\.gitconfig"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\110\\.viminfo",
       "PackagePath": "staticwebassets\\Files\\110\\.viminfo"
     },
@@ -293,6 +297,10 @@
       "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\82\\avatar.png"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ProviderProfile.css",
+      "PackagePath": "staticwebassets\\css\\admin\\ProviderProfile.css"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ViewCase.css",
       "PackagePath": "staticwebassets\\css\\admin\\ViewCase.css"
     },
@@ -311,10 +319,6 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\closeCase.css",
       "PackagePath": "staticwebassets\\css\\admin\\closeCase.css"
-    },
-    {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createProvider.css",
-      "PackagePath": "staticwebassets\\css\\admin\\createProvider.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createRequest.css",

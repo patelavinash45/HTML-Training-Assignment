@@ -15,6 +15,10 @@ namespace Services.Interfaces.AdminServices
 
         List<EmailSmsLogTableData> getSMSLogTabledata(EmailSmsLogs model);
 
-        DataTable ExportAllRecords();
+        DataTable ExportAllRecords();   
+
+        PatientHistory getPatientHistory(PatientHistory model,int pageNo);
+
+        PatientHistory getSMSLogTabledata(string data, int pageNo);
     }
 }

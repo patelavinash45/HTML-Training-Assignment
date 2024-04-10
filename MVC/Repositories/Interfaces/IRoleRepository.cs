@@ -18,10 +18,10 @@ namespace Repositories.Interfaces
 
         Task<int> addRole(Role role);
 
-        Task<bool> addRoleMenu(RoleMenu roleMenu);
+        Task<bool> addRoleMenus(List<RoleMenu> roleMenus);
 
         Task<bool> updateRole(Role role);
 
-        Task<bool> deleteRoleMenu(RoleMenu roleMenu);
+        Task<bool> deleteRoleMenus(List<RoleMenu> roleMenus);
     }
 }

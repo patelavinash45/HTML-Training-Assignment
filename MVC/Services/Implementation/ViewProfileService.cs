@@ -22,7 +22,7 @@ namespace Services.Implementation
         {
             User user = _userRepository.getUser(aspNetUserId);
             DateTime birthDay = DateTime.Parse(user.IntYear + "-" + user.StrMonth + "-" + user.IntDate);
-            ViewProfile viewProfile = new()
+            return new ViewProfile()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -35,7 +35,6 @@ namespace Services.Implementation
                 ZipCode = user.ZipCode,
                 IsMobile = user.IsMobile[0] ? 1 : 0,
             };
-            return viewProfile;
         }
 
         public async Task<bool> updatePatientProfile(ViewProfile model, int aspnetUserId)
@@ -72,7 +71,7 @@ namespace Services.Implementation
             {
                 adminRegions[adminRegion.RegionId] = true;
             }
-            AdminCreaateAndProfile adminViewProfile = new AdminCreaateAndProfile()
+            return new AdminCreaateAndProfile()
             {
                 FirstName = admin.FirstName,
                 LastName = admin.LastName,
@@ -88,7 +87,6 @@ namespace Services.Implementation
                 Regions = regions,
                 AdminRegions = adminRegions,
             };
-            return adminViewProfile;
         }
 
         public async Task<bool> editEditAdministratorInformastion(String data1, int aspNetUserId)

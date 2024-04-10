@@ -4,6 +4,10 @@ namespace Repositories.Interfaces
 {
     public interface IUserRepository
     {
+        int countUsers(Func<User, bool> predicat);
+
+        List<User> getAllUser(Func<User, bool> predicat,int skip);
+
         int getUserID(int aspNetUserID);
 
         Task<int> addUser(User user);
@@ -21,6 +25,8 @@ namespace Repositories.Interfaces
         List<Physician> getAllPhysiciansByRegionId(int regionId);
 
         List<PhysicianRegion> getAllPhysicianRegionsByRegionId(int regionId);
+
+        List<PhysicianRegion> getAllPhysicianRegionsByPhysicianId(int physicianId);
 
         List<Physician> getAllUnAssignedPhysician();
 

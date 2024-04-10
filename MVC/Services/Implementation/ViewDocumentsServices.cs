@@ -14,42 +14,33 @@ namespace Services.Implementation
         private readonly IRequestWiseFileRepository _requestWiseFileRepository;
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly IFileService _fileService;
-        private readonly IUserRepository _userRepository;
 
         public ViewDocumentsServices(IRequestWiseFileRepository requestWiseFileRepository, IRequestClientRepository requestClientRepository,
-                                      IFileService fileService, IUserRepository userRepository)
+                                      IFileService fileService)
         {
             _requestWiseFileRepository = requestWiseFileRepository;
             _requestClientRepository = requestClientRepository;
             _fileService = fileService;
-            _userRepository = userRepository;
         }
 
         public ViewDocument getDocumentList(int requestId, int aspNetUserId)
         {
-            List<RequestWiseFile> requestWiseFiles = _requestWiseFileRepository.getFilesByrequestId(requestId);
-            List<FileModel> fileList = new List<FileModel>();
-            foreach (var file in requestWiseFiles)
-            {
-                FileModel fileModel = new FileModel()
-                {
-                    RequestId = requestId,
-                    RequestWiseFileId = file.RequestWiseFileId,
-                    FileName = file.FileName,
-                    Uploder = file.Uploder,
-                    CreatedDate = file.CreatedDate,
-                };
-                fileList.Add(fileModel);
-            }
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(requestId);
-            Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserId);
-            ViewDocument viewDocument = new()
+            return new ViewDocument()
             {
                 FirstName = requestClient.FirstName,
                 LastName = requestClient.LastName,
-                FileList = fileList,
+                FileList = _requestWiseFileRepository.getFilesByrequestId(requestId)
+                            .Select(requestWiseFile =>
+                            new FileModel()
+                            {
+                                RequestId = requestId,
+                                RequestWiseFileId = requestWiseFile.RequestWiseFileId,
+                                FileName = requestWiseFile.FileName,
+                                Uploder = requestWiseFile.Uploder,
+                                CreatedDate = requestWiseFile.CreatedDate,
+                            }).ToList(),
             };
-            return viewDocument;
         }
 
         public async Task<bool> uploadFile(ViewDocument model ,String firstName,String lastName,int requestId)

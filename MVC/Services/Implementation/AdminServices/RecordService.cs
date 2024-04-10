@@ -1,11 +1,10 @@
 ﻿using Repositories.DataModels;
-using Repositories.Implementation;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.ViewModels.Admin;
-using System;
 using System.Data;
 using System.Reflection;
+using System.Text.Json;
 
 namespace Services.Implementation.AdminServices
 {
@@ -14,29 +13,33 @@ namespace Services.Implementation.AdminServices
         private readonly IRequestClientRepository _requestClientRepository;
         private readonly ILogsService _logsService;
         private readonly IRoleRepository _roleRepository;
+        private readonly IUserRepository _userRepository;
 
-        public RecordService(IRequestClientRepository requestClientRepository,ILogsService logsService,IRoleRepository roleRepository)
+        public RecordService(IRequestClientRepository requestClientRepository,ILogsService logsService, IRoleRepository roleRepository,
+                                       IUserRepository userRepository)
         {
             _requestClientRepository = requestClientRepository;
             _logsService = logsService;
             _roleRepository = roleRepository;
+            _userRepository = userRepository;
         }
 
         public Records getRecords(Records model)
         {
-            Func<RequestClient, bool> predicate = a =>
+            Func<RequestClient, bool> predicat = a =>
             (model.RequestType == null || model.RequestType == a.Request.RequestTypeId)
             && (model.Email == null || a.Email.ToLower().Contains(model.Email.ToLower()))
             && (model.Number == null || a.PhoneNumber.Contains(model.Number))
             && (model.StartDate == null || a.Request.AcceptedDate >= model.StartDate)
             && (model.EndDate == null || a.Request.AcceptedDate <= model.EndDate)
             && (model.PatientName == null || a.FirstName.ToLower().Contains(model.PatientName.ToLower())
-                                          || a.LastName.ToLower().Contains(model.PatientName.ToLower()))
-            && (model.ProviderName == null || a.Physician == null || a.Physician.FirstName.ToLower().Contains(model.ProviderName.ToLower())
-                                                                  || a.Physician.LastName.ToLower().Contains(model.ProviderName.ToLower()))
+                                          || a.LastName.ToLower().Contains(model.PatientName.ToLower())
+                                          || $"{a.FirstName} {a.LastName}".ToLower().Contains(model.PatientName.ToLower()))
+            && (model.ProviderName == null || ( a.Physician != null && (a.Physician.FirstName.ToLower().Contains(model.ProviderName.ToLower())
+                                                                     || a.Physician.LastName.ToLower().Contains(model.ProviderName.ToLower()))))
             && (model.RequestStatus == null || a.Status == model.RequestStatus)
             && (a.Status == 3 || a.Status == 7 || a.Status == 8);
-            model.RecordTableDatas = _requestClientRepository.getRequestClientsBasedOnFilter(predicate)
+            model.RecordTableDatas = _requestClientRepository.getRequestClientsBasedOnFilter(predicat)
                 .Select(requestClient =>
                 {
                     RequestNote requestNote = requestClient.Request.RequestNotes.FirstOrDefault(a => a.RequestId == requestClient.RequestId);
@@ -68,13 +71,13 @@ namespace Services.Implementation.AdminServices
 
         public List<EmailSmsLogTableData> getEmailLogTabledata(EmailSmsLogs model)
         {
-            Func<EmailLog, bool> predicate = a =>
+            Func<EmailLog, bool> predicat = a =>
             (model.Email == null || a.EmailId.ToLower().Contains(model.Email))
             && (model.Name == null || a.Name.Contains(model.Name))
             && (model.Role == null || a.RoleId == model.Role)
-            && (model.CreatedDate == null || a.CreateDate == model.CreatedDate)
-            && (model.SendDate == null || a.SentDate == model.SendDate);
-            return _logsService.getAllEmailLogs(predicate).Select(emailLog => new EmailSmsLogTableData()
+            && (model.CreatedDate == null || DateOnly.FromDateTime(a.CreateDate) == model.CreatedDate)
+            && (model.SendDate == null || DateOnly.FromDateTime(a.SentDate) == model.SendDate);
+            return _logsService.getAllEmailLogs(predicat).Select(emailLog => new EmailSmsLogTableData()
             {
                 Name = emailLog.Name,
                 Action = emailLog.SubjectName,
@@ -95,13 +98,13 @@ namespace Services.Implementation.AdminServices
 
         public List<EmailSmsLogTableData> getSMSLogTabledata(EmailSmsLogs model)
         {
-            Func<Smslog, bool> predicate = a =>
-            (model.Phone == null || a.MobileNumber.Contains(model.Email))
+            Func<Smslog, bool> predicat = a =>
+            (model.Phone == null || a.MobileNumber.Contains(model.Phone))
             && (model.Name == null || a.Name.Contains(model.Name))
             && (model.Role == null || a.RoleId == model.Role)
-            && (model.CreatedDate == null || a.CreateDate == model.CreatedDate)
-            && (model.SendDate == null || a.SentDate == model.SendDate);
-            return _logsService.getAllSMSLogs(predicate).Select(emailLog => new EmailSmsLogTableData()
+            && (model.CreatedDate == null || DateOnly.FromDateTime(a.CreateDate) == model.CreatedDate)
+            && (model.SendDate == null || DateOnly.FromDateTime(a.SentDate) == model.SendDate);
+            return _logsService.getAllSMSLogs(predicat).Select(emailLog => new EmailSmsLogTableData()
             {
                 Name = emailLog.Name,
                 Action = emailLog.Smstemplate,
@@ -142,6 +145,47 @@ namespace Services.Implementation.AdminServices
                 currentRow++;
             }
             return dataTable;
+        }
+
+        public PatientHistory getPatientHistory(PatientHistory model,int pageNo)
+        {
+            int skip = (pageNo - 1) * 5;
+            Func<User, bool> predicat = a =>
+            (model.Email == null || a.Email.Contains(model.Email))
+            && (model.Phone == null || a.Mobile.Contains(model.Phone))
+            && (model.FirstName == null || a.FirstName.ToLower().Contains(model.FirstName.ToLower()))
+            && (model.LastName == null || a.LastName.ToLower().Contains(model.LastName.ToLower()));
+            int totalPatient = _userRepository.countUsers(predicat);
+            List<PatientHistoryTableData> patientHistoryTableDatas = _userRepository.getAllUser(predicat,skip)
+                    .Select(user => new PatientHistoryTableData()
+                    {
+                        UserId = user.UserId, 
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Phone = user.Mobile,
+                        Address = $"{user.House}, {user.Street}, {user.City}, {user.State}, {user.ZipCode}"
+                    }).ToList();
+            int totalPages = totalPatient % 5 != 0 ? (totalPatient / 5) + 1 : totalPatient / 5;
+            model.PatientHistoryTable = new PatientHistoryTable()
+            {
+                IsFirstPage = pageNo != 1,
+                IsLastPage = pageNo != totalPages,
+                IsNextPage = pageNo < totalPages,
+                IsPreviousPage = pageNo > 1,
+                TotalRequests = totalPatient,
+                PageNo = pageNo,
+                StartRange = skip + 1,
+                EndRange = skip + 5 < totalPatient ? skip + 5 : totalPatient,
+                PatientHistoryTableDatas = patientHistoryTableDatas,
+            };
+            return model;
+        }
+
+        public PatientHistory getSMSLogTabledata(string data, int pageNo)
+        {
+            PatientHistory model = JsonSerializer.Deserialize<PatientHistory>(data);
+            return getPatientHistory(model, pageNo);
         }
     }
 }

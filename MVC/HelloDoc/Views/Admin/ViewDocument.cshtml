@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/viewDocument.css" rel="stylesheet" />
@@ -36,14 +38,15 @@
                 <div class="w-100">
                     Check here to review and add file that you or the Client/member has attached to the Request.
                 </div>
-                <form asp-controller="Admin" asp-action="ViewDocument" enctype="multipart/form-data" id="fileUploadForm">
-                    <div class="input-group w-100 mb-4 mt-4">
-                        <input class="form-control" placeholder="Select File" type="file" id="filePicker" asp-for="File">
+                <form asp-controller="Admin" asp-action="ViewDocument" enctype="multipart/form-data" id="fileUploadForm" class="mb-4 mt-4">
+                    <div class="input-group w-100">
+                        <input class="form-control" placeholder="Select File" type="file" id="file-picker" asp-for="File">
                         <button class="fs-5 button" id="uploadButton" type="submit">
                             <i class="bi bi-cloud-arrow-up-fill "></i>
                             Upload
                         </button>
                     </div>
+                    <span asp-validation-for="File" class="text-danger"></span>
                 </form>
                 <div class="d-flex justify-content-between align-content-center mt-3 mb-3">
                     <span class="h3 w-100">

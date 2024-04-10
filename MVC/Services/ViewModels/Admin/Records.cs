@@ -68,9 +68,9 @@ namespace Services.ViewModels.Admin
 
         public string? Phone { get; set; }
 
-        public DateTime? SendDate { get; set; } 
+        public DateOnly? SendDate { get; set; } 
 
-        public DateTime? CreatedDate { get; set;} 
+        public DateOnly? CreatedDate { get; set;} 
 
         public List<EmailSmsLogTableData>? EmailSmsLogTableDatas { get; set; }
     }
@@ -93,6 +93,54 @@ namespace Services.ViewModels.Admin
 
         public string Send { get; set; }
 
+    }
 
+    public class PatientHistory
+    {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
+
+        public PatientHistoryTable PatientHistoryTable { get; set; }
+    }
+
+    public class PatientHistoryTable
+    {
+        public List<PatientHistoryTableData> PatientHistoryTableDatas { get; set; }
+
+        public int TotalRequests { get; set; }
+
+        public int PageNo { get; set; }
+
+        public bool IsFirstPage { get; set; }
+
+        public bool IsLastPage { get; set; }
+
+        public bool IsNextPage { get; set; }
+
+        public bool IsPreviousPage { get; set; }
+
+        public int StartRange { get; set; }
+
+        public int EndRange { get; set; }
+    }
+
+    public class PatientHistoryTableData
+    {
+        public int UserId { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
+
+        public string Address { get; set; }
     }
 }

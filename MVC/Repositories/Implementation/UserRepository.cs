@@ -14,6 +14,16 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
+        public int countUsers(Func<User, bool> predicat)
+        {
+            return _dbContext.Users.Where(predicat).Count();
+        }
+
+        public List<User> getAllUser(Func<User, bool> predicat, int skip)
+        {
+            return _dbContext.Users.Where(predicat).OrderByDescending(a => a.UserId).Skip(skip).Take(5).ToList();
+        }
+
         public int getUserID(int aspNetUserID)
         {
             User user = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == aspNetUserID);
@@ -62,6 +72,11 @@ namespace Repositories.Implementation
         public List<PhysicianRegion> getAllPhysicianRegionsByRegionId(int regionId)
         {
             return _dbContext.PhysicianRegions.Include(a => a.Physician).Where(a => (regionId == 0 || a.RegionId == regionId)).ToList();
+        }
+
+        public List<PhysicianRegion> getAllPhysicianRegionsByPhysicianId(int physicianId)
+        {
+            return _dbContext.PhysicianRegions.Where(a => a.PhysicianId == physicianId).ToList();
         }
 
         public List<Physician> getAllUnAssignedPhysician()

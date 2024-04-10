@@ -7,7 +7,7 @@ namespace Services.ViewModels
     { 
         public List<FileModel>? FileList { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="File Is Required")]
         public IFormFile File { get; set; }
 
         public string? FirstName { get; set; }

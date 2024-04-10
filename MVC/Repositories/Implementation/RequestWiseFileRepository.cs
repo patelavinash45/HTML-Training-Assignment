@@ -14,12 +14,6 @@ namespace Repositories.Implementation
             _dbContext = dbContext;
         }
 
-        public int countFile(int requestId)
-        {
-            return _dbContext.RequestWiseFiles.Count(a => a.RequestId == requestId && a.IsDeleted 
-                                                                                   == new BitArray(1, false));
-        }
-
         public async Task<bool> addFile(RequestWiseFile requestWiseFile)
         {
             _dbContext.RequestWiseFiles.Add(requestWiseFile);
@@ -28,7 +22,7 @@ namespace Repositories.Implementation
 
         public List<RequestWiseFile> getFilesByrequestId(int requestId)
         {
-            return _dbContext.RequestWiseFiles.Where(a => a.RequestId == requestId && a.IsDeleted == new BitArray(1, false)).ToList();
+            return _dbContext.RequestWiseFiles.Where(a => a.RequestId == requestId && a.IsDeleted != new BitArray(1, true)).ToList();
         }
 
         public RequestWiseFile getFilesByrequestWiseFileId(int requestWiseFileId)

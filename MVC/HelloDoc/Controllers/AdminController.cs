@@ -1,6 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.DataModels;
@@ -105,9 +104,9 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
-        public IActionResult CreateProvider()
+        public IActionResult ProviderProfile()
         {
-            return View(_providersService.getCreateProvider());
+            return View(_providersService.getProviderProfile(isUpdate: false,physicianId: 0));
         }
 
         [Authorization("Admin")]
@@ -141,6 +140,12 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
+        public IActionResult ProviderOnCall()
+        {
+            return View();
+        }
+
+        [Authorization("Admin")]
         public IActionResult CreateRole()
         {
             return View(_accessService.getCreateRole());
@@ -162,6 +167,12 @@ namespace HelloDoc.Controllers
         public IActionResult SMSLogs()
         {
             return View(_recordService.getSMSlLog(new EmailSmsLogs()));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult PatientHistory()
+        {
+            return View(_recordService.getPatientHistory(new PatientHistory(),pageNo:1));
         }
 
         [Authorization("Admin")]
@@ -214,7 +225,15 @@ namespace HelloDoc.Controllers
         [Authorization("Admin")]
         public IActionResult UpdateBusiness(int venderId)
         {
+            HttpContext.Session.SetInt32("venderId", venderId);
             return View("BusinessProfile", _partnersService.addBusiness(isUpdate: true, venderId: venderId));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult UpdateProvider(int physicianId)
+        {
+            HttpContext.Session.SetInt32("physicianId", physicianId);
+            return View("ProviderProfile", _providersService.getProviderProfile(isUpdate: true, physicianId: physicianId));
         }
 
         public IActionResult Agreement(String token)
@@ -462,7 +481,7 @@ namespace HelloDoc.Controllers
         {
             if (await _accessService.delete(roleId))
             {
-                _notyfService.Success("Successfully Role Created");
+                _notyfService.Success("Successfully Role Deleted");
             }
             else
             {
@@ -475,16 +494,13 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]  /////  sendlink ---  Dashboard
         public IActionResult SendLink(SendLink model)
         {
-            if (ModelState.IsValid)
+            if (_adminDashboardService.SendRequestLink(model, HttpContext))
             {
-                if (_adminDashboardService.SendRequestLink(model, HttpContext))
-                {
-                    _notyfService.Success("Successfully Link Send");
-                }
-                else
-                {
-                    _notyfService.Error("Link Send Faild !!");
-                }
+                _notyfService.Success("Successfully Link Send");
+            }
+            else
+            {
+                _notyfService.Error("Link Send Faild !!");
             }
             return RedirectToAction("Dashboard", "Admin");
         }
@@ -493,26 +509,21 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]  /////  create request ---  Dashboard
         public async Task<IActionResult> CreateRequest(CreateRequest model)
         {
-            if (ModelState.IsValid)
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _adminDashboardService.createRequest(model, aspNetUserId))
             {
-                int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-                if (await _adminDashboardService.createRequest(model, aspNetUserId))
-                {
-                    _notyfService.Success("Successfully Request Added");
-                }
-                else
-                {
-                    _notyfService.Error("Faild!");
-                }
-                return RedirectToAction("Dashboard", "Admin");
+                _notyfService.Success("Successfully Request Added");
             }
-            _notyfService.Warning("Add Required Field.");
-            return View(null);
+            else
+            {
+                _notyfService.Error("Faild!");
+            }
+            return RedirectToAction("Dashboard", "Admin");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]  /////  create provider ---  provider page
-        public async Task<IActionResult> CreateProvider(CreateProvider model)
+        public async Task<IActionResult> ProviderProfile(ProviderProfile model)
         {
             if (ModelState.IsValid)
             {
@@ -526,7 +537,7 @@ namespace HelloDoc.Controllers
                 }
                 return RedirectToAction("Providers", "Admin");
             }
-            CreateProvider createProvider = _providersService.getCreateProvider();
+            ProviderProfile createProvider = _providersService.getProviderProfile(isUpdate: false, physicianId: 0);
             model.Roles = createProvider.Roles;
             model.Regions = createProvider.Regions;
             _notyfService.Warning("Add Required Field.");
@@ -560,18 +571,17 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewDocument(ViewDocument model)
         {
-            if (ModelState.IsValid)
+            String firstname = HttpContext.Session.GetString("firstName");
+            String lastName = HttpContext.Session.GetString("lastName");
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
+            if (await _viewDocumentsServices.uploadFile(model, firstname, lastName, requestId))
             {
-                String firstname = HttpContext.Session.GetString("firstName");
-                String lastName = HttpContext.Session.GetString("lastName");
-                int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _viewDocumentsServices.uploadFile(model, firstName: firstname, lastName: lastName, requestId))
-                {
-                    _notyfService.Success("Successfully File Added.");
-                    return RedirectToAction("ViewDocument", "Admin");
-                }
+                _notyfService.Success("Successfully File Added.");
             }
-            _notyfService.Warning("Please, Select File");
+            else
+            {
+                _notyfService.Error("File");
+            }
             return RedirectToAction("ViewDocument", "Admin");
         }
 
@@ -652,19 +662,15 @@ namespace HelloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewCase(ViewCase model)
         {
-            if (ModelState.IsValid)
+            if (await _viewCaseService.updateRequest(model))
             {
-                if (await _viewCaseService.updateRequest(model))
-                {
-                    _notyfService.Success("Successfully Updated");
-                }
-                else
-                {
-                    _notyfService.Error("Update Faild");
-                }
-                return RedirectToAction("ViewCase", "Admin");
+                _notyfService.Success("Successfully Updated");
             }
-            return View(model);
+            else
+            {
+                _notyfService.Error("Update Faild");
+            }
+            return RedirectToAction("ViewCase", "Admin");
         }
 
         [HttpPost]
@@ -822,6 +828,7 @@ namespace HelloDoc.Controllers
             if (await _partnersService.EditBusiness(model,venderId))
             {
                 _notyfService.Success("Successfully Business Updated");
+                HttpContext.Session.Remove("venderId");
             }
             else
             {
@@ -968,7 +975,13 @@ namespace HelloDoc.Controllers
         [HttpPost]    // SMS Logs page filters
         public IActionResult GetSMSLogsTableDate(EmailSmsLogs model)
         {
-            return PartialView("_EmailLogTable", _recordService.getSMSLogTabledata(model));
+            return PartialView("_SmsLogTable", _recordService.getSMSLogTabledata(model));
+        }
+        
+        [HttpPost]    // Patient History filters
+        public IActionResult GetPatinetHistoryTableDate(string model,int pageNo)
+        {
+            return PartialView("_PatientHistoryTable", _recordService.getSMSLogTabledata(model,pageNo).PatientHistoryTable);
         }
     }
 }

@@ -1,45 +1,35 @@
-﻿using Repositories.DataModels;
-using Repositories.Interfaces;
+﻿using Repositories.Interfaces;
 using Services.Interfaces.PatientServices;
 using Services.ViewModels;
+using System.Collections;
 
 namespace Services.Implementation.PatientServices
 {
     public class PatientDashboardService : IPatientDashboardService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IRequestRepository _requestRepository;
         private readonly IRequestClientRepository _requestClientRepository;
-        private readonly IRequestWiseFileRepository _requestWiseFileRepository;
 
-        public PatientDashboardService(IUserRepository userRepository, IRequestRepository requestRepository,
-            IRequestClientRepository requestClientRepository, IRequestWiseFileRepository requestWiseFileRepository)
+        public PatientDashboardService(IUserRepository userRepository, IRequestClientRepository requestClientRepository)
         {
             _userRepository = userRepository;
-            _requestRepository = requestRepository;
             _requestClientRepository = requestClientRepository;
-            _requestWiseFileRepository = requestWiseFileRepository;
         }
 
         public List<Dashboard> GetUsersMedicalData(int aspNetUserId)
         {
-            int userId = _userRepository.getUserID(aspNetUserId);
-            List<RequestClient> requestClients = _requestClientRepository.getAllRequestClientForUser(userId);
-            List<Dashboard> dashboards = new List<Dashboard>() { };
-            foreach (RequestClient requestClient in requestClients)
-            {
-                Dashboard dashboard = new()
-                {
-                    RequestId = requestClient.RequestId,
-                    StrMonth = requestClient.StrMonth,
-                    IntYear = requestClient.IntYear,
-                    IntDate = requestClient.IntDate,
-                    Status = requestClient.Status,
-                    Document = _requestWiseFileRepository.countFile(requestClient.RequestId),
-                };
-                dashboards.Add(dashboard);
-            }
-            return dashboards;
+            return _requestClientRepository.getAllRequestClientForUser(_userRepository.getUserID(aspNetUserId))
+                    .Select(requestClient =>
+                    new Dashboard()
+                    {
+                        RequestId = requestClient.RequestId,
+                        StrMonth = requestClient.StrMonth,
+                        IntYear = requestClient.IntYear,
+                        IntDate = requestClient.IntDate,
+                        Status = requestClient.Status,
+                        Document = requestClient.Request.RequestWiseFiles == null ? 0 : 
+                                           requestClient.Request.RequestWiseFiles.Where(a => a.IsDeleted != new BitArray(1,true)).Count(),
+                    }).ToList();
         }
     }
 }

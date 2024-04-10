@@ -126,6 +126,11 @@
                         SMS Logs
                     </a>
                 </li>
+                <li>
+                    <a class="dropdown-item" asp-controller="Admin" asp-action="PatientHistory">
+                        Patient History
+                    </a>
+                </li>
             </ul>
             @if (Model == 7)
             {
@@ -200,6 +205,11 @@
             <li>
                 <a class="dropdown-item" asp-controller="Admin" asp-action="SmsLogs">
                     SMS Logs
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-controller="Admin" asp-action="PatientHistory">
+                    Patient History
                 </a>
             </li>
         </ul>

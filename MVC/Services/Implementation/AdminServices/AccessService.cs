@@ -28,26 +28,23 @@ namespace Services.Implementation.AdminServices
 
         public Access getAccessData()
         {
-            List<AccessTable> accessTables = _roleRepository.getAllRoles().Select(role => new AccessTable()
+            return new Access()
             {
-                Name = role.Name,
-                AccountType = role.AccountTypeNavigation.Name,
-                RoleId = role.RoleId,
-            }).ToList();
-            Access access = new Access()
-            {
-                RolesData = accessTables,
+                RolesData = _roleRepository.getAllRoles().Select(role => new AccessTable()
+                            {
+                                Name = role.Name,
+                                AccountType = role.AccountTypeNavigation.Name,
+                                RoleId = role.RoleId,
+                            }).ToList(),
             };
-            return access;
         }
 
         public CreateRole getCreateRole()
         {
-            CreateRole createRole = new CreateRole()
+            return new CreateRole()
             {
                 Menus = _roleRepository.getAllMenus().ToDictionary(menu => menu.MenuId, menu => menu.Name),
             };
-            return createRole;
         }
 
         public Dictionary<int, String> getMenusByRole(int roleId)
@@ -67,15 +64,14 @@ namespace Services.Implementation.AdminServices
             int roleId = await _roleRepository.addRole(role); 
             if(roleId > 0)
             {
-                foreach(String menuId in createRole.SelectedMenus)
-                {
-                    RoleMenu roleMenu = new RoleMenu()
-                    {
-                        RoleId = roleId,
-                        MenuId = int.Parse(menuId),
-                    };
-                    await _roleRepository.addRoleMenu(roleMenu);
-                }
+                await _roleRepository.addRoleMenus(
+                        createRole.SelectedMenus.Select(menuId =>
+                        new RoleMenu()
+                        {
+                            RoleId = roleId,
+                            MenuId = int.Parse(menuId),
+                        }).ToList()
+                );
                 return true;
             }
             return false;
@@ -83,24 +79,22 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> delete(int roleId)
         {
-            List<RoleMenu> roleMenus = _roleRepository.getAllRoleMenusByRole(roleId);
-            foreach(RoleMenu roleMenu in roleMenus)
+            if(await _roleRepository.deleteRoleMenus(_roleRepository.getAllRoleMenusByRole(roleId)))
             {
-                await _roleRepository.deleteRoleMenu(roleMenu);
+                Role role = _roleRepository.getRoleByRoleId(roleId);
+                role.IsDeleted = new BitArray(1, true);
+                return await _roleRepository.updateRole(role);
             }
-            Role role = _roleRepository.getRoleByRoleId(roleId);
-            role.IsDeleted = new BitArray(1, true);
-            return await _roleRepository.updateRole(role);
+            return false;
         }
 
         public AdminCreaateAndProfile GetAdminCreaateAndProfile()
         {
-            AdminCreaateAndProfile adminCreaateAndProfile = new AdminCreaateAndProfile()
+            return new AdminCreaateAndProfile()
             {
                 Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
                 Roles = _roleRepository.getRolesByUserType(3).Select(role => role.Name).ToList(),
             };
-            return adminCreaateAndProfile;
         }
 
         public async Task<bool> createAdmin(AdminCreaateAndProfile model)

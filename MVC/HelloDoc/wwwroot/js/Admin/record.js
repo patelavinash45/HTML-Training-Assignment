@@ -48,15 +48,15 @@ function getEmailLogs() {
 /// for Sms log Page
 
 $(document).on("click", ".searchButtonSMSLogs", function () {
-    getEmailLogs();
+    getSmslLogs();
 })
 
 $(document).on("click", ".resetSMSLogs", function () {
     $("#filterFormSMSLogs").trigger("reset");
-    getEmailLogs();
+    getSmslLogs();
 })
 
-function getEmailLogs() {
+function getSmslLogs() {
     $.ajax({
         url: "/Admin/GetSMSLogsTableDate",
         type: "Post",
@@ -65,4 +65,40 @@ function getEmailLogs() {
             $(".tableData").html(response);
         }
     })
+}
+
+/// for Patient History page
+
+$(document).on("click", ".searchButtonPatientHistory", function () {
+    getPatientHistory(1);
+})
+
+$(document).on("click", ".resetPatientHistory", function () {
+    $("#patientHistoryForm").trigger("reset");
+    getPatientHistory(1);
+})
+
+function getPatientHistory(pageNo) {
+    var data = JSON.stringify({
+        FirstName: $("#firstname").val(),
+        LastName: $("#lastName").val(),
+        Email: $("#email").val(),
+        Phone: $("#phone").val(),
+    })
+    $.ajax({
+        url: "/Admin/GetPatinetHistoryTableDate",
+        type: "Post",
+        data: {
+            model: data,
+            pageNo: pageNo,
+        },
+        success: function (response) {
+            $(".tableData").html(response);
+        }
+    })
+}
+
+function navigateToLastPage(totalRequestCount) {       /// for last page in pagination
+    var lastPageNo = getotalRequestCount % 10 != 0 ? parseInt(totalRequestCount / 10, 10) + 1 : parseInt(totalRequestCount / 10, 10);
+    getPatientHistory(lastPageNo);
 }

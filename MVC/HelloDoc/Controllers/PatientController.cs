@@ -215,18 +215,17 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewDocument(ViewDocument model)
         {
-            if (ModelState.IsValid)
+            String firstname = HttpContext.Session.GetString("firstName");
+            String lastName = HttpContext.Session.GetString("lastName");
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
+            if (await _viewDocumentsServices.uploadFile(model, firstname, lastName, requestId))
             {
-                String firstname = HttpContext.Session.GetString("firstName");
-                String lastName = HttpContext.Session.GetString("lastName");
-                int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _viewDocumentsServices.uploadFile(model, firstName: firstname, lastName: lastName,requestId))
-                {
-                    _notyfService.Success("Successfully File Added.");
-                    return RedirectToAction("ViewDocument", "Patient", new { id = requestId });
-                }
+                _notyfService.Success("Successfully File Added.");
             }
-            _notyfService.Warning("Please, Select File");
+            else
+            {
+                _notyfService.Error("File");
+            }
             return RedirectToAction("viewDocument", "Patient");
         }
 

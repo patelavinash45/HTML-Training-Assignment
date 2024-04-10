@@ -13,6 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ViewCase</title>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/css/international-telephone-input.css" rel="stylesheet" />
     <script src="~/js/international-telephone-input.js"></script>
@@ -63,24 +65,24 @@
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                         <input class="form-control" id="firstName" asp-for="FirstName" placeholder="FirstName" />
                         <label for="first-name">First Name</label>
-                        <span id="firstNameValidation" class="text-danger validation">The FirstName field is required.</span>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                         <input class="form-control" id="lastName" asp-for="LastName" placeholder="LastName" />
                         <label for="lastName">Last Name</label>
-                        <span id="lastNameValidation" class="text-danger validation">The LastName field is required.</span>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                         <input class="form-control" id="birthDate" type="date" asp-for="BirthDate" placeholder="BirthDate" />
                         <label for="birthDate">Date of Birth</label>
-                        <span id="birthDateValidation" class="text-danger validation">The BirthDate field is required.</span>
+                        <span asp-validation-for="BirthDate" class="text-danger"></span>
                     </div>
                     <div class="col-xl-6 col-md-6 col-lg-6 d-flex align-items-baseline">
                         <div class="form-floating w-100">
                             <input class="form-control" id="phone" type="tel" asp-for="Mobile" placeholder="Mobile" />
-                            <span id="phoneValidation" class="text-danger validation">The PhoneNumber field is required.</span>
+                            <span asp-validation-for="Mobile" class="text-danger"></span>
                             @*<label for="phone">Phone Number</label> *@
                         </div>  
                         <button class="px-3 mx-3">
@@ -101,7 +103,7 @@
                     <button class="px-3">
                         Save
                     </button>
-                    <button class="px-3 mx-2" onclick="ProfileEdit(false)" type="button">
+                    <button class="px-3 mx-2" onclick="ProfileEdit(false)" type="reset">
                         Cancel
                     </button>
                 </div>

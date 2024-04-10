@@ -217,7 +217,7 @@ namespace Services.Implementation.AdminServices
                 IntDate = DateTime.Now.Day,
                 StrMonth = DateTime.Now.Month.ToString(),
             };
-            return await _requestClientRepository.addRequestClient(requestClient) == 0 ? false : true;
+            return await _requestClientRepository.addRequestClient(requestClient);
         }
 
         public bool RequestSupport(RequestSupport model)

@@ -12,9 +12,9 @@ namespace Services.Interfaces.AdminServices
 
         Task<bool> contactProvider(ContactProvider model);
 
-        CreateProvider getCreateProvider();
+        ProviderProfile getProviderProfile(bool isUpdate, int physicianId);
 
-        Task<bool> createProvider(CreateProvider model);
+        Task<bool> createProvider(ProviderProfile model);
 
         ProviderScheduling getProviderSchedulingData();
 
