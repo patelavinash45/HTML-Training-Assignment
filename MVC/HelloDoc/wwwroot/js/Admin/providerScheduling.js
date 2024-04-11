@@ -212,7 +212,7 @@ $(document).on("submit", "#createShiftForm", function (e)
 
 
 
-/////   popup - create shift
+/////   popup - View(edit) shift
 
 var date, startTime, endTime, Id;
 
@@ -292,6 +292,24 @@ $(document).on("click", "#deletebutton", function () {     ///   for delete shif
         },
         success: function (response) {
             window.location.href = response.redirect;
+        }
+    })
+})
+
+
+///  Provider on call
+
+$(document).on("change", "#regionsListProviderOnCall", function () {
+    $.ajax({
+        url: "/Admin/GetProviderOnCall",
+        type: "Get",
+        contentType: "application/json",
+        async: true,
+        data: {
+            regionId: $(this).val(),
+        },
+        success: function (response) {
+            $(".providerList").html(response);
         }
     })
 })

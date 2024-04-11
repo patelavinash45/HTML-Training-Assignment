@@ -35,6 +35,10 @@ tr {
     height: 45px;
 }
 
+.profilePhoto{
+    width: 8vh;
+}
+
 .providerList {
     border-radius: 10px;
     background-color: white;

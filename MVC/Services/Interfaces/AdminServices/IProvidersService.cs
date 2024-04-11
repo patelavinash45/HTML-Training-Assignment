@@ -12,9 +12,11 @@ namespace Services.Interfaces.AdminServices
 
         Task<bool> contactProvider(ContactProvider model);
 
-        ProviderProfile getProviderProfile(bool isUpdate, int physicianId);
+        CreateProvider getCreateProvider();
 
-        Task<bool> createProvider(ProviderProfile model);
+        EditProvider getEditProvider(int physicianId);
+
+        Task<bool> createProvider(CreateProvider model);
 
         ProviderScheduling getProviderSchedulingData();
 
@@ -33,5 +35,11 @@ namespace Services.Interfaces.AdminServices
         ViewShift getShiftDetails(int shiftDetailsId);
 
         Task<bool> EditShiftDetails(string data);
+
+        ProviderOnCall getProviderOnCall(int regionId);
+
+        ProviderList getProviderList(int regionId);
+
+        bool SaveSign(string sign,int physicianId);
     }
 }

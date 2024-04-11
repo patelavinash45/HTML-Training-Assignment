@@ -29,5 +29,9 @@ namespace Services.Interfaces.AdminServices
         EncounterForm getEncounterDetails(int requestId, bool type);
 
         Task<bool> updateEncounter(EncounterForm model, int requestId);
+
+        ViewCase getRequestDetails(int requestId);
+
+        Task<bool> updateRequest(ViewCase model);
     }
 }

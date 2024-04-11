@@ -89,5 +89,16 @@ namespace Repositories.Implementation
         {
             return _dbContext.CaseTags.ToList();
         }
+
+        public List<RequestClient> getAllRequestClientsByUserId(int userId, int skip)
+        {
+            return _dbContext.RequestClients.Include(a => a.Request).ThenInclude(a => a.RequestWiseFiles.Where(a => a.IsDeleted != new BitArray(1, true)))
+                .Include(a => a.Physician).Where(a => a.Request.UserId == userId).OrderByDescending(a => a.RequestClientId).Skip(skip).Take(5).ToList();
+        }
+
+        public int countRequestClientsByUserId(int userId)
+        {
+            return _dbContext.RequestClients.Include(a => a.Request).Where(a => a.Request.UserId == userId).Count();
+        }
     }
 }

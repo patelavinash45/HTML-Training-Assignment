@@ -15,7 +15,7 @@
     <script src="~/js/Admin/providerScheduling.js"></script>
 </head>
 <body>
-    <partial name="_AdminDashboardHeader" model="0">
+    <partial name="_AdminDashboardHeader" model="4">
     <partial name="_CreateShift" model="Model.CreateShift">
     <partial name="_ViewShiftDetails" >
     <div class="container">
@@ -39,9 +39,11 @@
                     }
                 </select>
             <div class="topButtons">
-                <button class="fw-bold coloredButtons py-2 px-2 topButtons bg-white">
-                    Providers On Call
-                </button>
+                <a asp-controller="Admin" asp-action="ProviderOnCall">
+                    <button class="fw-bold coloredButtons py-2 px-2 topButtons bg-white">
+                        Providers On Call
+                    </button>
+                </a>
                 <a asp-controller="Admin" asp-action="RequestedShift">
                     <button class="coloredButtons fw-bold py-2 px-2 topButtons bg-white">
                         Shifts For Review

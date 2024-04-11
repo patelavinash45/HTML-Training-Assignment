@@ -5,10 +5,8 @@ using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.ViewModels.Admin;
 using System.Collections;
-using System.IO;
 using System.Net;
 using System.Net.Mail;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -92,11 +90,65 @@ namespace Services.Implementation.AdminServices
             };
         }
 
+        public ProviderOnCall getProviderOnCall(int regionId)
+        {
+            return new ProviderOnCall()
+            {
+                Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
+                ProviderList = getProviderList(regionId),
+            };
+        }
+
+        public ProviderList getProviderList(int regionId)
+        {
+            string path = "/Files//Providers/Photo/";
+            List<ProviderOnCallTable> providerOnCalls = new List<ProviderOnCallTable>();
+            List<ProviderOnCallTable> providerOffDuty = new List<ProviderOnCallTable>();
+            _userRepository.getAllPhysicianWithCurrentShift(regionId).ForEach(physician =>
+            {
+                foreach (var shift in physician.Shifts)
+                {
+                    if (shift.ShiftDetails.Count > 0)
+                    {
+                        providerOnCalls.Add(new ProviderOnCallTable()
+                        {
+                            Photo = $"{path}{physician.AspNetUserId}/{physician.Photo}",
+                            FirstName = physician.FirstName,
+                            LastName = physician.LastName,
+                        });
+                        goto NextPhysician;
+                    }
+                }
+                providerOffDuty.Add(new ProviderOnCallTable()
+                {
+                    Photo = $"{path}{physician.AspNetUserId}/{physician.Photo}",
+                    FirstName = physician.FirstName,
+                    LastName = physician.LastName,
+                });
+                NextPhysician:;
+            });
+            return new ProviderList()
+            {
+                providerOffDuty = providerOffDuty,
+                providerOnCall = providerOnCalls,
+            };
+        }
+
         public async Task<bool> editProviderNotification(int providerId,bool isNotification)
         {
             PhysicianNotification physicianNotification = _userRepository.GetPhysicianNotification(providerId);
             physicianNotification.IsNotificationStopped[0] = isNotification;
             return await _userRepository.updatePhysicianNotification(physicianNotification);
+        }
+
+        public bool SaveSign(string sign,int physicianId)
+        {
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(sign)))
+            {
+                var formFile = new FormFile(stream, 0, stream.Length, null, "sign.jpg");
+                filePickUp("sign", physicianId ,formFile);
+            }
+            return true;
         }
 
         public async Task<bool> contactProvider(ContactProvider model)
@@ -143,49 +195,16 @@ namespace Services.Implementation.AdminServices
             return true;
         }
 
-        public ProviderProfile getProviderProfile(bool isUpdate,int phycisianId)
+        public CreateProvider getCreateProvider()
         {
-            if (isUpdate)
+            return new CreateProvider()
             {
-                Physician physician = _userRepository.getPhysicianByPhysicianId(phycisianId);
-                return new ProviderProfile()
-                {
-                    FirstName = physician.FirstName,
-                    LastName = physician.LastName,
-                    Add1 = physician.Address1,
-                    Add2 = physician.Address2,
-                    UserName = physician.FirstName,
-                    Email = physician.Email,
-                    Phone = physician.Mobile,
-                    Phone2 = physician.AltPhone,
-                    MedicalLicance = physician.MedicalLicense,
-                    NpiNumber = physician.Npinumber,
-                    City = physician.City,
-                    Zip = physician.Zip,
-                    SelectedRegion = physician.RegionId.ToString(),
-                    BusinessName = physician.BusinessName,
-                    BusinessWebsite = physician.BusinessWebsite,
-                    AdminNotes = physician.AdminNotes != null ? physician.AdminNotes : "",
-                    IsAgreementDoc = physician.IsAgreementDoc[0],
-                    IsBackgroundDoc = physician.IsBackgroundDoc[0],
-                    IsHIPAACompliance = physician.IsTrainingDoc[0],
-                    IsNonDisclosureDoc = physician.IsNonDisclosureDoc[0],
-                    SelectedRegions = _userRepository.getAllPhysicianRegionsByPhysicianId(phycisianId).Select(x => x.RegionId.ToString()).ToList(),
-                    Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
-                    Roles = _roleRepository.getRolesByUserType(3).ToDictionary(role => role.RoleId, role => role.Name),
-                };
-            }
-            else
-            {
-                return new ProviderProfile()
-                {
-                    Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
-                    Roles = _roleRepository.getRolesByUserType(3).ToDictionary(role => role.RoleId, role => role.Name),
-                };
-            }
+                Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
+                Roles = _roleRepository.getRolesByUserType(3).ToDictionary(role => role.RoleId, role => role.Name),
+            };
         }
 
-        public async Task<bool> createProvider(ProviderProfile model)
+        public async Task<bool> createProvider(CreateProvider model)
         {
             int aspNetRoleId = _aspRepository.checkUserRole(role: "Physician");
             if (aspNetRoleId == 0)
@@ -235,6 +254,7 @@ namespace Services.Implementation.AdminServices
                 LastName = model.LastName,
                 Email = model.Email,
                 Mobile = model.Phone,
+                RoleId = model.SelectedRole,
                 MedicalLicense = model.MedicalLicance,
                 Address1 = model.Add1,
                 Address2 = model.Add2,
@@ -279,7 +299,45 @@ namespace Services.Implementation.AdminServices
             return false;
         }
 
-        //public async Task<bool> updateProvider(ProviderProfile model,int phycisianId)
+        public EditProvider getEditProvider(int physicianId)
+        {
+            Physician physician = _userRepository.getPhysicianByPhysicianId(physicianId);
+            EditProvider editProvider = new EditProvider()
+            {
+                FirstName = physician.FirstName,
+                LastName = physician.LastName,
+                Add1 = physician.Address1,
+                Add2 = physician.Address2,
+                SelectedRole = (int)physician.RoleId,
+                Status = (short)physician.Status,
+                UserName = physician.FirstName,
+                Email = physician.Email,
+                Phone = physician.Mobile,
+                Phone2 = physician.AltPhone,
+                MedicalLicance = physician.MedicalLicense,
+                NpiNumber = physician.Npinumber,
+                City = physician.City,
+                Zip = physician.Zip,
+                SelectedRegion = physician.RegionId.ToString(),
+                BusinessName = physician.BusinessName,
+                BusinessWebsite = physician.BusinessWebsite,
+                AdminNotes = physician.AdminNotes != null ? physician.AdminNotes : "",
+                AgreementDocPath = physician.IsAgreementDoc[0] ? getFile("AgreementDoc", (int)physician.AspNetUserId) : null,
+                IsAgreementDoc = physician.IsAgreementDoc[0],
+                BackgroundDocPath = physician.IsBackgroundDoc[0] ? getFile("BackgroundDoc", (int)physician.AspNetUserId) : null,
+                IsBackgroundDoc = physician.IsBackgroundDoc[0],
+                HIPAACompliancePath = physician.IsTrainingDoc[0] ? getFile("HIPAACompliance", (int)physician.AspNetUserId) : null,
+                IsHIPAACompliance = physician.IsTrainingDoc[0],
+                NonDisclosureDocPath = physician.IsNonDisclosureDoc[0] ? getFile("NonDisclosureDoc", (int)physician.AspNetUserId) : null,
+                IsNonDisclosureDoc = physician.IsNonDisclosureDoc[0],
+                SelectedRegions = _userRepository.getAllPhysicianRegionsByPhysicianId(physicianId).Select(x => x.RegionId.ToString()).ToList(),
+                Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
+                Roles = _roleRepository.getRolesByUserType(3).ToDictionary(role => role.RoleId, role => role.Name),
+            };
+            return editProvider;
+        }
+
+        //public async Task<bool> updateProvider(CreateProvider model,int phycisianId)
         //{
         //    Physician physician = _userRepository.getPhysicianByPhysicianId(phycisianId);
         //    physician.FirstName = model.FirstName;
@@ -302,7 +360,7 @@ namespace Services.Implementation.AdminServices
         //    physician.IsBackgroundDoc[0] = model.IsBackgroundDoc;
         //    physician.IsTrainingDoc[0] = model.IsHIPAACompliance;
         //    physician.IsNonDisclosureDoc[0] = model.IsNonDisclosureDoc;
-            
+
         //}
 
         public ProviderScheduling getProviderSchedulingData()
@@ -617,6 +675,13 @@ namespace Services.Implementation.AdminServices
             {
                 file.CopyTo(stream);
             }
+        }
+
+        private string getFile(String folderName, int aspNetUserId)
+        {
+            String path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files/Providers/" + folderName + "/" + aspNetUserId.ToString());
+            FileInfo[] Files = new DirectoryInfo(path).GetFiles();
+            return Path.Combine(path, Files[0].Name);
         }
 
     }

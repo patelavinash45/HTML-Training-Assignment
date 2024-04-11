@@ -27,5 +27,9 @@ namespace Repositories.Interfaces
         RequestClient getRequestClientAndRequestByRequestId(int requestId);
 
         Task<bool> updateRequestClient(RequestClient requestClient);
+
+        List<RequestClient> getAllRequestClientsByUserId(int userId, int skip);
+        
+        int countRequestClientsByUserId(int userId);
     }
 }

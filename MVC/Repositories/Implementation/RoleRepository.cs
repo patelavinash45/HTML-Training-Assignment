@@ -23,7 +23,7 @@ namespace Repositories.Implementation
 
         public List<Role> getRolesByUserType(int type)
         {
-            return _dbContext.Roles.Include(a => a.AccountTypeNavigation).Where(a => a.IsDeleted != new BitArray(1, true) && a.AccountType == type).ToList();
+            return _dbContext.Roles.Include(a => a.AccountTypeNavigation).Where(a => a.AccountType == type).ToList();
         }
 
         public Role getRoleByRoleId(int roleId)

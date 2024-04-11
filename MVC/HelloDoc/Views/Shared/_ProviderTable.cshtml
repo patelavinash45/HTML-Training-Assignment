@@ -48,7 +48,7 @@
                                 onclick="displayPopUp(@item.providerId)">
                             Contact
                         </button>
-                        <a asp-controller="Admin" asp-action="UpdateProvider" asp-route-physicianId="@item.providerId">
+                        <a asp-controller="Admin" asp-action="SetPhyscianId" asp-route-physicianId="@item.providerId">
                             <button class="bg-white px-3 fw-bold py-2">
                                 Edit
                             </button>
@@ -98,9 +98,11 @@
                                                                                             onclick="displayPopUp(@item.providerId)">
                             Contact
                         </button>
-                        <button class="bg-white px-3 fw-bold py-2">
-                            Edit
-                        </button>
+                        <a asp-controller="Admin" asp-action="SetPhyscianId" asp-route-physicianId="@item.providerId">
+                            <button class="bg-white px-3 fw-bold py-2">
+                                Edit
+                            </button>
+                        </a>
                     </div>
                     <hr class="h1">
                 </div>

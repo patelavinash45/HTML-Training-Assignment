@@ -102,3 +102,62 @@ function navigateToLastPage(totalRequestCount) {       /// for last page in pagi
     var lastPageNo = getotalRequestCount % 10 != 0 ? parseInt(totalRequestCount / 10, 10) + 1 : parseInt(totalRequestCount / 10, 10);
     getPatientHistory(lastPageNo);
 }
+
+function openRecord(userId){
+    $.ajax({
+        url: "/Admin/GetRecords",
+        type: "Get",
+        contentType: "application/json",
+        data: {
+            userId: userId,
+        },
+        success: function (response) {
+            window.location.href = response.redirect;
+        }
+    })
+}
+
+
+////  Patient Record
+
+function getPatientRecord(pageNo) {
+    $.ajax({
+        url: "/Admin/GetPatientRecord",
+        type: "Get",
+        contentType: "application/json",
+        data: {
+            pageNo: pageNo,
+        },
+        success: function (response) {
+            $(".recordList").html(response);
+        }
+    })
+}
+
+function navigation(requestId, actionName) {
+    $.ajax({
+        url: "/Admin/SetRequestId",
+        type: "Get",
+        contentType: "application/json",
+        data: {
+            requestId: requestId,
+            actionName: actionName,
+        },
+        success: function (response) {
+            window.location.href = response.redirect;
+        }
+    })
+}
+
+function navigatToViewCase(requestId) {
+    navigation(requestId, "ViewCase");
+}
+
+function navigatToViewDocuments(requestId) {
+    navigation(requestId, "ViewDocument");
+}
+
+function navigateToLastPagePatinetRecord(totalRequestCount) {       /// for last page in pagination
+    var lastPageNo = getotalRequestCount % 10 != 0 ? parseInt(totalRequestCount / 10, 10) + 1 : parseInt(totalRequestCount / 10, 10);
+    getPatientRecord(lastPageNo);
+}

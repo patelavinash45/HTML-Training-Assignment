@@ -143,4 +143,44 @@ namespace Services.ViewModels.Admin
 
         public string Address { get; set; }
     }
+
+    public class PatientRecord
+    {
+        public List<PatientRecordTableData> patientRecordTableDatas { get; set; }
+
+        public int TotalRequests { get; set; }
+
+        public int PageNo { get; set; }
+
+        public bool IsFirstPage { get; set; }
+
+        public bool IsLastPage { get; set; }
+
+        public bool IsNextPage { get; set; }
+
+        public bool IsPreviousPage { get; set; }
+
+        public int StartRange { get; set; }
+
+        public int EndRange { get; set; }
+    }
+
+    public class PatientRecordTableData
+    {
+        public int RequestId { get; set; }
+
+        public string Name { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+        public string Conformation { get; set; }
+
+        public string ProviderName { get; set; }
+
+        public DateTime ConcludeedDate { get; set; }
+
+        public int Ststus { get; set; }
+
+        public int CountDocument { get; set; }
+    }
 }

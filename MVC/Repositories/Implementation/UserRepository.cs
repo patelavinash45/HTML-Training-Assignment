@@ -151,6 +151,15 @@ namespace Repositories.Implementation
         {
             return _dbContext.PhysicianLocations.ToList();
         }
+
+        public List<Physician> getAllPhysicianWithCurrentShift(int regionId)
+        {
+            DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+            TimeOnly time = TimeOnly.FromDateTime(DateTime.Now);
+            return _dbContext.Physicians.Include(a => a.Shifts).ThenInclude(a => a.ShiftDetails
+                         .Where(a => (regionId == 0 || a.RegionId == regionId) && DateOnly.FromDateTime(a.ShiftDate) == date && a.StartTime <= time
+                                                                  && a.EndTime >= time)).ToList();
+        }
     }
 }
 

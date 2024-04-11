@@ -10,7 +10,6 @@ using Services.ViewModels;
 using Services.ViewModels.Admin;
 using System.Data;
 
-
 namespace HelloDoc.Controllers
 {
     public class AdminController : Controller
@@ -18,7 +17,6 @@ namespace HelloDoc.Controllers
         private readonly INotyfService _notyfService;
         private readonly ILoginService _loginService;
         private readonly IAdminDashboardService _adminDashboardService;
-        private readonly IViewCaseService _viewCaseService;
         private readonly IViewNotesService _viewNotesService;
         private readonly IViewDocumentsServices _viewDocumentsServices;
         private readonly IJwtService _jwtService;
@@ -30,7 +28,7 @@ namespace HelloDoc.Controllers
         private readonly IPartnersService _partnersService;
         private readonly IRecordService _recordService;
 
-        public AdminController(INotyfService notyfService, IAdminDashboardService adminDashboardService, IViewCaseService viewCaseService,
+        public AdminController(INotyfService notyfService, IAdminDashboardService adminDashboardService, 
                                 IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
                                 IJwtService jwtService, ISendOrderService sendOrderService, ICloseCaseService closeCaseService, 
                                 IViewProfileService viewProfileService, IPartnersService partnersService,
@@ -39,7 +37,6 @@ namespace HelloDoc.Controllers
             _notyfService = notyfService;
             _loginService = loginService;
             _adminDashboardService = adminDashboardService;
-            _viewCaseService = viewCaseService;
             _viewNotesService = viewNotesService;
             _viewDocumentsServices = viewDocumentsServices;
             _jwtService = jwtService;
@@ -87,7 +84,7 @@ namespace HelloDoc.Controllers
         public IActionResult ViewCase()
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
-            return View(_viewCaseService.getRequestDetails(requestId));
+            return View(_adminDashboardService.getRequestDetails(requestId));
         }
 
         [Authorization("Admin")]
@@ -104,9 +101,9 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
-        public IActionResult ProviderProfile()
+        public IActionResult CreateProvider()
         {
-            return View(_providersService.getProviderProfile(isUpdate: false,physicianId: 0));
+            return View(_providersService.getCreateProvider());
         }
 
         [Authorization("Admin")]
@@ -142,7 +139,7 @@ namespace HelloDoc.Controllers
         [Authorization("Admin")]
         public IActionResult ProviderOnCall()
         {
-            return View();
+            return View(_providersService.getProviderOnCall(regionId: 0));
         }
 
         [Authorization("Admin")]
@@ -173,6 +170,13 @@ namespace HelloDoc.Controllers
         public IActionResult PatientHistory()
         {
             return View(_recordService.getPatientHistory(new PatientHistory(),pageNo:1));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult PatientRecord()
+        {
+            int userId = HttpContext.Session.GetInt32("userId").Value;
+            return View(_recordService.getPatientRecord(userId,pageNo: 1));
         }
 
         [Authorization("Admin")]
@@ -230,10 +234,17 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
-        public IActionResult UpdateProvider(int physicianId)
+        public IActionResult SetPhyscianId(int physicianId)
         {
             HttpContext.Session.SetInt32("physicianId", physicianId);
-            return View("ProviderProfile", _providersService.getProviderProfile(isUpdate: true, physicianId: physicianId));
+            return RedirectToAction("EditProvider", "Admin");
+        }
+
+        [Authorization("Admin")]
+        public IActionResult EditProvider()
+        {
+            int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
+            return View(_providersService.getEditProvider(physicianId));
         }
 
         public IActionResult Agreement(String token)
@@ -433,6 +444,13 @@ namespace HelloDoc.Controllers
             return Json(new { redirect = Url.Action(actionName, "Admin") });
         }
 
+        [HttpGet]  /// Navigation to Patient Records
+        public JsonResult GetRecords(int userId)
+        {
+            HttpContext.Session.SetInt32("userId", userId);
+            return Json(new { redirect = Url.Action("PatientRecord", "Admin") });
+        }
+
         [HttpGet]  ////  SendAgreementPopUp
         public JsonResult GetEmailAndMobileNumber(int requestId)
         {
@@ -523,7 +541,7 @@ namespace HelloDoc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]  /////  create provider ---  provider page
-        public async Task<IActionResult> ProviderProfile(ProviderProfile model)
+        public async Task<IActionResult> CreateProvider(CreateProvider model)
         {
             if (ModelState.IsValid)
             {
@@ -537,7 +555,7 @@ namespace HelloDoc.Controllers
                 }
                 return RedirectToAction("Providers", "Admin");
             }
-            ProviderProfile createProvider = _providersService.getProviderProfile(isUpdate: false, physicianId: 0);
+            CreateProvider createProvider = _providersService.getCreateProvider();
             model.Roles = createProvider.Roles;
             model.Regions = createProvider.Regions;
             _notyfService.Warning("Add Required Field.");
@@ -662,7 +680,7 @@ namespace HelloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewCase(ViewCase model)
         {
-            if (await _viewCaseService.updateRequest(model))
+            if (await _adminDashboardService.updateRequest(model))
             {
                 _notyfService.Success("Successfully Updated");
             }
@@ -676,16 +694,13 @@ namespace HelloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> ContactProvider(ContactProvider model)
         {
-            if (ModelState.IsValid)
+            if (await _providersService.contactProvider(model))
             {
-                if (await _providersService.contactProvider(model))
-                {
-                    _notyfService.Success("Successfully Message Send");
-                }
-                else
-                {
-                    _notyfService.Error("Message Send Faild");
-                }
+                _notyfService.Success("Successfully Message Send");
+            }
+            else
+            {
+                _notyfService.Error("Message Send Faild");
             }
             return RedirectToAction("Providers", "Admin");
         }
@@ -952,9 +967,9 @@ namespace HelloDoc.Controllers
         }
 
         [HttpGet]   // Export All Data  -- Record Page
-        public IActionResult ExportAllRecords()
+        public IActionResult ExportAllRecords() 
         {
-            DataTable dataTable = _recordService.ExportAllRecords();
+            DataTable dataTable = _recordService.exportAllRecords();
             using (XLWorkbook wb = new XLWorkbook())
             {
                 wb.Worksheets.Add(dataTable);
@@ -982,6 +997,56 @@ namespace HelloDoc.Controllers
         public IActionResult GetPatinetHistoryTableDate(string model,int pageNo)
         {
             return PartialView("_PatientHistoryTable", _recordService.getSMSLogTabledata(model,pageNo).PatientHistoryTable);
+        }
+
+        [HttpGet]    // Provider On call Filter
+        public IActionResult GetProviderOnCall(int regionId)
+        {
+            return PartialView("_ProviderOnCallTable", _providersService.getProviderList(regionId));
+        }
+
+        [HttpGet]    // Provider Reacord page 
+        public IActionResult GetPatientRecord(int pageNo)
+        {
+            int userId = HttpContext.Session.GetInt32("userId").Value;
+            return PartialView("_PatientRecordTable", _recordService.getPatientRecord(userId,pageNo));
+        }
+
+        [HttpPost]    //  edit provier account informaction
+        public IActionResult EditphysicianAccountInformaction(EditProvider model)
+        {
+            return RedirectToAction("EditProvider", "Admin");
+        }
+
+        [HttpPost]    //  edit provier Physician Informaction
+        public IActionResult EditphysicianPhysicianInformaction(EditProvider model)
+        {
+            return RedirectToAction("EditProvider", "Admin");
+        }
+
+        [HttpPost]    //  edit provier Mailing & Billing Information
+        public IActionResult EditphysicianMailAndBillingInformaction(EditProvider model)
+        {
+            return RedirectToAction("EditProvider", "Admin");
+        }
+
+        [HttpPost]    //  edit provier Provider Profile
+        public IActionResult EditphysicianProviderProfile(EditProvider model)
+        {
+            return RedirectToAction("EditProvider", "Admin");
+        }
+
+        [HttpPost]    //  edit provier Onbording informaction
+        public IActionResult EditphysicianOnbordingInformaction(EditProvider model)
+        {
+            return RedirectToAction("EditProvider", "Admin");
+        }
+
+        [HttpPost]    //  save Signature form edit Provider
+        public IActionResult SaveSignature(string file)
+        {
+            _providersService.SaveSign(file,020);
+            return RedirectToAction("EditProvider", "Admin");
         }
     }
 }

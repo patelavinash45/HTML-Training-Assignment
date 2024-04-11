@@ -297,8 +297,8 @@
       "PackagePath": "staticwebassets\\Files\\Providers\\Photo\\82\\avatar.png"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ProviderProfile.css",
-      "PackagePath": "staticwebassets\\css\\admin\\ProviderProfile.css"
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\Providers\\sign\\20\\20",
+      "PackagePath": "staticwebassets\\Files\\Providers\\sign\\20"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\ViewCase.css",
@@ -319,6 +319,10 @@
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\closeCase.css",
       "PackagePath": "staticwebassets\\css\\admin\\closeCase.css"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createProvider.css",
+      "PackagePath": "staticwebassets\\css\\admin\\createProvider.css"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\css\\admin\\createRequest.css",

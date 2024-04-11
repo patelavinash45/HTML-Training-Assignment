@@ -54,5 +54,7 @@ namespace Repositories.Interfaces
 
         List<PhysicianLocation> getAllProviderLocation();
 
+        List<Physician> getAllPhysicianWithCurrentShift(int regionId);
+
     }
 }

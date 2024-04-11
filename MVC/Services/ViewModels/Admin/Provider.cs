@@ -49,7 +49,7 @@ namespace Services.ViewModels.Admin
         public string ProviderName { get; set; }
     }
 
-    public class ProviderProfile
+    public class CreateProvider
     {
         public bool isUpdate { get; set; }
 
@@ -134,6 +134,100 @@ namespace Services.ViewModels.Admin
         [RequiredIfBoolIsTrue(nameof(IsNonDisclosureDoc))]
         public IFormFile? NonDisclosureDoc { get; set; }
 
+    }
+
+    public class EditProvider
+    {
+        public bool isUpdate { get; set; }
+
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [StringLength(100)]
+        public string LastName { get; set; }
+
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "The Role field is required.")]
+        public int SelectedRole { get; set; }
+
+        public short Status { get; set; }
+
+        public Dictionary<int, string>? Roles { get; set; }
+
+        public string UserName { get; set; }
+
+        [StringLength(50)]
+        public string Email { get; set; }
+
+        [StringLength(20)]
+        public string Phone { get; set; }
+
+        [StringLength(20)]
+        public string Phone2 { get; set; }
+
+        [StringLength(500)]
+        public string MedicalLicance { get; set; }
+
+        [StringLength(500)]
+        public string NpiNumber { get; set; }
+
+        [StringLength(500)]
+        public string Add1 { get; set; }
+
+        [StringLength(500)]
+        public string Add2 { get; set; }
+
+        [StringLength(100)]
+        public string City { get; set; }
+
+        [StringLength(10)]
+        public string Zip { get; set; }
+
+        [Required(ErrorMessage = "The State field is required.")]
+        public string SelectedRegion { get; set; }
+
+        [Required(ErrorMessage = "The Region field is required.")]
+        public List<string> SelectedRegions { get; set; }
+
+        public Dictionary<int, string>? Regions { get; set; }
+
+        [StringLength(100)]
+        public string BusinessName { get; set; }
+
+        [StringLength(200)]
+        public string BusinessWebsite { get; set; }
+
+        public IFormFile Photo { get; set; }
+
+        [StringLength(500)]
+        public string AdminNotes { get; set; }
+
+        public bool IsAgreementDoc { get; set; }
+
+        public string AgreementDocPath { get; set; }
+
+        public IFormFile? AgreementDoc { get; set; }
+
+        public bool IsBackgroundDoc { get; set; }
+
+        public string BackgroundDocPath { get; set; }
+
+        public IFormFile? BackgroundDoc { get; set; }
+
+        public bool IsHIPAACompliance { get; set; }
+
+        public string HIPAACompliancePath { get; set; }
+
+        public IFormFile? HIPAACompliance { get; set; }
+
+        public bool IsNonDisclosureDoc { get; set; }
+
+        public string NonDisclosureDocPath { get; set; }
+
+        public IFormFile? NonDisclosureDoc { get; set; }
+
+        public IFormFile Signature { get; set; }
     }
 
     public class RequiredIfBoolIsTrueAttribute : ValidationAttribute
@@ -317,9 +411,15 @@ namespace Services.ViewModels.Admin
     {
         public Dictionary<int, string>? Regions { get; set; }
 
+        public ProviderList ProviderList { get; set; }
+    }
+
+    public class ProviderList
+    {
         public List<ProviderOnCallTable> providerOnCall { get; set; }
 
         public List<ProviderOnCallTable> providerOffDuty { get; set; }
+
     }
 
     public class ProviderOnCallTable

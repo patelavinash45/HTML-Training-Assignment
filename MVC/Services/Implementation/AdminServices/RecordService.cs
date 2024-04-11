@@ -2,6 +2,7 @@
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.ViewModels.Admin;
+using System;
 using System.Data;
 using System.Reflection;
 using System.Text.Json;
@@ -116,7 +117,7 @@ namespace Services.Implementation.AdminServices
             }).ToList();
         }
 
-        public DataTable ExportAllRecords()
+        public DataTable exportAllRecords()
         {
             List<String> columnsNames = new List<String>();
             DataTable dataTable = new DataTable();
@@ -186,6 +187,36 @@ namespace Services.Implementation.AdminServices
         {
             PatientHistory model = JsonSerializer.Deserialize<PatientHistory>(data);
             return getPatientHistory(model, pageNo);
+        }
+
+        public PatientRecord getPatientRecord(int userId, int pageNo)
+        {
+            int skip = (pageNo - 1) * 5;
+            int totalPatient = _requestClientRepository.countRequestClientsByUserId(userId);
+            List<PatientRecordTableData> patientRecordTableDatas = _requestClientRepository.getAllRequestClientsByUserId(userId,skip)
+                      .Select(requestClient => new PatientRecordTableData()
+                      {
+                          RequestId = requestClient.RequestId,
+                          Name = $"{requestClient.FirstName} {requestClient.LastName}",
+                          CreatedDate = requestClient.Request.CreatedDate,
+                          Conformation = requestClient.Request.ConfirmationNumber,
+                          ProviderName = requestClient.Physician != null ? $"{requestClient.Physician.FirstName} {requestClient.Physician.LastName}" : "-",
+                          Ststus = requestClient.Status,
+                          CountDocument = requestClient.Request.RequestWiseFiles != null ? requestClient.Request.RequestWiseFiles.Count : 0
+                      }).ToList();
+            int totalPages = totalPatient % 5 != 0 ? (totalPatient / 5) + 1 : totalPatient / 5;
+            return new PatientRecord()
+            {
+                IsFirstPage = pageNo != 1,
+                IsLastPage = pageNo != totalPages,
+                IsNextPage = pageNo < totalPages,
+                IsPreviousPage = pageNo > 1,
+                TotalRequests = totalPatient,
+                PageNo = pageNo,
+                StartRange = skip + 1,
+                EndRange = skip + 5 < totalPatient ? skip + 5 : totalPatient,
+                patientRecordTableDatas = patientRecordTableDatas,
+            };
         }
     }
 }
