@@ -41,5 +41,13 @@ namespace Services.Interfaces.AdminServices
         ProviderList getProviderList(int regionId);
 
         bool SaveSign(string sign,int physicianId);
+
+        Task<bool> editphysicianAccountInformaction(EditProvider model, int physicianId);
+
+        Task<bool> editphysicianPhysicianInformaction(EditProvider model, int physicianId);
+
+        Task<bool> editphysicianMailAndBillingInformaction(EditProvider model, int physicianId);
+
+        Task<bool> editphysicianProviderProfile(EditProvider model, int physicianId);
     }
 }

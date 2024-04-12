@@ -43,33 +43,40 @@ namespace Services.Implementation.AdminServices
         {
             return new CreateRole()
             {
-                Menus = _roleRepository.getAllMenus().ToDictionary(menu => menu.MenuId, menu => menu.Name),
+                RolesCheckBox = new RolesCheckBox()
+                {
+                    SelectedMenusForLoadData = new List<int>(),
+                    Menus = _roleRepository.getAllMenus().ToDictionary(menu => menu.MenuId, menu => menu.Name),
+                },
             };
         }
 
-        public Dictionary<int, String> getMenusByRole(int roleId)
+        public RolesCheckBox getMenusByRole(int roleId)
         {
-            return _roleRepository.getAllMenusByRole(roleId).ToDictionary(menu => menu.MenuId, menu => menu.Name);
+            return new RolesCheckBox()
+            {
+                SelectedMenusForLoadData = new List<int>(),
+                Menus = _roleRepository.getAllMenusByRole(roleId).ToDictionary(menu => menu.MenuId, menu => menu.Name),
+            };
         }
 
-        public async Task<bool> createRole(string data)
+        public async Task<bool> createRole(CreateRole model)
         {
-            CreateRole createRole = JsonSerializer.Deserialize<CreateRole>(data);
             Role role = new Role()
             {
-                Name = createRole.RoleName,
-                AccountType = int.Parse(createRole.SlectedAccountType),
+                Name = model.RoleName,
+                AccountType = model.SlectedAccountType,
                 CreatedDate = DateTime.Now,
             };
             int roleId = await _roleRepository.addRole(role); 
             if(roleId > 0)
             {
                 await _roleRepository.addRoleMenus(
-                        createRole.SelectedMenus.Select(menuId =>
+                        model.RolesCheckBox.SelectedMenus.Select(menuId =>
                         new RoleMenu()
                         {
                             RoleId = roleId,
-                            MenuId = int.Parse(menuId),
+                            MenuId = menuId,
                         }).ToList()
                 );
                 return true;
@@ -153,6 +160,21 @@ namespace Services.Implementation.AdminServices
                 return true;
             }
             return false;
+        }
+
+        public CreateRole getEditRole(int roleId)
+        {
+            Role role = _roleRepository.getRoleByRoleId(roleId);
+            return new CreateRole()
+            {
+                RoleName = role.Name,
+                SlectedAccountType = role.AccountType,
+                RolesCheckBox = new RolesCheckBox()
+                {
+                    SelectedMenusForLoadData = _roleRepository.getAllRoleMenusByRole(roleId).Select(roleMenu => roleMenu.MenuId).ToList(),
+                    Menus = _roleRepository.getAllMenusByRole(role.AccountType).ToDictionary(menu => menu.MenuId, menu => menu.Name),
+                },
+            };
         }
 
         private String genrateHash(String password)

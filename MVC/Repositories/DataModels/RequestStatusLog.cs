@@ -40,6 +40,9 @@ public partial class RequestStatusLog
     [InverseProperty("RequestStatusLogs")]
     public virtual Admin? Admin { get; set; }
 
+    [InverseProperty("RequestStatusLog")]
+    public virtual ICollection<CloseRequest> CloseRequests { get; set; } = new List<CloseRequest>();
+
     [ForeignKey("PhysicianId")]
     [InverseProperty("RequestStatusLogPhysicians")]
     public virtual Physician? Physician { get; set; }
@@ -47,9 +50,6 @@ public partial class RequestStatusLog
     [ForeignKey("RequestId")]
     [InverseProperty("RequestStatusLogs")]
     public virtual Request Request { get; set; } = null!;
-
-    [InverseProperty("RequestStatusLog")]
-    public virtual ICollection<RequestClosed> RequestCloseds { get; set; } = new List<RequestClosed>();
 
     [ForeignKey("TransToPhysicianId")]
     [InverseProperty("RequestStatusLogTransToPhysicians")]

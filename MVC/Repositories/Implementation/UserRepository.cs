@@ -100,6 +100,11 @@ namespace Repositories.Implementation
             return _dbContext.Physicians.FirstOrDefault(a => a.PhysicianId == physicianId);
         }
 
+        public Physician getPhysicianWithAspNetUser(int physicianId)
+        {
+            return _dbContext.Physicians.Include(a => a.AspNetUser).FirstOrDefault(a => a.PhysicianId == physicianId);
+        }
+
         public List<AdminRegion> getAdminRegionByAdminId(int adminId)
         {
             return _dbContext.AdminRegions.Where(a => a.AdminId == adminId).ToList();
@@ -126,6 +131,12 @@ namespace Repositories.Implementation
         public async Task<bool> addPhysicianRegion(PhysicianRegion physicianRegion)
         {
             _dbContext.PhysicianRegions.Add(physicianRegion);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> deletePhysicianRegion(PhysicianRegion physicianRegion)
+        {
+            _dbContext.PhysicianRegions.Remove(physicianRegion);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 

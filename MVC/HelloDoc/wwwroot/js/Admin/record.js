@@ -161,3 +161,54 @@ function navigateToLastPagePatinetRecord(totalRequestCount) {       /// for last
     var lastPageNo = getotalRequestCount % 10 != 0 ? parseInt(totalRequestCount / 10, 10) + 1 : parseInt(totalRequestCount / 10, 10);
     getPatientRecord(lastPageNo);
 }
+
+
+///   for Block History
+
+
+$(document).on("click", ".searchButtonBlockHistory", function () {
+    getBlckHistoryData(1);
+})
+
+$(document).on("click", ".resetBlockHistory", function () {
+    $("#blockHistoryForm").trigger("reset");
+    getBlckHistoryData(1);
+})
+
+function getBlckHistoryData(pageNo) {
+    var data = JSON.stringify({
+        Name: $("#firstname").val(),
+        Email: $("#email").val(),
+        Phone: $("#phone").val(),
+    });
+    $.ajax({
+        url: "/Admin/GetBlockHistoryTableDate",
+        type: "Post",
+        data: {
+            model: data,
+            pageNo: pageNo,
+            date: $("#date").val(),
+        },
+        success: function (response) {
+            $(".tableData").html(response);
+        }
+    })
+}
+
+function navigateToLastPageBlockHistory(totalRequestCount) {       /// for last page in pagination
+    var lastPageNo = getotalRequestCount % 10 != 0 ? parseInt(totalRequestCount / 10, 10) + 1 : parseInt(totalRequestCount / 10, 10);
+    getPatientRecord(lastPageNo);
+}
+
+function unblockRequest(requestId) {
+    $.ajax({
+        url: "/Admin/UnblockRequest",
+        type: "Post",
+        data: {
+            requestId: requestId,
+        },
+        success: function (response) {
+            window.location.href = response.redirect;
+        }
+    })
+}

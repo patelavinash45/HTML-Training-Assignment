@@ -1,27 +1,5 @@
-function roleValidation() {
-    if ($("#roleName").val().length == 0) {
-        $("#roleNameValidation").text("Role Name is required");
-    }
-    else {
-        $("#roleNameValidation").text("");
-    }
-}
-
-$(document).on("change", "#roleName", function () {
-    roleValidation();
-})
-
-function typeValidation() {
-    if ($("#type").val().length == 0) {
-        $("#accountTypeValidation").text("Account Type is required");
-    }
-    else {
-        $("#accountTypeValidation").text("");
-    }
-}
 
 $(document).on("change", "#type", function () {
-    typeValidation();
     selectedMenus = [];
     if ($(this).val().length != 0) {
         $.ajax({
@@ -54,28 +32,9 @@ function changeCheckBox(doc) {
     } 
 }
 
-$(document).on("click", "#saveButton", function () {
-    if ((selectedMenus.length != 0 || $("#type").val() == 1) && $("#roleName").val().length != 0 && $("#type").val().length != 0) {
-        var data = JSON.stringify({
-            RoleName: $("#roleName").val(),
-            SlectedAccountType: $("#type").val(),
-            SelectedMenus: selectedMenus,
-        });
-        $.ajax({
-            url: "/Admin/CreateRoles",
-            type: "Get",
-            contentType: "application/json",
-            data: {
-                data: data,
-            },
-            success: function (response) {
-                window.location.href = response.redirect;
-            }
-        })
-    }
-    else if (selectedMenus.length == 0 && $("#type").val() != 1) {
+$(document).on("submit", "#createRoleForm", function (e) {
+    if (selectedMenus.length == 0) {
+        e.preventDefault();
         $("#menuValidation").text("Select Any One Filed");
     }
-    roleValidation();
-    typeValidation();
 })

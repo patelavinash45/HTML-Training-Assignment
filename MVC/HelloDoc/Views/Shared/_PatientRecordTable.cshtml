@@ -106,32 +106,30 @@
             <div id="panelsStayOpen-@item.RequestId" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body row">
                     <div>
-                        <div class="mt-4">
-                            <i class="bi bi-envelope rounded-circle border border-1 border-primary p-2"></i>
-                            <span class="h6">
-                                Crated Date : @item.CreatedDate.ToString("MMM dd,yy")
-                            </span>
-                        </div>
-                        <div class="mt-4">
-                            <i class="bi bi-telephone rounded-circle border border-1 border-primary p-2"></i>
-                            <span class="h6">
-                                Provider : @item.ProviderName
-                            </span>
-                        </div>
-                        <div class="mt-4">
-                            <i class="bi bi-geo-alt rounded-circle border border-1 border-primary p-2"></i>
-                            <span class="h6">
-                                Concluded Date : @item.ConcludeedDate
-                            </span>
-                        </div>
-                        <div class="mt-4">
-                            <i class="bi bi-geo-alt rounded-circle border border-1 border-primary p-2"></i>
-                            <span class="h6">
-                                Status : @item.Ststus
-                            </span>
-                        </div>
+                        <i class="bi bi-envelope rounded-circle border border-1 border-primary p-2"></i>
+                        <span class="h6">
+                            Crated Date : @item.CreatedDate.ToString("MMM dd,yy")
+                        </span>
                     </div>
-                    <button class="bg-white px-3 fw-bold mb-3" onclick="navigatToViewCase(@item.RequestId)">
+                    <div class="mt-4">
+                        <i class="bi bi-telephone rounded-circle border border-1 border-primary p-2"></i>
+                        <span class="h6">
+                            Provider : @item.ProviderName
+                        </span>
+                    </div>
+                    <div class="mt-4">
+                        <i class="bi bi-geo-alt rounded-circle border border-1 border-primary p-2"></i>
+                        <span class="h6">
+                            Concluded Date : @item.ConcludeedDate
+                        </span>
+                    </div>
+                    <div class="mt-4">
+                        <i class="bi bi-geo-alt rounded-circle border border-1 border-primary p-2"></i>
+                        <span class="h6">
+                            Status : @item.Ststus
+                        </span>
+                    </div>
+                    <button class="bg-white px-3 fw-bold mb-3 mt-3" onclick="navigatToViewCase(@item.RequestId)">
                         View Case
                     </button>
                     @if (item.CountDocument > 0)

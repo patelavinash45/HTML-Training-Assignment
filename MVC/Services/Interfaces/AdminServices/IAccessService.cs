@@ -8,14 +8,16 @@ namespace Services.Interfaces.AdminServices
 
         CreateRole getCreateRole();
 
-        Dictionary<int,String> getMenusByRole(int roleId);
+        RolesCheckBox getMenusByRole(int roleId);
 
-        Task<bool> createRole(string data);
+        Task<bool> createRole(CreateRole model);
 
         Task<bool> delete(int roleId);
 
         AdminCreaateAndProfile GetAdminCreaateAndProfile();
 
         Task<bool> createAdmin(AdminCreaateAndProfile model);
+
+        CreateRole getEditRole(int roleId);
     }
 }

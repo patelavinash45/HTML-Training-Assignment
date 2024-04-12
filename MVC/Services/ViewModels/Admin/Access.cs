@@ -18,10 +18,15 @@
     {
         public string RoleName { get; set; }
 
-        public string SlectedAccountType { get; set; }
+        public int SlectedAccountType { get; set; }
 
-        public List<string> SelectedMenus { get; set; }
+        public RolesCheckBox RolesCheckBox { get; set; }
+    }
 
-        public Dictionary<int,string>? Menus { get; set; }
+    public class RolesCheckBox
+    {
+        public List<int> SelectedMenusForLoadData { get; set; }
+
+        public Dictionary<int, string>? Menus { get; set; }
     }
 }

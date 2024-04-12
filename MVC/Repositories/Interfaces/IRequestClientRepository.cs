@@ -12,6 +12,10 @@ namespace Repositories.Interfaces
 
         List<RequestClient> getRequestClientsBasedOnFilter(Func<RequestClient,bool> predicate);
 
+        List<BlockRequest> getRequestClientsAndBlockRequestBasedOnFilter(Func<BlockRequest, bool> predicate);
+
+        int countRequestClientsAndBlockRequestBasedOnFilter(Func<BlockRequest, bool> predicate);
+
         List<RequestClient> getRequestClientByStatus(List<int> status, int skip, string patientName, int regionId, int requesterTypeId);
 
         int countRequestClientByStatus(List<int> status);
@@ -31,5 +35,7 @@ namespace Repositories.Interfaces
         List<RequestClient> getAllRequestClientsByUserId(int userId, int skip);
         
         int countRequestClientsByUserId(int userId);
+
+        Task<bool> deleteBlockRequest(int requestId);
     }
 }

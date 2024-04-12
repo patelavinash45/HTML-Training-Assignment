@@ -180,6 +180,12 @@ namespace HelloDoc.Controllers
         }
 
         [Authorization("Admin")]
+        public IActionResult BlockHistory()
+        {
+            return View(_recordService.getBlockHistory(new BlockHistory(), pageNo: 1));
+        }
+
+        [Authorization("Admin")]
         public IActionResult ViewProfile()
         {
             int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
@@ -231,6 +237,13 @@ namespace HelloDoc.Controllers
         {
             HttpContext.Session.SetInt32("venderId", venderId);
             return View("BusinessProfile", _partnersService.addBusiness(isUpdate: true, venderId: venderId));
+        }
+
+        [Authorization("Admin")]
+        public IActionResult UpdateRole(int roleId)
+        {
+            HttpContext.Session.SetInt32("roleId", roleId);
+            return View("CreateRole", _accessService.getEditRole(roleId));
         }
 
         [Authorization("Admin")]
@@ -481,10 +494,10 @@ namespace HelloDoc.Controllers
             return PartialView("_CreateRoleCheckBox", _accessService.getMenusByRole(roleId));
         }
 
-        [HttpGet] //// create roles
-        public async Task<IActionResult> CreateRoles(String data)
+        [HttpPost] //// create roles
+        public async Task<IActionResult> CreateRole(CreateRole model)
         {
-            if (await _accessService.createRole(data))
+            if (await _accessService.createRole(model))
             {
                 _notyfService.Success("Successfully Role Created");
             }
@@ -996,7 +1009,7 @@ namespace HelloDoc.Controllers
         [HttpPost]    // Patient History filters
         public IActionResult GetPatinetHistoryTableDate(string model,int pageNo)
         {
-            return PartialView("_PatientHistoryTable", _recordService.getSMSLogTabledata(model,pageNo).PatientHistoryTable);
+            return PartialView("_PatientHistoryTable", _recordService.getPatientHistoryTable(model,pageNo));
         }
 
         [HttpGet]    // Provider On call Filter
@@ -1012,27 +1025,83 @@ namespace HelloDoc.Controllers
             return PartialView("_PatientRecordTable", _recordService.getPatientRecord(userId,pageNo));
         }
 
-        [HttpPost]    //  edit provier account informaction
-        public IActionResult EditphysicianAccountInformaction(EditProvider model)
+        [HttpPost]    // Block History filters
+        public IActionResult GetBlockHistoryTableDate(string model, int pageNo, string date)
         {
+            return PartialView("_BlockHistoryTable", _recordService.getBlockHistoryTable(model, pageNo, date));
+        }
+
+        [HttpPost]    // Block History page - unblock Request
+        public async Task<JsonResult> UnblockRequest(int requestId)
+        {
+            if (await _recordService.ubblockRequest(requestId))
+            {
+                _notyfService.Success("Successfully UnBlocked");
+            }
+            else
+            {
+                _notyfService.Error("UnBlock Faild");
+            }
+            return Json(new { redirect = Url.Action("BlockHistory", "Admin") });
+        }
+
+        [HttpPost]    //  edit provier account informaction
+        public async Task<IActionResult> EditphysicianAccountInformaction(EditProvider model)
+        {
+            int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
+            if (await _providersService.editphysicianAccountInformaction(model,physicianId))
+            {
+                _notyfService.Success("Successfully Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild");
+            }
             return RedirectToAction("EditProvider", "Admin");
         }
 
         [HttpPost]    //  edit provier Physician Informaction
-        public IActionResult EditphysicianPhysicianInformaction(EditProvider model)
+        public async Task<IActionResult> EditphysicianPhysicianInformaction(EditProvider model)
         {
+            int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
+            if (await _providersService.editphysicianPhysicianInformaction(model, physicianId))
+            {
+                _notyfService.Success("Successfully Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild");
+            }
             return RedirectToAction("EditProvider", "Admin");
         }
 
         [HttpPost]    //  edit provier Mailing & Billing Information
-        public IActionResult EditphysicianMailAndBillingInformaction(EditProvider model)
+        public async Task<IActionResult> EditphysicianMailAndBillingInformaction(EditProvider model)
         {
+            int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
+            if (await _providersService.editphysicianMailAndBillingInformaction(model, physicianId))
+            {
+                _notyfService.Success("Successfully Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild");
+            }
             return RedirectToAction("EditProvider", "Admin");
         }
 
         [HttpPost]    //  edit provier Provider Profile
-        public IActionResult EditphysicianProviderProfile(EditProvider model)
+        public async Task<IActionResult> EditphysicianProviderProfile(EditProvider model)
         {
+            int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
+            if (await _providersService.editphysicianProviderProfile(model, physicianId))
+            {
+                _notyfService.Success("Successfully Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild");
+            }
             return RedirectToAction("EditProvider", "Admin");
         }
 

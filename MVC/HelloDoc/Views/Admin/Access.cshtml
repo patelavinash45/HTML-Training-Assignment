@@ -52,9 +52,11 @@
                                         @item.AccountType
                                     </td>
                                     <td>
-                                        <button class="bg-white px-3 fw-bold py-2">
-                                            Edit
-                                        </button>
+                                        <a asp-controller="Admin" asp-action="UpdateRole" asp-route-roleId="@item.RoleId">
+                                            <button class="bg-white px-3 me-2 fw-bold py-2">
+                                                Edit
+                                            </button>
+                                        </a>
                                         <a asp-controller="Admin" asp-action="DeteteRole" asp-route-roleId="@item.RoleId">
                                             <button class="bg-white px-3 fw-bold py-2">
                                                 Delete
@@ -80,9 +82,11 @@
                                 <div class="accordion-body row mx-0">
                                     Acount Type: @item.AccountType
                                     <div class="d-flex justify-content-end align-items-center mb-2">
-                                        <button class="bg-white px-3 me-2 fw-bold py-2">
-                                            Edit
-                                        </button>
+                                        <a asp-controller="Admin" asp-action="UpdateRole" asp-route-roleId="@item.RoleId">
+                                            <button class="bg-white px-3 me-2 fw-bold py-2">
+                                                Edit
+                                            </button>
+                                        </a>
                                         <a asp-controller="Admin" asp-action="DeteteRole" asp-route-roleId="@item.RoleId">
                                             <button class="bg-white px-3 fw-bold py-2">
                                                 Delete

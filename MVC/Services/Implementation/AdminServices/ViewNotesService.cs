@@ -4,6 +4,7 @@ using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.Interfaces.AuthServices;
 using Services.ViewModels.Admin;
+using System.Collections;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
@@ -64,33 +65,41 @@ namespace Services.Implementation.AdminServices
         {
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
             requestClient.Status = 3;
-            await _requestClientRepository.updateRequestClient(requestClient);
-            Request request = _requestRepository.getRequestByRequestId(model.RequestId);
-            request.CaseTagId = model.Reason;
-            await _requestRepository.updateRequest(request);
-            RequestStatusLog _requestStatusLog = new()
+            if(await _requestClientRepository.updateRequestClient(requestClient))
             {
-                RequestId = model.RequestId,
-                Status = 3,
-                CreatedDate = DateTime.Now,
-                Notes = model.AdminTransferNotes,
-            };
-            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
+                Request request = _requestRepository.getRequestByRequestId(model.RequestId);
+                request.CaseTagId = model.Reason;
+                if(await _requestRepository.updateRequest(request))
+                {
+                    RequestStatusLog _requestStatusLog = new()
+                    {
+                        RequestId = model.RequestId,
+                        Status = 3,
+                        CreatedDate = DateTime.Now,
+                        Notes = model.AdminTransferNotes,
+                    };
+                    return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
+                }
+            }
+            return false;
         }
 
         public async Task<bool> agreementDeclined(Agreement model)
         {
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
             requestClient.Status = 8;
-            await _requestClientRepository.updateRequestClient(requestClient);
-            RequestStatusLog _requestStatusLog = new()
+            if(await _requestClientRepository.updateRequestClient(requestClient))
             {
-                RequestId = model.RequestId,
-                Status = 8,
-                CreatedDate = DateTime.Now,
-                Notes = model.CancelationReson,
-            };
-            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
+                RequestStatusLog _requestStatusLog = new()
+                {
+                    RequestId = model.RequestId,
+                    Status = 8,
+                    CreatedDate = DateTime.Now,
+                    Notes = model.CancelationReson,
+                };
+                return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
+            }
+            return false;
         }
 
         public async Task<bool> agreementAgree(Agreement model)
@@ -111,40 +120,49 @@ namespace Services.Implementation.AdminServices
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
             requestClient.Status = 2;
             requestClient.PhysicianId = model.SelectedPhysician;
-            await _requestClientRepository.updateRequestClient(requestClient);
-            RequestStatusLog _requestStatusLog = new()
+            if(await _requestClientRepository.updateRequestClient(requestClient))
             {
-                RequestId = model.RequestId,
-                Status = 2,
-                CreatedDate = DateTime.Now,
-                Notes = model.AdminTransferNotes,
-                PhysicianId = model.SelectedPhysician,
-            };
-            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
+                RequestStatusLog _requestStatusLog = new()
+                {
+                    RequestId = model.RequestId,
+                    Status = 2,
+                    CreatedDate = DateTime.Now,
+                    Notes = model.AdminTransferNotes,
+                    PhysicianId = model.SelectedPhysician,
+                };
+                return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
+            }
+            return false;
         }
 
         public async Task<bool> blockRequest(BlockPopUp model)
         {
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
             requestClient.Status = 0;
-            await _requestClientRepository.updateRequestClient(requestClient);
-            BlockRequest blockRequest = new()
+            if(await _requestClientRepository.updateRequestClient(requestClient))
             {
-                PhoneNumber = requestClient.PhoneNumber,
-                Email = requestClient.Email,
-                Reason = model.AdminTransferNotes,
-                RequestId = model.RequestId,
-                CreatedDate = DateTime.Now,
-            };
-            await _requestSatatusLogRepository.addBlockRequest(blockRequest);
-            RequestStatusLog _requestStatusLog = new()
-            {
-                RequestId = model.RequestId,
-                Status = 0,
-                CreatedDate = DateTime.Now,
-                Notes = model.AdminTransferNotes,
-            };
-            return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
+                BlockRequest blockRequest = new()
+                {
+                    PhoneNumber = requestClient.PhoneNumber,
+                    Email = requestClient.Email,
+                    Reason = model.AdminTransferNotes,
+                    RequestId = model.RequestId,
+                    CreatedDate = DateTime.Now,
+                    IsActive = new BitArray(1, false),
+                };
+                if (await _requestSatatusLogRepository.addBlockRequest(blockRequest))
+                {
+                    RequestStatusLog requestStatusLog = new()
+                    {
+                        RequestId = model.RequestId,
+                        Status = 0,
+                        CreatedDate = DateTime.Now,
+                        Notes = model.AdminTransferNotes,
+                    };
+                    return await _requestSatatusLogRepository.addRequestSatatusLog(requestStatusLog);
+                }
+            }
+            return false;
         }
 
         public async Task<bool> clearRequest(int requestId)

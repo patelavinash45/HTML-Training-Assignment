@@ -3,6 +3,7 @@ using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
 using System.Collections;
+using System.Linq;
 
 namespace Repositories.Implementation
 {
@@ -29,6 +30,16 @@ namespace Repositories.Implementation
         {
             return _dbContext.RequestClients.Include(a => a.Request).ThenInclude(a => a.RequestNotes).Include(a => a.Physician)
                                             .Include(a => a.Request.RequestStatusLogs).Where(predicate).ToList();
+        }
+
+        public List<BlockRequest> getRequestClientsAndBlockRequestBasedOnFilter(Func<BlockRequest, bool> predicate)
+        {
+            return _dbContext.BlockRequests.Include(a => a.Request.RequestClients).Where(predicate).ToList();
+        }
+
+        public int countRequestClientsAndBlockRequestBasedOnFilter(Func<BlockRequest, bool> predicate)
+        {
+            return _dbContext.BlockRequests.Include(a => a.Request.RequestClients).Count(predicate);
         }
 
         public List<RequestClient> getRequestClientByStatus(List<int> status, int skip, string patientName ,int regionId, int requesterTypeId)
@@ -98,7 +109,13 @@ namespace Repositories.Implementation
 
         public int countRequestClientsByUserId(int userId)
         {
-            return _dbContext.RequestClients.Include(a => a.Request).Where(a => a.Request.UserId == userId).Count();
+            return _dbContext.RequestClients.Include(a => a.Request).Count(a => a.Request.UserId == userId);
+        }
+
+        public async Task<bool> deleteBlockRequest(int requestId)
+        {
+            _dbContext.Remove(_dbContext.BlockRequests.FirstOrDefault(a => a.RequestId == requestId));
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }

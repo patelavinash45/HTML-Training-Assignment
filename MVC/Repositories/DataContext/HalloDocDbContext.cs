@@ -32,6 +32,8 @@ public partial class HalloDocDbContext : DbContext
 
     public virtual DbSet<CaseTag> CaseTags { get; set; }
 
+    public virtual DbSet<CloseRequest> CloseRequests { get; set; }
+
     public virtual DbSet<Concierge> Concierges { get; set; }
 
     public virtual DbSet<EmailLog> EmailLogs { get; set; }
@@ -61,8 +63,6 @@ public partial class HalloDocDbContext : DbContext
     public virtual DbSet<RequestBusiness> RequestBusinesses { get; set; }
 
     public virtual DbSet<RequestClient> RequestClients { get; set; }
-
-    public virtual DbSet<RequestClosed> RequestCloseds { get; set; }
 
     public virtual DbSet<RequestConcierge> RequestConcierges { get; set; }
 
@@ -148,6 +148,8 @@ public partial class HalloDocDbContext : DbContext
         modelBuilder.Entity<BlockRequest>(entity =>
         {
             entity.HasKey(e => e.BlockRequestId).HasName("BlockRequests_pkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.BlockRequests).HasConstraintName("requestId");
         });
 
         modelBuilder.Entity<Business>(entity =>
@@ -164,6 +166,21 @@ public partial class HalloDocDbContext : DbContext
         modelBuilder.Entity<CaseTag>(entity =>
         {
             entity.HasKey(e => e.CaseTagId).HasName("CaseTag_pkey");
+        });
+
+        modelBuilder.Entity<CloseRequest>(entity =>
+        {
+            entity.HasKey(e => e.RequestClosedId).HasName("RequestClosed_pkey");
+
+            entity.Property(e => e.RequestClosedId).HasDefaultValueSql("nextval('\"RequestClosed_RequestClosedId_seq\"'::regclass)");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.CloseRequests)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("RequestClosed_RequestId_fkey");
+
+            entity.HasOne(d => d.RequestStatusLog).WithMany(p => p.CloseRequests)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("RequestClosed_RequestStatusLogId_fkey");
         });
 
         modelBuilder.Entity<Concierge>(entity =>
@@ -285,19 +302,6 @@ public partial class HalloDocDbContext : DbContext
             entity.HasOne(d => d.Request).WithMany(p => p.RequestClients)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("RequestClient_RequestId_fkey");
-        });
-
-        modelBuilder.Entity<RequestClosed>(entity =>
-        {
-            entity.HasKey(e => e.RequestClosedId).HasName("RequestClosed_pkey");
-
-            entity.HasOne(d => d.Request).WithMany(p => p.RequestCloseds)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("RequestClosed_RequestId_fkey");
-
-            entity.HasOne(d => d.RequestStatusLog).WithMany(p => p.RequestCloseds)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("RequestClosed_RequestStatusLogId_fkey");
         });
 
         modelBuilder.Entity<RequestConcierge>(entity =>

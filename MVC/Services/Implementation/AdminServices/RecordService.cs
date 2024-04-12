@@ -1,4 +1,5 @@
-﻿using Repositories.DataModels;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Repositories.DataModels;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.ViewModels.Admin;
@@ -183,27 +184,16 @@ namespace Services.Implementation.AdminServices
             return model;
         }
 
-        public PatientHistory getSMSLogTabledata(string data, int pageNo)
+        public PatientHistoryTable getPatientHistoryTable(string data, int pageNo)
         {
             PatientHistory model = JsonSerializer.Deserialize<PatientHistory>(data);
-            return getPatientHistory(model, pageNo);
+            return getPatientHistory(model, pageNo).PatientHistoryTable;
         }
 
         public PatientRecord getPatientRecord(int userId, int pageNo)
         {
             int skip = (pageNo - 1) * 5;
             int totalPatient = _requestClientRepository.countRequestClientsByUserId(userId);
-            List<PatientRecordTableData> patientRecordTableDatas = _requestClientRepository.getAllRequestClientsByUserId(userId,skip)
-                      .Select(requestClient => new PatientRecordTableData()
-                      {
-                          RequestId = requestClient.RequestId,
-                          Name = $"{requestClient.FirstName} {requestClient.LastName}",
-                          CreatedDate = requestClient.Request.CreatedDate,
-                          Conformation = requestClient.Request.ConfirmationNumber,
-                          ProviderName = requestClient.Physician != null ? $"{requestClient.Physician.FirstName} {requestClient.Physician.LastName}" : "-",
-                          Ststus = requestClient.Status,
-                          CountDocument = requestClient.Request.RequestWiseFiles != null ? requestClient.Request.RequestWiseFiles.Count : 0
-                      }).ToList();
             int totalPages = totalPatient % 5 != 0 ? (totalPatient / 5) + 1 : totalPatient / 5;
             return new PatientRecord()
             {
@@ -215,8 +205,75 @@ namespace Services.Implementation.AdminServices
                 PageNo = pageNo,
                 StartRange = skip + 1,
                 EndRange = skip + 5 < totalPatient ? skip + 5 : totalPatient,
-                patientRecordTableDatas = patientRecordTableDatas,
+                patientRecordTableDatas = _requestClientRepository.getAllRequestClientsByUserId(userId, skip)
+                                          .Select(requestClient => new PatientRecordTableData()
+                                          {
+                                              RequestId = requestClient.RequestId,
+                                              Name = $"{requestClient.FirstName} {requestClient.LastName}",
+                                              CreatedDate = requestClient.Request.CreatedDate,
+                                              Conformation = requestClient.Request.ConfirmationNumber,
+                                              ProviderName = requestClient.Physician != null ? $"{requestClient.Physician.FirstName} {requestClient.Physician.LastName}" : "-",
+                                              Ststus = requestClient.Status,
+                                              CountDocument = requestClient.Request.RequestWiseFiles != null ? requestClient.Request.RequestWiseFiles.Count : 0,
+                                          }).ToList(),
             };
+        }
+
+        public BlockHistory getBlockHistory(BlockHistory model, int pageNo)
+        {
+            int skip = (pageNo - 1) * 5;
+            Func<BlockRequest, bool> predicat = a =>
+            (model.Phone == null || a.PhoneNumber.Contains(model.Phone))
+            && (model.Email == null || a.Email.Contains(model.Email))
+            && (model.Name == null || a.Request.RequestClients.FirstOrDefault(x => x.RequestId == a.RequestId).FirstName.ToLower().Contains(model.Name.ToLower())
+                                   || a.Request.RequestClients.FirstOrDefault(x => x.RequestId == a.RequestId).LastName.ToLower().Contains(model.Name.ToLower()))
+            && (model.Date == null || DateOnly.FromDateTime(a.CreatedDate) == model.Date);
+            int totalPatient = _requestClientRepository.countRequestClientsAndBlockRequestBasedOnFilter(predicat);
+            int totalPages = totalPatient % 5 != 0 ? (totalPatient / 5) + 1 : totalPatient / 5;
+            model.BlockHistoryTable = new BlockHistoryTable()
+            {
+                IsFirstPage = pageNo != 1,
+                IsLastPage = pageNo != totalPages,
+                IsNextPage = pageNo < totalPages,
+                IsPreviousPage = pageNo > 1,
+                TotalRequests = totalPatient,
+                PageNo = pageNo,
+                StartRange = skip + 1,
+                EndRange = skip + 5 < totalPatient ? skip + 5 : totalPatient,
+                BlockHistoryTableDatas = _requestClientRepository.getRequestClientsAndBlockRequestBasedOnFilter(predicat)
+                                          .Select(blockRequest => new BlockHistoryTableData()
+                                          {
+                                                  Name = $"{blockRequest.Request.RequestClients.FirstOrDefault(a => a.RequestId == blockRequest.RequestId).FirstName} " +
+                                                                                         $"{blockRequest.Request.RequestClients.FirstOrDefault(a => a.RequestId == blockRequest.RequestId).LastName}",
+                                                  Email = blockRequest.Email,
+                                                  Phone = blockRequest.PhoneNumber,
+                                                  CratedDate = blockRequest.CreatedDate,
+                                                  Notes = blockRequest.Reason != null ? blockRequest.Reason : "-",
+                                                  RequestId = (int)blockRequest.RequestId,
+                                                  IsActive = blockRequest.IsActive[0],
+                                          }).ToList(),
+            };
+            return model;
+        }
+
+        public BlockHistoryTable getBlockHistoryTable(string data, int pageNo, string date)
+        {
+            BlockHistory model = JsonSerializer.Deserialize<BlockHistory>(data);
+            if(date != null) { 
+                model.Date = DateOnly.Parse(date);
+            }
+            return getBlockHistory(model, pageNo).BlockHistoryTable;
+        }
+
+        public async Task<bool> ubblockRequest(int requestId)
+        {
+            if(await _requestClientRepository.deleteBlockRequest(requestId))
+            {
+                RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(requestId);
+                requestClient.Status = 1;
+                return await _requestClientRepository.updateRequestClient(requestClient);
+            }
+            return false;
         }
     }
 }

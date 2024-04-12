@@ -19,8 +19,14 @@ namespace Services.Interfaces.AdminServices
 
         PatientHistory getPatientHistory(PatientHistory model,int pageNo);
 
-        PatientHistory getSMSLogTabledata(string data, int pageNo);
+        PatientHistoryTable getPatientHistoryTable(string data, int pageNo);
 
         PatientRecord getPatientRecord(int userId, int pageNo);
+
+        BlockHistory getBlockHistory(BlockHistory model, int pageNo);
+
+        BlockHistoryTable getBlockHistoryTable(string data, int pageNo, string Date);
+
+        Task<bool> ubblockRequest(int requestId);
     }
 }

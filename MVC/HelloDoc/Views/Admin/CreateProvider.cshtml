@@ -187,14 +187,14 @@
             <h5 class="mt-4">
                 Onbording
             </h5>
-            <div class="row d-flex align-items-center">
-                <div class="col-7 d-flex align-items-center">
+            <div class="d-flex uploadFile">
+                <div class="d-flex align-items-center">
                     <input asp-for="IsAgreementDoc" type="checkbox" class="me-2" />
                     <span class="h5">
                         Independent Contractor Agreement
                     </span>
                 </div>
-                    <div class="col-5 d-flex align-items-end flex-column">
+                    <div class="d-flex align-items-end flex-column">
                         <div class="input-group">
                             <input asp-for="AgreementDoc" type="file" class="form-control d-none" id="inputGroupFile01">
                             <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile01">
@@ -205,14 +205,14 @@
                         <span asp-validation-for="AgreementDoc" class="text-danger"></span>
                     </div>
             </div>
-            <div class="row d-flex align-items-center">
-                <div class="col-7 d-flex align-items-center">
+            <div class="d-flex uploadFile">
+                <div class="d-flex align-items-center">
                     <input asp-for="IsBackgroundDoc" type="checkbox" class="me-2" />
                     <span class="h5">
                         Background Check
                     </span>
                 </div>
-                    <div class="col-5 d-flex align-items-end flex-column">
+                    <div class="d-flex align-items-end flex-column">
                         <div class="input-group">
                             <input asp-for="BackgroundDoc" type="file" class="form-control d-none" id="inputGroupFile02">
                             <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile02">
@@ -223,14 +223,14 @@
                         <span asp-validation-for="BackgroundDoc" class="text-danger"></span>
                 </div>
             </div>
-            <div class="row d-flex align-items-center">
-                <div class="col-7 d-flex align-items-center">
+            <div class="d-flex uploadFile">
+                <div class="d-flex align-items-center">
                     <input asp-for="IsHIPAACompliance" type="checkbox" class="me-2" />
                     <span class="h5">
                         HIPAA Compliance
                     </span>
                 </div>
-                    <div class="col-5 d-flex align-items-end flex-column">
+                    <div class="d-flex align-items-end flex-column">
                         <div class="input-group">
                             <input asp-for="HIPAACompliance" type="file" class="form-control d-none" id="inputGroupFile03">
                             <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile03">
@@ -241,14 +241,14 @@
                         <span asp-validation-for="HIPAACompliance" class="text-danger"></span>
                 </div>
             </div>
-            <div class="row d-flex align-items-center">
-                <div class="col-7 d-flex align-items-center">
+            <div class="d-flex uploadFile">
+                <div class="d-flex align-items-center">
                     <input asp-for="IsNonDisclosureDoc" type="checkbox" class="me-2" />
                     <span class="h5">
                         Non-disclosure Agreement
                     </span>
                 </div>
-                    <div class="col-5 d-flex align-items-end flex-column">
+                    <div class="d-flex align-items-end flex-column">
                         <div class="input-group">
                             <input asp-for="NonDisclosureDoc" type="file" class="form-control d-none" id="inputGroupFile04">
                             <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile04">

@@ -36,6 +36,8 @@ namespace Repositories.Interfaces
 
         Physician getPhysicianByPhysicianId(int physicianId);
 
+        Physician getPhysicianWithAspNetUser(int aspNetUserId);
+
         List<AdminRegion> getAdminRegionByAdminId(int adminId);
 
         Task<bool> updateAdmin(Admin admin);
@@ -45,6 +47,8 @@ namespace Repositories.Interfaces
         Task<bool> deleteAdminRgion(AdminRegion adminRegion);
 
         Task<bool> addPhysicianRegion(PhysicianRegion physicianRegion);
+
+        Task<bool> deletePhysicianRegion(PhysicianRegion physicianRegion);
 
         Task<bool> addPhysician(Physician physician);
 

@@ -151,7 +151,7 @@ namespace Services.ViewModels.Admin
         [Required(ErrorMessage = "The Role field is required.")]
         public int SelectedRole { get; set; }
 
-        public short Status { get; set; }
+        public int Status { get; set; }
 
         public Dictionary<int, string>? Roles { get; set; }
 
@@ -159,6 +159,9 @@ namespace Services.ViewModels.Admin
 
         [StringLength(50)]
         public string Email { get; set; }
+
+        [StringLength(50)]
+        public string SynchronizationEmail { get; set; }
 
         [StringLength(20)]
         public string Phone { get; set; }
@@ -185,10 +188,10 @@ namespace Services.ViewModels.Admin
         public string Zip { get; set; }
 
         [Required(ErrorMessage = "The State field is required.")]
-        public string SelectedRegion { get; set; }
+        public int SelectedRegion { get; set; }
 
         [Required(ErrorMessage = "The Region field is required.")]
-        public List<string> SelectedRegions { get; set; }
+        public List<int> SelectedRegions { get; set; }
 
         public Dictionary<int, string>? Regions { get; set; }
 
@@ -227,7 +230,7 @@ namespace Services.ViewModels.Admin
 
         public IFormFile? NonDisclosureDoc { get; set; }
 
-        public IFormFile Signature { get; set; }
+        public IFormFile? Signature { get; set; }
     }
 
     public class RequiredIfBoolIsTrueAttribute : ValidationAttribute
@@ -244,20 +247,12 @@ namespace Services.ViewModels.Admin
             foreach (var boolProperty in _boolProperties)
             {
                 var property = validationContext.ObjectType.GetProperty(boolProperty);
-
-                if (property == null)
-                {
-                    return new ValidationResult($"Unknown property {boolProperty}");
-                }
-
                 var boolPropertyValue = (bool)property.GetValue(validationContext.ObjectInstance);
-
                 if (boolPropertyValue && value == null)
                 {
                     return new ValidationResult($"{validationContext.DisplayName} is required");
                 }
             }
-
             return ValidationResult.Success;
         }
     }

@@ -53,7 +53,6 @@
                         <div class="row">
                             <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                                 <select asp-for="SelectedRole" class="form-select" id="role">
-                                    <option selected>Role</option>
                                     @foreach (var item in Model.Roles)
                                     {
                                         <option value="@item.Key">@item.Value</option>
@@ -63,12 +62,12 @@
                                 <span asp-validation-for="SelectedRole" class="text-danger"></span>
                             </div>
                             <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                                <select asp-for="SelectedRole" class="form-select" id="role">
+                                <select asp-for="Status" class="form-select" id="role">
                                     <option value="0">Pending</option>
                                     <option value="1">Active</option>
                                 </select>
                                 <label for="role">Status</label>
-                                <span asp-validation-for="SelectedRole" class="text-danger"></span>
+                                <span asp-validation-for="Status" class="text-danger"></span>
                             </div>
                         </div>
                     </fieldset>
@@ -128,16 +127,16 @@
                         </div>
                         <div class="row">
                             <div class="form-floating col-xl-6 col-md-6 col-lg-6">
-                                <input class="form-control" id="email" placeholder="Email" type="email" />
+                                <input asp-for="SynchronizationEmail" class="form-control" id="email" placeholder="Email" type="email" />
                                 <label for="email">Synchronization Email</label>
-                                @*<span asp-validation-for="Email" class="text-danger"></span>*@
+                                <span asp-validation-for="SynchronizationEmail" class="text-danger"></span>
                             </div>
                             <div class="col-xl-6 col-md-6 col-lg-6">
                                 @foreach (var item in Model.Regions)
                                 {
                                     <div class="form-check form-check-inline">
                                         <input name="SelectedRegions" class="form-check-input" type="checkbox" value="@item.Key"
-                                                                             checked=@Model.SelectedRegions.Contains(item.Key.ToString())>
+                                                                             checked=@Model.SelectedRegions.Contains(item.Key)>
                                         <label class="form-check-label" for="r-1">
                                             @item.Value
                                         </label>
@@ -222,7 +221,7 @@
                         </div>
                     </div>
                 </form>
-                <form asp-controller="Admin" asp-action="EditphysicianProviderProfile">
+                <form enctype="multipart/form-data" asp-controller="Admin" asp-action="EditphysicianProviderProfile">
                     <h5 class="mt-4">
                         Provider Profile
                     </h5>
@@ -266,8 +265,8 @@
                                     </button>
                                 </div>
                                 <span asp-validation-for="Photo" class="text-danger"></span>
-                                <div class="edit" id="signaturePad">
-                                    <canvas class="border" id="signature-pad" width="400" height="200"></canvas>
+                                <div class="edit mt-2 mb-2" id="signaturePad">
+                                    <canvas class="border border-1 rounded-3" id="signature-pad" width="350" height="200"></canvas>
                                     <div>
                                         <button class="px-3 me-2 text-white fw-bold bottomButtons" type="button" id="signatureSave">
                                             Save
@@ -307,74 +306,106 @@
                         Onbording
                     </h5>
                     <fieldset disabled id="fieldset5">
-                        <div class="row d-flex align-items-center">
-                            <div class="col-7 d-flex align-items-center">
+                        <div class="d-flex uploadFile">
+                            <div class="d-flex align-items-center">
                                 <input asp-for="IsAgreementDoc" type="checkbox" class="me-2" />
                                 <span class="h5">
                                     Independent Contractor Agreement
                                 </span>
                             </div>
-                            <div class="col-5 d-flex align-items-end flex-column">
+                            <div class="d-flex align-items-end flex-column">
                                 <div class="input-group">
                                     <input asp-for="AgreementDoc" type="file" class="form-control d-none" id="inputGroupFile01">
-                                    <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile01">
-                                        <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
-                                        Upload
-                                    </label>
+                                    <div class="d-flex">
+                                        @if(Model.AgreementDocPath != null)
+                                        {
+                                            <a href="@Model.AgreementDocPath" target="_blank" class="px-3 me-2 text-white fw-bold bottomButtons d-flex justify-content-center align-items-center">
+                                                View
+                                            </a>
+                                        }
+                                        <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile01">
+                                            <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
+                                            Upload
+                                        </label>
+                                    </div>
                                 </div>
                                 <span asp-validation-for="AgreementDoc" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="row d-flex align-items-center">
-                            <div class="col-7 d-flex align-items-center">
+                        <div class="d-flex uploadFile">
+                            <div class="d-flex align-items-center">
                                 <input asp-for="IsBackgroundDoc" type="checkbox" class="me-2" />
                                 <span class="h5">
                                     Background Check
                                 </span>
                             </div>
-                            <div class="col-5 d-flex align-items-end flex-column">
+                            <div class="d-flex align-items-end flex-column">
                                 <div class="input-group">
                                     <input asp-for="BackgroundDoc" type="file" class="form-control d-none" id="inputGroupFile02">
-                                    <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile02">
-                                        <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
-                                        Upload
-                                    </label>
+                                    <div class="d-flex">
+                                        @if (Model.BackgroundDocPath != null)
+                                        {
+                                            <a href="@Model.BackgroundDocPath" target="_blank" class="px-3 me-2 text-white fw-bold bottomButtons d-flex justify-content-center align-items-center">
+                                                View
+                                            </a>
+                                        }
+                                        <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile02">
+                                            <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
+                                            Upload
+                                        </label>
+                                    </div>
                                 </div>
                                 <span asp-validation-for="BackgroundDoc" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="row d-flex align-items-center">
-                            <div class="col-7 d-flex align-items-center">
+                        <div class="d-flex uploadFile">
+                            <div class="d-flex align-items-center">
                                 <input asp-for="IsHIPAACompliance" type="checkbox" class="me-2" />
                                 <span class="h5">
                                     HIPAA Compliance
                                 </span>
                             </div>
-                            <div class="col-5 d-flex align-items-end flex-column">
+                            <div class="d-flex align-items-end flex-column">
                                 <div class="input-group">
                                     <input asp-for="HIPAACompliance" type="file" class="form-control d-none" id="inputGroupFile03">
-                                    <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile03">
-                                        <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
-                                        Upload
-                                    </label>
+                                    <div class="d-flex">
+                                        @if (Model.HIPAACompliancePath != null)
+                                        {
+                                            <a href="@Model.HIPAACompliancePath" target="_blank" class="px-3 me-2 text-white fw-bold bottomButtons d-flex justify-content-center align-items-center">
+                                                View
+                                            </a>
+                                        }
+                                        <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile03">
+                                            <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
+                                            Upload
+                                        </label>
+                                    </div>
                                 </div>
                                 <span asp-validation-for="HIPAACompliance" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="row d-flex align-items-center">
-                            <div class="col-7 d-flex align-items-center">
+                        <div class="d-flex uploadFile">
+                            <div class="d-flex align-items-center">
                                 <input asp-for="IsNonDisclosureDoc" type="checkbox" class="me-2" />
                                 <span class="h5">
                                     Non-disclosure Agreement
                                 </span>
                             </div>
-                            <div class="col-5 d-flex align-items-end flex-column">
+                            <div class="d-flex align-items-end flex-column">
                                 <div class="input-group">
                                     <input asp-for="NonDisclosureDoc" type="file" class="form-control d-none" id="inputGroupFile04">
-                                    <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile04">
-                                        <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
-                                        Upload
-                                    </label>
+                                    <div class="d-flex">
+                                        @if (Model.NonDisclosureDocPath != null)
+                                        {
+                                            <a href="@Model.NonDisclosureDocPath" target="_blank" class="px-3 me-2 text-white fw-bold bottomButtons d-flex justify-content-center align-items-center">
+                                                View
+                                            </a>
+                                        }
+                                        <label class="input-group-text uploadButton px-3 py-2" for="inputGroupFile04">
+                                            <i class="bi bi-cloud-arrow-up-fill pe-2"></i>
+                                            Upload
+                                        </label>
+                                    </div>
                                 </div>
                                 <span asp-validation-for="NonDisclosureDoc" class="text-danger"></span>
                             </div>
@@ -382,18 +413,18 @@
                         <hr>
                     </fieldset>
                     <div class="d-flex justify-content-end mt-3 mb-2">
-                        <button class="px-3 text-white fw-bold bottomButtons" type="button" id="editbutton5">
+                        <button class="px-3 text-white fw-bold bottomButtons me-2" type="button" id="editbutton5">
                             Edit
                         </button>
                         <div class="edit" id="edit5">
                             <button class="px-3 me-2 text-white fw-bold bottomButtons" type="submit" id="administratorForm">
                                 Save Changes
                             </button>
-                            <button class="px-3 bg-white cancleButton fw-bold" type="reset" id="cancel5">
+                            <button class="px-3 bg-white cancleButton fw-bold me-2" type="reset" id="cancel5">
                                 Cancel
                             </button>
                         </div>
-                        <button class="px-3 text-white fw-bold bottomButtons" type="button" id="editbutton1">
+                        <button class="px-3 text-white fw-bold bottomButtons bg-danger border-danger" type="button" id="editbutton1">
                             Delete Account
                         </button>
                     </div>

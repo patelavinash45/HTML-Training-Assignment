@@ -131,6 +131,11 @@
                         Patient History
                     </a>
                 </li>
+                <li>
+                    <a class="dropdown-item" asp-controller="Admin" asp-action="BlockHistory">
+                        Block History
+                    </a>
+                </li>
             </ul>
             @if (Model == 7)
             {
@@ -210,6 +215,11 @@
             <li>
                 <a class="dropdown-item" asp-controller="Admin" asp-action="PatientHistory">
                     Patient History
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-controller="Admin" asp-action="BlockHistory">
+                    Block History
                 </a>
             </li>
         </ul>

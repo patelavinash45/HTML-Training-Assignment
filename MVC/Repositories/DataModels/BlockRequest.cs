@@ -35,4 +35,8 @@ public partial class BlockRequest
     public DateTime? ModifiedDate { get; set; }
 
     public int? RequestId { get; set; }
+
+    [ForeignKey("RequestId")]
+    [InverseProperty("BlockRequests")]
+    public virtual Request? Request { get; set; }
 }

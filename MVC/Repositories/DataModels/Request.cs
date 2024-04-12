@@ -84,18 +84,21 @@ public partial class Request
 
     public int? CaseTagId { get; set; }
 
+    [InverseProperty("Request")]
+    public virtual ICollection<BlockRequest> BlockRequests { get; set; } = new List<BlockRequest>();
+
     [ForeignKey("CaseTagId")]
     [InverseProperty("Requests")]
     public virtual CaseTag? CaseTag { get; set; }
+
+    [InverseProperty("Request")]
+    public virtual ICollection<CloseRequest> CloseRequests { get; set; } = new List<CloseRequest>();
 
     [InverseProperty("Request")]
     public virtual ICollection<RequestBusiness> RequestBusinesses { get; set; } = new List<RequestBusiness>();
 
     [InverseProperty("Request")]
     public virtual ICollection<RequestClient> RequestClients { get; set; } = new List<RequestClient>();
-
-    [InverseProperty("Request")]
-    public virtual ICollection<RequestClosed> RequestCloseds { get; set; } = new List<RequestClosed>();
 
     [InverseProperty("Request")]
     public virtual ICollection<RequestConcierge> RequestConcierges { get; set; } = new List<RequestConcierge>();
