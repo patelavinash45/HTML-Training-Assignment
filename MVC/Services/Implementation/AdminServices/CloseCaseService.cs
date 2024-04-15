@@ -19,16 +19,17 @@ namespace Services.Implementation.AdminServices
 
         public CloseCase getDaetails(int requestId)
         {
-            List<FileModel> fileList = _requestWiseFileRepository.getFilesByrequestId(requestId).Select(requestWiseFile => new FileModel()
-            {
-                RequestId = requestId,
-                RequestWiseFileId = requestWiseFile.RequestWiseFileId,
-                FileName = requestWiseFile.FileName,
-                Uploder = requestWiseFile.Uploder,
-                CreatedDate = requestWiseFile.CreatedDate,
-            }).ToList();
+            List<FileModel> fileList = _requestWiseFileRepository.getFilesByrequestId(requestId)
+                .Select(requestWiseFile => new FileModel()
+                {
+                    RequestId = requestId,
+                    RequestWiseFileId = requestWiseFile.RequestWiseFileId,
+                    FileName = requestWiseFile.FileName,
+                    Uploder = requestWiseFile.Uploder,
+                    CreatedDate = requestWiseFile.CreatedDate,
+                }).ToList();
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(requestId);
-            CloseCase closeCase = new CloseCase()
+            return new CloseCase()
             {
                 FirstName = requestClient.FirstName,
                 LastName = requestClient.LastName,
@@ -38,7 +39,6 @@ namespace Services.Implementation.AdminServices
                                  + "-" + requestClient.IntDate) : null,
                 FileList = fileList,
             };
-            return closeCase;
         }
 
         public async Task<bool> updateDetails(CloseCase model,int requestId)

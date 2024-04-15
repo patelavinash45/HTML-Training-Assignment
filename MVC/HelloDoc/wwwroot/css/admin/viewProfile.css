@@ -37,6 +37,10 @@ label,
     display: none;
 }
 
+.form-check-label{
+    margin-top: 0px;
+}
+
 .bottomButtons {
     background-color: cadetblue;
 }

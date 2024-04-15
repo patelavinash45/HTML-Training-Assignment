@@ -11,19 +11,14 @@
     mix-blend-mode: multiply;
 }
 
-.form-floating>input{
+
+.form-floating > input {
     background: transparent;
     border-color: black;
 }
 
 .form-control{
     background-color: transparent;
-}
-
-.form-floating {
-    margin-top: 2vh;
-    margin-bottom: 2vh;
-    width: 100%;
 }
 
 .conditions-text{
@@ -51,10 +46,8 @@
     height: 45px;
 }
 
-.input-icon{
-    position: absolute;
-    right: 10px;
-    bottom: 20px;
+.input-group-text {
+    border-color: black;
 }
 
 #them-icon{
@@ -83,11 +76,6 @@
     justify-content: center;
     align-items: center;
     color: black;
-}
-
-#hide-conformpassword,
-#hide-password {
-    display: none;
 }
 
 #alert-box {

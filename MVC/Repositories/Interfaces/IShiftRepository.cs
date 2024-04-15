@@ -16,9 +16,9 @@ namespace Repositories.Interfaces
 
         Task<bool> addShiftDetailsRegion(List<ShiftDetailRegion> shiftDetailRegions);
 
-        Task<bool> updateShiftDetails(ShiftDetail shiftDetail);
+        Task<bool> updateShiftDetails(List<ShiftDetail> shiftDetails);
 
-        Task<bool> updateShiftDetailRegion(ShiftDetailRegion shiftDetailRegion);
+        Task<bool> updateShiftDetailRegions(List<ShiftDetailRegion> shiftDetailRegions);
 
         ShiftDetail getShiftDetails(int shiftDetailsId);
 

@@ -30,11 +30,10 @@ namespace Repositories.Implementation
             return _dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestWiseFileId == requestWiseFileId);
         }
 
-        public async Task<bool> updateRequestWiseFile(RequestWiseFile requestWiseFile)
+        public async Task<bool> updateRequestWiseFiles(List<RequestWiseFile> requestWiseFiles)
         {
-            _dbContext.RequestWiseFiles.Update(requestWiseFile);
-            int temp = await _dbContext.SaveChangesAsync();
-            return temp > 0;
+            _dbContext.RequestWiseFiles.UpdateRange(requestWiseFiles);
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }

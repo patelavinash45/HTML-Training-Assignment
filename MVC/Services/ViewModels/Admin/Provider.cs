@@ -210,25 +210,33 @@ namespace Services.ViewModels.Admin
 
         public string AgreementDocPath { get; set; }
 
+        [RequiredIfBoolIsTrue(nameof(IsAgreementDoc))]
         public IFormFile? AgreementDoc { get; set; }
 
         public bool IsBackgroundDoc { get; set; }
 
         public string BackgroundDocPath { get; set; }
 
+        [RequiredIfBoolIsTrue(nameof(IsBackgroundDoc))]
         public IFormFile? BackgroundDoc { get; set; }
 
         public bool IsHIPAACompliance { get; set; }
 
         public string HIPAACompliancePath { get; set; }
 
+        [RequiredIfBoolIsTrue(nameof(IsHIPAACompliance))]
         public IFormFile? HIPAACompliance { get; set; }
 
         public bool IsNonDisclosureDoc { get; set; }
 
         public string NonDisclosureDocPath { get; set; }
 
+        [RequiredIfBoolIsTrue(nameof(IsNonDisclosureDoc))]
         public IFormFile? NonDisclosureDoc { get; set; }
+
+        public string SignaturePath { get; set; }
+
+        public bool IsSignature { get; set; }   
 
         public IFormFile? Signature { get; set; }
     }
@@ -330,7 +338,8 @@ namespace Services.ViewModels.Admin
         [Display(Name = "Physician")]
         public int SelectedPhysician { get; set; }
 
-        public DateTime ShiftDate { get; set; }
+        [Required]
+        public DateTime? ShiftDate { get; set; }
 
         public TimeOnly StartTime { get; set; }
 

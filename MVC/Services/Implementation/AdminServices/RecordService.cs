@@ -1,9 +1,7 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using Repositories.DataModels;
+﻿using Repositories.DataModels;
 using Repositories.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.ViewModels.Admin;
-using System;
 using System.Data;
 using System.Reflection;
 using System.Text.Json;
@@ -79,16 +77,17 @@ namespace Services.Implementation.AdminServices
             && (model.Role == null || a.RoleId == model.Role)
             && (model.CreatedDate == null || DateOnly.FromDateTime(a.CreateDate) == model.CreatedDate)
             && (model.SendDate == null || DateOnly.FromDateTime(a.SentDate) == model.SendDate);
-            return _logsService.getAllEmailLogs(predicat).Select(emailLog => new EmailSmsLogTableData()
-            {
-                Name = emailLog.Name,
-                Action = emailLog.SubjectName,
-                CreatedDate = emailLog.CreateDate,
-                SendDate = emailLog.SentDate,
-                Send = emailLog.IsEmailSent[0] ? "Yes" : "No",
-                Email = emailLog.EmailId,
-                RoleName = emailLog.Role.Name,
-            }).ToList();
+            return _logsService.getAllEmailLogs(predicat)
+                .Select(emailLog => new EmailSmsLogTableData()
+                {
+                    Name = emailLog.Name,
+                    Action = emailLog.SubjectName,
+                    CreatedDate = emailLog.CreateDate,
+                    SendDate = emailLog.SentDate,
+                    Send = emailLog.IsEmailSent[0] ? "Yes" : "No",
+                    Email = emailLog.EmailId,
+                    RoleName = emailLog.Role.Name,
+                }).ToList();
         }
 
         public EmailSmsLogs getSMSlLog(EmailSmsLogs model)
@@ -106,16 +105,17 @@ namespace Services.Implementation.AdminServices
             && (model.Role == null || a.RoleId == model.Role)
             && (model.CreatedDate == null || DateOnly.FromDateTime(a.CreateDate) == model.CreatedDate)
             && (model.SendDate == null || DateOnly.FromDateTime(a.SentDate) == model.SendDate);
-            return _logsService.getAllSMSLogs(predicat).Select(emailLog => new EmailSmsLogTableData()
-            {
-                Name = emailLog.Name,
-                Action = emailLog.Smstemplate,
-                CreatedDate = emailLog.CreateDate,
-                SendDate = emailLog.SentDate,
-                Send = emailLog.IsSmssent[0] ? "Yes" : "No",
-                RoleName = emailLog.Role.Name,
-                Phone = emailLog.MobileNumber,
-            }).ToList();
+            return _logsService.getAllSMSLogs(predicat)
+                .Select(emailLog => new EmailSmsLogTableData()
+                {
+                    Name = emailLog.Name,
+                    Action = emailLog.Smstemplate,
+                    CreatedDate = emailLog.CreateDate,
+                    SendDate = emailLog.SentDate,
+                    Send = emailLog.IsSmssent[0] ? "Yes" : "No",
+                    RoleName = emailLog.Role.Name,
+                    Phone = emailLog.MobileNumber,
+                }).ToList();
         }
 
         public DataTable exportAllRecords()

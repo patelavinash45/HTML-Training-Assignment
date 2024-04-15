@@ -273,7 +273,8 @@ namespace HelloDoc.Controllers
 
         public async Task<JsonResult> DeleteAllFiles(String requestWiseFileIdsList)   // delete all seleted file - view documents
         {
-            if (await _viewDocumentsServices.deleteAllFile(requestWiseFileIdsList))
+            int requestId = HttpContext.Session.GetInt32("requestId").Value;
+            if (await _viewDocumentsServices.deleteAllFile(requestWiseFileIdsList, requestId))
             {
                 _notyfService.Success("Successfully File Deleted");
             }
@@ -505,12 +506,29 @@ namespace HelloDoc.Controllers
             {
                 _notyfService.Error("Faild !!");
             }
-            return Json(new { redirect = Url.Action("Access", "Admin") });
+            return RedirectToAction("Access", "Admin");
+        }
+
+        [HttpPost] //// update roles
+        public async Task<IActionResult> UpdateRole(CreateRole model)
+        {
+            int roleId = HttpContext.Session.GetInt32("roleId").Value;
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _accessService.editRole(model,roleId,aspNetUserId))
+            {
+                _notyfService.Success("Successfully Role Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild !!");
+            }
+            return RedirectToAction("Access", "Admin");
         }
 
         public async Task<IActionResult> DeteteRole(int roleId)  ////   delete role - access page
         {
-            if (await _accessService.delete(roleId))
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _accessService.delete(roleId,aspNetUserId))
             {
                 _notyfService.Success("Successfully Role Deleted");
             }
@@ -643,7 +661,8 @@ namespace HelloDoc.Controllers
             if (ModelState.IsValid)
             {
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _adminDashboardService.updateEncounter(model, requestId))
+                int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+                if (await _adminDashboardService.updateEncounter(model, requestId, aspNetUserId))
                 {
                     _notyfService.Success("Successfully Updated");
                 }
@@ -884,7 +903,8 @@ namespace HelloDoc.Controllers
             if (ModelState.IsValid)
             {
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
-                if (await _viewNotesService.addAdminNotes(model.NewAdminNotes, requestId))
+                int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+                if (await _viewNotesService.addAdminNotes(model.NewAdminNotes, requestId, aspNetUserId))
                 {
                     _notyfService.Success("Successfully Notes Added");
                 }
@@ -956,7 +976,8 @@ namespace HelloDoc.Controllers
         [HttpGet]     // Edit Shift - provider Scheduling page
         public async Task<JsonResult> EditShiftDetails(string data)
         {
-            await _providersService.EditShiftDetails(data);
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            await _providersService.EditShiftDetails(data, aspNetUserId);
             return Json(new { redirect = Url.Action("ProviderScheduling", "Admin") });
         }
 
@@ -1049,7 +1070,8 @@ namespace HelloDoc.Controllers
         public async Task<IActionResult> EditphysicianAccountInformaction(EditProvider model)
         {
             int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
-            if (await _providersService.editphysicianAccountInformaction(model,physicianId))
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _providersService.editphysicianAccountInformaction(model,physicianId, aspNetUserId))
             {
                 _notyfService.Success("Successfully Updated");
             }
@@ -1064,7 +1086,8 @@ namespace HelloDoc.Controllers
         public async Task<IActionResult> EditphysicianPhysicianInformaction(EditProvider model)
         {
             int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
-            if (await _providersService.editphysicianPhysicianInformaction(model, physicianId))
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _providersService.editphysicianPhysicianInformaction(model, physicianId, aspNetUserId))
             {
                 _notyfService.Success("Successfully Updated");
             }
@@ -1079,7 +1102,8 @@ namespace HelloDoc.Controllers
         public async Task<IActionResult> EditphysicianMailAndBillingInformaction(EditProvider model)
         {
             int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
-            if (await _providersService.editphysicianMailAndBillingInformaction(model, physicianId))
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _providersService.editphysicianMailAndBillingInformaction(model, physicianId, aspNetUserId))
             {
                 _notyfService.Success("Successfully Updated");
             }
@@ -1094,7 +1118,8 @@ namespace HelloDoc.Controllers
         public async Task<IActionResult> EditphysicianProviderProfile(EditProvider model)
         {
             int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
-            if (await _providersService.editphysicianProviderProfile(model, physicianId))
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _providersService.editphysicianProviderProfile(model, physicianId, aspNetUserId))
             {
                 _notyfService.Success("Successfully Updated");
             }
@@ -1106,16 +1131,34 @@ namespace HelloDoc.Controllers
         }
 
         [HttpPost]    //  edit provier Onbording informaction
-        public IActionResult EditphysicianOnbordingInformaction(EditProvider model)
+        public async Task<IActionResult> EditphysicianOnbordingInformaction(EditProvider model)
         {
+            int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
+            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
+            if (await _providersService.editphysicianOnbordingInformaction(model, physicianId, aspNetUserId))
+            {
+                _notyfService.Success("Successfully Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild");
+            }
             return RedirectToAction("EditProvider", "Admin");
         }
 
         [HttpPost]    //  save Signature form edit Provider
-        public IActionResult SaveSignature(string file)
+        public async Task<JsonResult> SaveSignature(string file)
         {
-            _providersService.SaveSign(file,020);
-            return RedirectToAction("EditProvider", "Admin");
+            int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
+            if (await _providersService.SaveSign(file, physicianId))
+            {
+                _notyfService.Success("Successfully Updated");
+            }
+            else
+            {
+                _notyfService.Error("Faild");
+            }
+            return Json(new { redirect = Url.Action("EditProvider", "Admin")});
         }
     }
 }

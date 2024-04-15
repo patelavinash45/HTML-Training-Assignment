@@ -1,6 +1,7 @@
-﻿    using AspNetCoreHero.ToastNotification.Abstractions;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.DataModels;
 using Services.Interfaces;
 using Services.Interfaces.AuthServices;
 using Services.Interfaces.PatientServices;
@@ -83,14 +84,18 @@ namespace HelloDoc.Controllers
 
         public IActionResult NewPassword(String token, int id, string time)
         {
-            return View(_loginService.validatePasswordLink(token));
+            SetNewPassword setNewPassword = _loginService.validatePasswordLink(token);
+            if (!setNewPassword.IsValidLink)
+            {
+                _notyfService.Error(setNewPassword.ErrorMessage);
+            }
+            return View(setNewPassword);
         }
 
         [Authorization("Patient")]
         public IActionResult RequestForSomeOne()
         {
-            int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-            return View(_addRequestService.getModelForRequestForSomeoneelse(aspNetUserId));
+            return View();
         }
 
         [Authorization("Patient")]
@@ -179,7 +184,7 @@ namespace HelloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(await _loginService.changePassword(aspNetUserId: int.Parse(model.AspNetUserId),password: model.Password))
+                if(await _loginService.changePassword(aspNetUserId: model.AspNetUserId,password: model.Password))
                 {
                     _notyfService.Success("Successfully Password Updated");
                     return RedirectToAction("PatientSite", "Patient");

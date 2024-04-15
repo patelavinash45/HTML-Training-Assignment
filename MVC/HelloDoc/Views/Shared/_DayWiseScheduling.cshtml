@@ -1,7 +1,7 @@
 ﻿@model List<Services.ViewModels.Admin.SchedulingTable>
 
 <div class="table-responsive">
-    <table class="table table-bordered bg-white text-center">
+    <table class="table table-bordered bg-white text-center" id="">
         <thead>
             <tr class="align-middle">
                 <th class="w-25">
@@ -57,15 +57,15 @@
                         {
                             if(data.FirstHalf)
                             {
-                                <td class="dayWiseColumnWidth"><img class="w-50 float-lg-start" src="@data.Status" data-bs-target="#viewShiftDetails" data-bs-toggle="modal" onclick="openViewShiftModal(@data.ShiftDetailsId)" onclick="openViewShiftModal(@data.ShiftDetailsId)" /></td>
+                                <td class="dayWiseColumnWidth"><div style="margin-right:50%; background-color:@data.Status; height:45px" data-bs-target="#viewShiftDetails" data-bs-toggle="modal" onclick="openViewShiftModal(@data.ShiftDetailsId)"></div></td>
                             }
                             else if (data.SecoundHalf)
                             {
-                                <td class="dayWiseColumnWidth"><img class="float-end w-50" src="@data.Status" data-bs-target="#viewShiftDetails" data-bs-toggle="modal" onclick="openViewShiftModal(@data.ShiftDetailsId)" /></td>
+                                <td class="dayWiseColumnWidth"><div style="margin-left:50%; background-color:@data.Status; height:45px" data-bs-target="#viewShiftDetails" data-bs-toggle="modal" onclick="openViewShiftModal(@data.ShiftDetailsId)"></div></td>
                             }
                             else
                             {
-                                <td class="dayWiseColumnWidth"><img class="w-100" src="@data.Status" data-bs-target="#viewShiftDetails" data-bs-toggle="modal" onclick="openViewShiftModal(@data.ShiftDetailsId)" /></td>
+                                <td class="dayWiseColumnWidth" style="background-color:@data.Status"></td>
                             }
                         }else
                         {
@@ -76,4 +76,7 @@
             }
         </tbody>
     </table>
+    @*<table id="smallScreen">
+
+    </table>*@
 </div>

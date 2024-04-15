@@ -103,7 +103,7 @@ $(document).on("click", "#signatureSave", function () {
             file: signaturePad.toDataURL(),
         },
         success: function (response) {
-            $(".tableData").html(response);
+            window.location.href = response.redirect;
         }
     })
 })

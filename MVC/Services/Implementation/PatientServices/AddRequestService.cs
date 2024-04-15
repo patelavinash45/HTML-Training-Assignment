@@ -166,12 +166,6 @@ namespace Services.Implementation.PatientServices
             return await addPatientRequest(patientRequest);
         }
 
-        public AddRequestByPatient getModelForRequestForSomeoneelse(int aspNetUserId)
-        {
-            AddRequestByPatient addRequestByPatient = new AddRequestByPatient();
-            return addRequestByPatient;
-        }
-
         public async Task<bool> addRequestForSomeOneelse(AddRequestByPatient model,int aspNetUserIdMe)
         {
             int aspNetUserId = _aspRepository.checkUser(email: model.Email);

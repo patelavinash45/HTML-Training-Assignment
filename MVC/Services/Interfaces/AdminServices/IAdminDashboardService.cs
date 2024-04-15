@@ -28,7 +28,7 @@ namespace Services.Interfaces.AdminServices
 
         EncounterForm getEncounterDetails(int requestId, bool type);
 
-        Task<bool> updateEncounter(EncounterForm model, int requestId);
+        Task<bool> updateEncounter(EncounterForm model, int requestId, int aspNetUserId);
 
         ViewCase getRequestDetails(int requestId);
 

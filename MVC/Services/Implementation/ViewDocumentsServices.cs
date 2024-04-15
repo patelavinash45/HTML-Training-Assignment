@@ -52,17 +52,19 @@ namespace Services.Implementation
         {
             RequestWiseFile requestWiseFile = _requestWiseFileRepository.getFilesByrequestWiseFileId(requestWiseFileId);
             requestWiseFile.IsDeleted = new BitArray(1, true);
-            return await _requestWiseFileRepository.updateRequestWiseFile(requestWiseFile);
+            return await _requestWiseFileRepository.updateRequestWiseFiles(new List<RequestWiseFile> { requestWiseFile});
         }
 
-        public async Task<bool> deleteAllFile(String requestWiseFileIds)
+        public async Task<bool> deleteAllFile(String requestWiseFileIds, int requestId)
         {
             List<int> ids = JsonSerializer.Deserialize<List<String>>(requestWiseFileIds).Select(id => int.Parse(id)).ToList();
-            foreach(var id in ids)
-            {
-                await deleteFile(id);
-            }
-            return true;
+            List<RequestWiseFile> requestWiseFiles = _requestWiseFileRepository.getFilesByrequestId(requestId)
+                .Select(requestWiseFile =>
+                {
+                    requestWiseFile.IsDeleted = new BitArray(1, true);
+                    return requestWiseFile;
+                }).ToList();
+            return await _requestWiseFileRepository.updateRequestWiseFiles(requestWiseFiles);
         }
 
         public bool sendFileMail(String requestWiseFileIds ,int requestId)

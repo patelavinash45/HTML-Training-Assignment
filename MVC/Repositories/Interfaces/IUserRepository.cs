@@ -42,13 +42,13 @@ namespace Repositories.Interfaces
 
         Task<bool> updateAdmin(Admin admin);
 
-        Task<bool> addAdminRgion(AdminRegion adminRegion);
+        Task<bool> addAdminRgions(List<AdminRegion> adminRegions);
 
-        Task<bool> deleteAdminRgion(AdminRegion adminRegion);
+        Task<bool> deleteAdminRgions(List<AdminRegion> adminRegions);
 
-        Task<bool> addPhysicianRegion(PhysicianRegion physicianRegion);
+        Task<bool> addPhysicianRegions(List<PhysicianRegion> physicianRegions);
 
-        Task<bool> deletePhysicianRegion(PhysicianRegion physicianRegion);
+        Task<bool> deletePhysicianRegions(List<PhysicianRegion> physicianRegions);
 
         Task<bool> addPhysician(Physician physician);
 

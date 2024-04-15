@@ -17,28 +17,14 @@ namespace Repositories.Implementation
 
         public async Task<bool> addHealthProfessional(HealthProfessional healthProfessional)
         {
-            try
-            {
-                _dbContext.HealthProfessionals.Add(healthProfessional);
-                return await _dbContext.SaveChangesAsync() > 0;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            _dbContext.HealthProfessionals.Add(healthProfessional);
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> updateHealthProfessional(HealthProfessional healthProfessional)
         {
-            try
-            {
-                _dbContext.HealthProfessionals.Update(healthProfessional);
-                return await _dbContext.SaveChangesAsync() > 0;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            _dbContext.HealthProfessionals.Update(healthProfessional);
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public List<HealthProfessionalType> getHealthProfessionalTypes()
@@ -50,7 +36,7 @@ namespace Repositories.Implementation
         {
             return _dbContext.HealthProfessionals.Include(a => a.ProfessionNavigation)
                                .Where(a => (professionId == 0 || a.Profession == professionId) && a.IsDeleted == new BitArray(1, false) &&
-            (searchElement == null || a.VendorName.ToLower().Contains(searchElement.ToLower()))).ToList();
+                                     (searchElement == null || a.VendorName.ToLower().Contains(searchElement.ToLower()))).ToList();
         }
 
         public List<HealthProfessional> getHealthProfessionalByProfession(int professionId)

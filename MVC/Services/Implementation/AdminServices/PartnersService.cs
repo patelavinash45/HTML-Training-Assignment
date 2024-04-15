@@ -123,7 +123,8 @@ namespace Services.Implementation.AdminServices
             healthProfessional.City = businessProfile.City;
             healthProfessional.Zip = businessProfile.Zip;
             healthProfessional.RegionId = int.Parse(businessProfile.State);
-            businessProfile.BusinessContact = businessProfile.BusinessContact;
+            healthProfessional.BusinessContact = businessProfile.BusinessContact;
+            healthProfessional.ModifiedDate = DateTime.Now;
             return await _healthProfessionalRepository.updateHealthProfessional(healthProfessional);
         }
 
@@ -131,6 +132,7 @@ namespace Services.Implementation.AdminServices
         {
             HealthProfessional healthProfessional = _healthProfessionalRepository.getHealthProfessional(venderId);
             healthProfessional.IsDeleted = new BitArray(1, true);
+            healthProfessional.ModifiedDate = DateTime.Now;
             return await _healthProfessionalRepository.updateHealthProfessional(healthProfessional);
         }
     }

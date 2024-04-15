@@ -55,7 +55,7 @@ namespace Services.Implementation.AdminServices
             {
                 Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
             };
-            AdminDashboard adminDashboard = new()
+            return new AdminDashboard()
             {
                 NewRequests = GetNewRequest(status: "new", pageNo: 1, patientName: "" , regionId: 0, requesterTypeId: 0),
                 NewRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["new"]),
@@ -67,7 +67,6 @@ namespace Services.Implementation.AdminServices
                 CancelPopup = cancelPopUp,
                 AssignAndTransferPopup = assignAndTransferPopUp,
             };
-            return adminDashboard;
         }
 
         public TableModel GetNewRequest(String status, int pageNo, String patientName,int regionId, int requesterTypeId)
@@ -257,10 +256,9 @@ namespace Services.Implementation.AdminServices
         public EncounterForm getEncounterDetails(int requestId, bool type)
         {
             Encounter encounter = _encounterRepository.getEncounter(requestId);
-            EncounterForm encounterForm = new EncounterForm();
             if (encounter != null)
             {
-                encounterForm = new EncounterForm()
+                return new EncounterForm()
                 {
                     IsAdmin = type,
                     FirstName = encounter.FirstName,
@@ -297,10 +295,13 @@ namespace Services.Implementation.AdminServices
                     FollowUp = encounter.Followup,
                 };
             }
-            return encounterForm;
+            else
+            {
+                return new EncounterForm();
+            }
         }
 
-        public async Task<bool> updateEncounter(EncounterForm model, int requestId)
+        public async Task<bool> updateEncounter(EncounterForm model, int requestId, int aspNetUserId)
         {
             Encounter encounter = _encounterRepository.getEncounter(requestId);
             if (encounter == null)
@@ -379,17 +380,14 @@ namespace Services.Implementation.AdminServices
                 encounter.MedicationsDispensed = model.Dispensed;
                 encounter.Procedures = model.Procedures;
                 encounter.Followup = model.FollowUp;
+                encounter.ModifiedDate = DateTime.Now;
+                encounter.ModifiedBy = aspNetUserId.ToString();
             }
             return await _encounterRepository.updateEncounter(encounter);
         }
 
         public ViewCase getRequestDetails(int requestId)
         {
-            Dictionary<int, string> reasons = _requestClientRepository.getAllReason().ToDictionary(caseTag => caseTag.CaseTagId, caseTag => caseTag.Reason);
-            CancelPopUp cancelPopUp = new()
-            {
-                Reasons = reasons,
-            };
             RequestClient requestClient = _requestClientRepository.getRequestClientAndRequestByRequestId(requestId);
             ViewCase viewCase = new()
             {
@@ -405,7 +403,9 @@ namespace Services.Implementation.AdminServices
                 Email = requestClient.Email,
                 Address = requestClient.Street + " " + requestClient.City + " " + requestClient.State + " " + requestClient.ZipCode,
                 Region = requestClient.State,
-                CancelPopup = cancelPopUp,
+                CancelPopup = new CancelPopUp(){
+                                Reasons = _requestClientRepository.getAllReason().ToDictionary(caseTag => caseTag.CaseTagId, caseTag => caseTag.Reason),
+                              },
             };
             return viewCase;
         }
@@ -436,32 +436,33 @@ namespace Services.Implementation.AdminServices
         private TableModel getTableModal(List<RequestClient> requestClients, int totalRequests, int pageNo)
         {
             int skip = (pageNo - 1) * 10;
-            List<TablesData> tablesDatas = requestClients.Select(requestClient => new TablesData()
-            {
-                RequestId = requestClient.RequestId,
-                FirstName = requestClient.FirstName,
-                LastName = requestClient.LastName,
-                Requester = requestClient.Request.RequestTypeId,
-                RequesterFirstName = requestClient.Request.FirstName,
-                RequesterLastName = requestClient.Request.LastName,
-                Mobile = requestClient.PhoneNumber,
-                RequesterMobile = requestClient.Request.PhoneNumber,
-                State = requestClient.State,
-                Street = requestClient.Street,
-                ZipCode = requestClient.ZipCode,
-                City = requestClient.City,
-                Notes = requestClient.Symptoms,
-                RegionId = requestClient.RegionId,
-                PhysicianName = requestClient.Physician != null ? requestClient.Physician.FirstName + " " + requestClient.Physician.LastName : "",
-                RequesterType = requestClient.Request.RequestTypeId,
-                BirthDate = requestClient.IntYear != null ? DateTime.Parse(requestClient.IntYear + "-" + requestClient.StrMonth
-                                                               + "-" + requestClient.IntDate) : null,
-                RequestdDate = requestClient.Request.CreatedDate,
-                Email = requestClient.Email,
-                DateOfService = null,
-            }).ToList();
+            List<TablesData> tablesDatas = requestClients
+                .Select(requestClient => new TablesData()
+                {
+                    RequestId = requestClient.RequestId,
+                    FirstName = requestClient.FirstName,
+                    LastName = requestClient.LastName,
+                    Requester = requestClient.Request.RequestTypeId,
+                    RequesterFirstName = requestClient.Request.FirstName,
+                    RequesterLastName = requestClient.Request.LastName,
+                    Mobile = requestClient.PhoneNumber,
+                    RequesterMobile = requestClient.Request.PhoneNumber,
+                    State = requestClient.State,
+                    Street = requestClient.Street,
+                    ZipCode = requestClient.ZipCode,
+                    City = requestClient.City,
+                    Notes = requestClient.Symptoms,
+                    RegionId = requestClient.RegionId,
+                    PhysicianName = requestClient.Physician != null ? requestClient.Physician.FirstName + " " + requestClient.Physician.LastName : "",
+                    RequesterType = requestClient.Request.RequestTypeId,
+                    BirthDate = requestClient.IntYear != null ? DateTime.Parse(requestClient.IntYear + "-" + requestClient.StrMonth
+                                                                   + "-" + requestClient.IntDate) : null,
+                    RequestdDate = requestClient.Request.CreatedDate,
+                    Email = requestClient.Email,
+                    DateOfService = null,
+                }).ToList();
             int totalPages = totalRequests % 10 != 0 ? (totalRequests / 10) + 1 : totalRequests / 10;
-            TableModel tableModel = new()
+            return new TableModel()
             {
                 IsFirstPage = pageNo != 1,
                 IsLastPage = pageNo != totalPages,
@@ -473,7 +474,6 @@ namespace Services.Implementation.AdminServices
                 StartRange = skip + 1,
                 EndRange = skip + 10 < totalRequests ? skip + 10 : totalRequests,
             };
-            return tableModel;
         }
 
         private DataTable convertRequestClientToDataTable(List<RequestClient> requestClients)

@@ -6,7 +6,6 @@ using Services.ViewModels.Admin;
 using System.Collections;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
 
 namespace Services.Implementation.AdminServices
 {
@@ -72,7 +71,7 @@ namespace Services.Implementation.AdminServices
             if(roleId > 0)
             {
                 await _roleRepository.addRoleMenus(
-                        model.RolesCheckBox.SelectedMenus.Select(menuId =>
+                        model.SelectedMenus.Select(menuId =>
                         new RoleMenu()
                         {
                             RoleId = roleId,
@@ -84,12 +83,14 @@ namespace Services.Implementation.AdminServices
             return false;
         }
 
-        public async Task<bool> delete(int roleId)
+        public async Task<bool> delete(int roleId,int aspNetUserId)
         {
             if(await _roleRepository.deleteRoleMenus(_roleRepository.getAllRoleMenusByRole(roleId)))
             {
                 Role role = _roleRepository.getRoleByRoleId(roleId);
                 role.IsDeleted = new BitArray(1, true);
+                role.ModifiedDate = DateTime.Now;
+                role.ModifiedBy = aspNetUserId.ToString();
                 return await _roleRepository.updateRole(role);
             }
             return false;
@@ -148,16 +149,16 @@ namespace Services.Implementation.AdminServices
             };
             if(await _userRepository.addAdmin(admin))
             {
+                List<AdminRegion> adminRegions = new List<AdminRegion>();
                 foreach (String regionId in model.SelectedRegions)
                 {
-                    AdminRegion adminRegion = new AdminRegion()
+                    adminRegions.Add(new AdminRegion()
                     {
                         AdminId = admin.AdminId,
                         RegionId = int.Parse(regionId),
-                    };
-                    await _userRepository.addAdminRgion(adminRegion);
+                    });
                 }
-                return true;
+                await _userRepository.addAdminRgions(adminRegions);
             }
             return false;
         }
@@ -167,6 +168,7 @@ namespace Services.Implementation.AdminServices
             Role role = _roleRepository.getRoleByRoleId(roleId);
             return new CreateRole()
             {
+                IsUpdate = true,
                 RoleName = role.Name,
                 SlectedAccountType = role.AccountType,
                 RolesCheckBox = new RolesCheckBox()
@@ -175,6 +177,46 @@ namespace Services.Implementation.AdminServices
                     Menus = _roleRepository.getAllMenusByRole(role.AccountType).ToDictionary(menu => menu.MenuId, menu => menu.Name),
                 },
             };
+        }
+
+        public async Task<bool> editRole(CreateRole model,int roleId,int aspNetUserId)
+        {
+            List<RoleMenu> roleMenus = _roleRepository.getAllRoleMenusByRole(roleId);
+            List<RoleMenu> roleMenusForDelete = new List<RoleMenu>();
+            List<RoleMenu> roleMenusCreateNew = new List<RoleMenu>();
+            foreach (RoleMenu roleMenu in roleMenus)
+            {
+                if (!model.SelectedMenus.Contains(roleMenu.MenuId))
+                {
+                    roleMenusForDelete.Add(roleMenu);
+                }
+            }
+            foreach (int menuId in model.SelectedMenus)
+            {
+                if (!roleMenus.Any(a => a.MenuId == menuId))
+                {
+                    RoleMenu roleMenu = new RoleMenu()
+                    {
+                        RoleId = roleId,
+                        MenuId = menuId,
+                    };
+                    roleMenusCreateNew.Add(roleMenu);
+                }
+            }
+            if(roleMenusForDelete.Count > 0)
+            {
+                await _roleRepository.deleteRoleMenus(roleMenusForDelete);
+            }
+            if (roleMenusCreateNew.Count > 0)
+            {
+                await _roleRepository.addRoleMenus(roleMenusCreateNew);
+            }
+            Role role = _roleRepository.getRoleByRoleId(roleId);
+            role.Name = model.RoleName;
+            role.AccountType = model.SlectedAccountType;
+            role.ModifiedDate = DateTime.Now;
+            role.ModifiedBy = aspNetUserId.ToString();
+            return await _roleRepository.updateRole(role);
         }
 
         private String genrateHash(String password)

@@ -16,14 +16,12 @@ namespace Services.Implementation.AdminServices
 
         public SendOrder getSendOrderDetails(int requestId)
         { 
-            Dictionary<int, String> professions = _healthProfessionalRepository.getHealthProfessionalTypes()
-                                                    .ToDictionary(healthProfessionalType => healthProfessionalType.HealthProfessionalId,
-                                                                  healthProfessionalType => healthProfessionalType.ProfessionName);
-            SendOrder sendOrder = new SendOrder()
+            return new SendOrder()
             {
-                Professions = professions,
+                Professions = _healthProfessionalRepository.getHealthProfessionalTypes()
+                                                    .ToDictionary(healthProfessionalType => healthProfessionalType.HealthProfessionalId,
+                                                                  healthProfessionalType => healthProfessionalType.ProfessionName),
             };
-            return sendOrder;
         }
 
         public HealthProfessional getBussinessData(int venderId)
@@ -33,18 +31,18 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> addOrderDetails(SendOrder model,int requestId)
         {
-            OrderDetail orderDetail = new OrderDetail()
-            {
-                VendorId = model.SelectedBusiness,
-                RequestId = requestId,
-                FaxNumber = model.FaxNumber,
-                Email = model.Email,
-                BusinessContact = model.Contact,
-                Prescription = model.OrderDetails,
-                NoOfRefill = model.NoOfRefill,
-                CreatedDate = DateTime.Now,
-            };
-            return await _healthProfessionalRepository.addOrderDetails(orderDetail);
+            return await _healthProfessionalRepository.addOrderDetails(
+                new OrderDetail()
+                {
+                    VendorId = model.SelectedBusiness,
+                    RequestId = requestId,
+                    FaxNumber = model.FaxNumber,
+                    Email = model.Email,
+                    BusinessContact = model.Contact,
+                    Prescription = model.OrderDetails,
+                    NoOfRefill = model.NoOfRefill,
+                    CreatedDate = DateTime.Now,
+                });
         }
 
         public Dictionary<int, string> getBussinessByProfession(int professionId)

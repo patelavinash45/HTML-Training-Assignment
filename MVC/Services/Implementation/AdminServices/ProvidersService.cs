@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Repositories.DataModels;
 using Repositories.Interface;
 using Repositories.Interfaces;
@@ -34,14 +33,16 @@ namespace Services.Implementation.AdminServices
             _logsService = logsService;
         }
 
-        public Task<bool> EditShiftDetails(string data)
+        public Task<bool> EditShiftDetails(string data, int aspNetUserId)
         {
             ViewShift viewShift = JsonSerializer.Deserialize<ViewShift>(data);
             ShiftDetail shiftDetail = _shiftRepository.getShiftDetails(int.Parse(viewShift.ShiftDetailsId));
             shiftDetail.ShiftDate = DateTime.Parse(viewShift.ShiftDate.ToString());
             shiftDetail.StartTime = viewShift.StartTime;
             shiftDetail.EndTime = viewShift.EndTime;
-            return _shiftRepository.updateShiftDetails(shiftDetail);
+            shiftDetail.ModifiedBy = aspNetUserId;
+            shiftDetail.ModifiedDate = DateTime.Now;
+            return _shiftRepository.updateShiftDetails(new List<ShiftDetail> { shiftDetail});
         }
 
         public ViewShift getShiftDetails(int shiftDetailsId)
@@ -60,12 +61,13 @@ namespace Services.Implementation.AdminServices
 
         public List<ProviderLocation> getProviderLocation()
         {
-            return _userRepository.getAllProviderLocation().Select(physicianLocation => new ProviderLocation
-            {
-                ProviderName = physicianLocation.PhysicianName,
-                latitude = physicianLocation.Latitude,
-                longitude = physicianLocation.Longitude,
-            }).ToList();
+            return _userRepository.getAllProviderLocation()
+                .Select(physicianLocation => new ProviderLocation
+                {
+                    ProviderName = physicianLocation.PhysicianName,
+                    latitude = physicianLocation.Latitude,
+                    longitude = physicianLocation.Longitude,
+                }).ToList();
         }
 
         public Provider getProviders(int regionId)
@@ -142,22 +144,19 @@ namespace Services.Implementation.AdminServices
             return await _userRepository.updatePhysicianNotification(physicianNotification);
         }
 
-        public bool SaveSign(string sign,int physicianId)
+        public async Task<bool> SaveSign(string sign,int physicianId)
         {
-            //using (var stream = new MemoryStream(Encoding.ASCII.GetBytes(sign)))
-            //{
-            //    var formFile = new FormFile(stream, 0, stream.Length, null, "sign.png");
-            //    //filePickUp("sign", physicianId ,formFile);
-            //}
             String path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files/Providers/Sign/" + physicianId.ToString());
             if(!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             };
-            path = Path.Combine(path, "Sign.JPG");
-            byte[] bytes = Encoding.UTF8.GetBytes(sign);
+            path = Path.Combine(path, "Sign.png");
+            byte[] bytes = Convert.FromBase64String(sign.Split(",")[1]);
             File.WriteAllBytes(path, bytes);
-            return true;
+            Physician physician = _userRepository.getPhysicianWithAspNetUser(physicianId);
+            physician.IsSignature = new BitArray(1, true);
+            return await _userRepository.updatePhysician(physician);
         }
 
         public async Task<bool> contactProvider(ContactProvider model)
@@ -280,6 +279,7 @@ namespace Services.Implementation.AdminServices
                 IsBackgroundDoc = new BitArray(1, model.IsBackgroundDoc),
                 IsNonDisclosureDoc = new BitArray(1, model.IsNonDisclosureDoc),
                 IsTrainingDoc = new BitArray(1, model.IsHIPAACompliance),
+                IsSignature = new BitArray(1, false),
                 Photo = model.Photo.FileName,
                 AdminNotes = model.AdminNotes,
             };
@@ -292,6 +292,7 @@ namespace Services.Implementation.AdminServices
                 };
                 if(await _userRepository.addPhysicianNotification(physicianNotification))
                 {
+                    List<PhysicianRegion> physicianRegions = new List<PhysicianRegion>();
                     foreach (String regionId in model.SelectedRegions)
                     {
                         PhysicianRegion physicianRegion = new PhysicianRegion()
@@ -299,10 +300,13 @@ namespace Services.Implementation.AdminServices
                             PhysicianId = physician.PhysicianId,
                             RegionId = int.Parse(regionId),
                         };
-                        await _userRepository.addPhysicianRegion(physicianRegion);
+                        physicianRegions.Add(physicianRegion);
                     }
-                    physician.IsNotification = physicianNotification.Id;
-                    return await _userRepository.updatePhysician(physician);
+                    if(await _userRepository.addPhysicianRegions(physicianRegions))
+                    {
+                        physician.IsNotification = physicianNotification.Id;
+                        return await _userRepository.updatePhysician(physician);
+                    }
                 }
             }
             return false;
@@ -331,6 +335,8 @@ namespace Services.Implementation.AdminServices
                 SelectedRegion = physician.RegionId,
                 BusinessName = physician.BusinessName,
                 BusinessWebsite = physician.BusinessWebsite,
+                IsSignature = physician.IsSignature[0],
+                SignaturePath = physician.IsSignature[0] ? getFile("Sign", (int)physician.PhysicianId) : null,
                 AdminNotes = physician.AdminNotes != null ? physician.AdminNotes : "",
                 AgreementDocPath = physician.IsAgreementDoc[0] ? getFile("AgreementDoc", (int)physician.AspNetUserId) : null,
                 IsAgreementDoc = physician.IsAgreementDoc[0],
@@ -347,38 +353,14 @@ namespace Services.Implementation.AdminServices
             return editProvider;
         }
 
-        //public async Task<bool> updateProvider(CreateProvider model,int phycisianId)
-        //{
-        //    Physician physician = _userRepository.getPhysicianByPhysicianId(phycisianId);
-        //    physician.FirstName = model.FirstName;
-        //    physician.LastName = model.LastName;
-        //    physician.Email = model.Email;
-        //    physician.Mobile = model.Phone;
-        //    physician.MedicalLicense = model.MedicalLicance;
-        //    physician.Npinumber = model.NpiNumber;
-        //    physician.Address1 = model.Add1;
-        //    physician.Address2 = model.Add2;
-        //    physician.City = model.City;
-        //    physician.RegionId = int.Parse(model.SelectedRegion);
-        //    physician.Zip = model.Zip;
-        //    physician.AltPhone = model.Phone2;
-        //    physician.BusinessName = model.BusinessName;
-        //    physician.BusinessWebsite = model.BusinessWebsite;
-        //    physician.AdminNotes = model.AdminNotes;
-        //    physician.Photo = model.Photo.FileName;
-        //    physician.IsAgreementDoc[0] = model.IsAgreementDoc;
-        //    physician.IsBackgroundDoc[0] = model.IsBackgroundDoc;
-        //    physician.IsTrainingDoc[0] = model.IsHIPAACompliance;
-        //    physician.IsNonDisclosureDoc[0] = model.IsNonDisclosureDoc;
-
-        //}
-
-        public async Task<bool> editphysicianAccountInformaction(EditProvider model,int physicianId)
+        public async Task<bool> editphysicianAccountInformaction(EditProvider model,int physicianId, int aspNetUserId)
         {
             Physician physician = _userRepository.getPhysicianWithAspNetUser(physicianId);
             physician.Status = (short)model.Status;
             physician.RoleId = model.SelectedRole;
-            if(await _userRepository.updatePhysician(physician))
+            physician.ModifiedBy = aspNetUserId;
+            physician.ModifiedDate = DateTime.Now;
+            if (await _userRepository.updatePhysician(physician))
             {
                 physician.AspNetUser.PasswordHash = genrateHash(model.Password);
                 physician.AspNetUser.UserName = model.UserName;
@@ -387,7 +369,7 @@ namespace Services.Implementation.AdminServices
             return false;
         }
 
-        public async Task<bool> editphysicianPhysicianInformaction(EditProvider model,int physicianId)
+        public async Task<bool> editphysicianPhysicianInformaction(EditProvider model,int physicianId, int aspNetUserId)
         {
             Physician physician = _userRepository.getPhysicianWithAspNetUser(physicianId);
             physician.FirstName = model.FirstName;
@@ -397,34 +379,45 @@ namespace Services.Implementation.AdminServices
             physician.MedicalLicense = model.MedicalLicance;
             physician.Npinumber = model.NpiNumber;
             physician.SyncEmailAddress = model.SynchronizationEmail;
-            if (await _userRepository.updatePhysician(physician))
+            physician.ModifiedBy = aspNetUserId;
+            physician.ModifiedDate = DateTime.Now;
+            if(await _userRepository.updatePhysician(physician))
             {
                 List<PhysicianRegion> physicianRegions = _userRepository.getAllPhysicianRegionsByPhysicianId(physicianId);
+                List<PhysicianRegion> physicianRegionsDelete = new List<PhysicianRegion>();
+                List<PhysicianRegion> physicianRegionsCreate = new List<PhysicianRegion>();
                 foreach(PhysicianRegion physicianRegion in physicianRegions)
                 {
-                    if (!model.SelectedRegions.Contains(physicianRegion.RegionId))
+                    if(!model.SelectedRegions.Contains(physicianRegion.RegionId))
                     {
-                        await _userRepository.deletePhysicianRegion(physicianRegion);
+                        physicianRegionsDelete.Add(physicianRegion);
                     }
                 }
                 foreach (int regionId in model.SelectedRegions)
                 {
-                    if (!physicianRegions.Any(a => a.RegionId == regionId))
+                    if(!physicianRegions.Any(a => a.RegionId == regionId))
                     {
-                        PhysicianRegion physicianRegion = new PhysicianRegion()
-                        {
-                            PhysicianId = physicianId,
-                            RegionId = regionId,
-                        };
-                        await _userRepository.addPhysicianRegion(physicianRegion);
+                        physicianRegionsCreate.Add(
+                            new PhysicianRegion()
+                            {
+                                PhysicianId = physicianId,
+                                RegionId = regionId,
+                            });
                     }
                 }
-                return true;
+                if(physicianRegionsCreate.Count > 0) 
+                {
+                    await _userRepository.addPhysicianRegions(physicianRegionsCreate);
+                }
+                if(physicianRegionsDelete.Count > 0)
+                {
+                    return await _userRepository.deletePhysicianRegions(physicianRegionsDelete);
+                }
             }
             return false;
         }
 
-        public async Task<bool> editphysicianMailAndBillingInformaction(EditProvider model, int physicianId)
+        public async Task<bool> editphysicianMailAndBillingInformaction(EditProvider model, int physicianId, int aspNetUserId)
         {
             Physician physician = _userRepository.getPhysicianWithAspNetUser(physicianId);
             physician.Address1 = model.Add1;
@@ -433,17 +426,54 @@ namespace Services.Implementation.AdminServices
             physician.RegionId = model.SelectedRegion;
             physician.Zip = model.Zip;
             physician.AltPhone = model.Phone2;
+            physician.ModifiedBy = aspNetUserId;
+            physician.ModifiedDate = DateTime.Now;
             return await _userRepository.updatePhysician(physician);
         }
 
-        public async Task<bool> editphysicianProviderProfile(EditProvider model, int physicianId)
+        public async Task<bool> editphysicianProviderProfile(EditProvider model, int physicianId, int aspNetUserId)
         {
             Physician physician = _userRepository.getPhysicianWithAspNetUser(physicianId);
             physician.BusinessName = model.BusinessName;
             physician.BusinessWebsite = model.BusinessWebsite;
             physician.Photo = model.Photo.FileName;
             physician.AdminNotes = model.AdminNotes;
+            physician.ModifiedBy = aspNetUserId;
+            physician.ModifiedDate = DateTime.Now;
             filePickUp("Photo", (int)physician.AspNetUserId, model.Photo);
+            if (model.Signature != null)
+            {
+                physician.IsSignature = new BitArray(1,true);
+                filePickUp("Sign", physician.PhysicianId, model.Signature);
+            }
+            return await _userRepository.updatePhysician(physician);
+        }
+
+        public async Task<bool> editphysicianOnbordingInformaction(EditProvider model, int physicianId, int aspNetUserId)
+        {
+            Physician physician = _userRepository.getPhysicianWithAspNetUser(physicianId);
+            if (model.IsAgreementDoc)
+            {
+                filePickUp("AgreementDoc", aspNetUserId, model.AgreementDoc);
+            }
+            if (model.IsBackgroundDoc)
+            {
+                filePickUp("BackgroundDoc", aspNetUserId, model.BackgroundDoc);
+            }
+            if (model.IsHIPAACompliance)
+            {
+                filePickUp("HIPAACompliance", aspNetUserId, model.HIPAACompliance);
+            }
+            if (model.IsNonDisclosureDoc)
+            {
+                filePickUp("NonDisclosureDoc", aspNetUserId, model.NonDisclosureDoc);
+            }
+            physician.IsAgreementDoc = new BitArray(1, model.IsAgreementDoc);
+            physician.IsBackgroundDoc = new BitArray(1, model.IsBackgroundDoc);
+            physician.IsNonDisclosureDoc = new BitArray(1, model.IsNonDisclosureDoc);
+            physician.IsTrainingDoc = new BitArray(1, model.IsHIPAACompliance);
+            physician.ModifiedBy = aspNetUserId;
+            physician.ModifiedDate = DateTime.Now;
             return await _userRepository.updatePhysician(physician);
         }
 
@@ -463,10 +493,11 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> createShift(CreateShift model,int aspNetUserId)
         {
+            DateTime date = (DateTime)model.ShiftDate;
             Shift shift = new Shift()
             {
                 PhysicianId = model.SelectedPhysician,
-                StartDate = new DateOnly(model.ShiftDate.Year,model.ShiftDate.Month,model.ShiftDate.Day),
+                StartDate = new DateOnly(date.Year,date.Month,date.Day),
                 IsRepeat = new BitArray(1, model.IsRepeat),
                 WeekDays = model.IsRepeat ? String.Join("",model.SelectedDays):  "",
                 RepeatUpto = model.RepeatEnd,
@@ -479,7 +510,7 @@ namespace Services.Implementation.AdminServices
                 ShiftDetail shiftDetail = new ShiftDetail()
                 {
                     ShiftId = shift.ShiftId,
-                    ShiftDate = model.ShiftDate,
+                    ShiftDate = (DateTime)model.ShiftDate,
                     RegionId = model.SelectedRegion,
                     StartTime = model.StartTime,
                     EndTime = model.EndTime,
@@ -491,7 +522,7 @@ namespace Services.Implementation.AdminServices
                 {
                     foreach(int day in model.SelectedDays)
                     {
-                        DateTime date = model.ShiftDate;
+                        date = (DateTime)model.ShiftDate;
                         for(int i=0;i<model.RepeatEnd;i++)
                         {
                             date = date.AddDays(day - (int)date.DayOfWeek + 7);
@@ -573,27 +604,34 @@ namespace Services.Implementation.AdminServices
             List<int> ids = JsonSerializer.Deserialize<List<String>>(dataList).Select(id => int.Parse(id)).ToList();
             if (isApprove)
             {
+                List<ShiftDetail> shiftDetails = new List<ShiftDetail>();
                 foreach (int id in ids)
                 {
                     ShiftDetail shiftDetail = _shiftRepository.getShiftDetails(id);
                     shiftDetail.Status = 1;
-                    await _shiftRepository.updateShiftDetails(shiftDetail);
+                    shiftDetails.Add(shiftDetail);
                 }
-                return true;
+                return await _shiftRepository.updateShiftDetails(shiftDetails);
             }
             else
             {
+                List<ShiftDetail> shiftDetails = new List<ShiftDetail>();
+                List<ShiftDetailRegion> shiftDetailRegions = new List<ShiftDetailRegion>();
                 foreach (int id in ids)
                 { 
                     ShiftDetail shiftDetail = _shiftRepository.getShiftDetails(id);
                     shiftDetail.IsDeleted = new BitArray(1, true);
-                    await _shiftRepository.updateShiftDetails(shiftDetail);
+                    shiftDetails.Add(shiftDetail);
                     ShiftDetailRegion shiftDetailRegion = _shiftRepository.getShiftDetailRegion(id);
                     shiftDetailRegion.IsDeleted = new BitArray(1, true);
-                    await _shiftRepository.updateShiftDetailRegion(shiftDetailRegion);
+                    shiftDetailRegions.Add(shiftDetailRegion);
                 };
-                return true;
+                if(await _shiftRepository.updateShiftDetails(shiftDetails))
+                {
+                    return await _shiftRepository.updateShiftDetailRegions(shiftDetailRegions);
+                }
             }
+            return false;
         }
 
         public SchedulingTableMonthWise monthWiseScheduling(int regionId,string dateString)
@@ -661,7 +699,7 @@ namespace Services.Implementation.AdminServices
                             Enumerable.Range(shiftDetail.StartTime.Hour, totalHalfHour % 2 == 0 ? totalHalfHour / 2 : (totalHalfHour / 2) + 1)
                             .Select(time => new ShiftDetailsDayWise()
                             {
-                                Status = shiftDetail.Status == 0 ? "/images/PinkColorImage.jpg" : "/images/GreenColorImage.jpg",
+                                Status = shiftDetail.Status == 0 ? "#fac4f9" : "#a5cea3",
                                 Time = time,
                                 ShiftDetailsId = shiftDetail.ShiftDetailId,
                             }).ToList()
@@ -674,7 +712,7 @@ namespace Services.Implementation.AdminServices
                                                                                                                             .SecoundHalf = true;
                                 schedulingTable.DayWise.Add(new ShiftDetailsDayWise()
                                 {
-                                    Status = shiftDetail.Status == 0 ? "/images/PinkColorImage.jpg" : "/images/GreenColorImage.jpg",
+                                    Status = shiftDetail.Status == 0 ? "#fac4f9" : "#a5cea3",
                                     Time = shiftDetail.EndTime.Hour,
                                     ShiftDetailsId = shiftDetail.ShiftDetailId,
                                     FirstHalf = true,
@@ -765,8 +803,8 @@ namespace Services.Implementation.AdminServices
         {
             String path = Path.Combine("/Files//Providers/" + folderName + "/" + aspNetUserId.ToString());
             String _path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files/Providers/" + folderName + "/" + aspNetUserId.ToString());
-            FileInfo[] Files = new DirectoryInfo(_path).GetFiles();
-            return Path.Combine(path, Files[0].Name);
+            FileInfo[] Files = new DirectoryInfo(_path).GetFiles().OrderBy(p => p.LastWriteTime).ToArray(); 
+            return Path.Combine(path, Files[Files.Length - 1].Name);
         }
 
     }

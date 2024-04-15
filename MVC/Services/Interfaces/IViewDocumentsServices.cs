@@ -10,7 +10,7 @@ namespace Services.Interfaces
 
         Task<bool> deleteFile(int requestWiseFileId);
 
-        Task<bool> deleteAllFile(String requestWiseFileIds);
+        Task<bool> deleteAllFile(String requestWiseFileIds, int requestId);
 
         bool sendFileMail(String requestWiseFileIds,int requestId);
 

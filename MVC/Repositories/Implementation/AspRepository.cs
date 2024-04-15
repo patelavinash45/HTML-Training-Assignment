@@ -45,7 +45,7 @@ namespace Repositories.Implementation
             if(aspNetUser!=null)
             {
                 aspNetUser.ResetPasswordToken = token;
-                _dbContext.Update(aspNetUser);
+                _dbContext.AspNetUsers.Update(aspNetUser);
                 return await _dbContext.SaveChangesAsync() > 0;
             }
             return false;

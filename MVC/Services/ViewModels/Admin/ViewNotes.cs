@@ -11,7 +11,6 @@ namespace Services.ViewModels.Admin
 
         public string? AdminNotes { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string NewAdminNotes { get; set; }
 

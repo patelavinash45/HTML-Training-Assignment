@@ -52,6 +52,8 @@ namespace Services.Implementation
             user.IntDate = model.BirthDate.Value.Day;
             user.StrMonth = model.BirthDate.Value.Month.ToString();
             user.IntYear = model.BirthDate.Value.Year;
+            user.ModifiedDate = DateTime.Now;
+            user.ModifiedBy = aspnetUserId;
             return await _userRepository.updateProfile(user);
         }
 
@@ -97,29 +99,40 @@ namespace Services.Implementation
             admin.LastName = _data.LastName;
             admin.Email = _data.Email; 
             admin.Mobile = _data.Mobile;
+            admin.ModifiedBy = aspNetUserId;
+            admin.ModifiedDate = DateTime.Now;
             if(await _userRepository.updateAdmin(admin))
             {
                 List<AdminRegion> adminRegions = _userRepository.getAdminRegionByAdminId(admin.AdminId);
+                List<AdminRegion> adminRegionsCreateNew = new List<AdminRegion>();
+                List<AdminRegion> adminRegionsDelete = new List<AdminRegion>();
                 foreach(AdminRegion adminRegion in adminRegions)
                 {
                     if (!_data.SelectedRegions.Contains(adminRegion.RegionId.ToString()))
                     {
-                        await _userRepository.deleteAdminRgion(adminRegion);
+                        adminRegionsDelete.Add(adminRegion);
                     }
                 }
                 foreach (String regionId in _data.SelectedRegions)
                 {
                     if (!adminRegions.Any(a => a.RegionId == int.Parse(regionId)))
                     {
-                        AdminRegion _adminRegion = new AdminRegion()
+                        adminRegionsCreateNew.Add(new AdminRegion()
                         {
                             AdminId = admin.AdminId,
                             RegionId = int.Parse(regionId),
-                        };
-                        await _userRepository.addAdminRgion(_adminRegion);
+                        });
+                        
                     }
                 }
-                return true;
+                if(adminRegionsCreateNew.Count > 0)
+                {
+                    await _userRepository.addAdminRgions(adminRegionsCreateNew);
+                }
+                if(adminRegionsDelete.Count > 0)
+                {
+                    return await _userRepository.deleteAdminRgions(adminRegionsDelete);
+                }
             }
             return false;
         }
@@ -134,6 +147,8 @@ namespace Services.Implementation
             admin.RegionId = int.Parse(_data.SelectedRegion);
             admin.Zip = _data.ZipCode;
             admin.AltPhone = _data.Phone;
+            admin.ModifiedBy = aspNetUserId;
+            admin.ModifiedDate = DateTime.Now;
             return await _userRepository.updateAdmin(admin);
         }
     }

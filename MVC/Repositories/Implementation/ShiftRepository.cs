@@ -37,20 +37,6 @@ namespace Repositories.Implementation
             return _dbContext.ShiftDetails.Where(a => a.ShiftId == shiftId).ToList();
         }
 
-        //public List<ShiftDetail> getShiftDetailByPhysicianId(int physicianId, DateTime startDate, DateTime endDate)
-        //{
-        //    return _dbContext.ShiftDetails.Include(a => a.Shift).Where(a => a.RegionId == physicianId && a.IsDeleted == new BitArray(1, false) &&
-        //                                 a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date).ToList();
-        //    //return _dbContext.ShiftDetails.Include(a => a.Shift).Where(a => a.Shift.PhysicianId == physicianId && a.IsDeleted == new BitArray(1, false) &&
-        //    //                             a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date).ToList();
-        //}
-
-        //public List<ShiftDetail> getAllShiftDetailsForSecificMonths(DateTime startDate, DateTime endDate)
-        //{
-        //    return _dbContext.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician)
-        //            .Where(a => a.ShiftDate.Date >= startDate.Date && a.ShiftDate.Date <= endDate.Date && a.IsDeleted == new BitArray(1, false)).ToList();
-        //}
-
         public async Task<bool> addShift(Shift shift)
         {
             _dbContext.Shifts.Add(shift);
@@ -69,15 +55,15 @@ namespace Repositories.Implementation
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> updateShiftDetails(ShiftDetail shiftDetail)
+        public async Task<bool> updateShiftDetails(List<ShiftDetail> shiftDetails)
         {
-            _dbContext.ShiftDetails.Update(shiftDetail);
+            _dbContext.ShiftDetails.UpdateRange(shiftDetails);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> updateShiftDetailRegion(ShiftDetailRegion shiftDetailRegion)
+        public async Task<bool> updateShiftDetailRegions(List<ShiftDetailRegion> shiftDetailRegions)
         {
-            _dbContext.ShiftDetailRegions.Update(shiftDetailRegion);
+            _dbContext.ShiftDetailRegions.UpdateRange(shiftDetailRegions);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 

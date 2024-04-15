@@ -8,8 +8,6 @@ namespace Services.Interfaces.PatientServices
 
         AddRequestByPatient getModelForRequestByMe(int aspNetUserId);
 
-        AddRequestByPatient getModelForRequestForSomeoneelse(int aspNetUserId);
-
         Task<bool> addPatientRequest(AddPatientRequest model);
 
         Task<bool> addRequestForMe(AddRequestByPatient model);

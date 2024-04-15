@@ -36,7 +36,7 @@ namespace Services.Implementation.AuthServices
                 if (userType == 1)
                 {
                     User user = _userRepository.getUser(aspNetUserRole.UserId);
-                    UserDataModel userDataModel = new UserDataModel()
+                    return  new UserDataModel()
                     {
                         AspNetUserId = aspNetUserRole.UserId,
                         FirstName = user.FirstName,
@@ -44,12 +44,11 @@ namespace Services.Implementation.AuthServices
                         UserId = user.UserId,
                         UserType = aspNetUserRole.Role.Name,
                     };
-                    return userDataModel;
                 }
                 else
                 {
                     Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserRole.UserId);
-                    UserDataModel userDataModel = new UserDataModel()
+                    return new UserDataModel()
                     {
                         AspNetUserId = aspNetUserRole.UserId,
                         FirstName = admin.FirstName,
@@ -57,7 +56,6 @@ namespace Services.Implementation.AuthServices
                         AdminId = admin.AdminId,
                         UserType = aspNetUserRole.Role.Name,
                     };
-                    return userDataModel;
                 }
             }
             return null;
@@ -134,13 +132,20 @@ namespace Services.Implementation.AuthServices
             {
                 IsValidLink = false,
             };
-            JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(token);
-            if (_jwtService.validateToken(token, out jwtSecurityToken))
+            try
             {
-                int aspNetUserId = int.Parse(jwtSecurityToken.Claims.FirstOrDefault(a => a.Type == "aspNetUserId").Value);
-                setNewPassword.IsValidLink = _aspRepository.checkToken(token: token, aspNetUserId: aspNetUserId);
-                setNewPassword.AspNetUserId = aspNetUserId.ToString();
-                return setNewPassword;
+                JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(token);
+                if (_jwtService.validateToken(token, out jwtSecurityToken))
+                {
+                    int aspNetUserId = int.Parse(jwtSecurityToken.Claims.FirstOrDefault(a => a.Type == "aspNetUserId").Value);
+                    setNewPassword.IsValidLink = _aspRepository.checkToken(token: token, aspNetUserId: aspNetUserId);
+                    setNewPassword.AspNetUserId = aspNetUserId;
+                    return setNewPassword;
+                }
+            }
+            catch(Exception ex)
+            {
+                setNewPassword.ErrorMessage = "Link is Not Vlaid";
             }
             return setNewPassword;
         }

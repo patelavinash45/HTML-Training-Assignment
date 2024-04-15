@@ -101,6 +101,7 @@ label,
     height: 16.66%;
     border-bottom : 1px solid black;
     vertical-align: middle!important;
+    font-size: 15px;
 }
 
 .columnHeight{
@@ -115,9 +116,11 @@ label,
     width: 3.125%;
 }
 
+#smallScreen,
 .edit{
     display: none;
 }
+
 
 @media screen and (max-width:992px) {
     .topElements {
@@ -127,6 +130,20 @@ label,
     .topButtons,
     .select {
         width: 100%;
+    }
+
+    .divHeight {
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    #bigScreen{
+        display: none;
+    }
+
+    #smallScreen{
+        display: table;
     }
 }
 

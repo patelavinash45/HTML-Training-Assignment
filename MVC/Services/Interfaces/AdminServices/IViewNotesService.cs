@@ -7,7 +7,7 @@ namespace Services.Interfaces.AdminServices
     {
         ViewNotes GetNotes(int RequestId);
 
-        Task<bool> addAdminNotes(String adminNotes, int requestId);
+        Task<bool> addAdminNotes(String adminNotes, int requestId, int aspNetUserId);
 
         Task<bool> cancleRequest(CancelPopUp model);
 

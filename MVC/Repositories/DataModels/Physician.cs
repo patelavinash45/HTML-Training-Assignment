@@ -95,9 +95,6 @@ public partial class Physician
     [Column(TypeName = "bit(1)")]
     public BitArray? IsLicenseDoc { get; set; }
 
-    [StringLength(100)]
-    public string? Signature { get; set; }
-
     [Column(TypeName = "bit(1)")]
     public BitArray? IsCredentialDoc { get; set; }
 
@@ -108,6 +105,9 @@ public partial class Physician
     public string? SyncEmailAddress { get; set; }
 
     public int? IsNotification { get; set; }
+
+    [Column(TypeName = "bit(1)")]
+    public BitArray? IsSignature { get; set; }
 
     [ForeignKey("AspNetUserId")]
     [InverseProperty("PhysicianAspNetUsers")]

@@ -8,10 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Page</title>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/admin/loginPage.css" rel="stylesheet" />
-    <script src="~/js/Admin/loginPage.js"></script>
+    <script src="~/js/loginPage.js"></script>
 </head>
 
 <body>
@@ -32,21 +34,22 @@
                 <span class="mt-4 mb-2 fw-bold fs-4">
                     Login To Your Account
                 </span>
-                <div class="form-floating w-50 mt-2">
-                    <input asp-for="Email" class="form-control" id="email" type="text" placeholder="Email"/>
-                    <label for="email">Email</label>
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                    <i class="bi bi-envelope input-icon"></i>
+                <div class="input-group w-50 mt-2">
+                    <div class="form-floating flex-grow-1">
+                        <input asp-for="Email" class="form-control" id="email" type="email" placeholder="Email" />
+                        <label for="email">Email</label>
+                    </div>
+                    <i class="bi bi-envelope input-group-text bg-transparent"></i>
                 </div>
-                <div class="form-floating w-50 mt-3 mb-1">
-                    <input asp-for="PasswordHash" class="form-control" id="password" type="password" placeholder="Password" />
-                    <label for="password">Password</label>
-                    <span asp-validation-for="PasswordHash" class="text-danger"></span>
-                    <button class="input-icon bg-transparent border-0" type="button" onclick="changeIcon()">
-                        <i class="bi bi-eye" id="show-password"></i>
-                        <i class="bi bi-eye-slash" id="hide-password"></i>
-                    </button>
+                <span asp-validation-for="Email" class="text-danger w-50"></span>
+                <div class="input-group w-50 mt-2">
+                    <div class="form-floating flex-grow-1">
+                        <input asp-for="PasswordHash" class="form-control" id="password" type="password" placeholder="Password" />
+                        <label for="password">Password</label>
+                    </div>
+                    <i class="bi bi-eye input-group-text bg-transparent" id="passwordIcon"></i>
                 </div>
+                <span asp-validation-for="PasswordHash" class="text-danger w-50"></span>
                 <button type="submit" class="button w-50 mt-4 fs-4">
                     Log In
                 </button>

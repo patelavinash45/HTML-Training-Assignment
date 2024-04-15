@@ -19,9 +19,18 @@
     <partial name="_AdminDashboardHeader" model="6">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
-            <h3>
-                Create Role
-            </h3>
+                @if (Model.IsUpdate)
+                {
+                    <h3>
+                        Update Role
+                    </h3>
+                }
+                else
+                {
+                    <h3>
+                        Create Role
+                    </h3>
+                }
             <a asp-controller="Admin" asp-action="Access">
                 <button class="bg-white px-3 fw-bold">
                     <i class="bi bi-chevron-left"> </i>
@@ -33,7 +42,7 @@
             <h5 class="fw-bold">
                 Details
             </h5>
-            <form id="createRoleForm" asp-controller="Admin" asp-action="CreateRole">
+            <form id="createRoleForm" asp-controller="Admin" asp-action=@(Model.IsUpdate?"UpdateRole":"CreateRole")>
                 <div class="row">
                     <div class="form-floating col-xl-6 col-md-6 col-lg-6">
                         <input asp-for="RoleName" class="form-control" id="roleName" placeholder="BusinessFirstName" />

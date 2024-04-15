@@ -34,20 +34,22 @@ namespace Services.Interfaces.AdminServices
 
         ViewShift getShiftDetails(int shiftDetailsId);
 
-        Task<bool> EditShiftDetails(string data);
+        Task<bool> EditShiftDetails(string data, int aspNetUserId);
 
         ProviderOnCall getProviderOnCall(int regionId);
 
         ProviderList getProviderList(int regionId);
 
-        bool SaveSign(string sign,int physicianId);
+        Task<bool> SaveSign(string sign, int physicianId);
 
-        Task<bool> editphysicianAccountInformaction(EditProvider model, int physicianId);
+        Task<bool> editphysicianAccountInformaction(EditProvider model, int physicianId, int aspNetUserId);
 
-        Task<bool> editphysicianPhysicianInformaction(EditProvider model, int physicianId);
+        Task<bool> editphysicianPhysicianInformaction(EditProvider model, int physicianId, int aspNetUserId);
 
-        Task<bool> editphysicianMailAndBillingInformaction(EditProvider model, int physicianId);
+        Task<bool> editphysicianMailAndBillingInformaction(EditProvider model, int physicianId, int aspNetUserId);
 
-        Task<bool> editphysicianProviderProfile(EditProvider model, int physicianId);
+        Task<bool> editphysicianProviderProfile(EditProvider model, int physicianId, int aspNetUserId);
+        
+        Task<bool> editphysicianOnbordingInformaction(EditProvider model, int physicianId, int aspNetUserId);
     }
 }

@@ -34,17 +34,16 @@ namespace Services.Implementation.AdminServices
             RequestNote requestNote = _requestNotesRepository.GetRequestNoteByRequestId(RequestId);
             List<string> transferNotes = _requestSatatusLogRepository.GetRequestStatusLogByRequestId(RequestId)
                                                                      .Select(requestStatusLog => requestStatusLog.Notes).ToList();
-            ViewNotes notes = new()
+            return new ViewNotes()
             {
                 RequestId = RequestId,
                 AdminNotes = requestNote!=null?requestNote.AdminNotes:null,
                 PhysicianNotes = requestNote != null ? requestNote.PhysicianNotes : null,
                 TransferNotes = transferNotes,
             };
-            return notes;
         }
 
-        public async Task<bool> addAdminNotes(String adminNotes, int requestId)
+        public async Task<bool> addAdminNotes(String adminNotes, int requestId, int aspNetUserId)
         {
             RequestNote requestNote = _requestNotesRepository.GetRequestNoteByRequestId(requestId);
             if(requestNote == null)
@@ -58,6 +57,8 @@ namespace Services.Implementation.AdminServices
                 return await _requestNotesRepository.addRequestNote(_requestNote);
             }
             requestNote.AdminNotes= adminNotes;
+            requestNote.ModifiedDate = DateTime.Now;
+            requestNote.ModifiedBy = aspNetUserId;
             return await _requestNotesRepository.updateRequestNote(requestNote);
         }
 
@@ -69,16 +70,17 @@ namespace Services.Implementation.AdminServices
             {
                 Request request = _requestRepository.getRequestByRequestId(model.RequestId);
                 request.CaseTagId = model.Reason;
+                request.ModifiedDate = DateTime.Now;
                 if(await _requestRepository.updateRequest(request))
                 {
-                    RequestStatusLog _requestStatusLog = new()
-                    {
-                        RequestId = model.RequestId,
-                        Status = 3,
-                        CreatedDate = DateTime.Now,
-                        Notes = model.AdminTransferNotes,
-                    };
-                    return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
+                    return await _requestSatatusLogRepository.addRequestSatatusLog(
+                        new RequestStatusLog()
+                        {
+                            RequestId = model.RequestId,
+                            Status = 3,
+                            CreatedDate = DateTime.Now,
+                            Notes = model.AdminTransferNotes,
+                        });
                 }
             }
             return false;
@@ -90,14 +92,14 @@ namespace Services.Implementation.AdminServices
             requestClient.Status = 8;
             if(await _requestClientRepository.updateRequestClient(requestClient))
             {
-                RequestStatusLog _requestStatusLog = new()
-                {
-                    RequestId = model.RequestId,
-                    Status = 8,
-                    CreatedDate = DateTime.Now,
-                    Notes = model.CancelationReson,
-                };
-                return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
+                return await _requestSatatusLogRepository.addRequestSatatusLog(
+                    new RequestStatusLog()
+                    {
+                        RequestId = model.RequestId,
+                        Status = 8,
+                        CreatedDate = DateTime.Now,
+                        Notes = model.CancelationReson,
+                    });
             }
             return false;
         }
@@ -110,6 +112,7 @@ namespace Services.Implementation.AdminServices
             {
                 Request request = _requestRepository.getRequestByRequestId(model.RequestId);
                 request.AcceptedDate = DateTime.Now;
+                request.ModifiedDate = DateTime.Now;
                 return await _requestRepository.updateRequest(request);
             }
             return false;
@@ -122,15 +125,15 @@ namespace Services.Implementation.AdminServices
             requestClient.PhysicianId = model.SelectedPhysician;
             if(await _requestClientRepository.updateRequestClient(requestClient))
             {
-                RequestStatusLog _requestStatusLog = new()
-                {
-                    RequestId = model.RequestId,
-                    Status = 2,
-                    CreatedDate = DateTime.Now,
-                    Notes = model.AdminTransferNotes,
-                    PhysicianId = model.SelectedPhysician,
-                };
-                return await _requestSatatusLogRepository.addRequestSatatusLog(_requestStatusLog);
+                return await _requestSatatusLogRepository.addRequestSatatusLog(
+                    new RequestStatusLog()
+                    {
+                        RequestId = model.RequestId,
+                        Status = 2,
+                        CreatedDate = DateTime.Now,
+                        Notes = model.AdminTransferNotes,
+                        PhysicianId = model.SelectedPhysician,
+                    });
             }
             return false;
         }
@@ -152,14 +155,14 @@ namespace Services.Implementation.AdminServices
                 };
                 if (await _requestSatatusLogRepository.addBlockRequest(blockRequest))
                 {
-                    RequestStatusLog requestStatusLog = new()
-                    {
-                        RequestId = model.RequestId,
-                        Status = 0,
-                        CreatedDate = DateTime.Now,
-                        Notes = model.AdminTransferNotes,
-                    };
-                    return await _requestSatatusLogRepository.addRequestSatatusLog(requestStatusLog);
+                    return await _requestSatatusLogRepository.addRequestSatatusLog(
+                        new RequestStatusLog()
+                        {
+                            RequestId = model.RequestId,
+                            Status = 0,
+                            CreatedDate = DateTime.Now,
+                            Notes = model.AdminTransferNotes,
+                        });
                 }
             }
             return false;

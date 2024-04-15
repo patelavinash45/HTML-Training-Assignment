@@ -14,7 +14,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/patient/loginPage.css" rel="stylesheet" />
-    <script src="~/js/Patient/LoginPage.js"></script>
+    <script src="~/js/LoginPage.js"></script>
 </head>
 <body>
     @await Component.InvokeAsync("Notyf")
@@ -33,24 +33,25 @@
             </span>
             <p class="mt-2 mb-3 w-100" id="heading-text">Login To Your Account</p>
             <form class="w-100" asp-controller="Patient" asp-action="LoginPage">
-                <div class="form-floating">
-                    <input asp-for="Email" class="form-control" id="email" placeholder="Email" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                    <label for="email">Email</label>
-                    <i class="bi bi-envelope input-icon"></i>
+                <div class="input-group w-100 mt-2">
+                    <div class="form-floating flex-grow-1">
+                        <input asp-for="Email" class="form-control" id="email" type="email" placeholder="Email" />
+                        <label for="email">Email</label>
+                    </div>
+                    <i class="bi bi-envelope input-group-text bg-transparent"></i>
                 </div>
-                <div class="form-floating">
-                    <input asp-for="PasswordHash" class="form-control" id="password" type="password" placeholder="PasswordHash" />
-                    <span asp-validation-for="PasswordHash" class="text-danger"></span>
-                    <label for="password">Password</label>
-                    <button type="button" class="input-icon bg-transparent border-0" onclick="changeIcon()">
-                        <i class="bi bi-eye" id="show-password"></i>
-                        <i class="bi bi-eye-slash" id="hide-password"></i>
-                    </button>
+                <span asp-validation-for="Email" class="text-danger w-100"></span>
+                <div class="input-group w-100 mt-3">
+                    <div class="form-floating flex-grow-1">
+                        <input asp-for="PasswordHash" class="form-control" id="password" type="password" placeholder="Password" />
+                        <label for="password">Password</label>
+                    </div>
+                    <i class="bi bi-eye input-group-text bg-transparent" id="passwordIcon"></i>
                 </div>
-                <button type="submit" class="button">Log In</button>
+                <span asp-validation-for="PasswordHash" class="text-danger w-100"></span>
+                <button type="submit" class="button mt-3">Log In</button>
             </form>
-            <a class="mt-4 mb-5 backto-patientsite" asp-controller="Patient" asp-action="ResetPassword">
+            <a class="mt-5 mb-5 backto-patientsite" asp-controller="Patient" asp-action="ResetPassword">
                 Forgot password?
             </a>
         </div>

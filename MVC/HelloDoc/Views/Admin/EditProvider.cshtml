@@ -264,7 +264,12 @@
                                         Create
                                     </button>
                                 </div>
-                                <span asp-validation-for="Photo" class="text-danger"></span>
+                                @if(Model.IsSignature)
+                                {
+                                    <div class="mt-2">
+                                        <img src="@Model.SignaturePath" class="border border-1 rounded-3" width="350"/>
+                                    </div>
+                                }
                                 <div class="edit mt-2 mb-2" id="signaturePad">
                                     <canvas class="border border-1 rounded-3" id="signature-pad" width="350" height="200"></canvas>
                                     <div>

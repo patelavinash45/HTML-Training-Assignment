@@ -6,6 +6,7 @@ namespace Services.ViewModels
     {
         //[RegularExpression("(?=^.{8,10}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{\":;'?/>.<,])(?!.*\\s).*$", 
         //    ErrorMessage = "Password must be 8-10 characters long with at least one numeric,one upper case character and one special character.")]
+        [Display(Name = "Password")]
         public string PasswordHash { get; set; }
 
         public string Email { get; set; }
@@ -13,25 +14,27 @@ namespace Services.ViewModels
 
     public class ResetPassword
     {
-        public string? Email { get; set; }
+        public string Email { get; set; }
     }
 
     public class SetNewPassword
     {
         public bool IsValidLink { get; set; }
 
-        public String AspNetUserId { get; set; }
+        public string? ErrorMessage { get; set; }
 
-        [Required(ErrorMessage = "Password is required.")]
+        public int AspNetUserId { get; set; }
+
+        [Display(Name = "Password")]
         //[RegularExpression("(?=^.{8,10}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{\":;'?/>.<,])(?!.*\\s).*$",
         //    ErrorMessage = "Password must be 8-10 characters long with at least one numeric,one upper case character and one special character.")]
-        public string? Password { get; set; }
+        public string Password { get; set; }
 
-        [Required(ErrorMessage = "Conform Password is required.")]
+        [Display(Name = "Conform Password")]
         //[RegularExpression("(?=^.{8,10}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{\":;'?/>.<,])(?!.*\\s).*$",
         //    ErrorMessage = "Password must be 8-10 characters long with at least one numeric,one upper case character and one special character.")]
         [CompareAttribute("Password", ErrorMessage = "Password doesn't match.")]
-        public string? ConformPassword { get; set; }
+        public string ConformPassword { get; set; }
 
     }
 

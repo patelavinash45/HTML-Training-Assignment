@@ -12,12 +12,14 @@ namespace Services.Interfaces.AdminServices
 
         Task<bool> createRole(CreateRole model);
 
-        Task<bool> delete(int roleId);
+        Task<bool> delete(int roleId, int aspNetUserId);
 
         AdminCreaateAndProfile GetAdminCreaateAndProfile();
 
         Task<bool> createAdmin(AdminCreaateAndProfile model);
 
         CreateRole getEditRole(int roleId);
+
+        Task<bool> editRole(CreateRole model,int roleId,int aspNetUserId);
     }
 }

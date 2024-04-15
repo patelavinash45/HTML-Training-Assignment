@@ -16,11 +16,15 @@
 
     public class CreateRole
     {
+        public bool IsUpdate { get; set; } = false;
+
         public string RoleName { get; set; }
 
         public int SlectedAccountType { get; set; }
 
         public RolesCheckBox RolesCheckBox { get; set; }
+
+        public List<int> SelectedMenus { get; set; }
     }
 
     public class RolesCheckBox

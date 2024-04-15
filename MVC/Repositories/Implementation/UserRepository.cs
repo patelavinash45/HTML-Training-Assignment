@@ -116,27 +116,27 @@ namespace Repositories.Implementation
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> addAdminRgion(AdminRegion adminRegion)
+        public async Task<bool> addAdminRgions(List<AdminRegion> adminRegions)
         {
-            _dbContext.AdminRegions.Add(adminRegion);
+            _dbContext.AdminRegions.AddRange(adminRegions);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> deleteAdminRgion(AdminRegion adminRegion)
+        public async Task<bool> deleteAdminRgions(List<AdminRegion> adminRegions)
         {
-            _dbContext.AdminRegions.Remove(adminRegion);
+            _dbContext.AdminRegions.RemoveRange(adminRegions);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> addPhysicianRegion(PhysicianRegion physicianRegion)
+        public async Task<bool> addPhysicianRegions(List<PhysicianRegion> physicianRegions)
         {
-            _dbContext.PhysicianRegions.Add(physicianRegion);
+            _dbContext.PhysicianRegions.AddRange(physicianRegions);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> deletePhysicianRegion(PhysicianRegion physicianRegion)
+        public async Task<bool> deletePhysicianRegions(List<PhysicianRegion> physicianRegions)
         {
-            _dbContext.PhysicianRegions.Remove(physicianRegion);
+            _dbContext.PhysicianRegions.RemoveRange(physicianRegions);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
