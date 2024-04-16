@@ -1,31 +1,16 @@
 ﻿@model Services.ViewModels.Admin.ViewCase
 
 @{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "ViewCase";
+    ViewBag.JsFile = "/js/Admin/ViewCase.js";
+    ViewBag.CssFile = "/css/Admin/ViewCase.css";
+    ViewBag.Header = "_AdminDashboardHeader";
     List<String> requesterBgColor = new List<String>() { "", "bg-danger", "bg-success", "bg-warning", "bg-primary", "bg-info" };
     List<String> requester = new List<String>() { "", "Business", "Patient", "Family", "Concierge", "VIP" };
 }
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViewCase</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/css/international-telephone-input.css" rel="stylesheet" />
-    <script src="~/js/international-telephone-input.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/admin/ViewCase.css" rel="stylesheet" />
-    <script src="~/js/Admin/viewCase.js"></script>
-</head>
-
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_AdminDashboardHeader" model="0">
     <partial name="_RequestCancelPopUp" model="@Model.CancelPopup">
     <div class="tab-content container" id="profile_content">
         <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
@@ -165,5 +150,4 @@
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     </script>
-</body>
-</html>
+

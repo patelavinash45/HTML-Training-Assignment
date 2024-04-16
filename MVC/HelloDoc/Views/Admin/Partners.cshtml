@@ -1,20 +1,14 @@
 ﻿@model Services.ViewModels.Admin.Partners
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partners</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/admin/partners.css" rel="stylesheet" />
-    <script src="~/js/Admin/pratners.js"></script>
-</head>
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_AdminDashboardHeader" model="5">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Partners";
+    ViewBag.JsFile = "/js/Admin/pratners.js";
+    ViewBag.CssFile = "/css/Admin/partners.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
+
+
     <div class="container-fluid">
         <h4 class="mt-2 mb-2">
             Vendor(s)
@@ -42,5 +36,3 @@
             </div>
         </div>
     </div>
-</body>
-</html>

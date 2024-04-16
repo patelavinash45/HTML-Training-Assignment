@@ -1,23 +1,13 @@
 ﻿@model Services.ViewModels.Login
 
-<!DOCTYPE html>
-<html lang="en">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Login Page";
+    ViewBag.JsFile = "/js/loginPage.js";
+    ViewBag.CssFile = "/css/Admin/loginPage.css";
+}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Page</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/admin/loginPage.css" rel="stylesheet" />
-    <script src="~/js/loginPage.js"></script>
-</head>
 
-<body>
-    @await Component.InvokeAsync("Notyf")
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-6 col-md-6 col-lg-6 vh-100 left-side">
@@ -62,6 +52,3 @@
             </form>
         </div>
     </div>
-</body>
-
-</html>

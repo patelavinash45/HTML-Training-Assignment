@@ -7,10 +7,12 @@ using Services.Implementation;
 using Services.Implementation.AdminServices;
 using Services.Implementation.AuthServices;
 using Services.Implementation.PatientServices;
+using Services.Implementation.PhysicianServices;
 using Services.Interfaces;
 using Services.Interfaces.AdminServices;
 using Services.Interfaces.AuthServices;
 using Services.Interfaces.PatientServices;
+using Services.Interfaces.PhysicianServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +56,7 @@ builder.Services.AddScoped<IShiftRepository , ShiftRepository>();
 builder.Services.AddScoped<IPartnersService, PartnersService>();
 builder.Services.AddScoped<IRecordService, RecordService>();
 builder.Services.AddScoped<ILogsService, LogsService>();
+builder.Services.AddScoped<IPhysicianDashboardService, PhysicianDashboardService>();
 
 
 var app = builder.Build();

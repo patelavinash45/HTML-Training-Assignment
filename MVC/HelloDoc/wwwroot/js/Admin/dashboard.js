@@ -1,6 +1,7 @@
 var statusStrings = ["", "new", "pending", "active", "conclude", "close", "unpaid"];
 var statusTableStrings = ["", "_NewTable", "_PendingTable", "_ActiveTable", "_ConcludeTable", "_CloseTable", "_UnpaidTable"];
 var currentStatus = 1;         /// for which state is current
+var url = "/Admin/GetTablesData"
 
 function changeTable(temp) {      /// change view according to status
     $(".tables").css("display", "none");
@@ -14,7 +15,7 @@ function changeTable(temp) {      /// change view according to status
 
 function getTableData(pageNo) { ///get table data 
     $.ajax({
-        url: '/Admin/GetTablesData',
+        url: url,
         type: 'GET',
         contentType: 'application/json',
         data: {
@@ -109,4 +110,12 @@ $(document).on("click", "#exportData", function () {
             a.click();
         }
     })
+})
+
+
+$(document).ready(function () {
+    if ($("#physician").length > 0) {
+        statusTableStrings = ["", "_NewTablePhysician", "_PendingTablePhysician", "_ActiveTablePhysician", "_ConcludeTablePhysician"];
+        url = "/Physician/GetTablesData";
+    }
 })

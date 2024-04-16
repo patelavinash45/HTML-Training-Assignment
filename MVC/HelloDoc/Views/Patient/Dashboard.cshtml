@@ -1,29 +1,17 @@
 ﻿@model List<Services.ViewModels.Dashboard>
 
 @{
+    Layout = "_PatientLayout";
+    ViewData["Title"] = "Business Request";
+    ViewBag.JsFile = "/js/patient/dashboard.js";
+    ViewBag.CssFile = "/css/patient/dashboard.css";
+    ViewBag.Header = "_PatientDashboardHeader";
     List<String> status = new List<string>() {"Blocked", "Unassigned", "Accepted", "Cancelled", "Reserving", "MDEnRoute", "MDOnSite", "FollowUp", "Closed", "Locked", "Declined", "Consult", "Clear",
                             "CancelledByProvider", "CCUploadedByClient", "CCApprovedByAdmin" };
-
     List<String> months = new List<String>() { "", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-        Dashboard
-    </title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/patient/dashboard.css" rel="stylesheet" />
-    <script src="~/js/patient/dashboard.js"></script>
-</head>
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_PatientDashboardHeader" model="1">
+
     <div class="modal" tabindex="-1" id="createNewRequest">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -148,5 +136,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+

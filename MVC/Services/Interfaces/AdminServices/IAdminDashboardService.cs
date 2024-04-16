@@ -6,7 +6,7 @@ namespace Services.Interfaces.AdminServices
 {
     public interface IAdminDashboardService
     {
-        AdminDashboard getallRequests(int aspNetUserId);
+        AdminDashboard getallRequests();
 
         TableModel GetNewRequest(String status, int pageNo, String patientName, int regionId, int requesterTypeId);
 

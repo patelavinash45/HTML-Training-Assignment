@@ -371,7 +371,7 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> editphysicianPhysicianInformaction(EditProvider model,int physicianId, int aspNetUserId)
         {
-            Physician physician = _userRepository.getPhysicianWithAspNetUser(physicianId);
+            Physician physician = _userRepository.getPhysicianByPhysicianId(physicianId);
             physician.FirstName = model.FirstName;
             physician.LastName = model.LastName;
             physician.Email = model.Email;
@@ -419,7 +419,7 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> editphysicianMailAndBillingInformaction(EditProvider model, int physicianId, int aspNetUserId)
         {
-            Physician physician = _userRepository.getPhysicianWithAspNetUser(physicianId);
+            Physician physician = _userRepository.getPhysicianByPhysicianId(physicianId);
             physician.Address1 = model.Add1;
             physician.Address2 = model.Add2;
             physician.City = model.City;
@@ -433,7 +433,7 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> editphysicianProviderProfile(EditProvider model, int physicianId, int aspNetUserId)
         {
-            Physician physician = _userRepository.getPhysicianWithAspNetUser(physicianId);
+            Physician physician = _userRepository.getPhysicianByPhysicianId(physicianId);
             physician.BusinessName = model.BusinessName;
             physician.BusinessWebsite = model.BusinessWebsite;
             physician.Photo = model.Photo.FileName;
@@ -451,7 +451,7 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> editphysicianOnbordingInformaction(EditProvider model, int physicianId, int aspNetUserId)
         {
-            Physician physician = _userRepository.getPhysicianWithAspNetUser(physicianId);
+            Physician physician = _userRepository.getPhysicianByPhysicianId(physicianId);
             if (model.IsAgreementDoc)
             {
                 filePickUp("AgreementDoc", aspNetUserId, model.AgreementDoc);

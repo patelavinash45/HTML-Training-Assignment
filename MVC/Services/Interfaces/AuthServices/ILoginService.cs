@@ -5,9 +5,9 @@ namespace Services.Interfaces.AuthServices
 {
     public interface ILoginService
     {
-        UserDataModel auth(Login model,int userType);
+        UserDataModel auth(Login model,List<int> userType);
 
-        bool isTokenValid(HttpContext httpContext,String userType);
+        String isTokenValid(HttpContext httpContext, List<int> userType);
 
         Task<bool> resetPasswordLinkSend(string email,HttpContext httpContext);
 

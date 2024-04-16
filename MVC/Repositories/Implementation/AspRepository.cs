@@ -81,10 +81,10 @@ namespace Repositories.Implementation
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public AspNetUserRole validateAspNetUserRole(String email, String password, int userType)
+        public AspNetUserRole validateAspNetUserRole(String email, String password)
         {
             return _dbContext.AspNetUserRoles.Include(a => a.User).Include(a => a.Role).
-                       FirstOrDefault(a => a.RoleId == userType && a.User.Email == email && a.User.PasswordHash == password);
+                       FirstOrDefault(a => a.User.Email == email && a.User.PasswordHash == password);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿@model int
-@inject IHttpContextAccessor HttpContextAccessor
+﻿@inject IHttpContextAccessor HttpContextAccessor
 
 <link href="~/css/patient/_dashboardHeader.css" rel="stylesheet" />
 <header>
@@ -37,19 +36,11 @@
             <div class="mx-2 h6">
                 Dashboard
             </div>
-            @if(Model == 1)
-            {
-                <hr class="border-bottom border-3 border-dark h1" />
-            }
         </a>
         <a asp-controller="Patient" asp-action="ViewProfile" class="mx-2">
             <div class="mx-2 h6">
                 Profile
             </div>
-            @if (Model == 2)
-            {
-                <hr class="border-bottom border-3 border-dark h1" />
-            }
         </a>
     </div>
 </header>

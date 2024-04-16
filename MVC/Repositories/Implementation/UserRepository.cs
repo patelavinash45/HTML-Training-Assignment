@@ -53,6 +53,11 @@ namespace Repositories.Implementation
             return _dbContext.Admins.FirstOrDefault(a => a.AspNetUserId == aspNetUserId);
         }
 
+        public Physician getPhysicianByAspNetUserId(int aspNetUserId)
+        {
+            return _dbContext.Physicians.FirstOrDefault(a => a.AspNetUserId == aspNetUserId);
+        }
+
         public async Task<bool> addAdmin(Admin admin)
         {
             _dbContext.Admins.Add(admin);

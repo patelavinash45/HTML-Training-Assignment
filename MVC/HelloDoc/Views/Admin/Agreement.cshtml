@@ -1,17 +1,12 @@
 ﻿@model Services.ViewModels.Admin.Agreement
 
-<!DOCTYPE html>
-<html lang="en">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Agreement";
+    ViewBag.CssFile = "/css/admin/_requestPopUp.css";
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agreement</title>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/admin/_requestPopUp.css" rel="stylesheet" />
-</head>
-<body>
+
     <div class="container my-lg-5 py-lg-5">
         <div class="fs-4 mt-5">
             To provide best medical service, we cannot determine the cost right away. If you agree to our service, so we will provide care and
@@ -63,5 +58,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+

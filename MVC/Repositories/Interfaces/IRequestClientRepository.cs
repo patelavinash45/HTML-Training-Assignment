@@ -16,11 +16,13 @@ namespace Repositories.Interfaces
 
         int countRequestClientsAndBlockRequestBasedOnFilter(Func<BlockRequest, bool> predicate);
 
-        List<RequestClient> getRequestClientByStatus(List<int> status, int skip, string patientName, int regionId, int requesterTypeId);
+        List<RequestClient> getRequestClientByStatus(Func<RequestClient, bool> predicate, int skip);
 
-        int countRequestClientByStatus(List<int> status);
+        int countRequestClientByStatusForAdmin(List<int> status);
 
-        int countRequestClientByStatusAndFilter(List<int> status, string patientName, int regionId, int requesterTypeId);
+        int countRequestClientByStatusForPhysician(List<int> status, int aspNetUserId);
+
+        int countRequestClientByStatusAndFilter(Func<RequestClient, bool> predicate);
 
         List<RequestClient> getAllRequestClientForUser(int userId);
 

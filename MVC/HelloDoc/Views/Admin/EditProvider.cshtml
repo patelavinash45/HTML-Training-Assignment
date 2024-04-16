@@ -1,25 +1,14 @@
 ﻿@model Services.ViewModels.Admin.EditProvider
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Provider</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/international-telephone-input.css" rel="stylesheet" />
-    <script src="~/js/international-telephone-input.js"></script>
-    <link href="~/css/admin/createProvider.css" rel="stylesheet" />
-    <script src="~/js/Admin/provider.js"></script>
-</head>
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_AdminDashboardHeader" model="0">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Edit Provider";
+    ViewBag.JsFile = "/js/Admin/provider.js";
+    ViewBag.CssFile = "/css/Admin/createProvider.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
+
+
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
                 <h3>
@@ -450,5 +439,3 @@
                 utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
             });
         </script>
-</body>
-</html>

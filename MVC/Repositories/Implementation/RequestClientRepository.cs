@@ -2,6 +2,7 @@
 using Repositories.DataContext;
 using Repositories.DataModels;
 using Repositories.Interfaces;
+using System;
 using System.Collections;
 
 namespace Repositories.Implementation
@@ -41,30 +42,31 @@ namespace Repositories.Implementation
             return _dbContext.BlockRequests.Include(a => a.Request.RequestClients).Count(predicate);
         }
 
-        public List<RequestClient> getRequestClientByStatus(List<int> status, int skip, string patientName ,int regionId, int requesterTypeId)
+        public List<RequestClient> getRequestClientByStatus(Func<RequestClient, bool> predicate,int skip)
         {
-            Func<RequestClient, bool> predicate = a =>
-            (requesterTypeId == 0 || a.Request.RequestTypeId == requesterTypeId) 
-            && (regionId == 0 || a.RegionId == regionId)
-            && (patientName == null || a.FirstName.ToLower().Contains(patientName) || a.LastName.ToLower().Contains(patientName))
-            && (status.Contains(a.Status));
             return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Where(predicate)
                                           .OrderByDescending(a => a.RequestClientId).Skip(skip).Take(10).ToList();
         }
 
-        public int countRequestClientByStatusAndFilter(List<int> status, string patientName, int regionId, int requesterTypeId)
+        public int countRequestClientByStatusAndFilter(Func<RequestClient, bool> predicate)
         {
-            Func<RequestClient, bool> predicate = a =>
-            (requesterTypeId == 0 || a.Request.RequestTypeId == requesterTypeId)
-            && (regionId == 0 || a.RegionId == regionId)
-            && (patientName == null || a.FirstName.ToLower().Contains(patientName) || a.LastName.ToLower().Contains(patientName))
-            && (status.Contains(a.Status));
-            return _dbContext.RequestClients.Include(a => a.Request).Count(predicate);
+            return _dbContext.RequestClients.Include(a => a.Request).Include(a => a.Physician).Count(predicate);
         }
 
-        public int countRequestClientByStatus(List<int> status)
+        public int countRequestClientByStatusForAdmin(List<int> status)
         {
-            return _dbContext.RequestClients.Count(a => status.Contains(a.Status));
+            Func<RequestClient, bool> predicate = a => status.Contains(a.Status) && (!status.Contains(1) || a.Physician == null);
+            return _dbContext.RequestClients.Count(predicate);
+        }
+
+        public int countRequestClientByStatusForPhysician(List<int> status, int aspNetUserId)
+        {
+            Func<RequestClient, bool> predicate = a => 
+            status.Contains(a.Status) 
+            && (!status.Contains(1) || a.Physician != null) 
+            && a.Physician != null
+            && a.Physician.AspNetUserId == aspNetUserId;
+            return _dbContext.RequestClients.Count(predicate);
         }
 
         public List<RequestClient> getAllRequestClientForUser(int userId)

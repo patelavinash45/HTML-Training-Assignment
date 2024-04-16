@@ -121,7 +121,6 @@ namespace Services.Implementation.AdminServices
         public async Task<bool> assignRequest(AssignAndTransferPopUp model)
         {
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
-            requestClient.Status = 2;
             requestClient.PhysicianId = model.SelectedPhysician;
             if(await _requestClientRepository.updateRequestClient(requestClient))
             {
@@ -129,7 +128,7 @@ namespace Services.Implementation.AdminServices
                     new RequestStatusLog()
                     {
                         RequestId = model.RequestId,
-                        Status = 2,
+                        Status = 1,
                         CreatedDate = DateTime.Now,
                         Notes = model.AdminTransferNotes,
                         PhysicianId = model.SelectedPhysician,

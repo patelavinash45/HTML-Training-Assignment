@@ -1,24 +1,14 @@
 ﻿@model Services.ViewModels.AddFamilyRequest
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Family/Friend Request</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/patient/familyFriendRequest.css" rel="stylesheet" />
-    <link href="~/css/international-telephone-input.css" rel="stylesheet" />
-    <script src="~/js/international-telephone-input.js"></script>
-    <script src="~/js/request.js"></script>
-</head>
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_RequestHeader" />
+@{
+    Layout = "_PatientLayout";
+    ViewData["Title"] = "Business Request";
+    ViewBag.JsFile = "/js/request.js";
+    ViewBag.CssFile = "/css/patient/familyFriendRequest.css";
+    ViewBag.Header = "_RequestHeader";
+}
+
+
     <partial name="_WarningPopUp" />
     <div id="main-body">
         <div class="d-flex justify-content-end container">
@@ -189,5 +179,4 @@
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     </script>
-</body>
-</html>
+

@@ -1,19 +1,14 @@
 ﻿@model Services.ViewModels.Admin.SendOrder
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Order</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/admin/sendOrder.css" rel="stylesheet" />
-    <script src="~/js/Admin/sendOrder.js"></script>
-</head>
-<body>
-    <partial name="_AdminDashboardHeader" model="0">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Send Order";
+    ViewBag.JsFile = "/js/Admin/sendOrder.js";
+    ViewBag.CssFile = "/css/Admin/sendOrder.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
+
+
     <div class="container">
         <div class="d-flex justify-content-between align-content-center mt-3 mb-3">
             <span class="h3 mt-2">
@@ -97,5 +92,3 @@
             </div>
         </form>
     </div>
-</body>
-</html>

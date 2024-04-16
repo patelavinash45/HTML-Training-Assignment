@@ -1,19 +1,14 @@
 ﻿@model Services.ViewModels.Admin.PatientRecord
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Record</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/admin/records.css" rel="stylesheet" />
-    <script src="~/js/Admin/record.js"></script>
-</head>
-<body>
-    <partial name="_AdminDashboardHeader" model="7">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Patient Record";
+    ViewBag.JsFile = "/js/Admin/record.js";
+    ViewBag.CssFile = "/css/Admin/records.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
+
+
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center mt-2 mb-2">
                 <h3>
@@ -30,5 +25,3 @@
                 <partial name="_PatientRecordTable" model="@Model"></partial>
             </div>
         </div>
-</body>
-</html>

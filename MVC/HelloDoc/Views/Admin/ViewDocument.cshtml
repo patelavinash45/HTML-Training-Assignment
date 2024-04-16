@@ -1,21 +1,14 @@
 ﻿@model Services.ViewModels.ViewDocument
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/viewDocument.css" rel="stylesheet" />
-</head>
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_AdminDashboardHeader" model="0">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Document";
+    ViewBag.JsFile = "/js/viewDocument.js";
+    ViewBag.CssFile = "/css/viewDocument.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
+
+
     <div class="container tab-content" id="dashboard_content">
             <div class="d-flex justify-content-between align-content-center mt-3 mb-3">
                 <span class="h3">
@@ -161,6 +154,3 @@
     <div class="tab-content" id="profile_content">
         Profile content
     </div>
-</body>
-<script src="~/js/viewDocument.js"></script>
-</html>

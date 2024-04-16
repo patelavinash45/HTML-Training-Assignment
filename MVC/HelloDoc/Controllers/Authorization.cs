@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Services.Interfaces.AuthServices;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Claims;
 
 namespace HelloDoc.Authentication
@@ -48,7 +45,7 @@ namespace HelloDoc.Authentication
                     {
                         context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                         {
-                            Controller = _role,
+                            Controller = "Patient",
                             action = "AccessDenied",
                         }));
                     }

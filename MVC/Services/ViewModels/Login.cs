@@ -40,16 +40,18 @@ namespace Services.ViewModels
 
     public class UserDataModel
     {
+        public bool IsValid { get; set; } = false;
+
         public int AspNetUserId { get; set; }
 
-        public int UserId { get; set; }
-
-        public int AdminId { get; set; }
+        public int UserTypeId { get; set; }
 
         public string UserType { get; set; }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public string Message { get; set; }
     }
 }

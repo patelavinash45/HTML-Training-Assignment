@@ -1,19 +1,12 @@
 ﻿@model Services.ViewModels.Admin.Access
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Access</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/admin/providers.css" rel="stylesheet" />
-</head>
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_AdminDashboardHeader" model="6">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Access";
+    ViewBag.CssFile = "/css/admin/providers.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
+
         <div class="container">
             <h3 class="mt-3 mb-3">
                 Account Access
@@ -101,5 +94,3 @@
                 }
             </div>
         </div>
-</body>
-</html>

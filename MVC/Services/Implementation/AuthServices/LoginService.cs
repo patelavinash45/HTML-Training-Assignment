@@ -27,41 +27,66 @@ namespace Services.Implementation.AuthServices
             _jwtService = jwtService;
         }
 
-        public UserDataModel auth(Login model,int userType)
+        public UserDataModel auth(Login model,List<int> userType)
         {
             AspNetUserRole aspNetUserRole = _aspRepository.
-                           validateAspNetUserRole(email: model.Email, password: genrateHash(model.PasswordHash), userType: userType);
+                           validateAspNetUserRole(email: model.Email, password: genrateHash(model.PasswordHash));
             if (aspNetUserRole != null)
             {
-                if (userType == 1)
+                if(userType.Contains(aspNetUserRole.RoleId))
                 {
-                    User user = _userRepository.getUser(aspNetUserRole.UserId);
-                    return  new UserDataModel()
+                    switch (aspNetUserRole.RoleId)
                     {
-                        AspNetUserId = aspNetUserRole.UserId,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        UserId = user.UserId,
-                        UserType = aspNetUserRole.Role.Name,
-                    };
+                        case 1: User user = _userRepository.getUser(aspNetUserRole.UserId);
+                                return new UserDataModel()
+                                {
+                                    UserTypeId = 1,
+                                    IsValid = true,
+                                    AspNetUserId = aspNetUserRole.UserId,
+                                    FirstName = user.FirstName,
+                                    LastName = user.LastName,
+                                    UserType = aspNetUserRole.Role.Name,
+                                    Message = "Successfully Login",
+                                };
+                        case 2: Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserRole.UserId);
+                                return new UserDataModel()
+                                {
+                                    UserTypeId = 2,
+                                    IsValid = true,
+                                    AspNetUserId = aspNetUserRole.UserId,
+                                    FirstName = admin.FirstName,
+                                    LastName = admin.LastName,
+                                    UserType = aspNetUserRole.Role.Name,
+                                    Message = "Successfully Login",
+                                };
+                        default: Physician physician = _userRepository.getPhysicianByAspNetUserId(aspNetUserRole.UserId);
+                                 return new UserDataModel()
+                                 {
+                                     UserTypeId = 3,
+                                     IsValid = true,
+                                     AspNetUserId = aspNetUserRole.UserId,
+                                     FirstName = physician.FirstName,
+                                     LastName = physician.LastName,
+                                     UserType = aspNetUserRole.Role.Name,
+                                     Message = "Successfully Login",
+                                 };
+                    }
                 }
                 else
                 {
-                    Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserRole.UserId);
                     return new UserDataModel()
                     {
-                        AspNetUserId = aspNetUserRole.UserId,
-                        FirstName = admin.FirstName,
-                        LastName = admin.LastName,
-                        AdminId = admin.AdminId,
-                        UserType = aspNetUserRole.Role.Name,
+                        Message = "Access Denied !!",
                     };
                 }
             }
-            return null;
+            return new UserDataModel()
+            {
+                Message = "Invalid credentials !!",
+            };
         }
 
-        public bool isTokenValid(HttpContext httpContext, String userType)
+        public string isTokenValid(HttpContext httpContext,List<int> userType)
         {
             String token = httpContext.Request.Cookies["jwtToken"];
             if (token != null)
@@ -69,9 +94,10 @@ namespace Services.Implementation.AuthServices
                 JwtSecurityToken jwtToken = new JwtSecurityToken();
                 if (_jwtService.validateToken(token, out jwtToken))
                 {
-                    var jwtRole = jwtToken.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Role);
-                    if(jwtRole.Value == userType)
+                    var jwtUserType = jwtToken.Claims.FirstOrDefault(a => a.Type == "userTypeId");
+                    if (userType.Contains(int.Parse(jwtUserType.Value)))
                     {
+                        var jwtRole = jwtToken.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Role);
                         var jwtId = jwtToken.Claims.FirstOrDefault(a => a.Type == "aspNetUserId");
                         var jwtFirstName = jwtToken.Claims.FirstOrDefault(a => a.Type == "firstName");
                         var jwtLastName = jwtToken.Claims.FirstOrDefault(a => a.Type == "lastName");
@@ -79,11 +105,11 @@ namespace Services.Implementation.AuthServices
                         httpContext.Session.SetString("firstName", jwtFirstName.Value);
                         httpContext.Session.SetString("lastName", jwtLastName.Value);
                         httpContext.Session.SetInt32("aspNetUserId", int.Parse(jwtId.Value));
-                        return true;
+                        return jwtRole.Value;
                     }
                 }
             }
-            return false;
+            return null;
         }
 
         public async Task<bool> resetPasswordLinkSend(string email,HttpContext httpContext)

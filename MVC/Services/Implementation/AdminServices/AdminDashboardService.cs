@@ -7,6 +7,7 @@ using Services.Interfaces.AuthServices;
 using Services.ViewModels.Admin;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Reflection;
@@ -45,7 +46,7 @@ namespace Services.Implementation.AdminServices
             _encounterRepository = encounterRepository;
         }
 
-        public AdminDashboard getallRequests(int aspNetUserId)
+        public AdminDashboard getallRequests()
         {
             CancelPopUp cancelPopUp = new()
             {
@@ -58,12 +59,12 @@ namespace Services.Implementation.AdminServices
             return new AdminDashboard()
             {
                 NewRequests = GetNewRequest(status: "new", pageNo: 1, patientName: "" , regionId: 0, requesterTypeId: 0),
-                NewRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["new"]),
-                PendingRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["pending"]),
-                ActiveRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["active"]),
-                ConcludeRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["conclude"]),
-                TocloseRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["close"]),
-                UnpaidRequestCount = _requestClientRepository.countRequestClientByStatus(statusList["unpaid"]),
+                NewRequestCount = _requestClientRepository.countRequestClientByStatusForAdmin(statusList["new"]),
+                PendingRequestCount = _requestClientRepository.countRequestClientByStatusForAdmin(statusList["pending"]),
+                ActiveRequestCount = _requestClientRepository.countRequestClientByStatusForAdmin(statusList["active"]),
+                ConcludeRequestCount = _requestClientRepository.countRequestClientByStatusForAdmin(statusList["conclude"]),
+                TocloseRequestCount = _requestClientRepository.countRequestClientByStatusForAdmin(statusList["close"]),
+                UnpaidRequestCount = _requestClientRepository.countRequestClientByStatusForAdmin(statusList["unpaid"]),
                 CancelPopup = cancelPopUp,
                 AssignAndTransferPopup = assignAndTransferPopUp,
             };
@@ -72,12 +73,14 @@ namespace Services.Implementation.AdminServices
         public TableModel GetNewRequest(String status, int pageNo, String patientName,int regionId, int requesterTypeId)
         {
             int skip = (pageNo - 1) * 10;
-            int totalRequests = 0;
-            List<RequestClient> requestClients = new List<RequestClient>();
-            totalRequests += _requestClientRepository.countRequestClientByStatusAndFilter
-                              (status: statusList[status], patientName: patientName, regionId: regionId, requesterTypeId: requesterTypeId);
-            requestClients.AddRange(_requestClientRepository.getRequestClientByStatus
-                  (status: statusList[status], skip: skip, patientName: patientName, regionId: regionId, requesterTypeId: requesterTypeId));
+            Func<RequestClient, bool> predicate = a =>
+            (requesterTypeId == 0 || a.Request.RequestTypeId == requesterTypeId)
+            && (regionId == 0 || a.RegionId == regionId)
+            && (!statusList[status].Contains(1) || a.Physician == null)
+            && (patientName == null || a.FirstName.ToLower().Contains(patientName) || a.LastName.ToLower().Contains(patientName))
+            && (statusList[status].Contains(a.Status));
+            int totalRequests = _requestClientRepository.countRequestClientByStatusAndFilter(predicate);
+            List<RequestClient> requestClients = _requestClientRepository.getRequestClientByStatus(predicate, skip: skip);
             return getTableModal(requestClients, totalRequests, pageNo);
         }
 

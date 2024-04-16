@@ -549,6 +549,10 @@
       "PackagePath": "staticwebassets\\js\\Patient\\dashboard.js"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Physician\\dashboard.js",
+      "PackagePath": "staticwebassets\\js\\Physician\\dashboard.js"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\international-telephone-input.js",
       "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
     },

@@ -290,7 +290,6 @@ D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\staticwebasset
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\staticwebassets.pack.json
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\staticwebassets.build.json
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\staticwebassets.development.json
-D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\scopedcss\bundle\HelloDoc.styles.css
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\scopedcss\projectbundle\HelloDoc.bundle.scp.css
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\HelloDoc.csproj.CopyComplete
@@ -299,3 +298,4 @@ D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\refint\HelloDo
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\HelloDoc.pdb
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\HelloDoc.genruntimeconfig.cache
 D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\ref\HelloDoc.dll
+D:\project\HTML Training Assignment\MVC\HelloDoc\obj\Debug\net7.0\scopedcss\Views\Shared\_PatientLayout.cshtml.rz.scp.css

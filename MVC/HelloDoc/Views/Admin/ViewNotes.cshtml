@@ -1,22 +1,14 @@
 ﻿@model Services.ViewModels.Admin.ViewNotes
 
-<!DOCTYPE html>
-<html lang="en">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "ViewCase";
+    ViewBag.JsFile = "/js/Admin/viewNotes.js";
+    ViewBag.CssFile = "/css/Admin/ViewNotes.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViewCase</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/Admin/viewNotes.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/admin/ViewNotes.css" rel="stylesheet" />
-</head>
 
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_AdminDashboardHeader" model="0">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
             <h3>
@@ -91,5 +83,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+

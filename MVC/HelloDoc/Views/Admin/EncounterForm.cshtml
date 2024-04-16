@@ -1,20 +1,13 @@
 ﻿@model Services.ViewModels.Admin.EncounterForm
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encounter Form</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/international-telephone-input.css" rel="stylesheet" />
-    <script src="~/js/international-telephone-input.js"></script>
-    <link href="~/css/admin/encounterForm.css" rel="stylesheet" />
-</head>
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_AdminDashboardHeader" model="0">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Encounter Form";
+    ViewBag.CssFile = "/css/Admin/encounterForm.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
+
+
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
             <h3>
@@ -243,5 +236,3 @@
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     </script>
-</body>
-</html>

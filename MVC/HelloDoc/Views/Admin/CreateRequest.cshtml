@@ -1,24 +1,14 @@
 ﻿@model Services.ViewModels.Admin.CreateRequest
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Request</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/international-telephone-input.css" rel="stylesheet" />
-    <script src="~/js/international-telephone-input.js"></script>
-    <link href="~/css/admin/createRequest.css" rel="stylesheet" />
-    <script src="~/js/request.js"></script>
-</head>
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_AdminDashboardHeader" model="1">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Create Request";
+    ViewBag.JsFile = "/js/request.js";
+    ViewBag.CssFile = "/css/Admin/createRequest.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
+
+
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
             <h3>
@@ -147,5 +137,3 @@
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     </script>
-</body>
-</html>

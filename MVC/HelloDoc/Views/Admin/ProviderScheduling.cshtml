@@ -1,21 +1,14 @@
 ﻿@model Services.ViewModels.Admin.ProviderScheduling
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scheduling</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/admin/providerScheduling.css" rel="stylesheet" />
-    <script src="~/js/Admin/providerScheduling.js"></script>
-</head>
-<body>
-    <partial name="_AdminDashboardHeader" model="4">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Scheduling";
+    ViewBag.JsFile = "/js/Admin/providerScheduling.js";
+    ViewBag.CssFile = "/css/Admin/providerScheduling.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
+
+
     <partial name="_CreateShift" model="Model.CreateShift">
     <partial name="_ViewShiftDetails" >
     <div class="container">
@@ -98,5 +91,3 @@
             <partial name="_DayWiseScheduling" model="@Model.TableData">
         </div>
     </div>
-</body>
-</html>

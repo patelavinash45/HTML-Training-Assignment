@@ -1,7 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HelloDoc.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Repositories.DataModels;
 using Services.Interfaces;
 using Services.Interfaces.AuthServices;
 using Services.Interfaces.PatientServices;
@@ -46,9 +45,10 @@ namespace HelloDoc.Controllers
 
         public IActionResult LoginPage()
         {
-            if (_loginService.isTokenValid(HttpContext, "Patient"))
+            string role = _loginService.isTokenValid(HttpContext,new List<int> { 1 });
+            if (role != null)
             {
-                return RedirectToAction("Dashboard", "Patient");
+                return RedirectToAction("Dashboard", role);
             }
             return View();
         }
@@ -153,11 +153,11 @@ namespace HelloDoc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult LoginPage(Login model)
         {
-            UserDataModel user = _loginService.auth(model, 1);
-            if (user == null)
+            UserDataModel user = _loginService.auth(model, new List<int> { 1 });
+            if (!user.IsValid)
             {
-                _notyfService.Error("Invalid credentials");
-                return RedirectToAction("Dashboard", "Patient");
+                _notyfService.Error(user.Message);
+                return View(null);
             }
             else
             {
@@ -173,7 +173,7 @@ namespace HelloDoc.Controllers
                 };
                 Response.Cookies.Append("jwtToken", token, cookieOptions);
                 //HttpContext.Session.SetString("jwtToken", token);
-                _notyfService.Success("Successfully Login");
+                _notyfService.Success(user.Message);
                 return RedirectToAction("Dashboard", "Patient");
             }
         }

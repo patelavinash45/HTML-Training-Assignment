@@ -22,6 +22,7 @@ namespace Services.Implementation.AuthServices
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Role, user.UserType),
+                new Claim("userTypeId", user.UserTypeId.ToString()),
                 new Claim("firstName", user.FirstName),
                 new Claim("lastName", user.LastName),
                 new Claim("aspNetUserId", user.AspNetUserId.ToString()),

@@ -51,9 +51,10 @@ namespace HelloDoc.Controllers
 
         public IActionResult LoginPage()
         {
-            if (_loginService.isTokenValid(HttpContext, "Admin"))
+            string role = _loginService.isTokenValid(HttpContext, new List<int> { 2, });
+            if (role != null)
             {
-                return RedirectToAction("Dashboard", "Admin");
+                return RedirectToAction("Dashboard", role);
             }
             return View();
         }
@@ -69,8 +70,7 @@ namespace HelloDoc.Controllers
         [Authorization("Admin")]
         public IActionResult Dashboard()
         {
-            int aspNetUseId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-            return aspNetUseId > 0 ? View(_adminDashboardService.getallRequests(aspNetUseId)) : View(null);
+            return View(_adminDashboardService.getallRequests());
         }
 
         [Authorization("Admin")]
@@ -677,15 +677,15 @@ namespace HelloDoc.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]  //  login for physician and admin both
         public IActionResult LoginPage(Login model)
         {
             if (ModelState.IsValid)
             {
-                UserDataModel user = _loginService.auth(model, 2);
-                if (user == null)
+                UserDataModel user = _loginService.auth(model, new List<int> { 2 , 3});
+                if (!user.IsValid)
                 {
-                    _notyfService.Error("Invalid credentials");
+                    _notyfService.Error(user.Message);
                     return View(null);
                 }
                 else
@@ -702,8 +702,8 @@ namespace HelloDoc.Controllers
                     };
                     Response.Cookies.Append("jwtToken", token, cookieOptions);
                     //HttpContext.Session.SetString("jwtToken", token);
-                    _notyfService.Success("Successfully Login");
-                    return RedirectToAction("Dashboard", "Admin");
+                    _notyfService.Success(user.Message);
+                    return RedirectToAction("Dashboard", user.UserType);
                 }
             }
             return View(null);

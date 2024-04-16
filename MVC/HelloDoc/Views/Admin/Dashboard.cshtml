@@ -1,24 +1,14 @@
 ﻿@model Services.ViewModels.Admin.AdminDashboard
 
-<!DOCTYPE html>
-<html lang="en">
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Dashboard";
+    ViewBag.JsFile = "/js/Admin/dashboard.js";
+    ViewBag.CssFile = "/css/Admin/dashboard.css";
+    ViewBag.Header = "_AdminDashboardHeader";
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/Admin/dashboard.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/admin/dashboard.css" rel="stylesheet" />
-</head>
 
-<body>
-    @await Component.InvokeAsync("Notyf")
-    <partial name="_AdminDashboardHeader" model="1">
     <partial name="_SendLink" model="@Model.SendLink">
     <partial name="_RequestCancelPopUp" model="@Model.CancelPopup">
     <partial name="_RequestAssignPopUp" model="@Model.AssignAndTransferPopup">
@@ -218,6 +208,3 @@
             </div>
         </div>
     </div>
-</body>
-
-</html>

@@ -1,14 +1,12 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Submit Request</title>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/patient/submitRequest.css" rel="stylesheet" />
-</head>
-<body>
-    <partial name="_RequestHeader" />
+﻿@{
+    Layout = "_PatientLayout";
+    ViewData["Title"] = "Submit Request";
+    ViewBag.CssFile = "/css/patient/submitRequest.css";
+    ViewBag.Header = "_RequestHeader";
+}
+
+
+
     <div class="d-flex align-items-center flex-column">
         <a id="back-box" asp-controller="Patient" asp-action="PatientSite">
             <i class="bi bi-chevron-left"> </i>
@@ -31,5 +29,4 @@
     <div class="position-fixed vw-100 bottom-0">
         <partial name="_RequestFooter" />
     </div>
-</body>
-</html>
+
