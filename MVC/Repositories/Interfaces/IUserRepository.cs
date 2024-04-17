@@ -32,7 +32,7 @@ namespace Repositories.Interfaces
 
         List<Physician> getAllUnAssignedPhysician();
 
-        PhysicianNotification GetPhysicianNotification(int physicianId);
+        PhysicianNotification getPhysicianNotification(int physicianId);
 
         Task<bool> updatePhysicianNotification(PhysicianNotification physicianNotification);
 

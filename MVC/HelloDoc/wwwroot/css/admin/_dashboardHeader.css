@@ -52,7 +52,6 @@ header {
     top: 60px;
     background-color: white;
     width: 225px;
-    height: 100vh;
     position: absolute;
     z-index: 1;
 }

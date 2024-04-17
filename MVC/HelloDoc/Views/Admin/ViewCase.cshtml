@@ -1,11 +1,13 @@
 ﻿@model Services.ViewModels.Admin.ViewCase
+@inject IHttpContextAccessor httpContextAccessor
 
 @{
-    Layout = "_AdminLayout";
+    string role = httpContextAccessor.HttpContext.Session.GetString("role");
+    Layout = $"_{role}Layout";
     ViewData["Title"] = "ViewCase";
     ViewBag.JsFile = "/js/Admin/ViewCase.js";
     ViewBag.CssFile = "/css/Admin/ViewCase.css";
-    ViewBag.Header = "_AdminDashboardHeader";
+    ViewBag.Header = $"_{role}DashboardHeader";
     List<String> requesterBgColor = new List<String>() { "", "bg-danger", "bg-success", "bg-warning", "bg-primary", "bg-info" };
     List<String> requester = new List<String>() { "", "Business", "Patient", "Family", "Concierge", "VIP" };
 }
@@ -22,8 +24,8 @@
                     @requester[Model.Requester]
                 </div>
             </div>
-            <a asp-controller="Admin" asp-action="Dashboard" >
-                <button id="back-box">
+            <a asp-controller="@role" asp-action="Dashboard">
+                <button id="back-box" onclick="history.back()">
                     <i class="bi bi-chevron-left"> </i>
                     Back
                 </button>
@@ -81,9 +83,12 @@
                     <input class="form-control" id="email" type="email" asp-for="Email" disabled />
                     <label for="email">Email</label>
                 </div>
-                <button class="col-xl-6 col-md-6 col-lg-6 editButton" id="edit" onclick="ProfileEdit(true)" type="button">
-                    Edit
-                </button>
+                @if(Model.IsAdmin)
+                {
+                    <button class="col-xl-6 col-md-6 col-lg-6 editButton" id="edit" onclick="ProfileEdit(true)" type="button">
+                        Edit
+                    </button>
+                }
                 <div class="col-xl-6 col-md-6 col-lg-6" id="submit">
                     <button class="px-3">
                         Save
@@ -123,7 +128,7 @@
                 </div>
             </fieldset>
             <div class="d-flex mt-2 justify-content-end">
-                @if(Model.Status == 1)
+                @if(Model.Status == 1 && Model.IsAdmin)
                 {
                     <a asp-controller="" asp-action="">
                         <button class="px-3 mx-1" id="viewNotesButton" type="button">
@@ -136,9 +141,12 @@
                         View Notes
                     </button>
                 </a>
-                <button class="bg-danger px-3 text-white mx-1" onclick="cancelPopUp(@Model.RequestId)" data-bs-target="#cancelRequest" data-bs-toggle="modal" type="button">
-                    Cancle
-                </button>
+                @if(Model.IsAdmin)
+                {
+                    <button class="bg-danger px-3 text-white mx-1" onclick="cancelPopUp(@Model.RequestId)" data-bs-target="#cancelRequest" data-bs-toggle="modal" type="button">
+                        Cancle
+                    </button>
+                }
             </div>
         </form>
     </div>

@@ -88,9 +88,11 @@
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item">
-                                            Accept
-                                        </button>
+                                        <a asp-controller="Physician" asp-action="AcceptRequest" asp-route-requestId="@data.RequestId">
+                                            <button class="dropdown-item">
+                                                Accept
+                                            </button>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

@@ -66,9 +66,21 @@
                             @data.Street, @data.City, @data.State, @data.ZipCode
                         </td>
                         <td>
-                            <button class="bg-transparent text-white p-2 border-white btn">
-                                Home Call
-                            </button>
+                            @if(data.IsEncounter == 1)
+                            {
+                                if(data.EncounterType == 1)
+                                {
+                                    <button class="bg-transparent text-white p-2 border-white btn">
+                                        Video Call
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="bg-transparent text-white p-2 border-white btn">
+                                        Home Visit
+                                    </button>
+                                }
+                            }
                         </td>
                         <td>
                             <button class="bg-transparent text-white p-2 border-white btn">
@@ -97,22 +109,17 @@
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item">
+                                        <button class="dropdown-item" onclick="navigatToViewDocuments(@data.RequestId)">
                                             View Uploads
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item">
-                                            View Uploads
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button class="dropdown-item">
+                                        <button class="dropdown-item" onclick="checkEncounter(@data.IsEncounter,@data.RequestId)">
                                             Encounter
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item">
+                                        <button class="dropdown-item" onclick="navigatToSendOrder(@data.RequestId)">
                                             Send Order
                                         </button>
                                     </li>
@@ -201,7 +208,7 @@
                             </button>
                         </div>
                         <div class="px-2 col-md-4 col-sm-6 col-6">
-                            <button class="w-100 bg-success text-white fw-bold py-1" onclick="navigatToEncounterForm(@data.RequestId)">
+                            <button class="w-100 bg-success text-white fw-bold py-1" onclick="checkEncounter(@data.IsEncounter,@data.RequestId)">
                                 Encounter
                             </button>
                         </div>

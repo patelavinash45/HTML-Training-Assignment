@@ -209,6 +209,22 @@
       "PackagePath": "staticwebassets\\Files\\92\\LesfImage.png"
     },
     {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\93\\Fig18.Clear Case.png",
+      "PackagePath": "staticwebassets\\Files\\93\\Fig18.Clear Case.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\93\\Fig20.Close case.png",
+      "PackagePath": "staticwebassets\\Files\\93\\Fig20.Close case.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\93\\Fig23.Request Support.png",
+      "PackagePath": "staticwebassets\\Files\\93\\Fig23.Request Support.png"
+    },
+    {
+      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\93\\Fig25. Contact your Provider.jpg",
+      "PackagePath": "staticwebassets\\Files\\93\\Fig25. Contact your Provider.jpg"
+    },
+    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\Files\\93\\Fig40. Profession menu Vendors.jpg",
       "PackagePath": "staticwebassets\\Files\\93\\Fig40. Profession menu Vendors.jpg"
     },
@@ -537,20 +553,12 @@
       "PackagePath": "staticwebassets\\js\\Admin\\viewCase.js"
     },
     {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\viewNotes.js",
-      "PackagePath": "staticwebassets\\js\\Admin\\viewNotes.js"
-    },
-    {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Admin\\viewProfile.js",
       "PackagePath": "staticwebassets\\js\\Admin\\viewProfile.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Patient\\dashboard.js",
       "PackagePath": "staticwebassets\\js\\Patient\\dashboard.js"
-    },
-    {
-      "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\Physician\\dashboard.js",
-      "PackagePath": "staticwebassets\\js\\Physician\\dashboard.js"
     },
     {
       "Id": "D:\\project\\HTML Training Assignment\\MVC\\HelloDoc\\wwwroot\\js\\international-telephone-input.js",

@@ -261,3 +261,47 @@ $("#requestSupportForm").submit(function (e) {
         messageValidation();
     }
 })
+
+
+
+
+///  physician Encounter
+
+function checkEncounter(isEncounter,requestId) {
+    if (isEncounter == 1) {
+        navigatToEncounterForm(requestId);
+    }
+    else {
+        $(".patientRequestId").val(requestId);
+        $("#encounterPopUp").modal('show');
+    }
+}
+
+var isvideoCall = true;
+function careButtonChnage(temp) {
+    if (temp) {
+        $("#videoCall").addClass("activeButton");
+        $("#houseVisit").removeClass("activeButton");
+        isvideoCall = true;
+    }
+    else {
+        isvideoCall = false;
+        $("#houseVisit").addClass("activeButton");
+        $("#videoCall").removeClass("activeButton");
+    }
+}
+
+function encounter() {
+    $.ajax({
+        url: "/Physician/SetEncounter",
+        type: "Get",
+        contentType: "application/json",
+        data: {
+            isVideoCall: isvideoCall,
+            requestId: $("#requestId").val(),
+        },
+        success: function (response) {
+            window.location.href = response.redirect;
+        }
+    })
+}

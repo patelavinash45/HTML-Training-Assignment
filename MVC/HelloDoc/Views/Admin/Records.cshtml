@@ -8,23 +8,23 @@
     ViewBag.Header = "_AdminDashboardHeader";
 }
 
-    <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mt-2 mb-2">
-            <h3>
-                Search Records
-            </h3>
-            <a asp-controller="Admin" asp-action="ExportAllRecords">
-                <button class="px-3 fw-bold cloredButton text-white">
-                    <i class="bi bi-folder-symlink-fill"></i>
-                    <span class="buttonText">
-                        Export Data To Excel
-                    </span>
-                </button>
-            </a>
-        </div>
-        <div class="recordList">
-            <form id="filterForm">
-                <div class="row">
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mt-2 mb-2">
+        <h3>
+            Search Records
+        </h3>
+        <a asp-controller="Admin" asp-action="ExportAllRecords">
+            <button class="px-3 fw-bold cloredButton text-white">
+                <i class="bi bi-folder-symlink-fill"></i>
+                <span class="buttonText">
+                    Export Data To Excel
+                </span>
+            </button>
+        </a>
+    </div>
+    <div class="recordList">
+        <form id="filterForm">
+            <div class="row">
                 <div class="form-floating col-xl-3 col-lg-4 col-md-6 col-sm-6">
                     <select asp-for="RequestStatus" class="form-select" id="requestStatus">
                         <option value="">All</option>
@@ -50,12 +50,13 @@
                     <label for="requestType">Request Type</label>
                 </div>
                 <div class="form-floating col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                    <input asp-for="StartDate" class="form-control" id="startDate" placeholder="StartDate" type="date"/>
+                    <input asp-for="StartDate" class="form-control" id="startDate" placeholder="StartDate"
+                        type="date" />
                     <label for="startDate">From Date Of Service</label>
                 </div>
                 <div class="form-floating col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                    <input asp-for="EndDate" class="form-control" id="endDate" placeholder="EndDate" type="date"/>
-                    <label for="endDate">To Date Of Service</label> 
+                    <input asp-for="EndDate" class="form-control" id="endDate" placeholder="EndDate" type="date" />
+                    <label for="endDate">To Date Of Service</label>
                 </div>
                 <div class="form-floating col-xl-3 col-lg-4 col-md-6 col-sm-6">
                     <input asp-for="ProviderName" class="form-control" id="providerName" placeholder="ProviderName" />
@@ -78,9 +79,9 @@
                     Search
                 </button>
             </div>
-            </form>
-            <div class="tableData">
-                <partial name="_RecordTable" model="@Model.RecordTableDatas"></partial>
-            </div>
+        </form>
+        <div class="tableData">
+            <partial name="_RecordTable" model="@Model.RecordTableDatas"></partial>
         </div>
     </div>
+</div>

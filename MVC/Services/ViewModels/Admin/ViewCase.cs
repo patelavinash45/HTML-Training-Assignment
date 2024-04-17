@@ -4,6 +4,8 @@ namespace Services.ViewModels.Admin
 {
     public class ViewCase
     {
+        public bool IsAdmin { get; set; } = true;
+
         public int? Status { get; set; }
 
         public int RequestId { get; set; }

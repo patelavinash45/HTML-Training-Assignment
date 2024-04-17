@@ -43,7 +43,7 @@ namespace Services.Implementation.AdminServices
             };
         }
 
-        public async Task<bool> addAdminNotes(String adminNotes, int requestId, int aspNetUserId)
+        public async Task<bool> addAdminNotes(String newNotes, int requestId, int aspNetUserId, bool isAdmin)
         {
             RequestNote requestNote = _requestNotesRepository.GetRequestNoteByRequestId(requestId);
             if(requestNote == null)
@@ -51,12 +51,14 @@ namespace Services.Implementation.AdminServices
                 RequestNote _requestNote = new()
                 {
                     RequestId = requestId,
-                    AdminNotes = adminNotes,
+                    AdminNotes = isAdmin ? newNotes : null,
+                    PhysicianNotes = isAdmin ? null : newNotes,
                     CreatedDate = DateTime.Now,
                 };
                 return await _requestNotesRepository.addRequestNote(_requestNote);
             }
-            requestNote.AdminNotes= adminNotes;
+            requestNote.AdminNotes = isAdmin ? newNotes : null;
+            requestNote.PhysicianNotes = isAdmin ? null : newNotes;
             requestNote.ModifiedDate = DateTime.Now;
             requestNote.ModifiedBy = aspNetUserId;
             return await _requestNotesRepository.updateRequestNote(requestNote);
@@ -107,7 +109,7 @@ namespace Services.Implementation.AdminServices
         public async Task<bool> agreementAgree(Agreement model)
         {
             RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
-            requestClient.Status = 4;
+            requestClient.Status = 5;
             if(await _requestClientRepository.updateRequestClient(requestClient))
             {
                 Request request = _requestRepository.getRequestByRequestId(model.RequestId);

@@ -94,8 +94,13 @@
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item">
-                                            Accept
+                                        <button class="dropdown-item" onclick="displaySendAgreementPopUp(@data.RequestId)" data-bs-target="#sendAgreement" data-bs-toggle="modal">
+                                            Send Agreement
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item" onclick="displayPopUp(@data.RequestId)" data-bs-target="#physicianTransferRequest" data-bs-toggle="modal">
+                                            Transfer Request
                                         </button>
                                     </li>
                                 </ul>
@@ -179,6 +184,11 @@
                         <div class="px-2 col-md-4 col-sm-6 col-6">
                             <button class="w-100 bg-success text-white fw-bold py-1" onclick="navigatToViewDocuments(@data.RequestId)">
                                 View Uploads
+                            </button>
+                        </div>
+                        <div class="px-2 col-md-4 col-sm-6 col-6">
+                            <button class="w-100 bg-success text-white fw-bold py-1" onclick="displayPopUp(@data.RequestId)" data-bs-target="#physicianTransferRequest" data-bs-toggle="modal">
+                                Transfer Request
                             </button>
                         </div>
                         <div class="px-2 col-md-4 col-sm-6 col-6">

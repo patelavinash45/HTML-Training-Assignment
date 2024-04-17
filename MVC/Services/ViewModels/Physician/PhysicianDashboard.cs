@@ -4,6 +4,8 @@ namespace Services.ViewModels.Physician
 {
     public class PhysicianDashboard
     {
+        public Dictionary<int,string> Regions { get; set; }
+
         public TableModel NewRequests { get; set; }
 
         public int NewRequestCount { get; set; }
@@ -20,14 +22,10 @@ namespace Services.ViewModels.Physician
 
         public int ConcludeRequestCount { get; set; }
 
-        public CancelPopUp CancelPopup { get; set; }
-
         public Agreement SendAgreement { get; set; }
 
-        public AssignAndTransferPopUp AssignAndTransferPopup { get; set; }
-
-        public BlockPopUp BlockPopup { get; set; }
-
         public SendLink SendLink { get; set; }
+
+        public PhysicianTransferRequest PhysicianTransferRequest { get; set; }
     }
 }

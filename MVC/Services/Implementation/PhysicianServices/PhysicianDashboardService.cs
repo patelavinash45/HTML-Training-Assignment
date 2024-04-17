@@ -3,12 +3,15 @@ using Repositories.Interfaces;
 using Services.Interfaces.PhysicianServices;
 using Services.ViewModels.Admin;
 using Services.ViewModels.Physician;
+using System.Collections;
 
 namespace Services.Implementation.PhysicianServices
 {
     public class PhysicianDashboardService : IPhysicianDashboardService
     {
         private readonly IRequestClientRepository _requestClientRepository;
+        private readonly IRequestStatusLogRepository _requestStatusLogRepository;
+        private readonly IUserRepository _userRepository;
 
         private Dictionary<string, List<int>> statusList { get; set; } = new Dictionary<string, List<int>>()
             {
@@ -18,9 +21,53 @@ namespace Services.Implementation.PhysicianServices
                 {"conclude", new List<int> { 6 } },
             };
 
-        public PhysicianDashboardService(IRequestClientRepository requestClientRepository)
+        public PhysicianDashboardService(IRequestClientRepository requestClientRepository, IRequestStatusLogRepository requestStatusLogRepository,
+                                                             IUserRepository userRepository)
         {
             _requestClientRepository = requestClientRepository;
+            _requestStatusLogRepository = requestStatusLogRepository;
+            _userRepository = userRepository;
+        }
+
+        public async Task<bool> acceptRequest(int requestId)
+        {
+            RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(requestId);
+            requestClient.Status = 2;
+            return await _requestClientRepository.updateRequestClient(requestClient);
+        }
+
+        public async Task<bool> setEncounter(int requestId, bool isVideoCall)
+        {
+            RequestClient requestClient = _requestClientRepository.getRequestClientAndRequestByRequestId(requestId);
+            requestClient.Status = isVideoCall ? 5 : 4;
+            requestClient.Request.CallType = isVideoCall ? (short)1 : (short)2;
+            return await _requestClientRepository.updateRequestClient(requestClient);
+        }
+
+        public int getPhysicianIdFromAspNetUserId(int aspNetUserId)
+        {
+            return _userRepository.getPhysicianByAspNetUserId(aspNetUserId).PhysicianId;
+        }
+
+        public async Task<bool> transferRequest(PhysicianTransferRequest model)
+        {
+            RequestClient requestClient = _requestClientRepository.getRequestClientByRequestId(model.RequestId);
+            requestClient.Status = 1;
+            requestClient.PhysicianId = null;
+            if(await _requestClientRepository.updateRequestClient(requestClient))
+            {
+                return await _requestStatusLogRepository
+                    .addRequestSatatusLog(
+                    new RequestStatusLog()
+                    {
+                        RequestId = model.RequestId,
+                        Status = 1,
+                        CreatedDate = DateTime.Now,
+                        Notes = model.TransferNotes,
+                        TransToAdmin = new BitArray(1,true),
+                    });
+            }
+            return false;
         }
 
         public PhysicianDashboard getallRequests(int aspNetUserId)
@@ -40,8 +87,7 @@ namespace Services.Implementation.PhysicianServices
                 PendingRequestCount = _requestClientRepository.countRequestClientByStatusForPhysician(statusList["pending"], aspNetUserId),
                 ActiveRequestCount = _requestClientRepository.countRequestClientByStatusForPhysician(statusList["active"], aspNetUserId),
                 ConcludeRequestCount = _requestClientRepository.countRequestClientByStatusForPhysician(statusList["conclude"], aspNetUserId),
-                CancelPopup = cancelPopUp,
-                AssignAndTransferPopup = assignAndTransferPopUp,
+                Regions = _requestClientRepository.getAllRegions().ToDictionary(region => region.RegionId, region => region.Name),
             };
         }
 
@@ -82,6 +128,8 @@ namespace Services.Implementation.PhysicianServices
                     Notes = requestClient.Symptoms,
                     RequesterType = requestClient.Request.RequestTypeId,
                     Email = requestClient.Email,
+                    IsEncounter = requestClient.Request.CallType != null ? 1 : 0,
+                    EncounterType = requestClient.Request.CallType,
                 }).ToList();
             int totalPages = totalRequests % 10 != 0 ? (totalRequests / 10) + 1 : totalRequests / 10;
             return new TableModel()

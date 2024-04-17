@@ -185,13 +185,19 @@ table.dataTable th.dt-type-numeric {
     text-align: left;
 }
 
-.text-warnig,
-bg-warning{
-    
-}
 
 .table-responsive{
     overflow: inherit;
+}
+
+.careButton {
+    height: 50px;
+    background-color: white;
+}
+
+.activeButton{
+    background-color:cadetblue;
+    color: white;
 }
 
 

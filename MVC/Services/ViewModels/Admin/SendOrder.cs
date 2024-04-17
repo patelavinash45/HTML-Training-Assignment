@@ -10,8 +10,10 @@ namespace Services.ViewModels.Admin
 
         public Dictionary<int, String>? Professions { get; set; }
 
+        [Display(Name = "Profession")]
         public int SelectedProfession { get; set; }
 
+        [Display(Name = "Business")]
         public int SelectedBusiness { get; set; }
 
         [StringLength(100)]

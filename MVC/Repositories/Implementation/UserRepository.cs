@@ -89,7 +89,7 @@ namespace Repositories.Implementation
             return _dbContext.Physicians.Where(a => a.Status==0).ToList();
         }
 
-        public PhysicianNotification GetPhysicianNotification(int physicianId)
+        public PhysicianNotification getPhysicianNotification(int physicianId)
         {
             return _dbContext.PhysicianNotifications.FirstOrDefault(a => a.PhysicianId ==  physicianId);
         }

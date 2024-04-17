@@ -139,7 +139,7 @@ namespace Services.Implementation.AdminServices
 
         public async Task<bool> editProviderNotification(int providerId,bool isNotification)
         {
-            PhysicianNotification physicianNotification = _userRepository.GetPhysicianNotification(providerId);
+            PhysicianNotification physicianNotification = _userRepository.getPhysicianNotification(providerId);
             physicianNotification.IsNotificationStopped[0] = isNotification;
             return await _userRepository.updatePhysicianNotification(physicianNotification);
         }

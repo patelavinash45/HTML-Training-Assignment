@@ -86,6 +86,10 @@
 
         public string? Mobile { get; set; }
 
+        public int IsEncounter { get; set; }
+
+        public short? EncounterType { get; set; }
+
         public string? RequesterMobile { get; set; }
 
         public DateTime? BirthDate { get; set; }

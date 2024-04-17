@@ -22,15 +22,15 @@ namespace Services.Interfaces.AdminServices
 
         bool SendRequestLink(SendLink model,HttpContext httpContext);
 
-        Task<bool> createRequest(CreateRequest model, int aspNetUserId);
+        Task<bool> createRequest(CreateRequest model, int aspNetUserId, bool isAdmin);
 
         bool RequestSupport(RequestSupport model);
 
-        EncounterForm getEncounterDetails(int requestId, bool type);
+        EncounterForm getEncounterDetails(int requestId, bool isAdmin);
 
         Task<bool> updateEncounter(EncounterForm model, int requestId, int aspNetUserId);
 
-        ViewCase getRequestDetails(int requestId);
+        ViewCase getRequestDetails(int requestId, bool isAdmin);
 
         Task<bool> updateRequest(ViewCase model);
     }

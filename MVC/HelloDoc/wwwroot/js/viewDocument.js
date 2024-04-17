@@ -1,5 +1,5 @@
 var IdList = [];
-$('#mainCheckBox').click(function () {
+$(document).on("click","#mainCheckBox",function () {
     if ($(this).is(':checked')) {
         $('.checkBox').prop('checked', true);
         var temp = $('.checkBox');
@@ -14,14 +14,14 @@ $('#mainCheckBox').click(function () {
     }
 });
 
-$('#downloadAll').click(function () {
+$(document).on("click", "#downloadAll", function () {
     for (let i = 0; i < IdList.length; i++) {
         var id = "." + IdList[i];
         $(id)[0].click();
     }
 });
 
-$('#deleteAll').click(function () {
+$(document).on("click", "#deleteAll", function () {
     if (IdList.length > 0) {
         $.ajax({
             url: "/Admin/DeleteAllFiles",
@@ -37,7 +37,7 @@ $('#deleteAll').click(function () {
     }
 })
 
-$("#sendMail").click(function () {
+$(document).on("click", "#sendMail", function () {
     if (IdList.length > 0) {
         $.ajax({
             url: "/Admin/SendMail",

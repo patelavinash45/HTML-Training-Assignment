@@ -12,7 +12,7 @@ namespace Services.ViewModels.Admin
         public string? AdminNotes { get; set; }
 
         [StringLength(500)]
-        public string NewAdminNotes { get; set; }
+        public string NewNotes { get; set; }
 
         public List<String>? TransferNotes { get; set; }
     }

@@ -78,7 +78,6 @@ input[type=file]::-webkit-file-upload-button {
 }
 
 a{
-    height: 50px;
     border-radius: 10px;
 }
 

@@ -24,6 +24,13 @@ namespace Services.ViewModels.Admin
         public String? AdminTransferNotes { get; set; }
     }
 
+    public class PhysicianTransferRequest
+    {
+        public int RequestId { get; set; }
+
+        public String? TransferNotes { get; set; }
+    }
+
     public class CancelPopUp
     {
         public int Reason { get; set; }

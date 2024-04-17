@@ -18,7 +18,10 @@
 </head>
 <body>
     @await Component.InvokeAsync("Notyf")
-    <partial name="@ViewBag.Header" />
+    @if (ViewBag.Header != null)
+    {
+        <partial name="@ViewBag.Header" />
+    }
     @RenderBody()
 </body>
 </html>

@@ -150,7 +150,7 @@ namespace Services.Implementation.AdminServices
             }
         }
 
-        public async Task<bool> createRequest(CreateRequest model, int aspNetUserIdAdmin)
+        public async Task<bool> createRequest(CreateRequest model, int aspNetUserIdUser, bool isAdmin)
         {
             int aspNetUserId = _aspRepository.checkUser(email: model.Email);
             int userId = _userRepository.getUserID(aspNetUserId);
@@ -190,17 +190,35 @@ namespace Services.Implementation.AdminServices
                 };
                 await _aspRepository.addAspNetUserRole(aspNetUserRole);
             }
-            Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserIdAdmin);
-            Request request = new()
+            Request request = new Request();
+            if(isAdmin)
             {
-                RequestTypeId = 5,
-                FirstName = admin.FirstName,
-                LastName = admin.LastName,
-                Email = admin.Email,
-                PhoneNumber = admin.Mobile,
-                UserId = userId,
-                CreatedDate = DateTime.Now,
-            };
+                Admin admin = _userRepository.getAdmionByAspNetUserId(aspNetUserIdUser);
+                request = new Request()
+                {
+                    RequestTypeId = 5,
+                    FirstName = admin.FirstName,
+                    LastName = admin.LastName,
+                    Email = admin.Email,
+                    PhoneNumber = admin.Mobile,
+                    UserId = userId,
+                    CreatedDate = DateTime.Now,
+                };
+            }
+            else
+            {
+                Physician physician = _userRepository.getPhysicianByAspNetUserId(aspNetUserIdUser);
+                request = new Request()
+                {
+                    RequestTypeId = 5,
+                    FirstName = physician.FirstName,
+                    LastName = physician.LastName,
+                    Email = physician.Email,
+                    PhoneNumber = physician.Mobile,
+                    UserId = userId,
+                    CreatedDate = DateTime.Now,
+                };
+            }
             int requestId = await _requestRepository.addRequest(request);
             RequestClient requestClient = new()
             {
@@ -256,20 +274,19 @@ namespace Services.Implementation.AdminServices
             }
         }
 
-        public EncounterForm getEncounterDetails(int requestId, bool type)
+        public EncounterForm getEncounterDetails(int requestId, bool isAdmin)
         {
             Encounter encounter = _encounterRepository.getEncounter(requestId);
             if (encounter != null)
             {
                 return new EncounterForm()
                 {
-                    IsAdmin = type,
+                    IsAdmin = isAdmin,
                     FirstName = encounter.FirstName,
                     LastName = encounter.LastName,
                     Location = encounter.Location,
                     Email = encounter.Email,
-                    BirthDate = DateTime.Parse(encounter.IntYear + "-" + encounter.StrMonth
-                                 + "-" + encounter.IntDate),
+                    BirthDate = DateTime.Parse(encounter.IntYear + "-" + encounter.StrMonth + "-" + encounter.IntDate),
                     Date = encounter.Date,
                     Mobile = encounter.PhoneNumber,
                     HistoryOfIllness = encounter.IllnessOrInjury,
@@ -300,7 +317,10 @@ namespace Services.Implementation.AdminServices
             }
             else
             {
-                return new EncounterForm();
+                return new EncounterForm() 
+                { 
+                    IsAdmin = isAdmin,
+                };
             }
         }
 
@@ -389,11 +409,12 @@ namespace Services.Implementation.AdminServices
             return await _encounterRepository.updateEncounter(encounter);
         }
 
-        public ViewCase getRequestDetails(int requestId)
+        public ViewCase getRequestDetails(int requestId, bool isAdmin)
         {
             RequestClient requestClient = _requestClientRepository.getRequestClientAndRequestByRequestId(requestId);
-            ViewCase viewCase = new()
+            return new ViewCase()
             {
+                IsAdmin = isAdmin,
                 Status = requestClient.Status,
                 Requester = requestClient.Request.RequestTypeId,
                 RequestId = requestId,
@@ -410,7 +431,6 @@ namespace Services.Implementation.AdminServices
                                 Reasons = _requestClientRepository.getAllReason().ToDictionary(caseTag => caseTag.CaseTagId, caseTag => caseTag.Reason),
                               },
             };
-            return viewCase;
         }
 
         public async Task<bool> updateRequest(ViewCase model)

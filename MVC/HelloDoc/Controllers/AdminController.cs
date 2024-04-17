@@ -27,6 +27,7 @@ namespace HelloDoc.Controllers
         private readonly IAccessService _accessService;
         private readonly IPartnersService _partnersService;
         private readonly IRecordService _recordService;
+        private List<string> roles = new List<string> { "Admin", "Physician" };
 
         public AdminController(INotyfService notyfService, IAdminDashboardService adminDashboardService, 
                                 IViewNotesService viewNotesService, ILoginService loginService, IViewDocumentsServices viewDocumentsServices,
@@ -51,7 +52,7 @@ namespace HelloDoc.Controllers
 
         public IActionResult LoginPage()
         {
-            string role = _loginService.isTokenValid(HttpContext, new List<int> { 2, });
+            string role = _loginService.isTokenValid(HttpContext, new List<int> { 2, 3 });
             if (role != null)
             {
                 return RedirectToAction("Dashboard", role);
@@ -73,28 +74,34 @@ namespace HelloDoc.Controllers
             return View(_adminDashboardService.getallRequests());
         }
 
-        [Authorization("Admin")]
+        [Authorization("Admin", "Physician")]
+        [HttpGet("/Encounter/EncounterForm")]
         public IActionResult EncounterForm()
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
-            return View(_adminDashboardService.getEncounterDetails(requestId, true));
+            bool isAdmin = HttpContext.Session.GetString("role") == "Admin";
+            return View(_adminDashboardService.getEncounterDetails(requestId, isAdmin));
         }
-
-        [Authorization("Admin")]
+         
+        [Authorization("Admin", "Physician")]
+        [HttpGet("/Case/ViewCase")]
         public IActionResult ViewCase()
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
-            return View(_adminDashboardService.getRequestDetails(requestId));
+            bool isAdmin = HttpContext.Session.GetString("role") == "Admin";
+            return View(_adminDashboardService.getRequestDetails(requestId,isAdmin));
         }
 
-        [Authorization("Admin")]
+        [Authorization("Admin", "Physician")]
+        [HttpGet("/Case/ViewNotes")]
         public IActionResult ViewNotes()
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
             return View(_viewNotesService.GetNotes(requestId));
         }
 
-        [Authorization("Admin")]
+        [Authorization("Admin", "Physician")]
+        [HttpGet("/Request/CreateRequest")]
         public IActionResult CreateRequest()
         {
             return View(null);
@@ -217,7 +224,8 @@ namespace HelloDoc.Controllers
             return View();
         }
 
-        [Authorization("Admin")]
+        [Authorization("Admin", "Physician")]
+        [HttpGet("/Case/ViewDocument")]
         public IActionResult ViewDocument()
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
@@ -225,7 +233,8 @@ namespace HelloDoc.Controllers
             return View(_viewDocumentsServices.getDocumentList(requestId: requestId, aspNetUserId: aspNetUserId));
         }
 
-        [Authorization("Admin")]
+        [Authorization("Admin", "Physician")]
+        [HttpGet("/Order/SendOrder")]
         public IActionResult SendOrder()
         {
             int requestId = HttpContext.Session.GetInt32("requestId").Value;
@@ -246,14 +255,15 @@ namespace HelloDoc.Controllers
             return View("CreateRole", _accessService.getEditRole(roleId));
         }
 
-        [Authorization("Admin")]
+        [Authorization("Admin", "Physician")]
         public IActionResult SetPhyscianId(int physicianId)
         {
             HttpContext.Session.SetInt32("physicianId", physicianId);
             return RedirectToAction("EditProvider", "Admin");
         }
 
-        [Authorization("Admin")]
+        [Authorization("Admin", "Physician")]
+        [HttpGet("/Profile/ViewProfile")]
         public IActionResult EditProvider()
         {
             int physicianId = HttpContext.Session.GetInt32("physicianId").Value;
@@ -398,7 +408,8 @@ namespace HelloDoc.Controllers
                 {
                     _notyfService.Error("Agreement Send Faild!");
                 }
-                return RedirectToAction("Dashboard", "Admin");
+                string role = HttpContext.Session.GetString("role");
+                return RedirectToAction("Dashboard", role);
             }
             return View(model);
         }
@@ -551,15 +562,17 @@ namespace HelloDoc.Controllers
             {
                 _notyfService.Error("Link Send Faild !!");
             }
-            return RedirectToAction("Dashboard", "Admin");
+            string role = HttpContext.Session.GetString("role");
+            return RedirectToAction("Dashboard", role);
         }
 
-        [HttpPost]
+        [HttpPost("/Request/CreateRequest")]
         [ValidateAntiForgeryToken]  /////  create request ---  Dashboard
         public async Task<IActionResult> CreateRequest(CreateRequest model)
         {
             int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-            if (await _adminDashboardService.createRequest(model, aspNetUserId))
+            bool isAdmin = HttpContext.Session.GetString("role") == "Admin";
+            if (await _adminDashboardService.createRequest(model, aspNetUserId, isAdmin))
             {
                 _notyfService.Success("Successfully Request Added");
             }
@@ -567,7 +580,8 @@ namespace HelloDoc.Controllers
             {
                 _notyfService.Error("Faild!");
             }
-            return RedirectToAction("Dashboard", "Admin");
+            string role = HttpContext.Session.GetString("role");
+            return RedirectToAction("Dashboard", role);
         }
 
         [HttpPost]
@@ -616,8 +630,8 @@ namespace HelloDoc.Controllers
             return View(model);
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpPost("/Case/ViewDocument")]
         public async Task<IActionResult> ViewDocument(ViewDocument model)
         {
             String firstname = HttpContext.Session.GetString("firstName");
@@ -629,13 +643,13 @@ namespace HelloDoc.Controllers
             }
             else
             {
-                _notyfService.Error("File");
+                _notyfService.Error("Failed !!");
             }
             return RedirectToAction("ViewDocument", "Admin");
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpPost("/Order/SendOrder")]
         public async Task<IActionResult> SendOrder(SendOrder model)
         {
             if (ModelState.IsValid)
@@ -649,12 +663,13 @@ namespace HelloDoc.Controllers
                 {
                     _notyfService.Error("Order Faild !!");
                 }
-                return RedirectToAction("Dashboard", "Admin");
+                string role = HttpContext.Session.GetString("role");
+                return RedirectToAction("Dashboard", role);
             }
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost("/Encounter/EncounterForm")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EncounterForm(EncounterForm model)
         {
@@ -709,7 +724,7 @@ namespace HelloDoc.Controllers
             return View(null);
         }
 
-        [HttpPost]
+        [HttpPost("/Case/ViewCase")]
         public async Task<IActionResult> ViewCase(ViewCase model)
         {
             if (await _adminDashboardService.updateRequest(model))
@@ -897,14 +912,15 @@ namespace HelloDoc.Controllers
             return RedirectToAction("Partners", "Admin");
         }
 
-        [HttpPost]
+        [HttpPost("/Case/ViewNotes")]
         public async Task<IActionResult> ViewNotes(ViewNotes model)
         {
             if (ModelState.IsValid)
             {
                 int requestId = HttpContext.Session.GetInt32("requestId").Value;
                 int aspNetUserId = HttpContext.Session.GetInt32("aspNetUserId").Value;
-                if (await _viewNotesService.addAdminNotes(model.NewAdminNotes, requestId, aspNetUserId))
+                bool isAdmin = HttpContext.Session.GetString("role") == "Admin";
+                if (await _viewNotesService.addAdminNotes(model.NewNotes, requestId, aspNetUserId, isAdmin))
                 {
                     _notyfService.Success("Successfully Notes Added");
                 }

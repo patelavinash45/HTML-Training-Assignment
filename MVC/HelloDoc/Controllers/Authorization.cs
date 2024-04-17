@@ -8,11 +8,11 @@ namespace HelloDoc.Authentication
 {
     public class Authorization : Attribute, IAuthorizationFilter
     {
-        private string _role;
+        private List<string> _roles;
 
-        public Authorization(string role)
+        public Authorization(params string[] roles)
         {
-            _role = role;
+            _roles = new List<string>(roles);
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)
@@ -26,7 +26,7 @@ namespace HelloDoc.Authentication
                 {
                     context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                     {
-                        Controller = _role,
+                        Controller = _roles.Contains("Patient") ? "Patient" : "Admin",
                         action = "LoginPage",
                     }));
                 }
@@ -41,7 +41,7 @@ namespace HelloDoc.Authentication
                 else
                 {
                     String jwtRole = jwtToken.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Role).Value;
-                    if (jwtRole != _role)
+                    if (!_roles.Contains(jwtRole))
                     {
                         context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                         {
